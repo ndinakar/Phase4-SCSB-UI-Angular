@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NodeService } from '../dashboardservice';
-import { TreeNode } from 'primeng/api';
-import { MessageService } from 'primeng/api';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { SearchRecordRequest } from 'src/app/model/SearchRecordRequest';
-import { Table } from 'primeng/table';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MessageService, TreeNode } from 'primeng/api';
+import { Table } from 'primeng/table';
+import { SearchService } from 'src/app/services/search/search.service';
+
 
 @Component({
   selector: 'app-search',
@@ -110,7 +108,7 @@ export class SearchComponent implements OnInit {
   ];
 
   @ViewChild('dt') dt: Table;
-  constructor(private nodeService: NodeService, private messageService: MessageService, private formBuilder: FormBuilder) {
+  constructor(private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder) {
 
   }
   public data: Object[];
@@ -227,7 +225,7 @@ export class SearchComponent implements OnInit {
     console.log("overall", this.postData)
 
     this.showresultdiv = true;
-    this.nodeService.getSearch(this.postData).subscribe(files => this.searchVal = files);
+    this.searchService.getSearch(this.postData).subscribe(files => this.searchVal = files);
 
     this.cols = [
       { field: 'title', header: 'Title' },

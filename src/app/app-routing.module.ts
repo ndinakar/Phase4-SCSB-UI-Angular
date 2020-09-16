@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { HomeComponent } from './modules/home/home.component';
-import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
-import { SearchComponent } from './modules/dashboard/search/search.component';
-import { CollectionComponent } from './modules/dashboard/collection/collection.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HomeComponent } from './components/home/home.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { SearchComponent } from './components/search/search.component';
+import { CollectionComponent } from './components/collection/collection.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },

@@ -6,9 +6,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
-import { HomeComponent } from './modules/home/home.component';
-import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HomeComponent } from './components/home/home.component';
+import { DashboardModule } from './components/dashboard/dashboard.module';
 
 
 @NgModule({
