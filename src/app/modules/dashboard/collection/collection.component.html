@@ -1,0 +1,462 @@
+<!-- Collection Tab-->
+<div id="collectionContentId" name="collectionContentName" th:fragment="content" xmlns:th="http://www.thymeleaf.org" role="tabpanel" class="tab-pane active">
+    <link rel="stylesheet" th:href=""/>
+    <script type="text/javascript" th:src=""></script>
+    <div id="collectionFormDivId" name="collectionFormDivName" th:fragment="collection-form"
+         xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+        <form id="collection-form" name="collection-form" class="form-horizontal"
+              th:action=""
+              th:object="" method="post">
+            <input type="hidden"  th:name=""   th:value=""/>
+            <fieldset>
+                <div class="search-bar">
+                    <div class="row margin-0">
+                        <div class="col-xs-12  padding-0">
+                            <div class="row margin-btm-10">
+                                <div class="col-sm-1 padding-right-10 collection-title">Barcode(s)</div>
+                                <div class="col-sm-11 padding-left-0">
+                                    <form>
+                                        <div class="input-group buscador-principal">
+                                            <input id="bibId" type="hidden" th:field=""/>
+                                            <input id="itemId" type="hidden" th:field=""/>
+                                            <input id="shared" type="hidden" th:field=""/>
+                                            <input id="submitted" type="hidden" value="false" th:field="*"/>
+                                            <input id="title" type="hidden" th:field=""/>
+                                            <input id="author" type="hidden" th:field=""/>
+                                            <input id="publisher" type="hidden" th:field=""/>
+                                            <input id="publishedDate" type="hidden" th:field=""/>
+                                            <input id="callNumber" type="hidden" th:field=""/>
+                                            <input id="showModal" type="hidden" th:field=""/>
+                                            <div>
+                                                <input id="barcodeFieldId" name="barcodeFieldName" type="text"
+                                                       placeholder="Type Text Here....." th:field=""
+                                                       class="form-control">
+                                              
+                                            </div>
+                                            <div class="input-group-btn search-panel padding-right-10">
+                                                <button id="displayRecords" type="submit" name="action" value="displayRecords"
+                                                        class="btn themed-button themed-button-collection">Display
+                                                    Records
+                                                </button>
+                                            </div>
+                                            <div class="input-group-btn">
+                                                <button id="clearSearch" type="submit" name="clearSearch"
+                                                        class="btn themed-button themed-button-cancel">Clear Search
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="noteTextDivId">
+                                <strong>NOTE:</strong>
+                                <ul id="notesListId" style="list-style-type:disc;">
+                                    <li>Multiple item barcodes separated by commas(,) can be added to retrieve the records.</li>
+                                    <li>A maximum of only 10 items can be retrieved.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div id="searchResultsContainer" class="search-results-container" data-th-if="">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
+                            <div id="errorMessageId" class="row margin-btm-10" data-th-if="">
+                                <div class="col-sm-12">
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpanId" th:text=""></span></div>
+                                </div>
+                            </div>
+                            <div id="barcodesNotFoundErrorMessageId" class="row margin-btm-10" data-th-if="">
+                                <div class="col-sm-12">
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="barcodesNotFoundErrorMessageSpanId" th:text=""></span></div>
+                                </div>
+                            </div>
+                            <div id="ignoredBarcodesErrorMessageId" class="row margin-btm-10" data-th-if="">
+                                <div class="col-sm-12">
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="ignoredBarcodesErrorMessageSpanId" th:text=""></span></div>
+                                </div>
+                            </div>
+                            <div class="row" th:if="">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="pull-left col-sm-2">
+                                            <div class="recap-status">
+                                                <div class="inline-box margin-right-10">
+                                                    <img class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP"
+                                                         style="width:20px;height:25px;"/><span
+                                                        class="align-middle padding-5">In ReCAP</span>
+                                                </div>
+                                                <div class="inline-box">
+                                                    <img class="status" src="../../../../assets/images/out.png" alt="Out"
+                                                         style="width:20px;height:25px;"/><span
+                                                        class="align-middle padding-5">OUT</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="">CGD - Collection Group Designation</p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <table id="collection-result-table" class="table table-striped margin-btm-0">
+                                        <thead class="tablesorter-headerRow">
+                                        <tr>
+                                            <th width="30%" height="40">
+                                                <div>Barcode</div>
+                                            </th>
+                                            <th width="50%">
+                                                <div>Title</div>
+                                            </th>
+                                            <th th:title="'Collection Group Designation'">
+                                                <div>CGD</div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr data-th-id=""
+                                            th:each=""
+                                            class="displayRow">
+                                            <input data-th-id=""
+                                                   name="displayRowBibId" type="hidden"
+                                                   th:field=""/>
+                                            <input data-th-id=""
+                                                   name="displayRowItemId" type="hidden"
+                                                   th:field=""/>
+                                            <td>
+                                                <input type="hidden"
+                                                       th:field=""/>
+                                                <span class="status1">
+                                                    <img src="../../../../assets/images/inRecap.png" alt="In ReCAP"
+                                                         style="width:20px;height:25px;"
+                                                         th:if=""/>
+                                                    <img src="../../../../assets/images/out.png" alt="Out" style="width:20px;height:25px;"
+                                                         th:if=""/>
+                                                </span>
+                                                    <span class="title_text" id="barcodeSpanId"
+                                                          th:text=""></span>
+                                            </td>
+                                            <td>
+                                                <input type="hidden"
+                                                       th:field=""/>
+                                                <span class="">
+                                                    <a id="titleLinkId" href="#" th:text="" th:onclick=""></a>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <input type="hidden"
+                                                       th:field=""/>
+                                                    <span id="cgdSpanId"
+                                                          th:text=""></span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div id="collectionUpdateModal">
+                    <div id="collection-result-inner" class="modal fade collection-result-inner-table" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                    <div class="modal-dialog modal-lg" role="document" style="width: 1200px;">
+                        <div id="collectionModalContent" class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title fontcolor-dark" id="myModalLabel"><span th:text=""></span></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="fulldetails">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row margin-btm-05">
+                                                <div class="col-sm-5">Author</div>
+                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                            </div>
+                                            <div class="row margin-btm-05">
+                                                <div class="col-sm-5">Published Date</div>
+                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                            </div>
+                                            <div class="row margin-btm-05">
+                                                <div class="col-sm-5">Call Number</div>
+                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row margin-btm-05">
+                                                <div class="col-sm-5">Publisher</div>
+                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                            </div>
+                                            <div class="row margin-btm-05">
+                                                <input type="hidden" th:field=""/>
+                                                <div class="col-sm-5">Owning Institution</div>
+                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                            </div>
+                                            <div class="row margin-btm-05">
+                                                <div class="col-sm-5">Collection Group Designation (CGD)</div>
+                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row margin-top-10 margin-btm-10"><div class="col-sm-12 divider-horizontal"></div></div>
+                                    <div class="row">
+                                        <div class="col-sm-7">
+                                            <div class="contentdetail">
+                                                <h4 class="border-style-bottom padding-10 margin-top-05 margin-btm-0">MARC Content</h4>
+                                                <div class="padding-10">
+                                                    <div style="max-height:425px;overflow:auto">
+                                                        <table class="table table-striped small margin-btm-0">
+                                                            <tr>
+                                                                <input type="hidden" th:field=""/>
+                                                                <td width="40%">tag000</td>
+                                                                <td><span th:text=""></span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <input type="hidden" th:field=""/>
+                                                                <td>Control Number (001)</td>
+                                                                <td><span th:text=""></span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <input type="hidden" th:field=""/>
+                                                                <td>Date and Time (005)</td>
+                                                                <td><span th:text=""></span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <input type="hidden" th:field=""/>
+                                                                <td>Fixed Length Data Element (008)</td>
+                                                                <td><span th:text=""></span></td>
+                                                            </tr>
+                                                            <tr th:each="bibDataField,bibDataFieldStat : ">
+                                                                <td>
+                                                                    <input type="hidden" th:field=""/>
+                                                                    <input type="hidden" th:field=""/>
+                                                                    <input type="hidden" th:field=""/>
+                                                                    <input type="hidden" th:field=""/>
+                                                                    <span style="margin-left: 30px;" th:text=""></span>
+                                                                    <span th:inline="text"></span>
+                                                                </td>
+                                                                <td><span th:text=""></span></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5 padding-left-0">
+                                            <div class="itemdetail">
+                                                <h4 class="border-style-bottom padding-10 margin-top-05 margin-btm-0">Item Details</h4>
+                                                <div id="itemDetailsSection" class="padding-10">
+                                                    <input id="allowEdit" type="hidden" th:field=""/>
+                                                    <input id="warningMessage" type="hidden" th:field=""/>
+                                                    <div class="row form-group">
+                                                        <div id="collectionUpdateMessage" class="row margin-btm-10" th:if="">
+                                                            <div class="col-sm-12">
+                                                                <div class="bg-success text-success padding-10">
+                                                                    <span class="margin-right-05 glyphicon glyphicon-saved"></span><span th:text=""></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="collectionUpdateErrorMessage" class="row margin-btm-10" th:if="">
+                                                            <div class="col-sm-12">
+                                                                <div class="bg-danger text-danger padding-10">
+                                                                    <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:utext=""></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="collectionUpdateWarningMessage" class="row margin-btm-10" th:if="">
+                                                            <div class="col-sm-12">
+                                                                <div class="bg-warning text-warning padding-10">
+                                                                    <span id="warningMessageId" class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:text=""></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <table class="table table-striped small margin-btm-0">
+                                                        <tr>
+                                                            <input type="hidden" th:field=""/>
+                                                            <td width="60%">Availability</td>
+                                                            <td th:if=""><span th:text="'In Recap'"></span></td>
+                                                            <td th:if=""><span th:text="'Out'"></span></td>
+                                                            <td th:if=""><span th:text=""></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <input type="hidden" th:field=""/>
+                                                            <td>Barcode</td>
+                                                            <td><span th:text=""></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <input type="hidden" th:field=""/>
+                                                            <td>Customer Code</td>
+                                                            <td><span th:text=""></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <input type="hidden" th:field=""/>
+                                                            <td>Use Restriction</td>
+                                                            <td><span th:text=""></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <input id="cgdField" type="hidden" th:field=""/>
+                                                            <td>Collection Group Designation (CGD)</td>
+                                                            <td><span th:text=""></span></td>
+                                                        </tr>
+                                                    </table>
+                                                    <div th:if="">
+                                                    <div id="collectionOptionsDiv" class="row radio-btn-warpper" th:if="">
+                                                        <div class="col-sm-12" align="center">
+                                                            <div class="form-group margin-btm-10">
+                                                                <div class="radio-inline radio margin-0 padding-left-0">
+                                                                    <label>
+                                                                        <input type="radio" name="collectionoption" id="editCgdclick" value="Update CGD" th:field="" onclick="editCgdcontrol()"/> Edit CGD
+                                                                        <span class="cr"><i class="cr-icon radio-dot"></i></span>
+                                                                    </label>
+                                                                </div>
+
+                                                                <div class="radio-inline radio padding-left-0 margin-left-15">
+                                                                    <label>
+                                                                        <input type="radio" name="collectionoption" id="deaccesionclick" value="Deaccession" th:field="" onclick="deaccessioncontrol()"/> Deaccession
+                                                                        <span class="cr"><i class="cr-icon radio-dot"></i></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Edit CDG-->
+
+                                                    <div id="editCDG-section" class="padding-top-20">
+                                                        <div class="row form-group">
+                                                            <div class="col-sm-4 text-right padding-right-30 margin-top-10">
+                                                                <label class="fontcolor-dark">New CGD <span class="error-color" th:if="">*</span></label>
+                                                            </div>
+                                                            <div class="col-sm-8 padding-left-0">
+                                                                <div class="select-holder" id="newCGDDiv" th:if="">
+                                                                    <select class="form-control themed-input themed-select"
+                                                                            name="newCGD"
+                                                                            id="newCGD"
+                                                                            th:field=""
+                                                                            th:onchange="'javascript:toggleNewCgdValidation()'">
+                                                                        <option value="">Select</option>
+                                                                        <option value="Shared">Shared</option>
+                                                                        <option value="Private">Private</option>
+                                                                        <option value="Open">Open</option>
+                                                                    </select>
+                                                                </div>
+                                                                <span id="cgdErrorMessage" style="color: red;">Choose a new CGD.</span>
+                                                                <div class="form-group padding-top-10">
+                                                                    <span id="newCGDReadOnly" th:if="" th:text=""></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row form-group">
+                                                            <div class="col-sm-4 text-right padding-right-30">
+                                                                <label for="CGDChangeNotes" class="fontcolor-dark">CGD Change Notes <span class="error-color" th:if="">*</span></label>
+                                                            </div>
+                                                            <div class="col-sm-8 padding-left-0">
+                                                                <textarea class="form-control themed-input" name="CGDChangeNotes" id="CGDChangeNotes" th:field="" th:if="" th:onkeyup="" maxlength="2000"></textarea>
+                                                                <span id="cgdNotesErrorMessage" style="color: red;">Please enter CGD change notes.</span>
+                                                                <p id="cgdRemainingCharacter">Remaining Characters : <span id="cgdNotesRemainingCharacters">2000</span></p>
+                                                                <div class="form-group">
+                                                                    <span id="CGDNoteReadOnly" th:if="" th:text=""></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row form-group">
+                                                            <div class="col-sm-6 text-right padding-right-30"></div>
+                                                            <div class="col-sm-6 padding-left-0">
+                                                                <button id="collectionUpdateCgdButton"
+                                                                        type="button"
+                                                                        name="action"
+                                                                        onclick="collectionUpdate()"
+                                                                        class="btn btn-primary"
+                                                                        th:if="">
+                                                                    Save
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--Deaccession-->
+                                                    <div id="Deaccession-section" class="padding-top-20">
+                                                        <div class="row form-group">
+                                                            <div class="col-sm-4 text-right padding-right-30 margin-top-10">
+                                                                <label for="deaccessionType" class="fontcolor-dark">Deaccession Type <span class="error-color">*</span></label>
+                                                            </div>
+                                                            <div class="col-sm-8 padding-left-0 padding-top-10">
+                                                                <input type="text" id="deaccessionType" name="deaccessionType" class="form-control themed-input disable-input" th:field="" th:if="" readonly="readonly"/>
+                                                                <span th:if="" th:text=""></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group">
+                                                            <div class="col-sm-4 text-right padding-right-30 margin-top-10">
+                                                                <label for="DeliveryLocation" class="fontcolor-dark">Delivery Location <span class="error-color" th:if="">*</span></label>
+                                                            </div>
+                                                            <div class="col-sm-8 padding-left-0">
+                                                                <div class="select-holder" th:if="">
+                                                                    <input type="hidden" th:field=""/>
+                                                                    <select class="form-control themed-input themed-select"
+                                                                            name="DeliveryLocation"
+                                                                            id="DeliveryLocation"
+                                                                            th:field=""
+                                                                            th:if=""
+                                                                            th:disabled=""
+                                                                            th:onchange="">
+                                                                        <option value=""></option>
+                                                                        <option th:each="" th:value="" th:text=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <span id="locationErrorMessage" style="color: red;">This is a mandatory field.</span>
+                                                                <div class="form-group padding-left-10 padding-top-10">
+                                                                    <span th:if="" th:text=""></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group">
+                                                            <div class="col-sm-4 text-right padding-right-30 margin-top-10"><label for="DeaccessionNotes" class="fontcolor-dark">Deaccession Notes <span class="error-color" th:if="">*</span></label></div>
+                                                            <div class="col-sm-8 padding-left-0 padding-top-10">
+                                                                <textarea class="form-control themed-input" name="DeaccessionNotes" id="DeaccessionNotes" th:field="" th:if="" th:onkeyup="" maxlength="2000"></textarea>
+                                                                <span id="deaccessionNotesErrorMessage" style="color: red;">Please enter deaccession notes.</span>
+                                                                <p id="deaccessionRemainingCharacters">Remaining Characters : <span id="deaccessionNotesRemainingCharacters">2000</span></p>
+                                                                <span th:if="" th:text=""></span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row form-group">
+                                                            <div class="col-sm-6 text-right padding-right-30"></div>
+                                                            <div class="col-sm-6 padding-left-0">
+                                                                <button id="collectionDeaccessionButton"
+                                                                        type="button"
+                                                                        name="action"
+                                                                        onclick="collectionUpdate()"
+                                                                        class="btn btn-primary"
+                                                                        th:if="">
+                                                                    Deaccession Item
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div id="mandateText" th:if="">
+                                                        Fields marked with asterisk(<span class="error-color">*</span>) are mandatory.
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
+                            <div class="modal-footer">
+                                <button class="btn themed-button themed-button-cancel padding-left-30 padding-right-30" data-dismiss="modal" aria-label="Close">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<!-- Collection Tab-->
