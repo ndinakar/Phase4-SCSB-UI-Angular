@@ -270,28 +270,24 @@
                                     <div class="col-xs-12">
                                         <div class="pull-left margin-btm-0 margin-right-35" style="margin-top: -20px; margin-bottom: -10px;">
                                             <div id="paginationId" name="paginationName">
-                                                <!-- <ul class="pagination">
-                                                    <li class="disabled">
-                                                        <span>First</span>
-                                                        
-                                                        <button id="firstBottom" type="submit" name="action" value="first" hidden="hidden"></button>
+                                                <ul class="pagination">
+                                                    <li [ngClass]="(firstbutton==true)?'disabled':''" >
+                                                        <span (click)="firstapi()">First</span>
+                                                       
                                                     </li>
-                                                    <li class="disabled">
-                                                        <span>Previous</span>
-                                                        
-                                                        <button id="previousBottom" type="submit" name="action" value="previous" hidden="hidden"></button>
+                                                    <li [ngClass]="(previousbutton==true)?'disabled':''">
+                                                        <span (click)="previousapi()" >Previous</span>
+                                                       
                                                     </li>
-                                                    <li>
+                                                    <li [ngClass]="(nextbutton==true)?'disabled':''">
+                                                        <span (click)="nextapi()">Next</span>
                                                         
-                                                        <a href="#" title="Go to next page" onclick="document.getElementById('pageNumber').value = parseInt(document.getElementById('pageNumber').value) + 1; document.getElementById('nextBottom').click();">Next</a>
-                                                        <button id="nextBottom" type="submit" name="action" value="next" hidden="hidden"></button>
                                                     </li>
-                                                    <li>
+                                                    <li [ngClass]="(lastbutton==true)?'disabled':''">
+                                                        <span (click)="lastapi()">Last</span>
                                                         
-                                                        <a href="#" onclick="document.getElementById('lastBottom').click();">Last</a>
-                                                        <button id="lastBottom" type="submit" name="action" value="last" hidden="hidden"></button>
                                                     </li>
-                                                </ul> -->
+                                                </ul>
                                             </div>
                                         </div>
                                         <div class="pull-left margin-top-05 parent">
@@ -314,13 +310,13 @@
                                 <div id="showEntriesAndNumFoundDiv" name="showEntriesAndNumFoundDiv" class="row">
                                     <div class="col-sm-2 margin-top-05 show-entries-section">
                                         <div class="">
-                                            <!-- <span class="show-title">Show Entries</span>
-                                            <select id="numOfRecordsId" name="pageSize" class="themed-input" onchange="document.getElementById('pageSizeChangeButtonId').click()">
+                                            <span class="show-title">Show Entries</span>
+                                            <select id="numOfRecordsId" name="pageSize" [(ngModel)]="showentries" class="themed-input" (change)="showentriesChange(showentries)" [ngModelOptions]="{standalone: true}" style="margin-left: 5px;">
                                                 <option value="10" selected="selected">10</option>
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
                                                 <option value="100">100</option>
-                                            </select> -->
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-7 margin-top-10"><div class="row" style="font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 17px !important;">OI - Owning Institution, CC - Customer Code, CGD - Collection Group Designation, SH - Summary Holdings</div>
@@ -334,8 +330,8 @@
                                 <!--show entries end-->
                             <!--tree grid start-->
 
-                               <p-table #dt [columns]="cols" [autoLayout]="true" [value]="searchVal['searchResultRows']" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
-                               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50,100]" paginatorPosition="both" selectionMode="checkbox" [(selection)]="selectedNodes1" dataKey="title" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                               <p-table #dt [columns]="cols" [autoLayout]="true" [value]="searchVal['searchResultRows']" [paginator]="false" [rows]="10" [showCurrentPageReport]="false" 
+                               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50,100]" paginatorPosition="" selectionMode="checkbox" [(selection)]="selectedNodes1" dataKey="title" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                               
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
@@ -440,28 +436,24 @@
                             <div id="paginationAndButtons" name="paginationAndButtons" class="margin-top-15 export-buttons">
                             <div class="pull-left" style="margin-top: -20px;">
                             <div id="paginationId" name="paginationName">
-                            <!-- <ul class="pagination">
-                            <li class="disabled">
-                            <span>First</span>
-
-                            <button id="firstBottom" type="submit" name="action" value="first" hidden="hidden"></button>
-                            </li>
-                            <li class="disabled">
-                            <span>Previous</span>
-
-                            <button id="previousBottom" type="submit" name="action" value="previous" hidden="hidden"></button>
-                            </li>
-                            <li>
-
-                            <a href="#" title="Go to next page" onclick="document.getElementById('pageNumber').value = parseInt(document.getElementById('pageNumber').value) + 1; document.getElementById('nextBottom').click();">Next</a>
-                            <button id="nextBottom" type="submit" name="action" value="next" hidden="hidden"></button>
-                            </li>
-                            <li>
-
-                            <a href="#" onclick="document.getElementById('lastBottom').click();">Last</a>
-                            <button id="lastBottom" type="submit" name="action" value="last" hidden="hidden"></button>
-                            </li>
-                            </ul> -->
+                                <ul class="pagination">
+                                    <li [ngClass]="(firstbutton==true)?'disabled':''" >
+                                        <span (click)="firstapi()">First</span>
+                                       
+                                    </li>
+                                    <li [ngClass]="(previousbutton==true)?'disabled':''">
+                                        <span (click)="previousapi()" >Previous</span>
+                                       
+                                    </li>
+                                    <li [ngClass]="(nextbutton==true)?'disabled':''">
+                                        <span (click)="nextapi()">Next</span>
+                                        
+                                    </li>
+                                    <li [ngClass]="(lastbutton==true)?'disabled':''">
+                                        <span (click)="lastapi()">Last</span>
+                                        
+                                    </li>
+                                </ul>
                             </div>
                             </div>
                             <div style="margin-top: -20px;">

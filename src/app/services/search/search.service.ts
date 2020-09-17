@@ -44,5 +44,11 @@ export class SearchService {
         headers: appHeaders.getHeaders()
       });
   }
-
+  
+  onPageSizeChange(postData: SearchRecordRequest): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/pageChanges", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
 }
