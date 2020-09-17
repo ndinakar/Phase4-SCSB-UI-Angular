@@ -147,14 +147,15 @@ export class SearchComponent implements OnInit {
   }
 
   //show entries api start
-  showentriesChange(value) {
-    console.log("new pagae Size", value);
+    onPageSizeChange(value) {
+    //console.log("new pagae Size", value);
     this.showentries = value;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
     this.useRestrictions = [];
+    this.nextvalue = this.searchVal['pageNumber'];
 
     var searchfullrec = this.searchForm.value;
     if (searchfullrec.owningInstitutionNYPL == true) {
@@ -191,7 +192,7 @@ export class SearchComponent implements OnInit {
       this.materialTypes.push('Serial')
     }
     if (searchfullrec.others == true) {
-      this.materialTypes.push('others')
+      this.materialTypes.push('Others')
     }
 
     if (searchfullrec.NoRestrictions == true) {
@@ -216,7 +217,7 @@ export class SearchComponent implements OnInit {
       "useRestrictions": this.useRestrictions,
       "searchResultRows": [],
       "catalogingStatus": "Complete",
-      "pageNumber": this.searchVal['pageNumber'],
+      "pageNumber": this.nextvalue,
       "pageSize": this.showentries,
       "isDeleted": false,
       "totalPageCount": 0,
@@ -231,9 +232,11 @@ export class SearchComponent implements OnInit {
       "errorMessage": null
     }
 
-    //console.log("OnChange ", this.postData)
+    //console.log("postDATA  ", this.postData)
+    console.log("Before Total page count"+this.searchVal['totalPageCount']);
     this.showresultdiv = true;
     this.searchService.onPageSizeChange(this.postData).subscribe(files => this.searchVal = files);
+    console.log("After Total page count"+this.searchVal['totalPageCount']);
     this.cols = [
       { field: 'title', header: 'Title' },
       { field: 'author', header: 'Author' },
@@ -268,12 +271,17 @@ export class SearchComponent implements OnInit {
       this.nextbutton = false;
       this.lastbutton = false;
       console.log(" condition 2");
-    }else if(this.searchVal['pageNumber'] > 0){
-      console.log("page Number"+this.searchVal['pageNumber']);
+    }else if(this.searchVal['pageNumber'] > 0 && (this.searchVal['pageNumber'] == this.searchVal['totalPageCount']-1)){
       this.firstbutton = false;
       this.previousbutton = false;
       this.nextbutton = true;
       this.lastbutton = true;
+      console.log(" condition 3");
+    }else{
+      this.firstbutton = true;
+      this.previousbutton = true;
+      this.nextbutton = false;
+      this.lastbutton = false;
       console.log(" condition 3");
     }
   }
@@ -323,7 +331,7 @@ export class SearchComponent implements OnInit {
       this.materialTypes.push('Serial')
     }
     if (searchfullrec.others == true) {
-      this.materialTypes.push('others')
+      this.materialTypes.push('Others')
     }
 
     if (searchfullrec.NoRestrictions == true) {
@@ -363,7 +371,7 @@ export class SearchComponent implements OnInit {
       "errorMessage": null
     }
 
-    console.log("overall", this.postData)
+    //console.log("postDATA", this.postData)
 
     this.showresultdiv = true;
     this.searchService.getSearch(this.postData).subscribe(files => this.searchVal = files);
@@ -396,7 +404,7 @@ export class SearchComponent implements OnInit {
     //console.log(this.searchVal['pageNumber']+"     "+(this.searchVal['totalPageCount']-1));
     //console.log(this.nextvalue == (this.searchVal['totalPageCount']-1));
     if (this.searchVal['pageNumber'] == (this.searchVal['totalPageCount']-2)) {
-      console.log(this.nextvalue+"  INSIDE   "+(this.searchVal['totalPageCount']-1));
+      //console.log(this.nextvalue+"  INSIDE   "+(this.searchVal['totalPageCount']-1));
       this.firstbutton = false;
       this.previousbutton = false;
       this.nextbutton = true;
@@ -453,7 +461,7 @@ export class SearchComponent implements OnInit {
       this.materialTypes.push('Serial')
     }
     if (searchfullrec.others == true) {
-      this.materialTypes.push('others')
+      this.materialTypes.push('Others')
     }
 
     if (searchfullrec.NoRestrictions == true) {
@@ -580,7 +588,7 @@ console.log(this.searchVal['pageNumber']);
         this.materialTypes.push('Serial')
       }
       if (searchfullrec.others == true) {
-        this.materialTypes.push('others')
+        this.materialTypes.push('Others')
       }
 
       if (searchfullrec.NoRestrictions == true) {
@@ -700,7 +708,7 @@ console.log(this.searchVal['pageNumber']);
       this.materialTypes.push('Serial')
     }
     if (searchfullrec.others == true) {
-      this.materialTypes.push('others')
+      this.materialTypes.push('Others')
     }
 
     if (searchfullrec.NoRestrictions == true) {
@@ -820,7 +828,7 @@ console.log(this.searchVal['pageNumber']);
       this.materialTypes.push('Serial')
     }
     if (searchfullrec.others == true) {
-      this.materialTypes.push('others')
+      this.materialTypes.push('Others')
     }
 
     if (searchfullrec.NoRestrictions == true) {

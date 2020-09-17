@@ -311,7 +311,7 @@
                                     <div class="col-sm-2 margin-top-05 show-entries-section">
                                         <div class="">
                                             <span class="show-title">Show Entries</span>
-                                            <select id="numOfRecordsId" name="pageSize" [(ngModel)]="showentries" class="themed-input" (change)="showentriesChange(showentries)" [ngModelOptions]="{standalone: true}" style="margin-left: 5px;">
+                                            <select id="numOfRecordsId" name="pageSize" [(ngModel)]="showentries" class="themed-input" (change)="onPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}" style="margin-left: 5px;">
                                                 <option value="10" selected="selected">10</option>
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
