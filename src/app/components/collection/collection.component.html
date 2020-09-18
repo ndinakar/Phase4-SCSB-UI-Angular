@@ -28,19 +28,19 @@
                                             <input id="callNumber" type="hidden" th:field=""/>
                                             <input id="showModal" type="hidden" th:field=""/>
                                             <div>
-                                                <input id="barcodeFieldId" name="barcodeFieldName" type="text"
+                                                <input id="barcodeFieldId"  [(ngModel)]="barcodeFieldName" name="barcodeFieldName" type="text"
                                                        placeholder="Type Text Here....." th:field=""
                                                        class="form-control">
                                               
                                             </div>
                                             <div class="input-group-btn search-panel padding-right-10">
-                                                <button id="displayRecords" type="submit" name="action" value="displayRecords"
+                                                <button (click)="displyRecords()" id="displayRecords" type="button" name="action" value="displayRecords"
                                                         class="btn themed-button themed-button-collection">Display
                                                     Records
                                                 </button>
                                             </div>
                                             <div class="input-group-btn">
-                                                <button id="clearSearch" type="submit" name="clearSearch"
+                                                <button  (click)="clearsearch()" id="clearSearch" type="button" name="clearSearch"
                                                         class="btn themed-button themed-button-cancel">Clear Search
                                                 </button>
                                             </div>
@@ -58,11 +58,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div id="searchResultsContainer" class="search-results-container" data-th-if="">
+                 <div *ngIf="showresultdiv" id="searchResultsContainer" class="search-results-container" >
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                            <div id="errorMessageId" class="row margin-btm-10" data-th-if="">
+                            <!-- <div id="errorMessageId" class="row margin-btm-10" data-th-if="">
                                 <div class="col-sm-12">
                                     <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpanId" th:text=""></span></div>
                                 </div>
@@ -76,7 +76,7 @@
                                 <div class="col-sm-12">
                                     <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="ignoredBarcodesErrorMessageSpanId" th:text=""></span></div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row" th:if="">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -113,7 +113,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr data-th-id=""
+                                        <!-- <tr data-th-id=""
                                             th:each=""
                                             class="displayRow">
                                             <input data-th-id=""
@@ -148,6 +148,11 @@
                                                     <span id="cgdSpanId"
                                                           th:text=""></span>
                                             </td>
+                                        </tr> -->
+                                        <tr *ngFor="let item of collectionVal['searchResultRows']">
+                                            <th>{{ item.barcode }}</th>
+                                            <td (click)="modaltitle(item.title)" style="cursor: pointer;color:#337ab7">{{ item.title }}</td>
+                                            <td>{{ item.collectionGroupDesignation }}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -155,7 +160,7 @@
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div> 
 
                 <div id="collectionUpdateModal">
                     <div id="collection-result-inner" class="modal fade collection-result-inner-table" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -248,7 +253,7 @@
                                                 <div id="itemDetailsSection" class="padding-10">
                                                     <input id="allowEdit" type="hidden" th:field=""/>
                                                     <input id="warningMessage" type="hidden" th:field=""/>
-                                                    <div class="row form-group">
+                                                    <!-- <div class="row form-group">
                                                         <div id="collectionUpdateMessage" class="row margin-btm-10" th:if="">
                                                             <div class="col-sm-12">
                                                                 <div class="bg-success text-success padding-10">
@@ -270,7 +275,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
 
                                                     <table class="table table-striped small margin-btm-0">
                                                         <tr>
@@ -307,14 +312,14 @@
                                                             <div class="form-group margin-btm-10">
                                                                 <div class="radio-inline radio margin-0 padding-left-0">
                                                                     <label>
-                                                                        <input type="radio" name="collectionoption" id="editCgdclick" value="Update CGD" th:field="" onclick="editCgdcontrol()"/> Edit CGD
+                                                                        <input type="radio"  [checked]="true"  name="collectionoption"   (click)="editCgdcontrol()"/> Edit CGD
                                                                         <span class="cr"><i class="cr-icon radio-dot"></i></span>
                                                                     </label>
                                                                 </div>
 
                                                                 <div class="radio-inline radio padding-left-0 margin-left-15">
                                                                     <label>
-                                                                        <input type="radio" name="collectionoption" id="deaccesionclick" value="Deaccession" th:field="" onclick="deaccessioncontrol()"/> Deaccession
+                                                                        <input type="radio" name="collectionoption" id="deaccesionclick" value="Deaccession" th:field="" (click)="deaccessioncontrol()"/> Deaccession
                                                                         <span class="cr"><i class="cr-icon radio-dot"></i></span>
                                                                     </label>
                                                                 </div>
@@ -323,7 +328,7 @@
                                                     </div>
                                                     <!-- Edit CDG-->
 
-                                                    <div id="editCDG-section" class="padding-top-20">
+                                                    <div *ngIf="editCDGsection" id="editCDG-section" class="padding-top-20">
                                                         <div class="row form-group">
                                                             <div class="col-sm-4 text-right padding-right-30 margin-top-10">
                                                                 <label class="fontcolor-dark">New CGD <span class="error-color" th:if="">*</span></label>
@@ -341,7 +346,7 @@
                                                                         <option value="Open">Open</option>
                                                                     </select>
                                                                 </div>
-                                                                <span id="cgdErrorMessage" style="color: red;">Choose a new CGD.</span>
+                                                                <span *ngIf="cgdErrorMessage" id="cgdErrorMessage" style="color: red;">Choose a new CGD.</span>
                                                                 <div class="form-group padding-top-10">
                                                                     <span id="newCGDReadOnly" th:if="" th:text=""></span>
                                                                 </div>
@@ -353,8 +358,8 @@
                                                                 <label for="CGDChangeNotes" class="fontcolor-dark">CGD Change Notes <span class="error-color" th:if="">*</span></label>
                                                             </div>
                                                             <div class="col-sm-8 padding-left-0">
-                                                                <textarea class="form-control themed-input" name="CGDChangeNotes" id="CGDChangeNotes" th:field="" th:if="" th:onkeyup="" maxlength="2000"></textarea>
-                                                                <span id="cgdNotesErrorMessage" style="color: red;">Please enter CGD change notes.</span>
+                                                                <textarea class="form-control themed-input" name="CGDChangeNotes" id="CGDChangeNotes" [(ngModel)]="CGDChangeNotes" (keyup)="CGDChangeNotesFunc(CGDChangeNotes)" maxlength="2000"></textarea>
+                                                                <span *ngIf="cgdNotesErrorMessage" id="cgdNotesErrorMessage" style="color: red;">Please enter CGD change notes.</span>
                                                                 <p id="cgdRemainingCharacter">Remaining Characters : <span id="cgdNotesRemainingCharacters">2000</span></p>
                                                                 <div class="form-group">
                                                                     <span id="CGDNoteReadOnly" th:if="" th:text=""></span>
@@ -377,7 +382,7 @@
                                                         </div>
                                                     </div>
                                                     <!--Deaccession-->
-                                                    <div id="Deaccession-section" class="padding-top-20">
+                                                    <div *ngIf="Deaccessionsection" id="Deaccession-section" class="padding-top-20">
                                                         <div class="row form-group">
                                                             <div class="col-sm-4 text-right padding-right-30 margin-top-10">
                                                                 <label for="deaccessionType" class="fontcolor-dark">Deaccession Type <span class="error-color">*</span></label>
@@ -405,7 +410,7 @@
                                                                         <option th:each="" th:value="" th:text=""></option>
                                                                     </select>
                                                                 </div>
-                                                                <span id="locationErrorMessage" style="color: red;">This is a mandatory field.</span>
+                                                                <span *ngIf="locationErrorMessage" id="locationErrorMessage" style="color: red;">This is a mandatory field.</span>
                                                                 <div class="form-group padding-left-10 padding-top-10">
                                                                     <span th:if="" th:text=""></span>
                                                                 </div>
@@ -414,8 +419,8 @@
                                                         <div class="row form-group">
                                                             <div class="col-sm-4 text-right padding-right-30 margin-top-10"><label for="DeaccessionNotes" class="fontcolor-dark">Deaccession Notes <span class="error-color" th:if="">*</span></label></div>
                                                             <div class="col-sm-8 padding-left-0 padding-top-10">
-                                                                <textarea class="form-control themed-input" name="DeaccessionNotes" id="DeaccessionNotes" th:field="" th:if="" th:onkeyup="" maxlength="2000"></textarea>
-                                                                <span id="deaccessionNotesErrorMessage" style="color: red;">Please enter deaccession notes.</span>
+                                                                <textarea class="form-control themed-input" name="DeaccessionNotes" id="DeaccessionNotes" [(ngModel)]="DeaccessionNotes" (keyup)="DeaccessionNotesFunc(DeaccessionNotes)" maxlength="2000"></textarea>
+                                                                <span *ngIf="deaccessionNotesErrorMessage" id="deaccessionNotesErrorMessage" style="color: red;">Please enter deaccession notes.</span>
                                                                 <p id="deaccessionRemainingCharacters">Remaining Characters : <span id="deaccessionNotesRemainingCharacters">2000</span></p>
                                                                 <span th:if="" th:text=""></span>
                                                             </div>

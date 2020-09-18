@@ -17,6 +17,16 @@ export class CollectionComponent implements OnInit {
   cols: any[];
   showresultdiv = false;
   errorDiv =  false;
+  editCDGsection=true;
+  Deaccessionsection=false;
+  cgdErrorMessage=false;
+  cgdNotesErrorMessage=false;
+  locationErrorMessage=false;
+  deaccessionNotesErrorMessage=false;
+  
+  barcodeFieldName:string;
+  CGDChangeNotes:string;
+  DeaccessionNotes:string;
   constructor(private formBuilder: FormBuilder, private collectionService: CollectionService) { }
 
   ngOnInit(): void {
@@ -24,11 +34,7 @@ export class CollectionComponent implements OnInit {
       barcodeFieldName: ['']
     });
   }
-  collectionfieldval = [
-    { id: 'barcode', name: "Barcode" },
-    { id: 'title', name: "Title" },
-    { id: 'collectionGroupDesignation', name: "CGD" }
-  ];
+  
   
   postData = {
     "itemBarcodes": "",
@@ -76,11 +82,16 @@ export class CollectionComponent implements OnInit {
     "allowEdit": false,
     "username": null
   }
+  
+  clearsearch(){
+    this.barcodeFieldName='';
+    this.showresultdiv = false;
+  }
   displyRecords(){
+    console.log("vall",this.barcodeFieldName)
     this.showresultdiv = true;
-    var collectionfullrec = this.collectionForm.value;
     this.postData = {
-      "itemBarcodes": collectionfullrec.barcodeFieldName,
+      "itemBarcodes": this.barcodeFieldName,
       "showResults": false,
       "selectAll": false,
       "errorMessage": null,
@@ -126,10 +137,52 @@ export class CollectionComponent implements OnInit {
       "username": null
     }
     this.collectionService.displyRecords(this.postData).subscribe(res => this.collectionVal=res);
-    this.cols = [
-      { field: 'barcode', header: 'Barcode' },
-      { field: 'title', header: 'Title' },
-      { field: 'collectionGroupDesignation', header: 'CGD' }
-    ];
+   
+   
   }
+
+  modaltitle(value){
+    console.log("modalval",value)
+    // $('#collectionUpdateModal').html();
+    $('#collection-result-inner').modal({ show: true });
+  }
+
+  editCgdcontrol(){
+    this.editCDGsection=true;
+    this.Deaccessionsection=false;
+  }
+
+  deaccessioncontrol(){
+    this.editCDGsection=false;
+    this.Deaccessionsection=true;
+  }
+
+  CGDChangeNotesFunc(val){
+    console.log("vall",val)
+    var CGDChangeNotes = $('#CGDChangeNotes').val();
+    var cgdNoteLength = CGDChangeNotes.length;
+    console.log("ll",cgdNoteLength)
+    var len = val.length;
+    if (len > 2000) {
+        val = val.substring(0, 2000);
+    } else {
+        $('#cgdNotesRemainingCharacters').text(2000 - len);
+    }
+   
+  }
+
+  DeaccessionNotesFunc(val){
+    console.log("vall1",val)
+    var DeaccessionNotes = $('#DeaccessionNotes').val();
+    var deaNoteLength = DeaccessionNotes.length;
+    console.log("ll",deaNoteLength)
+    var len = val.length;
+    if (len > 2000) {
+        val = val.substring(0, 2000);
+    } else {
+        $('#deaccessionNotesRemainingCharacters').text(2000 - len);
+    }
+   
+  }
+
 }
