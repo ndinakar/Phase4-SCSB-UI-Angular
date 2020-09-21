@@ -29,20 +29,20 @@ export class CollectionService {
         headers: appHeaders.getHeaders()
       });
   }
-  openMarcView(): Observable<CollectionForm[]> {
-    return this.httpClient.post<CollectionForm[]>(this.baseUrl + this.prefix + "/openMarcView", {},
+  openMarcView(): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/openMarcView", {},
       {
         headers: appHeaders.getHeaders()
       });
   }
-  updateCollection(): Observable<CollectionForm[]> {
-    return this.httpClient.post<CollectionForm[]>(this.baseUrl + this.prefix + "/collectionUpdate", {},
+  updateCollection(): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/collectionUpdate", {},
       {
         headers: appHeaders.getHeaders()
       });
   }
-  checkCrossInstitutionBorrowed(): Observable<CollectionForm[]> {
-    return this.httpClient.post<CollectionForm[]>(this.baseUrl + this.prefix + "/checkCrossInstitutionBorrowed", {},
+  checkCrossInstitutionBorrowed(): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/checkCrossInstitutionBorrowed", {},
       {
         headers: appHeaders.getHeaders()
       });
