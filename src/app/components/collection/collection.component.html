@@ -261,20 +261,20 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- <div id="collectionUpdateErrorMessage" class="row margin-btm-10" th:if="">
+                                                        <div *ngIf="collectionUpdateErrorMessage" id="collectionUpdateErrorMessage" class="row margin-btm-10" th:if="">
                                                             <div class="col-sm-12">
                                                                 <div class="bg-danger text-danger padding-10">
-                                                                    <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:utext=""></span>
+                                                                    <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{crossinstitutionVal['errorMessage']}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div id="collectionUpdateWarningMessage" class="row margin-btm-10" th:if="">
+                                                        <div *ngIf="collectionUpdateWarningMessage" id="collectionUpdateWarningMessage" class="row margin-btm-10" th:if="">
                                                             <div class="col-sm-12">
                                                                 <div class="bg-warning text-warning padding-10">
-                                                                    <span id="warningMessageId" class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:text=""></span>
+                                                                    <span id="warningMessageId" class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{crossinstitutionVal['warningMessage']}}</span>
                                                                 </div>
                                                             </div>
-                                                        </div> -->
+                                                        </div> 
                                                     </div>
 
                                                     <table class="table table-striped small margin-btm-0">
