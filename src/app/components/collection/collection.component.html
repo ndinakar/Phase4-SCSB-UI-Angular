@@ -62,22 +62,22 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                            <!-- <div id="errorMessageId" class="row margin-btm-10" data-th-if="">
+                             <div id="errorMessageId" class="row margin-btm-10" *ngIf="norecord">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpanId" th:text=""></span></div>
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpanId" th:text="">No results found.</span></div>
                                 </div>
                             </div>
-                            <div id="barcodesNotFoundErrorMessageId" class="row margin-btm-10" data-th-if="">
+                            <div id="barcodesNotFoundErrorMessageId" class="row margin-btm-10" *ngIf="barcodesNotFoundErrorMessageId">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="barcodesNotFoundErrorMessageSpanId" th:text=""></span></div>
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="barcodesNotFoundErrorMessageSpanId" th:text="">{{barerrmsg}}</span></div>
                                 </div>
                             </div>
-                            <div id="ignoredBarcodesErrorMessageId" class="row margin-btm-10" data-th-if="">
+                            <!-- <div id="ignoredBarcodesErrorMessageId" class="row margin-btm-10" data-th-if="">
                                 <div class="col-sm-12">
                                     <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="ignoredBarcodesErrorMessageSpanId" th:text=""></span></div>
                                 </div>
-                            </div> -->
-                            <div class="row" th:if="">
+                            </div>  -->
+                            <div class="row" *ngIf="resultdiv">
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="pull-left col-sm-2">
@@ -151,7 +151,7 @@
                                         </tr> -->
                                         <tr *ngFor="let item of collectionVal['searchResultRows']">
                                             <th>{{ item.barcode }}</th>
-                                            <td (click)="modaltitle(item.title)" style="cursor: pointer;color:#337ab7">{{ item.title }}</td>
+                                            <td (click)="modaltitle(item.bibId)" style="cursor: pointer;color:#337ab7">{{ item.title }}</td>
                                             <td>{{ item.collectionGroupDesignation }}</td>
                                         </tr>
                                         </tbody>
@@ -162,13 +162,13 @@
                     </div>
                 </div> 
 
-                <div id="collectionUpdateModal">
+                <div id="collectionUpdateModal" *ngIf='openmarcVal'>
                     <div id="collection-result-inner" class="modal fade collection-result-inner-table" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                     <div class="modal-dialog modal-lg" role="document" style="width: 1200px;">
                         <div id="collectionModalContent" class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title fontcolor-dark" id="myModalLabel"><span th:text=""></span></h4>
+                                <h4 class="modal-title fontcolor-dark" id="myModalLabel"><span >{{openmarcVal['title']}}</span></h4>
                             </div>
                             <div class="modal-body">
                                 <div class="fulldetails">
@@ -176,30 +176,30 @@
                                         <div class="col-sm-6">
                                             <div class="row margin-btm-05">
                                                 <div class="col-sm-5">Author</div>
-                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['author']}}</span></div>
                                             </div>
                                             <div class="row margin-btm-05">
                                                 <div class="col-sm-5">Published Date</div>
-                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['publishedDate']}}</span></div>
                                             </div>
                                             <div class="row margin-btm-05">
                                                 <div class="col-sm-5">Call Number</div>
-                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['callNumber']}}</span></div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row margin-btm-05">
                                                 <div class="col-sm-5">Publisher</div>
-                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['publisher']}}</span></div>
                                             </div>
                                             <div class="row margin-btm-05">
                                                 <input type="hidden" th:field=""/>
                                                 <div class="col-sm-5">Owning Institution</div>
-                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['owningInstitution']}}</span></div>
                                             </div>
                                             <div class="row margin-btm-05">
                                                 <div class="col-sm-5">Collection Group Designation (CGD)</div>
-                                                <div class="col-sm-7 fontcolor-light"><span th:text=""></span></div>
+                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['collectionGroupDesignation']}}</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -214,33 +214,33 @@
                                                             <tr>
                                                                 <input type="hidden" th:field=""/>
                                                                 <td width="40%">tag000</td>
-                                                                <td><span th:text=""></span></td>
+                                                                <td><span >{{openmarcVal['tag000']}}</span></td>
                                                             </tr>
                                                             <tr>
                                                                 <input type="hidden" th:field=""/>
                                                                 <td>Control Number (001)</td>
-                                                                <td><span th:text=""></span></td>
+                                                                <td><span >{{openmarcVal['controlNumber001']}}</span></td>
                                                             </tr>
                                                             <tr>
                                                                 <input type="hidden" th:field=""/>
                                                                 <td>Date and Time (005)</td>
-                                                                <td><span th:text=""></span></td>
+                                                                <td><span >{{openmarcVal['controlNumber005']}}</span></td>
                                                             </tr>
                                                             <tr>
                                                                 <input type="hidden" th:field=""/>
                                                                 <td>Fixed Length Data Element (008)</td>
-                                                                <td><span th:text=""></span></td>
+                                                                <td><span >{{openmarcVal['controlNumber008']}}</span></td>
                                                             </tr>
-                                                            <tr th:each="bibDataField,bibDataFieldStat : ">
+                                                            <tr *ngFor="let item of openmarcVal['bibDataFields']">
                                                                 <td>
                                                                     <input type="hidden" th:field=""/>
                                                                     <input type="hidden" th:field=""/>
                                                                     <input type="hidden" th:field=""/>
                                                                     <input type="hidden" th:field=""/>
-                                                                    <span style="margin-left: 30px;" th:text=""></span>
-                                                                    <span th:inline="text"></span>
+                                                                    <span style="margin-left: 30px;" >{{item.dataFieldTag}}</span>
+                                                                    <span >{{item.indicator1}}{{item.indicator2}}</span>
                                                                 </td>
-                                                                <td><span th:text=""></span></td>
+                                                                <td><span >{{item.dataFieldValue}}</span></td>
                                                             </tr>
                                                         </table>
                                                     </div>
@@ -253,15 +253,15 @@
                                                 <div id="itemDetailsSection" class="padding-10">
                                                     <input id="allowEdit" type="hidden" th:field=""/>
                                                     <input id="warningMessage" type="hidden" th:field=""/>
-                                                    <!-- <div class="row form-group">
-                                                        <div id="collectionUpdateMessage" class="row margin-btm-10" th:if="">
+                                                    <div class="row form-group">
+                                                        <div id="collectionUpdateMessage" class="row margin-btm-10" *ngIf="collectionUpdateMessage">
                                                             <div class="col-sm-12">
                                                                 <div class="bg-success text-success padding-10">
-                                                                    <span class="margin-right-05 glyphicon glyphicon-saved"></span><span th:text=""></span>
+                                                                    <span class="margin-right-05 glyphicon glyphicon-saved"></span><span >{{collectionmsg}}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div id="collectionUpdateErrorMessage" class="row margin-btm-10" th:if="">
+                                                        <!-- <div id="collectionUpdateErrorMessage" class="row margin-btm-10" th:if="">
                                                             <div class="col-sm-12">
                                                                 <div class="bg-danger text-danger padding-10">
                                                                     <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:utext=""></span>
@@ -274,40 +274,41 @@
                                                                     <span id="warningMessageId" class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:text=""></span>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div> -->
+                                                        </div> -->
+                                                    </div>
 
                                                     <table class="table table-striped small margin-btm-0">
                                                         <tr>
                                                             <input type="hidden" th:field=""/>
                                                             <td width="60%">Availability</td>
-                                                            <td th:if=""><span th:text="'In Recap'"></span></td>
+                                                            <!-- <td th:if=""><span th:text="'In Recap'"></span></td>
                                                             <td th:if=""><span th:text="'Out'"></span></td>
-                                                            <td th:if=""><span th:text=""></span></td>
+                                                            <td th:if=""><span th:text=""></span></td> -->
+                                                            <td ><span >{{openmarcVal['availability']}}</span></td>
                                                         </tr>
                                                         <tr>
                                                             <input type="hidden" th:field=""/>
                                                             <td>Barcode</td>
-                                                            <td><span th:text=""></span></td>
+                                                            <td><span >{{openmarcVal['barcode']}}</span></td>
                                                         </tr>
                                                         <tr>
                                                             <input type="hidden" th:field=""/>
                                                             <td>Customer Code</td>
-                                                            <td><span th:text=""></span></td>
+                                                            <td><span >{{openmarcVal['customerCode']}}</span></td>
                                                         </tr>
                                                         <tr>
                                                             <input type="hidden" th:field=""/>
                                                             <td>Use Restriction</td>
-                                                            <td><span th:text=""></span></td>
+                                                            <td><span >{{openmarcVal['useRestriction']}}</span></td>
                                                         </tr>
                                                         <tr>
                                                             <input id="cgdField" type="hidden" th:field=""/>
                                                             <td>Collection Group Designation (CGD)</td>
-                                                            <td><span th:text=""></span></td>
+                                                            <td><span >{{openmarcVal['collectionGroupDesignation']}}</span></td>
                                                         </tr>
                                                     </table>
                                                     <div th:if="">
-                                                    <div id="collectionOptionsDiv" class="row radio-btn-warpper" th:if="">
+                                                    <div id="collectionOptionsDiv" class="row radio-btn-warpper" *ngIf="!collectionUpdateMessage">
                                                         <div class="col-sm-12" align="center">
                                                             <div class="form-group margin-btm-10">
                                                                 <div class="radio-inline radio margin-0 padding-left-0">
@@ -331,15 +332,11 @@
                                                     <div *ngIf="editCDGsection" id="editCDG-section" class="padding-top-20">
                                                         <div class="row form-group">
                                                             <div class="col-sm-4 text-right padding-right-30 margin-top-10">
-                                                                <label class="fontcolor-dark">New CGD <span class="error-color" th:if="">*</span></label>
+                                                                <label class="fontcolor-dark">New CGD <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
                                                             </div>
                                                             <div class="col-sm-8 padding-left-0">
-                                                                <div class="select-holder" id="newCGDDiv" th:if="">
-                                                                    <select class="form-control themed-input themed-select"
-                                                                            name="newCGD"
-                                                                            id="newCGD"
-                                                                            th:field=""
-                                                                            th:onchange="'javascript:toggleNewCgdValidation()'">
+                                                                <div class="select-holder"  id="newCGDDiv" *ngIf="!collectionUpdateMessage">
+                                                                    <select class="form-control themed-input themed-select" [ngModelOptions]="{standalone: true}" [(ngModel)]="CGDselect">
                                                                         <option value="">Select</option>
                                                                         <option value="Shared">Shared</option>
                                                                         <option value="Private">Private</option>
@@ -348,34 +345,29 @@
                                                                 </div>
                                                                 <span *ngIf="cgdErrorMessage" id="cgdErrorMessage" style="color: red;">Choose a new CGD.</span>
                                                                 <div class="form-group padding-top-10">
-                                                                    <span id="newCGDReadOnly" th:if="" th:text=""></span>
+                                                                    <span id="newCGDReadOnly" *ngIf="collectionUpdateMessage" >{{newCGD}}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="row form-group">
                                                             <div class="col-sm-4 text-right padding-right-30">
-                                                                <label for="CGDChangeNotes" class="fontcolor-dark">CGD Change Notes <span class="error-color" th:if="">*</span></label>
+                                                                <label for="CGDChangeNotes" class="fontcolor-dark">CGD Change Notes <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
                                                             </div>
                                                             <div class="col-sm-8 padding-left-0">
-                                                                <textarea class="form-control themed-input" name="CGDChangeNotes" id="CGDChangeNotes" [(ngModel)]="CGDChangeNotes" (keyup)="CGDChangeNotesFunc(CGDChangeNotes)" maxlength="2000"></textarea>
+                                                                <textarea *ngIf="!collectionUpdateMessage" class="form-control themed-input" name="CGDChangeNotes" id="CGDChangeNotes" [(ngModel)]="CGDChangeNotes" (keyup)="CGDChangeNotesFunc(CGDChangeNotes)" maxlength="2000"></textarea>
                                                                 <span *ngIf="cgdNotesErrorMessage" id="cgdNotesErrorMessage" style="color: red;">Please enter CGD change notes.</span>
-                                                                <p id="cgdRemainingCharacter">Remaining Characters : <span id="cgdNotesRemainingCharacters">2000</span></p>
+                                                                <p *ngIf="!collectionUpdateMessage" id="cgdRemainingCharacter">Remaining Characters : <span id="cgdNotesRemainingCharacters">2000</span></p>
                                                                 <div class="form-group">
-                                                                    <span id="CGDNoteReadOnly" th:if="" th:text=""></span>
+                                                                    <span id="CGDNoteReadOnly" *ngIf="collectionUpdateMessage" >{{newCGDnote}}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="row form-group">
+                                                        <div class="row form-group" *ngIf="!collectionUpdateMessage">
                                                             <div class="col-sm-6 text-right padding-right-30"></div>
                                                             <div class="col-sm-6 padding-left-0">
-                                                                <button id="collectionUpdateCgdButton"
-                                                                        type="button"
-                                                                        name="action"
-                                                                        onclick="collectionUpdate()"
-                                                                        class="btn btn-primary"
-                                                                        th:if="">
+                                                                <button id="collectionUpdateCgdButton" class="btn btn-primary" (click)="saveCGD(openmarcVal['bibId'],openmarcVal['collectionGroupDesignation'])" type="button" name="action" >
                                                                     Save
                                                                 </button>
                                                             </div>
@@ -385,54 +377,51 @@
                                                     <div *ngIf="Deaccessionsection" id="Deaccession-section" class="padding-top-20">
                                                         <div class="row form-group">
                                                             <div class="col-sm-4 text-right padding-right-30 margin-top-10">
-                                                                <label for="deaccessionType" class="fontcolor-dark">Deaccession Type <span class="error-color">*</span></label>
+                                                                <label for="deaccessionType" class="fontcolor-dark">Deaccession Type <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
                                                             </div>
                                                             <div class="col-sm-8 padding-left-0 padding-top-10">
-                                                                <input type="text" id="deaccessionType" name="deaccessionType" class="form-control themed-input disable-input" th:field="" th:if="" readonly="readonly"/>
-                                                                <span th:if="" th:text=""></span>
+                                                                <input type="text" *ngIf="!collectionUpdateMessage" [(ngModel)]="deaccessionType" id="deaccessionType" name="deaccessionType" class="form-control themed-input disable-input" th:field="" th:if="" readonly="readonly"/>
+                                                                <span *ngIf="collectionUpdateMessage">{{newdeaccessionType}}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row form-group">
                                                             <div class="col-sm-4 text-right padding-right-30 margin-top-10">
-                                                                <label for="DeliveryLocation" class="fontcolor-dark">Delivery Location <span class="error-color" th:if="">*</span></label>
+                                                                <label for="DeliveryLocation" class="fontcolor-dark">Delivery Location <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
                                                             </div>
                                                             <div class="col-sm-8 padding-left-0">
-                                                                <div class="select-holder" th:if="">
+                                                                <div class="select-holder" *ngIf="!collectionUpdateMessage">
                                                                     <input type="hidden" th:field=""/>
-                                                                    <select class="form-control themed-input themed-select"
-                                                                            name="DeliveryLocation"
-                                                                            id="DeliveryLocation"
-                                                                            th:field=""
-                                                                            th:if=""
-                                                                            th:disabled=""
-                                                                            th:onchange="">
-                                                                        <option value=""></option>
-                                                                        <option th:each="" th:value="" th:text=""></option>
+                                                                    <select [(ngModel)]="DeliveryLocation" class="form-control themed-input themed-select"
+                                                                            name="DeliveryLocation" [ngModelOptions]="{standalone: true}" >
+                                                                        <option value="">Select</option>
+                                                                        <option *ngFor="let del of openmarcVal['deliveryLocations']" [ngValue]="del.pwdDeliveryRestrictions">
+                                                                            {{del.pwdDeliveryRestrictions}}
+                                                                          </option>
                                                                     </select>
                                                                 </div>
                                                                 <span *ngIf="locationErrorMessage" id="locationErrorMessage" style="color: red;">This is a mandatory field.</span>
                                                                 <div class="form-group padding-left-10 padding-top-10">
-                                                                    <span th:if="" th:text=""></span>
+                                                                    <span *ngIf="collectionUpdateMessage">{{newDeliveryLocation}}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row form-group">
-                                                            <div class="col-sm-4 text-right padding-right-30 margin-top-10"><label for="DeaccessionNotes" class="fontcolor-dark">Deaccession Notes <span class="error-color" th:if="">*</span></label></div>
+                                                            <div class="col-sm-4 text-right padding-right-30 margin-top-10"><label for="DeaccessionNotes" class="fontcolor-dark">Deaccession Notes <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label></div>
                                                             <div class="col-sm-8 padding-left-0 padding-top-10">
-                                                                <textarea class="form-control themed-input" name="DeaccessionNotes" id="DeaccessionNotes" [(ngModel)]="DeaccessionNotes" (keyup)="DeaccessionNotesFunc(DeaccessionNotes)" maxlength="2000"></textarea>
+                                                                <textarea *ngIf="!collectionUpdateMessage" class="form-control themed-input" name="DeaccessionNotes" id="DeaccessionNotes" [(ngModel)]="DeaccessionNotes" (keyup)="DeaccessionNotesFunc(DeaccessionNotes)" maxlength="2000"></textarea>
                                                                 <span *ngIf="deaccessionNotesErrorMessage" id="deaccessionNotesErrorMessage" style="color: red;">Please enter deaccession notes.</span>
-                                                                <p id="deaccessionRemainingCharacters">Remaining Characters : <span id="deaccessionNotesRemainingCharacters">2000</span></p>
-                                                                <span th:if="" th:text=""></span>
+                                                                <p *ngIf="!collectionUpdateMessage" id="deaccessionRemainingCharacters">Remaining Characters : <span id="deaccessionNotesRemainingCharacters">2000</span></p>
+                                                                <span *ngIf="collectionUpdateMessage">{{newdeaccessionnote}}</span>
                                                             </div>
                                                         </div>
 
-                                                        <div class="row form-group">
+                                                        <div class="row form-group" *ngIf="!collectionUpdateMessage">
                                                             <div class="col-sm-6 text-right padding-right-30"></div>
                                                             <div class="col-sm-6 padding-left-0">
                                                                 <button id="collectionDeaccessionButton"
                                                                         type="button"
                                                                         name="action"
-                                                                        onclick="collectionUpdate()"
+                                                                        (click)="saveDeaccession(openmarcVal['bibId'],openmarcVal['deaccessionType'])"
                                                                         class="btn btn-primary"
                                                                         th:if="">
                                                                     Deaccession Item
@@ -442,7 +431,7 @@
                                                     </div>
 
 
-                                                    <div id="mandateText" th:if="">
+                                                    <div id="mandateText" *ngIf="!collectionUpdateMessage">
                                                         Fields marked with asterisk(<span class="error-color">*</span>) are mandatory.
                                                     </div>
                                                 </div>

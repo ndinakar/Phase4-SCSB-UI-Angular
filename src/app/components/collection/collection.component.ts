@@ -14,6 +14,9 @@ declare var $: any;
 export class CollectionComponent implements OnInit {
   collectionForm: FormGroup;
   collectionVal: TreeNode[];
+  openmarcVal: TreeNode[];
+  collectionupdateVal: TreeNode[];
+  crossinstitutionVal: TreeNode[];
   cols: any[];
   showresultdiv = false;
   errorDiv =  false;
@@ -23,10 +26,29 @@ export class CollectionComponent implements OnInit {
   cgdNotesErrorMessage=false;
   locationErrorMessage=false;
   deaccessionNotesErrorMessage=false;
-  
+  newCGDReadOnly=false;
+  CGDNoteReadOnly=false;
+  collectionUpdateMessage=false;
+
   barcodeFieldName:string;
   CGDChangeNotes:string;
   DeaccessionNotes:string;
+  CGDselect:string;
+  newCGD:string;
+  newCGDnote:string;
+  collectionmsg:string;
+  deaccessionType:string;
+  DeliveryLocation:string;
+
+  newdeaccessionType:string;
+  newDeliveryLocation:string;
+  newdeaccessionnote:string;
+  itemBarcodenew:string;
+  norecord=false;
+  barcodesNotFoundErrorMessageId=false;
+  resultdiv=false;
+  barerrmsg:string;
+  
   constructor(private formBuilder: FormBuilder, private collectionService: CollectionService) { }
 
   ngOnInit(): void {
@@ -88,8 +110,13 @@ export class CollectionComponent implements OnInit {
     this.showresultdiv = false;
   }
   displyRecords(){
-    console.log("vall",this.barcodeFieldName)
+    console.log("vall",this.barcodeFieldName);
+    this.barerrmsg='';
     this.showresultdiv = true;
+    if(this.barcodeFieldName !=null && this.barcodeFieldName !=undefined && this.barcodeFieldName !=''){
+      console.log("nbdfvsdv")
+      this.norecord=false;
+    
     this.postData = {
       "itemBarcodes": this.barcodeFieldName,
       "showResults": false,
@@ -136,23 +163,168 @@ export class CollectionComponent implements OnInit {
       "allowEdit": false,
       "username": null
     }
-    this.collectionService.displyRecords(this.postData).subscribe(res => this.collectionVal=res);
-   
+    this.collectionService.displyRecords(this.postData).subscribe(
+    
+      (res) => {
+        this.collectionVal=res;
+            if(this.collectionVal['barcodesNotFoundErrorMessage']==null){
+            
+            this.resultdiv=true
+            this.norecord=false;
+            this.barcodesNotFoundErrorMessageId=false;
+            }else{
+              this.barerrmsg=this.collectionVal['barcodesNotFoundErrorMessage'];
+              this.resultdiv=false;
+             this.norecord=false;
+             this.barcodesNotFoundErrorMessageId=true;
+            }
+      },
+      (error) => {
+      //Called when error
+      }
+
+      );
+    }else{
+      console.log("nb")
+      this.norecord=true;
+      this.resultdiv=false;
+      this.barcodesNotFoundErrorMessageId=false;
+    }
    
   }
 
-  modaltitle(value){
-    console.log("modalval",value)
+  modaltitle(bibid){
+    this.CGDselect='';
+    this.DeliveryLocation='';
+    this.collectionUpdateMessage=false;
+    this.CGDChangeNotes='';
+    this.DeaccessionNotes='';
+    console.log("modalval",bibid)
     // $('#collectionUpdateModal').html();
-    $('#collection-result-inner').modal({ show: true });
+    this.postData={
+      "itemBarcodes" : "",
+      "showResults" : false,
+      "selectAll" : false,
+      "errorMessage" : null,
+      "barcodesNotFoundErrorMessage" : null,
+      "ignoredBarcodesErrorMessage" : null,
+      "searchResultRows" : [],
+      "showModal" : false,
+      "bibId" : bibid,
+      "title" : null,
+      "author" : null,
+      "publisher" : null,
+      "publishedDate" : null,
+      "owningInstitution" : null,
+      "callNumber" : null,
+      "leaderMaterialType" : null,
+      "tag000" : null,
+      "controlNumber001" : null,
+      "controlNumber005" : null,
+      "controlNumber008" : null,
+      "content" : null,
+      "bibDataFields" : [],
+      "BibliographicMarcForm.errorMessage" : null,
+      "warningMessage" : null,
+      "itemId" : null,
+      "availability" : null,
+      "barcode" : null,
+      "locationCode" : null,
+      "useRestriction" : null,
+      "monographCollectionGroupDesignation" : null,
+      "collectionGroupDesignation" : "Shared",
+      "newCollectionGroupDesignation" : "",
+      "cgdChangeNotes" : "test",
+      "customerCode" : null,
+      "deaccessionType" : null,
+      "deaccessionNotes" : null,
+      "deliveryLocations" : [],
+      "deliveryLocation" : null,
+      "shared" : false,
+      "submitted" : false,
+      "message" : null,
+      "collectionAction" : null,
+      "allowEdit" : false,
+      "username" : null
+      }
+      this.collectionService.openMarcView(this.postData).subscribe(
+        //res => this.openmarcVal=res
+        (res) => {
+          this.openmarcVal=res;
+           // console.log("openmarc",this.openmarcVal['bibDataFields'])
+          this.CGDselect=this.openmarcVal['collectionGroupDesignation'];
+          this.deaccessionType=this.openmarcVal['deaccessionType'];
+          this.itemBarcodenew=this.openmarcVal['itemBarcodes'];
+          console.log("openmarc",this.openmarcVal['collectionGroupDesignation'])
+
+          //cross institute
+          // this.postData={
+          //   "itemBarcodes" : this.itemBarcodenew,
+          //   "customerCode" : "",
+          //   "collectionAction" :  "Update CGD" 
+          //   }
+          // this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
+          //    (res) => {
+          //      this.crossinstitutionVal=res;
+          //    },
+          //   (error) => {
+          //      //Called when error
+          //   }
+             
+          //    );
+          //cross institue tend
+          $('#collection-result-inner').modal({ show: true });
+
+
+        },
+        (error) => {
+        //Called when error
+        }
+
+        );
+    
   }
 
   editCgdcontrol(){
+     //cross institute
+    //  this.postData={
+    //   "itemBarcodes" : this.itemBarcodenew,
+    //   "customerCode" : "",
+    //   "collectionAction" :  "Update CGD" 
+    //   }
+    // this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
+    //    (res) => {
+    //      this.crossinstitutionVal=res;
+    //    },
+    //   (error) => {
+    //      //Called when error
+    //   }
+       
+    //    );
+    //cross institue tend
+
     this.editCDGsection=true;
     this.Deaccessionsection=false;
   }
 
   deaccessioncontrol(){
+
+      //cross institute
+      // this.postData= {
+      //   "itemBarcodes" : this.itemBarcodenew,
+      //   "customerCode" : "",
+      //   "collectionAction" :  "Deaccession" 
+      //   }
+      // this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
+      //    (res) => {
+      //      this.crossinstitutionVal=res;
+      //    },
+      //   (error) => {
+      //      //Called when error
+      //   }
+         
+      //    );
+      //cross institue tend
     this.editCDGsection=false;
     this.Deaccessionsection=true;
   }
@@ -184,5 +356,176 @@ export class CollectionComponent implements OnInit {
     }
    
   }
+
+  //save cgd start
+  saveCGD(bibid,cgdold){
+    if(this.CGDselect !='' && this.CGDChangeNotes!='' && this.CGDselect !=undefined && this.CGDChangeNotes!=undefined){
+      this.cgdErrorMessage=false;
+      this.cgdNotesErrorMessage=false;
+      this.newCGDReadOnly=true;
+      this.CGDNoteReadOnly=true;
+      this.postData={
+      "itemBarcodes" : "",
+      "showResults" : false,
+      "selectAll" : false,
+      "errorMessage" : null,
+      "barcodesNotFoundErrorMessage" : null,
+      "ignoredBarcodesErrorMessage" : null,
+      "searchResultRows" : [],
+      "showModal" : false,
+      "bibId" : bibid,
+      "title" : null,
+      "author" : null,
+      "publisher" : null,
+      "publishedDate" : null,
+      "owningInstitution" : null,
+      "callNumber" : null,
+      "leaderMaterialType" : null,
+      "tag000" : null,
+      "controlNumber001" : null,
+      "controlNumber005" : null,
+      "controlNumber008" : null,
+      "content" : null,
+      "bibDataFields" : [],
+      "BibliographicMarcForm.errorMessage" : null,
+      "warningMessage" : null,
+      "itemId" : null,
+      "availability" : null,
+      "barcode" : null,
+      "locationCode" : null,
+      "useRestriction" : null,
+      "monographCollectionGroupDesignation" : null,
+      "collectionGroupDesignation" : cgdold,
+      "newCollectionGroupDesignation" : this.CGDselect,
+      "cgdChangeNotes" : this.CGDChangeNotes,
+      "customerCode" : null,
+      "deaccessionType" : null,
+      "deaccessionNotes" : null,
+      "deliveryLocations" : [],
+      "deliveryLocation" : null,
+      "shared" : false,
+      "submitted" : false,
+      "message" : null,
+      "collectionAction" : "Update CGD",
+      "allowEdit" : false,
+      "username" : null
+      }
+      
+      this.collectionService.updateCollection(this.postData).subscribe(
+       // (res) => this.collectionupdateVal=res
+        (res) => {
+          this.collectionupdateVal=res;
+          console.log("updatesave",this.collectionupdateVal['newCollectionGroupDesignation'])
+          this.newCGD=this.collectionupdateVal['newCollectionGroupDesignation'];
+          this.newCGDnote=this.collectionupdateVal['cgdChangeNotes'];
+          this.collectionmsg=this.collectionupdateVal['message'];
+          this.collectionUpdateMessage=true;
+          this.Deaccessionsection=false;
+        },
+       (error) => {
+          //Called when error
+       }
+        
+        );
+    
+    }else{
+      console.log("111",this.CGDselect)
+      console.log("22",this.CGDChangeNotes)
+      if(this.CGDselect =='' || this.CGDselect ==undefined){
+           this.cgdErrorMessage=true;
+      }else if(this.CGDChangeNotes==undefined || this.CGDChangeNotes==''){
+            this.cgdNotesErrorMessage=true;
+      }
+      console.log("err")
+    }
+  }
+  //save cgd end
+
+  //save deacc start
+  saveDeaccession(bibid,deacctype){
+    if(this.deaccessionType !='' && this.DeliveryLocation!='' && this.DeaccessionNotes!='' && this.deaccessionType !=undefined && this.DeliveryLocation!=undefined && this.DeaccessionNotes!=undefined){
+      this.locationErrorMessage=false;
+      this.deaccessionNotesErrorMessage=false;
+      this.postData={
+        "itemBarcodes" : "",
+        "showResults" : false,
+        "selectAll" : false,
+        "errorMessage" : null,
+        "barcodesNotFoundErrorMessage" : null,
+        "ignoredBarcodesErrorMessage" : null,
+        "searchResultRows" : [],
+        "showModal" : false,
+        "bibId" : bibid,
+        "title" : null,
+        "author" : null,
+        "publisher" : null,
+        "publishedDate" : null,
+        "owningInstitution" : null,
+        "callNumber" : null,
+        "leaderMaterialType" : null,
+        "tag000" : null,
+        "controlNumber001" : null,
+        "controlNumber005" : null,
+        "controlNumber008" : null,
+        "content" : null,
+        "bibDataFields" : [],
+        "BibliographicMarcForm.errorMessage" : null,
+        "warningMessage" : null,
+        "itemId" : null,
+        "availability" : null,
+        "barcode" : null,
+        "locationCode" : null,
+        "useRestriction" : null,
+        "monographCollectionGroupDesignation" : null,
+        "collectionGroupDesignation" : "Shared",
+        "newCollectionGroupDesignation" : "",
+        "cgdChangeNotes" : "test",
+        "customerCode" : null,
+        "deaccessionType" : deacctype,
+        "deaccessionNotes" : this.DeaccessionNotes,
+        "deliveryLocations" : [],
+        "deliveryLocation" : this.DeliveryLocation,
+        "shared" : false,
+        "submitted" : false,
+        "message" : null,
+        "collectionAction" : "Deaccession",
+        "allowEdit" : false,
+        "username" : null
+        }
+      
+      this.collectionService.updateCollection(this.postData).subscribe(
+       // (res) => this.collectionupdateVal=res
+        (res) => {
+          this.collectionupdateVal=res;
+          console.log("updatesave",this.collectionupdateVal['deaccessionType']);
+          this.newdeaccessionType=this.collectionupdateVal['deaccessionType'];
+          this.newDeliveryLocation=this.collectionupdateVal['deliveryLocation'];
+          this.newdeaccessionnote=this.collectionupdateVal['deaccessionNotes'];
+
+          this.collectionmsg=this.collectionupdateVal['message'];
+          this.collectionUpdateMessage=true;
+          this.editCDGsection=false;
+        },
+       (error) => {
+          //Called when error
+       }
+        
+        );
+    
+    }else{
+      console.log("111",this.deaccessionType)
+      console.log("22",this.CGDChangeNotes)
+      if(this.deaccessionType =='' || this.deaccessionType ==undefined){
+           
+      }else if(this.DeliveryLocation==undefined || this.DeliveryLocation==''){
+        this.locationErrorMessage=true;
+      }
+      else if(this.DeaccessionNotes==undefined || this.DeaccessionNotes==''){
+        this.deaccessionNotesErrorMessage=true;
+     }
+      console.log("err")
+    }
+  }
+  //save deacc end
 
 }
