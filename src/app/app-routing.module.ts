@@ -5,7 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { SearchComponent } from './components/search/search.component';
 import { CollectionComponent } from './components/collection/collection.component';
-
+import { RequestComponent } from './components/request/request.component';
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -21,6 +21,10 @@ const routes: Routes = [
       {
         path: 'collection', 
         component: CollectionComponent,
+      },
+      {
+        path: 'request', 
+        component: RequestComponent,
       }
       
     ]

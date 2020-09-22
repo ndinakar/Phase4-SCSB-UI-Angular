@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
+import { RequestComponent } from './components/request/request.component';
 
 
 
@@ -15,7 +16,8 @@ import { HomeComponent } from './components/home/home.component';
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    HomeComponent, 
+    HomeComponent,
+    RequestComponent, 
   ],
   imports: [
     BrowserModule,
