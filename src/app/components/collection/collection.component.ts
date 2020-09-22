@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵEMPTY_ARRAY } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { CollectionService } from 'src/app/services/collection/collection.service';
@@ -112,12 +112,12 @@ export class CollectionComponent implements OnInit {
     this.barcodeFieldName = '';
     this.showresultdiv = false;
   }
-  displyRecords() {
+  displayRecords() {
     console.log("vall", this.barcodeFieldName);
     this.barerrmsg = '';
     this.showresultdiv = true;
     if (this.barcodeFieldName != null && this.barcodeFieldName != undefined && this.barcodeFieldName != '') {
-      console.log("nbdfvsdv")
+     
       this.norecord = false;
 
       this.postData = {
@@ -170,16 +170,20 @@ export class CollectionComponent implements OnInit {
 
         (res) => {
           this.collectionVal = res;
-          if (this.collectionVal['barcodesNotFoundErrorMessage'] == null) {
+          if (this.collectionVal['barcodesNotFoundErrorMessage'] == null && (this.collectionVal['searchResultRows']) != ɵEMPTY_ARRAY) {
 
             this.resultdiv = true
             this.norecord = false;
             this.barcodesNotFoundErrorMessageId = false;
-          } else {
+          } else if (this.collectionVal['barcodesNotFoundErrorMessage'] != null && (this.collectionVal['searchResultRows']) != ɵEMPTY_ARRAY) {
             this.barerrmsg = this.collectionVal['barcodesNotFoundErrorMessage'];
-            this.resultdiv = false;
             this.norecord = false;
+            this.resultdiv = true; 
             this.barcodesNotFoundErrorMessageId = true;
+          } else if (this.collectionVal['barcodesNotFoundErrorMessage'] != null && (this.collectionVal['searchResultRows']) == ɵEMPTY_ARRAY) {
+            this.norecord = true;
+            this.resultdiv = false; 
+            this.barcodesNotFoundErrorMessageId = false;
           }
         },
         (error) => {
@@ -196,16 +200,16 @@ export class CollectionComponent implements OnInit {
 
   }
 
-  modaltitle(bibid) {
+  openMarcView(bibid) {
     this.CGDselect = '';
     this.DeliveryLocation = '';
     this.collectionUpdateMessage = false;
     this.CGDChangeNotes = '';
     this.DeaccessionNotes = '';
-    console.log("modalval", bibid)
+    //console.log("modalval", bibid)
     // $('#collectionUpdateModal').html();
     this.postData = {
-      "itemBarcodes": "",
+      "itemBarcodes": this.collectionVal['itemBarcodes'],
       "showResults": false,
       "selectAll": false,
       "errorMessage": null,
@@ -258,7 +262,7 @@ export class CollectionComponent implements OnInit {
         this.CGDselect = this.openmarcVal['collectionGroupDesignation'];
         this.deaccessionType = this.openmarcVal['deaccessionType'];
         this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
-        console.log("openmarc", this.openmarcVal['collectionGroupDesignation'])
+        //console.log("openmarc", this.openmarcVal['collectionGroupDesignation'])
 
         //cross institute
         this.postData =
@@ -424,6 +428,7 @@ export class CollectionComponent implements OnInit {
   deaccessioncontrol() {
 
     //cross institute
+    //The item has been successfully deaccessioned.
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
     this.bibId = this.openmarcVal['bibId'];
     this.customerCode = this.openmarcVal['customerCode'];
