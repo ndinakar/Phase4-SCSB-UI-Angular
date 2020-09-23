@@ -151,7 +151,7 @@
                                         </tr> -->
                                         <tr *ngFor="let item of collectionVal['searchResultRows']">
                                             <th>{{ item.barcode }}</th>
-                                            <td (click)="openMarcView(item.bibId)" style="cursor: pointer;color:#337ab7"><a>{{ item.title }}</a></td>
+                                            <td (click)="openMarcView(item.bibId,item.barcode)" style="cursor: pointer;color:#337ab7"><a>{{ item.title }}</a></td>
                                             <td>{{ item.collectionGroupDesignation }}</td>
                                         </tr>
                                         </tbody>

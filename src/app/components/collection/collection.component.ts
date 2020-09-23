@@ -200,7 +200,7 @@ export class CollectionComponent implements OnInit {
 
   }
 
-  openMarcView(bibid) {
+  openMarcView(bibid,barcode) {
     this.CGDselect = '';
     this.DeliveryLocation = '';
     this.collectionUpdateMessage = false;
@@ -209,7 +209,7 @@ export class CollectionComponent implements OnInit {
     //console.log("modalval", bibid)
     // $('#collectionUpdateModal').html();
     this.postData = {
-      "itemBarcodes": this.collectionVal['itemBarcodes'],
+      "itemBarcodes": barcode,
       "showResults": false,
       "selectAll": false,
       "errorMessage": null,
@@ -541,6 +541,7 @@ export class CollectionComponent implements OnInit {
       this.cgdNotesErrorMessage = false;
       this.newCGDReadOnly = true;
       this.CGDNoteReadOnly = true;
+      if(this.CGDselect != cgdold){
       this.postData = {
         "itemBarcodes": this.itemBarcodenew,
         "showResults": false,
@@ -604,10 +605,11 @@ export class CollectionComponent implements OnInit {
         }
 
       );
+      }else{
+        this.cgdErrorMessage = true;
+      }
 
     } else {
-      console.log("111", this.CGDselect)
-      console.log("22", this.CGDChangeNotes)
       if (this.CGDselect == '' || this.CGDselect == undefined) {
         this.cgdErrorMessage = true;
       } else if (this.CGDChangeNotes == undefined || this.CGDChangeNotes == '') {

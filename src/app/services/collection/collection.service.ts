@@ -16,13 +16,6 @@ export class CollectionService {
 
   constructor(@Inject(HttpClient) private httpClient: HttpClient) { }
 
-  getCollection(): Observable<CollectionForm[]> {
-    this.baseUrl = urls.baseUrl;
-    return this.httpClient.post<CollectionForm[]>(this.baseUrl + this.prefix + "/collection", {},
-      {
-        headers: appHeaders.getHeaders()
-      });
-  }
   displyRecords(postData: CollectionForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/displayRecords", postData,
       {
