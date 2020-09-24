@@ -27,8 +27,8 @@ export class RequestService {
         headers: appHeaders.getHeaders()
       });
   }
-  loadCreateRequest(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/loadCreateRequest", postData,
+  loadCreateRequest(): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/loadCreateRequest",
       {
         headers: appHeaders.getHeaders()
       });

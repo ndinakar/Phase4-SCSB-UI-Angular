@@ -235,8 +235,12 @@ export class SearchComponent implements OnInit {
     //console.log("postDATA  ", this.postData)
     console.log("Before Total page count"+this.searchVal['totalPageCount']);
     this.showresultdiv = true;
-    this.searchService.onPageSizeChange(this.postData).subscribe(files => this.searchVal = files);
-    console.log("After Total page count"+this.searchVal['totalPageCount']);
+    this.searchService.onPageSizeChange(this.postData).subscribe((res) => {
+      this.searchVal = res;
+      console.log("After Total page count"+this.searchVal['totalPageCount']);
+
+    console.log("Result"+this.searchVal);
+
     this.cols = [
       { field: 'title', header: 'Title' },
       { field: 'author', header: 'Author' },
@@ -258,32 +262,42 @@ export class SearchComponent implements OnInit {
       { field: 'useRestriction', header: 'Use Restriction' },
       { field: 'barcode', header: 'Barcode' },
     ];
-    //console.log("new page Count"+this.searchVal['pageNumber']);
-    if(this.searchVal['pageNumber'] == 0 && (this.searchVal['totalPageCount']-1 == 0)){
-      this.firstbutton = true;
-      this.previousbutton = true;
-      this.nextbutton = true;
-      this.lastbutton = true;
-      console.log(" condition 1");
-    }else if(this.searchVal['pageNumber'] > 0 && (this.searchVal['pageNumber'] > this.searchVal['totalPageCount']-1)){
+    console.log("new page Count"+this.searchVal['pageNumber']+"total page count"+this.searchVal['totalPageCount']);
+    if(this.searchVal['pageNumber'] == 0 && (this.searchVal['totalPageCount']-1 >0)){
       this.firstbutton = true;
       this.previousbutton = true;
       this.nextbutton = false;
       this.lastbutton = false;
+      console.log(" condition 1");
+     }else if(this.searchVal['pageNumber'] == 0 && (this.searchVal['pageNumber'] == this.searchVal['totalPageCount']-1)){
+      this.firstbutton = true;
+      this.previousbutton = true;
+      this.nextbutton = true;
+      this.lastbutton = true;
       console.log(" condition 2");
-    }else if(this.searchVal['pageNumber'] > 0 && (this.searchVal['pageNumber'] == this.searchVal['totalPageCount']-1)){
+    }
+    else if((this.searchVal['pageNumber'] == this.searchVal['totalPageCount']-1)&&this.searchVal['totalPageCount']-1>0){
       this.firstbutton = false;
       this.previousbutton = false;
       this.nextbutton = true;
       this.lastbutton = true;
       console.log(" condition 3");
-    }else{
-      this.firstbutton = true;
-      this.previousbutton = true;
+    }else if((this.searchVal['pageNumber'] < this.searchVal['totalPageCount']-1)&&(this.searchVal['pageNumber'] != 0)){
+      this.firstbutton = false;
+      this.previousbutton = false;
       this.nextbutton = false;
       this.lastbutton = false;
-      console.log(" condition 3");
+      console.log(" condition 4");
     }
+    },
+    (error) => {
+      //Called when error
+    }
+
+  );
+
+    
+
   }
 
   //show entries api end

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RequestService } from 'src/app/services/request/request.service';
 
 @Component({
   selector: 'app-request',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RequestComponent implements OnInit {
 
-  constructor() { }
+  constructor(private requestService: RequestService) { }
   postData = {
     "requestId":null,
     "patronBarcode":null,
@@ -24,7 +25,7 @@ export class RequestComponent implements OnInit {
     "requestType":null,
     "requestNotes":null,
     "startPage":null,
-    "endPage,":null,
+    "endPage":null,
     "volumeNumber":null,
     "issue":null,
     "articleAuthor":null,
@@ -77,5 +78,7 @@ export class RequestComponent implements OnInit {
     this.searchBar = !this.searchBar;
     this.create_request = !this.create_request;
   }
-  createRequest() { }
+  createRequest() { 
+    this.requestService.loadCreateRequest().subscribe( (res) => { }, (error) => { } ); 
+  }
 }
