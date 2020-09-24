@@ -98,7 +98,7 @@
                                                     <div>
                                                         <label>
                                                             <input type="checkbox" formControlName="owningInstitutionNYPL" [checked]="checked" id="owningInstitutionNYPL"
-                                                                   name="owningInstitutionNYPL" (change)="isChangeLimitAccessToggle($event.target.checked ? 'NYPL' : false)" value="NYPL"
+                                                                   name="owningInstitutionNYPL"  value="NYPL"
                                                                     class="facetCheckBox">
                                                             <span class="cr"></span>
                                                             
@@ -348,7 +348,8 @@
                                     </tr>
                                     
                                        
-                                        <tr>
+                                        <!-- <tr>
+                                            
                                         <th style="width: 3em">
                                         </th>
                                         
@@ -356,7 +357,7 @@
                                             <input  style="width:100px" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
                                            &nbsp;
                                         </th>
-                                    </tr> 
+                                    </tr>  -->
                                    
                                     
                                 </ng-template>

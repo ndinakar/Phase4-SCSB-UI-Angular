@@ -148,7 +148,6 @@ export class SearchComponent implements OnInit {
 
   //show entries api start
     onPageSizeChange(value) {
-    //console.log("new pagae Size", value);
     this.showentries = value;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -206,7 +205,6 @@ export class SearchComponent implements OnInit {
     if (searchfullrec.SupervisedUse == true) {
       this.useRestrictions.push('SupervisedUse')
     }
-    //console.log(" page Number"+this.searchVal['pageNumber']);
     this.postData = {
       "fieldValue": searchfullrec.fieldValue,
       "fieldName": searchfullrec.fieldName,
@@ -231,15 +229,9 @@ export class SearchComponent implements OnInit {
       "index": null,
       "errorMessage": null
     }
-
-    //console.log("postDATA  ", this.postData)
-    console.log("Before Total page count"+this.searchVal['totalPageCount']);
     this.showresultdiv = true;
     this.searchService.onPageSizeChange(this.postData).subscribe((res) => {
       this.searchVal = res;
-      console.log("After Total page count"+this.searchVal['totalPageCount']);
-
-    console.log("Result"+this.searchVal);
 
     this.cols = [
       { field: 'title', header: 'Title' },
@@ -262,32 +254,27 @@ export class SearchComponent implements OnInit {
       { field: 'useRestriction', header: 'Use Restriction' },
       { field: 'barcode', header: 'Barcode' },
     ];
-    console.log("new page Count"+this.searchVal['pageNumber']+"total page count"+this.searchVal['totalPageCount']);
     if(this.searchVal['pageNumber'] == 0 && (this.searchVal['totalPageCount']-1 >0)){
       this.firstbutton = true;
       this.previousbutton = true;
       this.nextbutton = false;
       this.lastbutton = false;
-      console.log(" condition 1");
      }else if(this.searchVal['pageNumber'] == 0 && (this.searchVal['pageNumber'] == this.searchVal['totalPageCount']-1)){
       this.firstbutton = true;
       this.previousbutton = true;
       this.nextbutton = true;
       this.lastbutton = true;
-      console.log(" condition 2");
     }
     else if((this.searchVal['pageNumber'] == this.searchVal['totalPageCount']-1)&&this.searchVal['totalPageCount']-1>0){
       this.firstbutton = false;
       this.previousbutton = false;
       this.nextbutton = true;
       this.lastbutton = true;
-      console.log(" condition 3");
     }else if((this.searchVal['pageNumber'] < this.searchVal['totalPageCount']-1)&&(this.searchVal['pageNumber'] != 0)){
       this.firstbutton = false;
       this.previousbutton = false;
       this.nextbutton = false;
       this.lastbutton = false;
-      console.log(" condition 4");
     }
     },
     (error) => {
@@ -385,8 +372,6 @@ export class SearchComponent implements OnInit {
       "errorMessage": null
     }
 
-    //console.log("postDATA", this.postData)
-
     this.showresultdiv = true;
     this.searchService.getSearch(this.postData).subscribe(files => this.searchVal = files);
 
@@ -415,10 +400,7 @@ export class SearchComponent implements OnInit {
 
   //next api start
   nextapi() {
-    //console.log(this.searchVal['pageNumber']+"     "+(this.searchVal['totalPageCount']-1));
-    //console.log(this.nextvalue == (this.searchVal['totalPageCount']-1));
     if (this.searchVal['pageNumber'] == (this.searchVal['totalPageCount']-2)) {
-      //console.log(this.nextvalue+"  INSIDE   "+(this.searchVal['totalPageCount']-1));
       this.firstbutton = false;
       this.previousbutton = false;
       this.nextbutton = true;
@@ -430,8 +412,6 @@ export class SearchComponent implements OnInit {
       this.lastbutton = false;
     }
    
-   
-    //console.log("next api value", this.nextvalue);
     this.nextvalue = this.searchVal['pageNumber'] + 1;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -515,8 +495,6 @@ export class SearchComponent implements OnInit {
       "errorMessage": null
     }
 
-    //console.log("overall", this.postData)
-
     this.showresultdiv = true;
     this.searchService.searchNext(this.postData).subscribe(files => this.searchVal = files);
 
@@ -541,13 +519,11 @@ export class SearchComponent implements OnInit {
       { field: 'useRestriction', header: 'Use Restriction' },
       { field: 'barcode', header: 'Barcode' },
     ];
-    //console.log(this.postData)
   }
   //next api end
 
   //previous api start
   previousapi() {
-console.log(this.searchVal['pageNumber']);
     if (this.searchVal['pageNumber'] > 1) {
       this.firstbutton = false;
       this.previousbutton = false;
@@ -641,9 +617,6 @@ console.log(this.searchVal['pageNumber']);
         "index": null,
         "errorMessage": null
       }
-
-      //console.log("overall", this.postData)
-
       this.showresultdiv = true;
       this.searchService.searchPrevious(this.postData).subscribe(files => this.searchVal = files);
 
@@ -679,7 +652,6 @@ console.log(this.searchVal['pageNumber']);
     this.nextbutton = false;
     this.lastbutton = false;
     this.nextvalue = 0;
-    console.log("first api value", this.nextvalue);
     this.nextvalue = this.nextvalue;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -762,8 +734,6 @@ console.log(this.searchVal['pageNumber']);
       "errorMessage": null
     }
 
-    //console.log("overall", this.postData)
-
     this.showresultdiv = true;
     this.searchService.searchFirst(this.postData).subscribe(files => this.searchVal = files);
 
@@ -799,7 +769,6 @@ console.log(this.searchVal['pageNumber']);
     this.nextbutton = true;
     this.lastbutton = true;
     this.lastValue = this.searchVal['totalPageCount']-1;
-    console.log("last api value", this.nextvalue);
     this.nextvalue = this.nextvalue;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -881,9 +850,6 @@ console.log(this.searchVal['pageNumber']);
       "index": null,
       "errorMessage": null
     }
-
-    //console.log("overall", this.postData)
-
     this.showresultdiv = true;
     this.searchService.searchLast(this.postData).subscribe(files => this.searchVal = files);
 
@@ -924,7 +890,6 @@ console.log(this.searchVal['pageNumber']);
 
   checkUncheckAll() {
     var searchallvalue = this.searchForm.value;
-    console.log("texxttt", searchallvalue.fieldValue)
     if (this.checked === true) {
       this.checked = false;
       this.searchForm = this.formBuilder.group({
@@ -970,19 +935,6 @@ console.log(this.searchVal['pageNumber']);
 
     }
   }
-
-  isChangeLimitAccessToggle(e) {
-    //   var checkvalue=this.searchForm.value;
-    //   console.log("texxttt",checkvalue.owningInstitutionNYPL)
-    // console.log("checkkval",e)
-    //   if(e='NYPL'){
-    //     this.searchForm.controls['owningInstitutionNYPL'].setValue(e);
-    //    }else{
-    //     this.searchForm.controls['owningInstitutionNYPL'].setValue(false);
-    //    }
-
-
-  }
   onReset() {
 
     this.searchForm = this.formBuilder.group({
@@ -1008,6 +960,5 @@ console.log(this.searchVal['pageNumber']);
   setFileName() {
     this.dt.exportFilename = 'ExportRecords' + '_' +
       new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'UTC');
-    //this.dt.exportCSV();
   }
 }
