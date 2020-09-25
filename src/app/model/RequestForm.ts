@@ -1,0 +1,46 @@
+import { SearchResultRow } from '../model/SearchResultRow';
+
+export class RequestForm {
+  requestId: number;
+  patronBarcode: string;
+  itemBarcode: string;
+  status: string;
+  deliveryLocation: string;
+  patronBarcodeInRequest: string;
+  itemBarcodeInRequest: string;
+  deliveryLocationInRequest: string;
+  itemTitle: string;
+  itemOwningInstitution: string;
+  patronEmailAddress: string;
+  requestingInstitution: string;
+  requestType: string;
+  requestNotes: string;
+  startPage: string;
+  endPage: string;
+  volumeNumber: string;
+  issue: string;
+  articleAuthor: string;
+  articleTitle: string;
+  message: string;
+  errorMessage: string;
+  totalRecordsCount: string;
+  pageNumber: number;
+  pageSize: number;
+  totalPageCount: number;
+  submitted: boolean;
+  showResults: boolean;
+  requestingInstitutions: string[];
+  requestTypes: string[];
+  deliveryLocations: string[];
+  searchResultRows: SearchResultRow[];
+  requestStatuses: string[];
+  institutionList: string[];
+  disableRequestingInstitution: boolean;
+  onChange: string;
+  institution: string;
+  showRequestErrorMsg: boolean;
+  requestingInstituionHidden: string;
+  itemBarcodeHidden: string;
+  disableSearchInstitution: boolean;
+  searchInstitutionHdn: string;
+}
