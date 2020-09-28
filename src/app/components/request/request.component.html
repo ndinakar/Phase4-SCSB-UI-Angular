@@ -447,7 +447,7 @@
                                                                         th:onchange="'javascript:toggleDeliveryLocationValidation()'">
                                                                     <option value=""></option>
                                                                     <option *ngFor="let del3 of deliveryLocVal" [ngValue]="del3[0]">
-                                                                        {{del3[1]}}
+                                                                        {{del3[1]}}-{{del3[0]}}
                                                                       </option>
                                                                 </select>
                                                                 <span id="deliveryLocationErrorMessage" *ngIf="deliveryLocationErrorMessage" style="color: red;">Delivery location is required.</span>

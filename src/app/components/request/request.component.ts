@@ -318,7 +318,7 @@ export class RequestComponent implements OnInit {
       this.deliveryLocVal = Object.keys(del).map(function(data){
         return [data,del[data]];
     });
-    console.log(this.deliveryLocVal);
+    console.log("DeliveryLocations",this.deliveryLocVal);
   
       },
      (error) => {
@@ -352,10 +352,11 @@ export class RequestComponent implements OnInit {
   }
   createRequest() { 
     console.log("sd",this.itemBarcodeId)
-    console.log("sd",this.requestingInstitutionId)
+    console.log("InstitutionId",this.requestingInstitutionId)
     console.log("sd",this.patronBarcodeId)
     console.log("start",this.StartPage)
     console.log("arrr",this.ChapterTitle)
+    console.log("DeliveryLOcations",this.deliveryLocationId)
     if(this.eddshow){
     //with edd start
     if((this.itemBarcodeId ==undefined || this.itemBarcodeId =='') && (this.requestingInstitutionId==undefined || this.requestingInstitutionId=='') && (this.patronBarcodeId==undefined || this.patronBarcodeId=='') && (this.patronEmailId==undefined || this.patronEmailId=='')  && (this.StartPage==undefined || this.StartPage=='') && (this.StartPage==undefined || this.StartPage=='') && (this.EndPage==undefined || this.EndPage=='') && (this.ChapterTitle==undefined || this.ChapterTitle=='')){
