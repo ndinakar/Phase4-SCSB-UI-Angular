@@ -28,26 +28,28 @@
                                         <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12">
                                             <div class="col-md-32 col-sm-3 col-lg-2 padding-right-20 padding-left-0">
                                                 <label class="fontcolor-dark margin-btm-10">Patron Barcode</label>
-                                                <input id="patronBarcode" name="patronBarcode" type="text"  class="form-control themed-input" onkeyup="togglePatronBarcodeSearch()"/>
-                                                <p id="patronBarcodeSearchError" style="color: red;display: none">Patron barcode is required.</p>
+                                                <input id="patronBarcode" name="patronBarcode" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchPatronBarcode" type="text"  class="form-control themed-input" onkeyup="togglePatronBarcodeSearch()"/>
+                                                <p id="patronBarcodeSearchError" *ngIf="patronBarcodeSearchError" style="color: red;">Patron barcode is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Item Barcode</label>
-                                                <input id="itemBarcode" name="itemBarcode" type="text"  class="form-control themed-input" onkeyup="toggleItemBarcodeSearch()"/>
-                                                <p id="itemBarcodeSearchError" style="color: red;display: none">Item barcode is required.</p>
+                                                <input id="itemBarcode" name="itemBarcode" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchItemBarcode" class="form-control themed-input" onkeyup="toggleItemBarcodeSearch()"/>
+                                                <p id="itemBarcodeSearchError" *ngIf="itemBarcodeSearchError" style="color: red;">Item barcode is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Status</label>
                                                 <div class="select-holder">
                                                     <select id="requestStatus"
                                                             name="requestStatus"
+                                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="requestStatus"
                                                             class="themed-input themed-select"
                                                             style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;"
                                                             
-                                                            onchange="onChangeRequestStatus()">
+                                                            (change)="onChangeRequestStatus(requestStatus)">
                                                         <option value="">ALL</option>
-                                                        <option value="active">ACTIVE</option>
-                                                        <option ></option>
+                                                        <option *ngFor="let del4 of searchReqVal['requestStatuses']" [ngValue]="del4">
+                                                            {{del4}}
+                                                          </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -55,14 +57,17 @@
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Institution</label>
                                                 <div class="select-holder">
-                                                    <select id="institutionList"
-                                                            name="institutionList"
-                                                            
+                                                    <select id="searchInstitutionList"
+                                                            name="searchInstitutionList"
+                                                            class="themed-input themed-select"
+                                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="searchInstitutionList"
                                                             style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;"
                                                             
                                                            >
                                                         <option value=""></option>
-                                                        <option ></option>
+                                                        <option *ngFor="let del5 of searchReqVal['institutionList']" [ngValue]="del5">
+                                                            {{del5}}
+                                                          </option>
                                                     </select>
                                                 </div>
                                                 <input type="hidden" id="searchInstitutionHdn" />
@@ -70,34 +75,35 @@
 
                                             <div class="col-md-3 col-sm-3 col-lg-3">
                                                 <div class="input-group-btn search-panel padding-right-10">
-                                                    <button id="searchRequestsButton" class="btn themed-button themed-button-search" type="button" name="searchRequestsButton" click="searchRequests('searchRequests')">Search</button>
+                                                    <button id="searchRequestsButton" class="btn themed-button themed-button-search" type="button" name="searchRequestsButton" (click)="searchRequests()">Search</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" id="noteAll" style="">
+                                        <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" id="noteAll" *ngIf="noteAll" >
                                             <strong>Note:</strong> 'Patron Barcode' or 'Item Barcode' needs to be provided to search with request status as 'All'. Neither are mandatory when searching with other request statuses.
                                         </div>
-                                        <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" id="noteActive" style="display: none;">
+                                        <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" id="noteActive" *ngIf="noteActive">
                                             <strong>Note:</strong> Under 'Active' request status, records under retrieval order placed, recall order placed and EDD order placed are retrieved.
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        <div  class="search-results-container">
+                        <div  class="search-results-container" *ngIf="searchReqresultFirst">
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                            <!-- <div class="row margin-btm-10" data-th-if="${requestForm.message ne null &amp;&amp; requestForm.message ne ''}">
+                            <div *ngIf="messageNoSearchRecords"class="row margin-btm-10">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:text="${requestForm.message}"></span></div>
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span> {{searchreqResultVal['message']}}</span></div>
                                 </div>
-                            </div> -->
-                            <div >
+                            </div> 
+                            <div *ngIf="searchReqresult">
                                 <div class="row">
                                     <div class="col-sm-3 col-md-2 col-lg-2 margin-top-05 show-entries-section">
                                         <div class="">
                                             <span class="show-title margin-right-05">Show Entries</span>
                                             <select id="numOfRecordsId" name="numOfRecordsName" class="themed-input"
-                                                     onchange="requestsOnPageSizeChange()">
+                                            [(ngModel)]="showentries" class="themed-input" (change)="onPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}">
+                                                <option value="3">3</option>   
                                                 <option value="10">10</option>
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
@@ -108,7 +114,7 @@
                                     </div>
                                     <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"><div class="row">RI - Requesting Institution, RT - Request Type, OI - Owning Institution, DL - Delivery Location</div>
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-3 text-right"><h4>Search Results Found: <span ></span></h4></div>
+                                    <div class="col-sm-12 col-md-12 col-lg-3 text-right"><h4>Search Results Found: <span >{{searchreqResultVal['totalRecordsCount']}}</span></h4></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -131,6 +137,27 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                                <tr class="requestRow" *ngFor="let item of searchreqResultVal['searchResultRows']">
+                                                    <th>{{ item.patronBarcode }}</th>
+                                                    <td >{{ item.requestingInstitution }}</td>
+                                                    <td><a>{{ item.barcode }}</a></td>
+                                                    <td>{{ item.owningInstitution }}</td>
+                                                    <td>{{ item.deliveryLocation }}</td>
+                                                    <td>{{ item.requestType }}</td>
+                                                    <td>{{ item.requestCreatedBy }}</td>
+                                                    <td>{{ item.patronEmailId }}</td>
+                                                    <td>{{ item.createdDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
+                                                    <td>{{ item.lastUpdatedDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
+                                                    <td>{{ item.status }}</td>
+                                                    <td><button type="button" (click)="reqNotemodal(item.requestNotes)" name="action"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
+                                                    <td> 
+                                                        <button (click)="cancelRequest(item.requestId)" *ngIf="item.status=='ACTIVE' || item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='REFILED'|| item.status=='LAS REFILE REQUEST PLACED'"  style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" th:title="'Cancel Request'"  type="button" class="btn btn-round" name="action" >Cancel Note
+                                                        </button>
+
+                                                        <button *ngIf="item.status=='EXCEPTION'"  (click)="resubmitReq(item.barcode,item.requestId)" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" name="action" >Resubmit Request
+                                                        </button> 
+                                                    </td>
+                                                </tr>
                                                 <tr   class="requestRow">
                                                     <!-- <input data-th-id="'requestRowBibId-'+ ${searchResultStat.index}" name="requestRowBibId" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].bibId}"/>
                                                     <input data-th-id="'requestRowItemId-'+ ${searchResultStat.index}" name="requestRowItemId" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].itemId}"/>
@@ -208,8 +235,8 @@
                                                                     <div class="col-sm-4 pull-right">
                                                                         <input id="cancelConfirmIndexId" name="cancelConfirmIndexId" type="text" hidden="hidden"/>
                                                                         <input id="cancelConfirmRequestId" name="cancelConfirmRequestId" type="text" hidden="hidden"/>
-                                                                        <button id="proceedBtn"  type="button" name="action"
-                                                                                class="btn btn-primary" onclick="cancelRequestItem()">Proceed
+                                                                        <button id="proceedBtn"  type="button" name="action" style="margin-right: 6px;"
+                                                                                class="btn btn-primary" (click)="cancelRequestItem()">Proceed
                                                                         </button>
                                                                         <button id="cancelBtn" type="button" name="cancel" data-dismiss="modal"
                                                                                 class="btn btn-danger">Cancel
@@ -228,30 +255,20 @@
                                         <div class="pull-right">
                                             <div id="requestPaginationId" name="requestPaginationName" xmlns:th="http://www.w3.org/1999/xhtml">
                                                 <ul class="pagination">
-                                                    <!-- <li >
-                                                        <span >First</span>
-                                                        <a  href="#"
-                                                           title="Go to first page"
-                                                           onclick="requestsFirstPage()">First</a>
+                                                    <li [ngClass]="(firstbutton==true)?'disabled':''">
+                                                        <span (click)="firstCall()">First</span>
                                                     </li>
-                                                    <li th:class="${(requestForm.pageNumber != 0) &amp;&amp; (requestForm.totalPageCount &gt; 1)}? '' : 'disabled'">
-                                                        <span th:if="${requestForm.pageNumber == 0}">Previous</span>
-                                                        <a th:if="${requestForm.pageNumber != 0}" href="#"
-                                                           title="Go to previous page"
-                                                           onclick="requestsPreviousPage()">Previous</a>
+                                                    <li [ngClass]="(previousbutton==true)?'disabled':''">
+                                                        <span (click)="previousCall()">Previous</span>
                                                     </li>
-                                                    <li th:class="${(requestForm.pageNumber+1 != requestForm.totalPageCount) &amp;&amp; (requestForm.totalPageCount &gt; 1)}? '' : 'disabled'">
-                                                        <span th:if="${requestForm.pageNumber+1 == requestForm.totalPageCount}">Next</span>
-                                                        <a th:if="${requestForm.pageNumber+1 != requestForm.totalPageCount}"
-                                                           href="#" title="Go to next page"
-                                                           onclick="requestsNextPage()">Next</a>
+                                                    <li [ngClass]="(nextbutton==true)?'disabled':''">
+                                                        <span (click)="nextCall()">Next</span>
+                                                      
                                                     </li>
-                                                    <li th:class="${requestForm.pageNumber+1 == requestForm.totalPageCount}? 'disabled' : ''">
-                                                        <span th:if="${requestForm.pageNumber+1 == requestForm.totalPageCount}">Last</span>
-                                                        <a th:if="${requestForm.pageNumber+1 != requestForm.totalPageCount}"
-                                                           href="#"
-                                                           onclick="requestsLastPage()">Last</a>
-                                                    </li> -->
+                                                    <li [ngClass]="(lastbutton==true)?'disabled':''">
+                                                        <span (click)="lastCall()">Last</span>
+                                                       
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -279,9 +296,9 @@
                         </div>
                         <div  class="buscador-principal">
                             <div *ngIf="createsubmit" id="successTextIdForRequest" class="text-success">
-                                Your request was received and will be processed.To track the request's status, please <a href="#" th:data1="${requestForm.patronBarcodeInRequest}" onclick="goToSearchRequest(this.getAttribute('data1'))"><b><u>click here</u></b></a><br />
-                                To create another request for the same patron, please <a href="#" onclick="loadCreateRequestForSamePatron()"><b><u>click here</u></b></a><br />
-                                To create another request for a different patron, please <a href="#" onclick="loadCreateRequest()"><b><u>click here</u></b></a>
+                                Your request was received and will be processed.To track the request's status, please <a  style="cursor: pointer" (click)="goToSearchRequest(this.patronBarcodeId)"><b><u>click here</u></b></a><br />
+                                To create another request for the same patron, please <a  style="cursor: pointer" (click)="loadCreateRequestForSamePatron(this.patronBarcodeId,this.requestingInstitutionId)"><b><u>click here</u></b></a><br />
+                                To create another request for a different patron, please <a  style="cursor: pointer" (click)="differentpatron()"><b><u>click here</u></b></a>
                             </div>
                             <div class="row margin-top-25 margin-btm-30">
                                 <div class="col-sm-12">
@@ -571,7 +588,7 @@
                             <div class="row">
                                 <div class="col-xs-12 text-center">
                                     <button  type="button" *ngIf="!createsubmit" class="btn btn-default themed-button btn-primary" id="createrequestsubmit" (click)="createRequest()">Create Request</button>
-                                    <button  type="button" *ngIf="!createsubmit" class="pull-right btn btn-default themed-button themed-button-cancel" id="createrequestclear" onclick="resetDefaults()">Clear</button>
+                                    <button  type="button" *ngIf="!createsubmit" class="pull-right btn btn-default themed-button themed-button-cancel" id="createrequestclear" (click)="resetDefaults()">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -590,7 +607,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="padding-10">
-                                            <span id="cancelStatus"></span>
+                                            <span id="cancelStatus">{{this.reqcancelmsg}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -612,12 +629,12 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="padding-10">
-                                            <div id="resubmitRequestConfirmBodyId">
-                                                <span>Do you want to resubmit the request for the barcode : <span id="resubmitReqConfirmItemBarcode"></span></span>
+                                            <div id="resubmitRequestConfirmBodyId" *ngIf="resubmitRequestConfirmBodyId">
+                                                <span>Do you want to resubmit the request for the barcode : <span id="resubmitReqConfirmItemBarcode">{{resubmitReqConfirmItemBarcode}}</span></span>
                                             </div>
-                                            <div id="resubmitRequestBodyId">
+                                            <div id="resubmitRequestBodyId" *ngIf="!resubmitRequestConfirmBodyId">
                                                 <div>
-                                                    <span>Barcode : <span id="resubmitReqItemBarcode"></span></span>
+                                                    <span>Barcode : <span id="resubmitReqItemBarcode">{{resubmitReqConfirmItemBarcode}}</span></span>
                                                 </div>
                                                 <div>
                                                     <span id="resubmitRequestStatus"></span>
@@ -629,8 +646,8 @@
                             </div>
                             <div class="modal-footer" style="padding-top: 0px;">
                                 <div id="resubmitRequestConfirmFooterId" class="pull-right">
-                                    <button id="resubmitRequestYes" style="height:35px;font-size:15px;" type="button" class="btn btn-default themed-button btn-primary" onclick="resubmitRequestItem()">Yes</button>
-                                    <button id="resubmitRequestNo" style="height:35px;font-size:15px;" type="button" class="btn btn-default themed-button themed-button-cancel" onclick="closeResubmitRequestItem()">No</button>
+                                    <button id="resubmitRequestYes" style="height:35px;font-size:15px;" *ngIf="resubmitRequestConfirmBodyId" type="button" class="btn btn-default themed-button btn-primary" (click)="resubmitRequestItem()">Yes</button>
+                                    <button id="resubmitRequestNo" style="height:35px;font-size:15px;" *ngIf="resubmitRequestConfirmBodyId" type="button" class="btn btn-default themed-button themed-button-cancel" data-dismiss="modal" (click)="closeResubmitRequestItem()">No</button>
                                 </div>
                             </div>
                         </div>
@@ -649,7 +666,7 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <p id="requestNotesData" style="white-space: pre-wrap;word-wrap: break-word;"></p>
+                                        <p id="requestNotesData" style="white-space: pre-wrap;word-wrap: break-word;">{{this.requestNotesData}}</p>
                                     </div>
                                 </div>
                             </div>
