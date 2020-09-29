@@ -969,8 +969,6 @@ export class SearchComponent implements OnInit {
       barcode1.push(this.selectedNodes1[i].barcode);
     }
     var barcode=barcode1.join();
-    // console.log(this.selectedNodes1)
-    // console.log(barcode);
     this.router.navigate(['/dashboard/request', barcode]);
   }
 }

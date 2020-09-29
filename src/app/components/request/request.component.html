@@ -102,9 +102,8 @@
                                         <div class="">
                                             <span class="show-title margin-right-05">Show Entries</span>
                                             <select id="numOfRecordsId" name="numOfRecordsName" class="themed-input"
-                                            [(ngModel)]="showentries" class="themed-input" (change)="onPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}">
-                                                <option value="3" selected="selected">3</option>   
-                                                <option value="10">10</option>
+                                            [(ngModel)]="showentries" class="themed-input" (change)="onPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}">  
+                                                <option value="10" selected="selected">10</option>
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
                                                 <option value="100">100</option>
@@ -151,7 +150,7 @@
                                                     <td>{{ item.status }}</td>
                                                     <td><button type="button" (click)="reqNotemodal(item.requestNotes)" name="action"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
                                                     <td> 
-                                                        <button (click)="cancelRequest(item.requestId)" *ngIf="item.status=='ACTIVE' || item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='REFILED'|| item.status=='LAS REFILE REQUEST PLACED'"  style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" th:title="'Cancel Request'"  type="button" class="btn btn-round" name="action" >Cancel Note
+                                                        <button (click)="cancelRequest(item.requestId)" *ngIf="item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='LAS REFILE REQUEST PLACED'"  style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" th:title="'Cancel Request'"  type="button" class="btn btn-round" name="action" >Cancel Note
                                                         </button>
 
                                                         <button *ngIf="item.status=='EXCEPTION'"  (click)="resubmitReq(item.barcode,item.requestId)" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" name="action" >Resubmit Request

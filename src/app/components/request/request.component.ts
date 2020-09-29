@@ -79,7 +79,7 @@ export class RequestComponent implements OnInit {
   nextvalue = 0;
   previousValue=0;
   lastValue=0;
-  showentries = 3;
+  showentries = 10;
 
   barcode_id:string;
 
@@ -130,7 +130,7 @@ export class RequestComponent implements OnInit {
       "errorMessage":null,
       "totalRecordsCount":"0",
       "pageNumber":0,
-      "pageSize":3,
+      "pageSize":this.showentries,
       "totalPageCount":0,
       "submitted":false,
       "showResults":false,
@@ -288,7 +288,7 @@ export class RequestComponent implements OnInit {
       "errorMessage":null,
       "totalRecordsCount":"0",
       "pageNumber":0,
-      "pageSize":3,
+      "pageSize":this.showentries,
       "totalPageCount":0,
       "submitted":false,
       "showResults":false,
@@ -365,7 +365,7 @@ export class RequestComponent implements OnInit {
       "errorMessage":null,
       "totalRecordsCount":"0",
       "pageNumber":0,
-      "pageSize":3,
+      "pageSize":this.showentries,
       "totalPageCount":0,
       "submitted":false,
       "showResults":false,
@@ -514,7 +514,7 @@ export class RequestComponent implements OnInit {
         "errorMessage":null,
         "totalRecordsCount":"0",
         "pageNumber":0,
-        "pageSize":3,
+        "pageSize":this.showentries,
         "totalPageCount":0,
         "submitted":false,
         "showResults":false,
@@ -611,7 +611,7 @@ export class RequestComponent implements OnInit {
           "errorMessage":null,
           "totalRecordsCount":"0",
           "pageNumber":0,
-          "pageSize":3,
+          "pageSize":this.showentries,
           "totalPageCount":0,
           "submitted":false,
           "showResults":false,
@@ -736,7 +736,7 @@ export class RequestComponent implements OnInit {
           "errorMessage":null,
           "totalRecordsCount":"0",
           "pageNumber":0,
-          "pageSize":3,
+          "pageSize":this.showentries,
           "totalPageCount":0,
           "submitted":false,
           "showResults":false,
@@ -913,7 +913,7 @@ export class RequestComponent implements OnInit {
          "errorMessage":null,
          "totalRecordsCount":"0",
          "pageNumber":0,
-         "pageSize":3,
+         "pageSize":this.showentries,
          "totalPageCount":0,
          "submitted":false,
          "showResults":false,
@@ -1032,7 +1032,7 @@ export class RequestComponent implements OnInit {
       "errorMessage":null,
       "totalRecordsCount":"0",
       "pageNumber":0,
-      "pageSize":3,
+      "pageSize":this.showentries,
       "totalPageCount":0,
       "submitted":false,
       "showResults":false,
@@ -1103,7 +1103,7 @@ export class RequestComponent implements OnInit {
       "errorMessage":null,
       "totalRecordsCount":"0",
       "pageNumber":0,
-      "pageSize":3,
+      "pageSize":this.showentries,
       "totalPageCount":0,
       "submitted":false,
       "showResults":false,
@@ -1149,6 +1149,7 @@ export class RequestComponent implements OnInit {
 
   }
   firstCall(){
+    this.showentries = this.searchreqResultVal['pageSize'];
     this.postData ={
       "requestId":null,
       "patronBarcode":this.searchPatronBarcode,
@@ -1215,6 +1216,7 @@ export class RequestComponent implements OnInit {
 
   }
   previousCall(){
+    this.showentries = this.searchreqResultVal['pageSize'];
     this.postData ={
       "requestId":null,
       "patronBarcode":this.searchPatronBarcode,
@@ -1280,6 +1282,7 @@ export class RequestComponent implements OnInit {
       })
   }
   nextCall(){
+    this.showentries = this.searchreqResultVal['pageSize'];
     this.postData ={
       "requestId":null,
       "patronBarcode":this.searchPatronBarcode,
@@ -1345,6 +1348,7 @@ export class RequestComponent implements OnInit {
       })
   }
   lastCall(){
+    this.showentries = this.searchreqResultVal['pageSize'];
     this.postData ={
       "requestId":null,
       "patronBarcode":this.searchPatronBarcode,
