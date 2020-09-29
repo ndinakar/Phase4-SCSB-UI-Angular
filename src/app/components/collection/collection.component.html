@@ -1,13 +1,11 @@
 <!-- Collection Tab-->
-<div id="collectionContentId" name="collectionContentName" th:fragment="content" xmlns:th="http://www.thymeleaf.org" role="tabpanel" class="tab-pane active">
-    <link rel="stylesheet" th:href=""/>
-    <script type="text/javascript" th:src=""></script>
-    <div id="collectionFormDivId" name="collectionFormDivName" th:fragment="collection-form"
-         xmlns:th="http://www.thymeleaf.org" th:remove="tag">
-        <form id="collection-form" name="collection-form" class="form-horizontal"
-              th:action=""
-              th:object="" method="post">
-            <input type="hidden"  th:name=""   th:value=""/>
+<div id="collectionContentId" name="collectionContentName"  role="tabpanel" class="tab-pane active">
+    <link rel="stylesheet" />
+    <script type="text/javascript" ></script>
+    <div id="collectionFormDivId" name="collectionFormDivName" 
+         xmlns:th="http://www.thymeleaf.org" >
+        <form id="collection-form" name="collection-form" class="form-horizontal">
+            <input type="hidden"  />
             <fieldset>
                 <div class="search-bar">
                     <div class="row margin-0">
@@ -17,19 +15,19 @@
                                 <div class="col-sm-11 padding-left-0">
                                     <form>
                                         <div class="input-group buscador-principal">
-                                            <input id="bibId" type="hidden" th:field=""/>
-                                            <input id="itemId" type="hidden" th:field=""/>
-                                            <input id="shared" type="hidden" th:field=""/>
-                                            <input id="submitted" type="hidden" value="false" th:field="*"/>
-                                            <input id="title" type="hidden" th:field=""/>
-                                            <input id="author" type="hidden" th:field=""/>
-                                            <input id="publisher" type="hidden" th:field=""/>
-                                            <input id="publishedDate" type="hidden" th:field=""/>
-                                            <input id="callNumber" type="hidden" th:field=""/>
-                                            <input id="showModal" type="hidden" th:field=""/>
+                                            <input id="bibId" type="hidden" />
+                                            <input id="itemId" type="hidden" />
+                                            <input id="shared" type="hidden" />
+                                            <input id="submitted" type="hidden" value="false" />
+                                            <input id="title" type="hidden" />
+                                            <input id="author" type="hidden" />
+                                            <input id="publisher" type="hidden" />
+                                            <input id="publishedDate" type="hidden" />
+                                            <input id="callNumber" type="hidden" />
+                                            <input id="showModal" type="hidden" />
                                             <div>
                                                 <input id="barcodeFieldId"  [(ngModel)]="barcodeFieldName" name="barcodeFieldName" type="text"
-                                                       placeholder="Type Text Here....." th:field=""
+                                                       placeholder="Type Text Here....."
                                                        class="form-control">
                                               
                                             </div>
@@ -64,12 +62,12 @@
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
                              <div id="errorMessageId" class="row margin-btm-10" *ngIf="norecord">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpanId" th:text="">No results found.</span></div>
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpanId" text="">No results found.</span></div>
                                 </div>
                             </div>
                             <div id="barcodesNotFoundErrorMessageId" class="row margin-btm-10" *ngIf="barcodesNotFoundErrorMessageId">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="barcodesNotFoundErrorMessageSpanId" th:text="">{{barerrmsg}}</span></div>
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="barcodesNotFoundErrorMessageSpanId" text="">{{barerrmsg}}</span></div>
                                 </div>
                             </div>
                             <!-- <div id="ignoredBarcodesErrorMessageId" class="row margin-btm-10" data-th-if="">
@@ -107,51 +105,15 @@
                                             <th width="50%">
                                                 <div>Title</div>
                                             </th>
-                                            <th th:title="'Collection Group Designation'">
+                                            <th title="'Collection Group Designation'">
                                                 <div>CGD</div>
                                             </th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!-- <tr data-th-id=""
-                                            th:each=""
-                                            class="displayRow">
-                                            <input data-th-id=""
-                                                   name="displayRowBibId" type="hidden"
-                                                   th:field=""/>
-                                            <input data-th-id=""
-                                                   name="displayRowItemId" type="hidden"
-                                                   th:field=""/>
-                                            <td>
-                                                <input type="hidden"
-                                                       th:field=""/>
-                                                <span class="status1">
-                                                    <img src="../../../../assets/images/inRecap.png" alt="In ReCAP"
-                                                         style="width:20px;height:25px;"
-                                                         th:if=""/>
-                                                    <img src="../../../../assets/images/out.png" alt="Out" style="width:20px;height:25px;"
-                                                         th:if=""/>
-                                                </span>
-                                                    <span class="title_text" id="barcodeSpanId"
-                                                          th:text=""></span>
-                                            </td>
-                                            <td>
-                                                <input type="hidden"
-                                                       th:field=""/>
-                                                <span class="">
-                                                    <a id="titleLinkId" href="#" th:text="" th:onclick=""></a>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <input type="hidden"
-                                                       th:field=""/>
-                                                    <span id="cgdSpanId"
-                                                          th:text=""></span>
-                                            </td>
-                                        </tr> -->
                                         <tr *ngFor="let item of collectionVal['searchResultRows']">
                                             <th>{{ item.barcode }}</th>
-                                            <td (click)="openMarcView(item.bibId,item.barcode)" style="cursor: pointer;color:#337ab7"><a>{{ item.title }}</a></td>
+                                            <td (click)="openMarcView(item.bibId,item.barcode,item.itemId)" style="cursor: pointer;color:#337ab7"><a>{{ item.title }}</a></td>
                                             <td>{{ item.collectionGroupDesignation }}</td>
                                         </tr>
                                         </tbody>
@@ -193,7 +155,7 @@
                                                 <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['publisher']}}</span></div>
                                             </div>
                                             <div class="row margin-btm-05">
-                                                <input type="hidden" th:field=""/>
+                                                <input type="hidden"/>
                                                 <div class="col-sm-5">Owning Institution</div>
                                                 <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['owningInstitution']}}</span></div>
                                             </div>
@@ -212,31 +174,31 @@
                                                     <div style="max-height:425px;overflow:auto">
                                                         <table class="table table-striped small margin-btm-0">
                                                             <tr>
-                                                                <input type="hidden" th:field=""/>
+                                                                <input type="hidden" />
                                                                 <td width="40%">tag000</td>
                                                                 <td><span >{{openmarcVal['tag000']}}</span></td>
                                                             </tr>
                                                             <tr>
-                                                                <input type="hidden" th:field=""/>
+                                                                <input type="hidden" />
                                                                 <td>Control Number (001)</td>
                                                                 <td><span >{{openmarcVal['controlNumber001']}}</span></td>
                                                             </tr>
                                                             <tr>
-                                                                <input type="hidden" th:field=""/>
+                                                                <input type="hidden" />
                                                                 <td>Date and Time (005)</td>
                                                                 <td><span >{{openmarcVal['controlNumber005']}}</span></td>
                                                             </tr>
                                                             <tr>
-                                                                <input type="hidden" th:field=""/>
+                                                                <input type="hidden" />
                                                                 <td>Fixed Length Data Element (008)</td>
                                                                 <td><span >{{openmarcVal['controlNumber008']}}</span></td>
                                                             </tr>
                                                             <tr *ngFor="let item of openmarcVal['bibDataFields']">
                                                                 <td>
-                                                                    <input type="hidden" th:field=""/>
-                                                                    <input type="hidden" th:field=""/>
-                                                                    <input type="hidden" th:field=""/>
-                                                                    <input type="hidden" th:field=""/>
+                                                                    <input type="hidden" />
+                                                                    <input type="hidden" />
+                                                                    <input type="hidden" />
+                                                                    <input type="hidden" />
                                                                     <span style="margin-left: 30px;" >{{item.dataFieldTag}}</span>
                                                                     <span >{{item.indicator1}}{{item.indicator2}}</span>
                                                                 </td>
@@ -251,8 +213,8 @@
                                             <div class="itemdetail">
                                                 <h4 class="border-style-bottom padding-10 margin-top-05 margin-btm-0">Item Details</h4>
                                                 <div id="itemDetailsSection" class="padding-10">
-                                                    <input id="allowEdit" type="hidden" th:field=""/>
-                                                    <input id="warningMessage" type="hidden" th:field=""/>
+                                                    <input id="allowEdit" type="hidden" />
+                                                    <input id="warningMessage" type="hidden" />
                                                     <div class="row form-group">
                                                         <div id="collectionUpdateMessage" class="row margin-btm-10" *ngIf="collectionUpdateMessage">
                                                             <div class="col-sm-12">
@@ -261,14 +223,14 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div *ngIf="collectionUpdateErrorMessage" id="collectionUpdateErrorMessage" class="row margin-btm-10" th:if="">
+                                                        <div *ngIf="collectionUpdateErrorMessage" id="collectionUpdateErrorMessage" class="row margin-btm-10" >
                                                             <div class="col-sm-12">
                                                                 <div class="bg-danger text-danger padding-10">
                                                                     <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{crossinstitutionVal['errorMessage']}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div *ngIf="collectionUpdateWarningMessage" id="collectionUpdateWarningMessage" class="row margin-btm-10" th:if="">
+                                                        <div *ngIf="collectionUpdateWarningMessage" id="collectionUpdateWarningMessage" class="row margin-btm-10" >
                                                             <div class="col-sm-12">
                                                                 <div class="bg-warning text-warning padding-10">
                                                                     <span id="warningMessageId" class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{crossinstitutionVal['warningMessage']}}</span>
@@ -279,7 +241,7 @@
 
                                                     <table class="table table-striped small margin-btm-0">
                                                         <tr>
-                                                            <input type="hidden" th:field=""/>
+                                                            <input type="hidden" />
                                                             <td width="60%">Availability</td>
                                                             <!-- <td th:if=""><span th:text="'In Recap'"></span></td>
                                                             <td th:if=""><span th:text="'Out'"></span></td>
@@ -287,27 +249,27 @@
                                                             <td ><span >{{openmarcVal['availability']}}</span></td>
                                                         </tr>
                                                         <tr>
-                                                            <input type="hidden" th:field=""/>
+                                                            <input type="hidden" />
                                                             <td>Barcode</td>
                                                             <td><span >{{openmarcVal['barcode']}}</span></td>
                                                         </tr>
                                                         <tr>
-                                                            <input type="hidden" th:field=""/>
+                                                            <input type="hidden" />
                                                             <td>Customer Code</td>
                                                             <td><span >{{openmarcVal['customerCode']}}</span></td>
                                                         </tr>
                                                         <tr>
-                                                            <input type="hidden" th:field=""/>
+                                                            <input type="hidden" />
                                                             <td>Use Restriction</td>
                                                             <td><span >{{openmarcVal['useRestriction']}}</span></td>
                                                         </tr>
                                                         <tr>
-                                                            <input id="cgdField" type="hidden" th:field=""/>
+                                                            <input id="cgdField" type="hidden" />
                                                             <td>Collection Group Designation (CGD)</td>
                                                             <td><span >{{openmarcVal['collectionGroupDesignation']}}</span></td>
                                                         </tr>
                                                     </table>
-                                                    <div th:if="">
+                                                    <div >
                                                     <div id="collectionOptionsDiv" class="row radio-btn-warpper" *ngIf="!collectionUpdateMessage">
                                                         <div class="col-sm-12" align="center">
                                                             <div class="form-group margin-btm-10">
@@ -380,7 +342,7 @@
                                                                 <label for="deaccessionType" class="fontcolor-dark">Deaccession Type <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
                                                             </div>
                                                             <div class="col-sm-8 padding-left-0 padding-top-10">
-                                                                <input type="text" *ngIf="!collectionUpdateMessage" [(ngModel)]="deaccessionType" id="deaccessionType" name="deaccessionType" class="form-control themed-input disable-input" th:field="" th:if="" readonly="readonly"/>
+                                                                <input type="text" *ngIf="!collectionUpdateMessage" [(ngModel)]="deaccessionType" id="deaccessionType" name="deaccessionType" class="form-control themed-input disable-input" readonly="readonly"/>
                                                                 <span *ngIf="collectionUpdateMessage">{{newdeaccessionType}}</span>
                                                             </div>
                                                         </div>
@@ -390,12 +352,12 @@
                                                             </div>
                                                             <div class="col-sm-8 padding-left-0">
                                                                 <div class="select-holder" *ngIf="!collectionUpdateMessage">
-                                                                    <input type="hidden" th:field=""/>
+                                                                    <input type="hidden" />
                                                                     <select [(ngModel)]="DeliveryLocation" class="form-control themed-input themed-select"
                                                                             name="DeliveryLocation" [ngModelOptions]="{standalone: true}" >
-                                                                        <option value="">Select</option>
-                                                                        <option *ngFor="let del of openmarcVal['deliveryLocations']" [ngValue]="del.pwdDeliveryRestrictions">
-                                                                            {{del.pwdDeliveryRestrictions}}
+                                                                        <option value=""></option>
+                                                                        <option *ngFor="let del of openmarcVal['deliveryLocations']" [ngValue]="del.customerCode">
+                                                                            {{del.description}}-{{del.customerCode}}
                                                                           </option>
                                                                     </select>
                                                                 </div>
@@ -421,9 +383,9 @@
                                                                 <button id="collectionDeaccessionButton"
                                                                         type="button"
                                                                         name="action"
-                                                                        (click)="saveDeaccession(openmarcVal['bibId'],openmarcVal['deaccessionType'])"
+                                                                        (click)="saveDeaccession(openmarcVal['bibId'],openmarcVal['deaccessionType'],openmarcVal['itemBarcodes'])"
                                                                         class="btn btn-primary"
-                                                                        th:if="">
+                                                                        >
                                                                     Deaccession Item
                                                                 </button>
                                                             </div>

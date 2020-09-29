@@ -200,7 +200,7 @@ export class CollectionComponent implements OnInit {
 
   }
 
-  openMarcView(bibid,barcode) {
+  openMarcView(bibid,barcode,itemId) {
     this.CGDselect = '';
     this.DeliveryLocation = '';
     this.collectionUpdateMessage = false;
@@ -233,7 +233,7 @@ export class CollectionComponent implements OnInit {
       "bibDataFields": [],
       "BibliographicMarcForm.errorMessage": null,
       "warningMessage": null,
-      "itemId": null,
+      "itemId": itemId,
       "availability": null,
       "barcode": null,
       "locationCode": null,
@@ -258,11 +258,10 @@ export class CollectionComponent implements OnInit {
       //res => this.openmarcVal=res
       (res) => {
         this.openmarcVal = res;
-        // console.log("openmarc",this.openmarcVal['bibDataFields'])
         this.CGDselect = this.openmarcVal['collectionGroupDesignation'];
         this.deaccessionType = this.openmarcVal['deaccessionType'];
         this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
-        //console.log("openmarc", this.openmarcVal['collectionGroupDesignation'])
+        console.log();
 
         //cross institute
         this.postData =
@@ -291,7 +290,7 @@ export class CollectionComponent implements OnInit {
           "bibDataFields": [],
           "BibliographicMarcForm.errorMessage": null,
           "warningMessage": null,
-          "itemId": null,
+          "itemId": itemId,
           "availability": null,
           "barcode": null,
           "locationCode": null,
@@ -625,10 +624,11 @@ export class CollectionComponent implements OnInit {
   //save cgd end
 
   //save deacc start
-  saveDeaccession(bibid, deacctype) {
+  saveDeaccession(bibid, deacctype,itemBarcode) {
     if (this.deaccessionType != '' && this.DeliveryLocation != '' && this.DeaccessionNotes != '' && this.deaccessionType != undefined && this.DeliveryLocation != undefined && this.DeaccessionNotes != undefined) {
       this.locationErrorMessage = false;
       this.deaccessionNotesErrorMessage = false;
+      console.log(bibid,deacctype,itemBarcode);
       this.postData = {
         "itemBarcodes": "",
         "showResults": false,
@@ -656,7 +656,7 @@ export class CollectionComponent implements OnInit {
         "warningMessage": null,
         "itemId": null,
         "availability": null,
-        "barcode": null,
+        "barcode": itemBarcode,
         "locationCode": null,
         "useRestriction": null,
         "monographCollectionGroupDesignation": null,
@@ -675,12 +675,11 @@ export class CollectionComponent implements OnInit {
         "allowEdit": false,
         "username": null
       }
-
       this.collectionService.updateCollection(this.postData).subscribe(
         // (res) => this.collectionupdateVal=res
         (res) => {
           this.collectionupdateVal = res;
-          //console.log("updatesave", this.collectionupdateVal['deaccessionType']);
+          console.log("updatesave", this.collectionupdateVal);
           this.newdeaccessionType = this.collectionupdateVal['deaccessionType'];
           this.newDeliveryLocation = this.collectionupdateVal['deliveryLocation'];
           this.newdeaccessionnote = this.collectionupdateVal['deaccessionNotes'];
