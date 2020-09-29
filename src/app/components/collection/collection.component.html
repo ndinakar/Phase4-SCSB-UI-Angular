@@ -219,21 +219,21 @@
                                                         <div id="collectionUpdateMessage" class="row margin-btm-10" *ngIf="collectionUpdateMessage">
                                                             <div class="col-sm-12">
                                                                 <div class="bg-success text-success padding-10">
-                                                                    <span class="margin-right-05 glyphicon glyphicon-saved"></span><span >{{collectionmsg}}</span>
+                                                                    <span class="margin-right-05 glyphicon glyphicon-saved"></span><span>{{message}}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div *ngIf="collectionUpdateErrorMessage" id="collectionUpdateErrorMessage" class="row margin-btm-10" >
                                                             <div class="col-sm-12">
                                                                 <div class="bg-danger text-danger padding-10">
-                                                                    <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{crossinstitutionVal['errorMessage']}</span>
+                                                                    <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span [innerHTML]="errorMessage"></span>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div *ngIf="collectionUpdateWarningMessage" id="collectionUpdateWarningMessage" class="row margin-btm-10" >
                                                             <div class="col-sm-12">
                                                                 <div class="bg-warning text-warning padding-10">
-                                                                    <span id="warningMessageId" class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{crossinstitutionVal['warningMessage']}}</span>
+                                                                    <span id="warningMessageId" class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{warningMessage}}</span>
                                                                 </div>
                                                             </div>
                                                         </div> 
@@ -282,7 +282,7 @@
 
                                                                 <div class="radio-inline radio padding-left-0 margin-left-15">
                                                                     <label>
-                                                                        <input type="radio" name="collectionoption" id="deaccesionclick" value="Deaccession" th:field="" (click)="deaccessioncontrol()"/> Deaccession
+                                                                        <input type="radio" name="collectionoption" id="deaccesionclick" value="Deaccession" (click)="deaccessioncontrol()"/> Deaccession
                                                                         <span class="cr"><i class="cr-icon radio-dot"></i></span>
                                                                     </label>
                                                                 </div>

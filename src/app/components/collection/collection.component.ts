@@ -16,9 +16,9 @@ export class CollectionComponent implements OnInit {
   collectionForm: FormGroup;
   collectionVal: TreeNode[];
   openmarcVal: TreeNode[];
-  collectionupdateVal: TreeNode[];
   crossinstitutionVal: TreeNode[];
   cols: any[];
+  itemId: number;
   showresultdiv = false;
   errorDiv = false;
   editCDGsection = true;
@@ -31,7 +31,7 @@ export class CollectionComponent implements OnInit {
   CGDNoteReadOnly = false;
   collectionUpdateMessage = false;
   collectionUpdateErrorMessage = false;
-  collectionUpdateWarningMessage =  false;
+  collectionUpdateWarningMessage = false;
   barcodeFieldName: string;
   CGDChangeNotes: string;
   DeaccessionNotes: string;
@@ -50,8 +50,11 @@ export class CollectionComponent implements OnInit {
   barcodesNotFoundErrorMessageId = false;
   resultdiv = false;
   barerrmsg: string;
-  bibId :string;
+  bibId: string;
   customerCode: string;
+  message: string;
+  warningMessage: string;
+  errorMessage: string;
   constructor(private formBuilder: FormBuilder, private collectionService: CollectionService) { }
 
   ngOnInit(): void {
@@ -117,7 +120,7 @@ export class CollectionComponent implements OnInit {
     this.barerrmsg = '';
     this.showresultdiv = true;
     if (this.barcodeFieldName != null && this.barcodeFieldName != undefined && this.barcodeFieldName != '') {
-     
+
       this.norecord = false;
 
       this.postData = {
@@ -170,21 +173,7 @@ export class CollectionComponent implements OnInit {
 
         (res) => {
           this.collectionVal = res;
-          if (this.collectionVal['barcodesNotFoundErrorMessage'] == null && (this.collectionVal['searchResultRows']) != ɵEMPTY_ARRAY) {
-
-            this.resultdiv = true
-            this.norecord = false;
-            this.barcodesNotFoundErrorMessageId = false;
-          } else if (this.collectionVal['barcodesNotFoundErrorMessage'] != null && (this.collectionVal['searchResultRows']) != ɵEMPTY_ARRAY) {
-            this.barerrmsg = this.collectionVal['barcodesNotFoundErrorMessage'];
-            this.norecord = false;
-            this.resultdiv = true; 
-            this.barcodesNotFoundErrorMessageId = true;
-          } else if (this.collectionVal['barcodesNotFoundErrorMessage'] != null && (this.collectionVal['searchResultRows']) == ɵEMPTY_ARRAY) {
-            this.norecord = true;
-            this.resultdiv = false; 
-            this.barcodesNotFoundErrorMessageId = false;
-          }
+          this.validateDisplayRecords();
         },
         (error) => {
           //Called when error
@@ -200,14 +189,12 @@ export class CollectionComponent implements OnInit {
 
   }
 
-  openMarcView(bibid,barcode,itemId) {
+  openMarcView(bibid, barcode, itemId) {
     this.CGDselect = '';
     this.DeliveryLocation = '';
     this.collectionUpdateMessage = false;
     this.CGDChangeNotes = '';
     this.DeaccessionNotes = '';
-    //console.log("modalval", bibid)
-    // $('#collectionUpdateModal').html();
     this.postData = {
       "itemBarcodes": barcode,
       "showResults": false,
@@ -235,7 +222,7 @@ export class CollectionComponent implements OnInit {
       "warningMessage": null,
       "itemId": itemId,
       "availability": null,
-      "barcode": null,
+      "barcode": barcode,
       "locationCode": null,
       "useRestriction": null,
       "monographCollectionGroupDesignation": null,
@@ -261,12 +248,10 @@ export class CollectionComponent implements OnInit {
         this.CGDselect = this.openmarcVal['collectionGroupDesignation'];
         this.deaccessionType = this.openmarcVal['deaccessionType'];
         this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
-        console.log();
-
         //cross institute
         this.postData =
         {
-          "itemBarcodes": this.itemBarcodenew,
+          "itemBarcodes": null,
           "showResults": false,
           "selectAll": false,
           "errorMessage": null,
@@ -292,22 +277,22 @@ export class CollectionComponent implements OnInit {
           "warningMessage": null,
           "itemId": itemId,
           "availability": null,
-          "barcode": null,
+          "barcode": this.itemBarcodenew,
           "locationCode": null,
           "useRestriction": null,
           "monographCollectionGroupDesignation": null,
-          "collectionGroupDesignation": "Shared",
-          "newCollectionGroupDesignation": "",
+          "collectionGroupDesignation": this.CGDselect,
+          "newCollectionGroupDesignation": null,
           "cgdChangeNotes": "test",
           "customerCode": null,
-          "deaccessionType": null,
+          "deaccessionType": this.deaccessionType,
           "deaccessionNotes": null,
           "deliveryLocations": [],
           "deliveryLocation": null,
           "shared": false,
           "submitted": false,
-          "message": 'Update CGD',
-          "collectionAction": null,
+          "message": null,
+          "collectionAction": 'Update CGD',
           "allowEdit": false,
           "username": null
         }
@@ -315,19 +300,7 @@ export class CollectionComponent implements OnInit {
           (res) => {
             this.crossinstitutionVal = res;
             $('#collection-result-inner').modal({ show: true });
-            if(this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null){
-              this.collectionUpdateErrorMessage = true;
-              this.collectionUpdateWarningMessage = true;
-            }else if(this.crossinstitutionVal['warningMessage'] != null){
-              this.collectionUpdateErrorMessage = false;
-              this.collectionUpdateWarningMessage = true;
-            } else if(this.crossinstitutionVal['errorMessage'] != null){
-              this.collectionUpdateErrorMessage = true;
-              this.collectionUpdateWarningMessage = false;
-            }else{
-              this.collectionUpdateErrorMessage = false;
-              this.collectionUpdateWarningMessage = false;
-            }
+            this.validateResponse();
           },
           (error) => {
             //Called when error
@@ -335,7 +308,7 @@ export class CollectionComponent implements OnInit {
 
         );
         //cross institue tend
-        
+
 
 
       },
@@ -344,7 +317,7 @@ export class CollectionComponent implements OnInit {
       }
 
     );
-    
+
 
   }
 
@@ -352,9 +325,10 @@ export class CollectionComponent implements OnInit {
     //cross institute
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
     this.bibId = this.openmarcVal['bibId'];
+    this.itemId = this.openmarcVal['itemId']
     this.postData =
     {
-      "itemBarcodes": this.itemBarcodenew,
+      "itemBarcodes": "",
       "showResults": false,
       "selectAll": false,
       "errorMessage": null,
@@ -378,9 +352,9 @@ export class CollectionComponent implements OnInit {
       "bibDataFields": [],
       "BibliographicMarcForm.errorMessage": null,
       "warningMessage": null,
-      "itemId": null,
+      "itemId": this.itemId,
       "availability": null,
-      "barcode": null,
+      "barcode": this.itemBarcodenew,
       "locationCode": null,
       "useRestriction": null,
       "monographCollectionGroupDesignation": null,
@@ -394,35 +368,24 @@ export class CollectionComponent implements OnInit {
       "deliveryLocation": null,
       "shared": false,
       "submitted": false,
-      "message": 'Update CGD',
-      "collectionAction": null,
+      "message": null,
+      "collectionAction": 'Update CGD',
       "allowEdit": false,
       "username": null
     }
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
-       (res) => {
-         this.crossinstitutionVal=res;
-         if(this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null){
-          this.collectionUpdateErrorMessage = true;
-          this.collectionUpdateWarningMessage = true;
-        }else if(this.crossinstitutionVal['warningMessage'] != null){
-          this.collectionUpdateErrorMessage = false;
-          this.collectionUpdateWarningMessage = true;
-        } else if(this.crossinstitutionVal['errorMessage'] != null){
-          this.collectionUpdateErrorMessage = true;
-          this.collectionUpdateWarningMessage = false;
-        }else{
-          this.collectionUpdateErrorMessage = false;
-          this.collectionUpdateWarningMessage = false;
-        }
-       },
+      (res) => {
+        this.crossinstitutionVal = res;
+        console.log(this.crossinstitutionVal['warningMessage']);
+        this.validateResponse();
+      },
       (error) => {
-         //Called when error
+        //Called when error
       }
 
-       );
+    );
     //cross institue tend
-    
+
     this.editCDGsection = true;
     this.Deaccessionsection = false;
   }
@@ -434,9 +397,10 @@ export class CollectionComponent implements OnInit {
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
     this.bibId = this.openmarcVal['bibId'];
     this.customerCode = this.openmarcVal['customerCode'];
+    this.itemId = this.openmarcVal['itemId']
     this.postData =
     {
-      "itemBarcodes": this.itemBarcodenew,
+      "itemBarcodes": "",
       "showResults": false,
       "selectAll": false,
       "errorMessage": null,
@@ -460,51 +424,39 @@ export class CollectionComponent implements OnInit {
       "bibDataFields": [],
       "BibliographicMarcForm.errorMessage": null,
       "warningMessage": null,
-      "itemId": null,
+      "itemId": this.itemId,
       "availability": null,
-      "barcode": null,
+      "barcode": this.itemBarcodenew,
       "locationCode": null,
       "useRestriction": null,
       "monographCollectionGroupDesignation": null,
-      "collectionGroupDesignation": "Shared",
-      "newCollectionGroupDesignation": "",
-      "cgdChangeNotes": "test",
-      "customerCode": null,
+      "collectionGroupDesignation": null,
+      "newCollectionGroupDesignation": null,
+      "cgdChangeNotes": null,
+      "customerCode": this.customerCode,
       "deaccessionType": null,
       "deaccessionNotes": null,
       "deliveryLocations": [],
       "deliveryLocation": null,
       "shared": false,
       "submitted": false,
-      "message": 'Deaccession',
-      "collectionAction": null,
+      "message": null,
+      "collectionAction": 'Deaccession',
       "allowEdit": false,
       "username": null
     }
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
-       (res) => {
-         this.crossinstitutionVal=res;
-         if(this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null){
-          this.collectionUpdateErrorMessage = true;
-          this.collectionUpdateWarningMessage = true;
-        }else if(this.crossinstitutionVal['warningMessage'] != null){
-          this.collectionUpdateErrorMessage = false;
-          this.collectionUpdateWarningMessage = true;
-        } else if(this.crossinstitutionVal['errorMessage'] != null){
-          this.collectionUpdateErrorMessage = true;
-          this.collectionUpdateWarningMessage = false;
-        }else{
-          this.collectionUpdateErrorMessage = false;
-          this.collectionUpdateWarningMessage = false;
-        }
-       },
+      (res) => {
+        this.crossinstitutionVal = res;
+        this.validateResponse();
+      },
       (error) => {
-         //Called when error
+        //Called when error
       }
 
-       );
+    );
     //cross institue tend
-   
+
     this.editCDGsection = false;
     this.Deaccessionsection = true;
   }
@@ -524,7 +476,7 @@ export class CollectionComponent implements OnInit {
   }
 
   DeaccessionNotesFunc(val) {
-   // console.log("vall1", val)
+    // console.log("vall1", val)
     var DeaccessionNotes = $('#DeaccessionNotes').val();
     var deaNoteLength = DeaccessionNotes.length;
     //console.log("ll", deaNoteLength)
@@ -544,71 +496,72 @@ export class CollectionComponent implements OnInit {
       this.cgdNotesErrorMessage = false;
       this.newCGDReadOnly = true;
       this.CGDNoteReadOnly = true;
-      if(this.CGDselect != cgdold){
-      this.postData = {
-        "itemBarcodes": this.itemBarcodenew,
-        "showResults": false,
-        "selectAll": false,
-        "errorMessage": null,
-        "barcodesNotFoundErrorMessage": null,
-        "ignoredBarcodesErrorMessage": null,
-        "searchResultRows": [],
-        "showModal": false,
-        "bibId": bibid,
-        "title": null,
-        "author": null,
-        "publisher": null,
-        "publishedDate": null,
-        "owningInstitution": null,
-        "callNumber": null,
-        "leaderMaterialType": null,
-        "tag000": null,
-        "controlNumber001": null,
-        "controlNumber005": null,
-        "controlNumber008": null,
-        "content": null,
-        "bibDataFields": [],
-        "BibliographicMarcForm.errorMessage": null,
-        "warningMessage": null,
-        "itemId": null,
-        "availability": null,
-        "barcode": null,
-        "locationCode": null,
-        "useRestriction": null,
-        "monographCollectionGroupDesignation": null,
-        "collectionGroupDesignation": cgdold,
-        "newCollectionGroupDesignation": this.CGDselect,
-        "cgdChangeNotes": this.CGDChangeNotes,
-        "customerCode": null,
-        "deaccessionType": null,
-        "deaccessionNotes": null,
-        "deliveryLocations": [],
-        "deliveryLocation": null,
-        "shared": false,
-        "submitted": false,
-        "message": null,
-        "collectionAction": "Update CGD",
-        "allowEdit": false,
-        "username": null
-      }
-
-      this.collectionService.updateCollection(this.postData).subscribe(
-        // (res) => this.collectionupdateVal=res
-        (res) => {
-          this.collectionupdateVal = res;
-          //console.log("updatesave", this.collectionupdateVal['newCollectionGroupDesignation'])
-          this.newCGD = this.collectionupdateVal['newCollectionGroupDesignation'];
-          this.newCGDnote = this.collectionupdateVal['cgdChangeNotes'];
-          this.collectionmsg = this.collectionupdateVal['message'];
-          this.collectionUpdateMessage = true;
-          this.Deaccessionsection = false;
-        },
-        (error) => {
-          //Called when error
+      if (this.CGDselect != cgdold) {
+        this.postData = {
+          "itemBarcodes": "",
+          "showResults": false,
+          "selectAll": false,
+          "errorMessage": null,
+          "barcodesNotFoundErrorMessage": null,
+          "ignoredBarcodesErrorMessage": null,
+          "searchResultRows": [],
+          "showModal": false,
+          "bibId": bibid,
+          "title": null,
+          "author": null,
+          "publisher": null,
+          "publishedDate": null,
+          "owningInstitution": null,
+          "callNumber": null,
+          "leaderMaterialType": null,
+          "tag000": null,
+          "controlNumber001": null,
+          "controlNumber005": null,
+          "controlNumber008": null,
+          "content": null,
+          "bibDataFields": [],
+          "BibliographicMarcForm.errorMessage": null,
+          "warningMessage": null,
+          "itemId": null,
+          "availability": null,
+          "barcode": this.itemBarcodenew,
+          "locationCode": null,
+          "useRestriction": null,
+          "monographCollectionGroupDesignation": null,
+          "collectionGroupDesignation": cgdold,
+          "newCollectionGroupDesignation": this.CGDselect,
+          "cgdChangeNotes": this.CGDChangeNotes,
+          "customerCode": null,
+          "deaccessionType": null,
+          "deaccessionNotes": null,
+          "deliveryLocations": [],
+          "deliveryLocation": null,
+          "shared": false,
+          "submitted": false,
+          "message": null,
+          "collectionAction": "Update CGD",
+          "allowEdit": false,
+          "username": null
         }
 
-      );
-      }else{
+        this.collectionService.updateCollection(this.postData).subscribe(
+          // (res) => this.crossinstitutionVal=res
+          (res) => {
+            this.crossinstitutionVal = res;
+            //console.log("updatesave", this.crossinstitutionVal['newCollectionGroupDesignation'])
+            this.newCGD = this.crossinstitutionVal['newCollectionGroupDesignation'];
+            this.newCGDnote = this.crossinstitutionVal['cgdChangeNotes'];
+            this.collectionmsg = this.crossinstitutionVal['message'];
+            this.collectionUpdateMessage = true;
+            this.Deaccessionsection = false;
+            this.validateResponse();
+          },
+          (error) => {
+            //Called when error
+          }
+
+        );
+      } else {
         this.cgdErrorMessage = true;
       }
 
@@ -624,11 +577,11 @@ export class CollectionComponent implements OnInit {
   //save cgd end
 
   //save deacc start
-  saveDeaccession(bibid, deacctype,itemBarcode) {
+  saveDeaccession(bibid, deacctype, itemBarcode) {
     if (this.deaccessionType != '' && this.DeliveryLocation != '' && this.DeaccessionNotes != '' && this.deaccessionType != undefined && this.DeliveryLocation != undefined && this.DeaccessionNotes != undefined) {
       this.locationErrorMessage = false;
       this.deaccessionNotesErrorMessage = false;
-      console.log(bibid,deacctype,itemBarcode);
+      console.log(bibid, deacctype, itemBarcode);
       this.postData = {
         "itemBarcodes": "",
         "showResults": false,
@@ -676,17 +629,18 @@ export class CollectionComponent implements OnInit {
         "username": null
       }
       this.collectionService.updateCollection(this.postData).subscribe(
-        // (res) => this.collectionupdateVal=res
+        // (res) => this.crossinstitutionVal=res
         (res) => {
-          this.collectionupdateVal = res;
-          console.log("updatesave", this.collectionupdateVal);
-          this.newdeaccessionType = this.collectionupdateVal['deaccessionType'];
-          this.newDeliveryLocation = this.collectionupdateVal['deliveryLocation'];
-          this.newdeaccessionnote = this.collectionupdateVal['deaccessionNotes'];
+          this.crossinstitutionVal = res;
+          console.log("updatesave", this.crossinstitutionVal);
+          this.newdeaccessionType = this.crossinstitutionVal['deaccessionType'];
+          this.newDeliveryLocation = this.crossinstitutionVal['deliveryLocation'];
+          this.newdeaccessionnote = this.crossinstitutionVal['deaccessionNotes'];
 
-          this.collectionmsg = this.collectionupdateVal['message'];
+          this.collectionmsg = this.crossinstitutionVal['message'];
           this.collectionUpdateMessage = true;
           this.editCDGsection = false;
+          this.validateResponse();
         },
         (error) => {
           //Called when error
@@ -695,7 +649,7 @@ export class CollectionComponent implements OnInit {
       );
 
     } else {
-     // console.log("111", this.deaccessionType)
+      // console.log("111", this.deaccessionType)
       //console.log("22", this.CGDChangeNotes)
       if (this.deaccessionType == '' || this.deaccessionType == undefined) {
 
@@ -708,6 +662,48 @@ export class CollectionComponent implements OnInit {
       //console.log("err")
     }
   }
-  //save deacc end
+  validateResponse() {
+    this.message = this.crossinstitutionVal['message'];
+    this.warningMessage = this.crossinstitutionVal['warningMessage'];
+    this.errorMessage = this.crossinstitutionVal['errorMessage'];
 
+    if (this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null) {
+      this.collectionUpdateErrorMessage = true;
+      this.collectionUpdateWarningMessage = true;
+      this.collectionUpdateMessage = false;
+      console.log("1");
+    } else if (this.crossinstitutionVal['warningMessage'] != null) {
+      this.collectionUpdateErrorMessage = false;
+      this.collectionUpdateWarningMessage = true;
+      this.collectionUpdateMessage = false;
+      console.log("2");
+    } else if (this.crossinstitutionVal['errorMessage'] != null) {
+      this.collectionUpdateErrorMessage = true;
+      this.collectionUpdateWarningMessage = false;
+      this.collectionUpdateMessage = false;
+      console.log("3");
+    } else if (this.crossinstitutionVal['message'] != null) {
+      this.collectionUpdateMessage = true;
+      this.collectionUpdateWarningMessage = false;
+      this.collectionUpdateErrorMessage = false;
+      console.log("4");
+    }
+  }
+  //save deacc end
+  validateDisplayRecords() {
+    this.barerrmsg = this.collectionVal['barcodesNotFoundErrorMessage'];
+    if (this.collectionVal['barcodesNotFoundErrorMessage'] == null && (this.collectionVal['searchResultRows']) != 0) {
+      this.resultdiv = true
+      this.norecord = false;
+      this.barcodesNotFoundErrorMessageId = false;
+    } else if (this.collectionVal['barcodesNotFoundErrorMessage'] != null && (this.collectionVal['searchResultRows']) == 0) {
+      this.norecord = false;
+      this.resultdiv = false;
+      this.barcodesNotFoundErrorMessageId = true;
+    } else if (this.collectionVal['barcodesNotFoundErrorMessage'] != null && (this.collectionVal['searchResultRows']) != 0) {
+      this.norecord = false;
+      this.resultdiv = true;
+      this.barcodesNotFoundErrorMessageId = true;
+    }
+  }
 }
