@@ -460,7 +460,7 @@
                             <div style="margin-top: -20px;">
                             <button id="export" [disabled]="clicked" (click)="setFileName();dt.exportCSV({selectionOnly:true})" name="action" value="export" type="button" class="btn btn-primary pull-right" style="margin-right: 10px;">Export Selected Records
                             </button>
-                            <button id="requestButton" [routerLink]="['/dashboard/request']" [disabled]="clicked" type="button" name="action" value="request" class="btn btn-primary pull-right" style="margin-right: 10px;">Request Selected
+                            <button id="requestButton" (click)="routeToRequest()" [disabled]="clicked" type="button" name="action" value="request" class="btn btn-primary pull-right" style="margin-right: 10px;">Request Selected
                             Items(s)
                             </button>
                             </div>

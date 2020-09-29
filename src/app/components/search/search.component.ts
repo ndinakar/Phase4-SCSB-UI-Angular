@@ -961,4 +961,8 @@ export class SearchComponent implements OnInit {
     this.dt.exportFilename = 'ExportRecords' + '_' +
       new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'UTC');
   }
+  routeToRequest(){
+    console.log(this.selectedNodes1)
+    console.log(this.selectedNodes1[0]);
+  }
 }

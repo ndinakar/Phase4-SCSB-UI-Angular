@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 
-
+import { ActivatedRoute } from '@angular/router'; 
 
 
 declare var $: any;
@@ -80,7 +80,8 @@ export class RequestComponent implements OnInit {
   previousValue=0;
   lastValue=0;
   showentries = 3;
-  constructor(private formBuilder: FormBuilder,private requestService: RequestService) { }
+
+  constructor(private formBuilder: FormBuilder,private requestService: RequestService, private router:ActivatedRoute) { }
   
   ngOnInit(): void {
     this.requestForm = this.formBuilder.group({
@@ -115,7 +116,7 @@ export class RequestComponent implements OnInit {
       "errorMessage":null,
       "totalRecordsCount":"0",
       "pageNumber":0,
-      "pageSize":10,
+      "pageSize":3,
       "totalPageCount":0,
       "submitted":false,
       "showResults":false,
@@ -242,7 +243,7 @@ export class RequestComponent implements OnInit {
       "errorMessage":null,
       "totalRecordsCount":"0",
       "pageNumber":0,
-      "pageSize":10,
+      "pageSize":3,
       "totalPageCount":0,
       "submitted":false,
       "showResults":false,
@@ -278,7 +279,6 @@ export class RequestComponent implements OnInit {
       (res) => {
         this.itemBarcodeNotFoundErrorMessage=false;
         this.itembarcodeVal=res;
-        console.log("lll",this.itembarcodeVal)
         if(!this.itembarcodeVal['errorMessage']){
         this.itemTitleId=this.itembarcodeVal['itemTitle'];
         this.itemOwningInstitutionId=this.itembarcodeVal['itemOwningInstitution'];
@@ -320,7 +320,7 @@ export class RequestComponent implements OnInit {
       "errorMessage":null,
       "totalRecordsCount":"0",
       "pageNumber":0,
-      "pageSize":10,
+      "pageSize":3,
       "totalPageCount":0,
       "submitted":false,
       "showResults":false,
@@ -386,10 +386,8 @@ export class RequestComponent implements OnInit {
 
     if(!pattern.test(val))
     {
-      console.log("lll11")
       this.patronEmailIdErrorMessage=true;
     }​else{
-      console.log("lll11222")
       this.patronEmailIdErrorMessage=false;
     }
   }
@@ -471,7 +469,7 @@ export class RequestComponent implements OnInit {
         "errorMessage":null,
         "totalRecordsCount":"0",
         "pageNumber":0,
-        "pageSize":10,
+        "pageSize":3,
         "totalPageCount":0,
         "submitted":false,
         "showResults":false,
@@ -568,7 +566,7 @@ export class RequestComponent implements OnInit {
           "errorMessage":null,
           "totalRecordsCount":"0",
           "pageNumber":0,
-          "pageSize":10,
+          "pageSize":3,
           "totalPageCount":0,
           "submitted":false,
           "showResults":false,
@@ -693,7 +691,7 @@ export class RequestComponent implements OnInit {
           "errorMessage":null,
           "totalRecordsCount":"0",
           "pageNumber":0,
-          "pageSize":10,
+          "pageSize":3,
           "totalPageCount":0,
           "submitted":false,
           "showResults":false,
@@ -767,7 +765,7 @@ export class RequestComponent implements OnInit {
         "itemTitle":null,
         "itemOwningInstitution":null,
         "patronEmailAddress":null,
-        "requestingInstitution":this.searchInstitutionList,
+        "requestingInstitution":null,
         "requestType":null,
         "requestNotes":null,
         "startPage":null,
@@ -803,7 +801,7 @@ export class RequestComponent implements OnInit {
         ],
         "disableRequestingInstitution":false,
         "onChange":false,
-        "institution":null,
+        "institution":this.searchInstitutionList,
         "showRequestErrorMsg":null,
         "requestingInstituionHidden":null,
         "itemBarcodeHidden":null,
@@ -816,9 +814,7 @@ export class RequestComponent implements OnInit {
           this.searchReqresultFirst=true;
           this.searchreqResultVal=res;
           this.pagination();
-          console.log("message Value",this.searchreqResultVal['message']);
           if(this.searchreqResultVal['message'] != null){
-            console.log("message Value",this.searchreqResultVal['message']);
             this.messageNoSearchRecords =true;
             this.searchReqresult = false;
           }else{
@@ -872,7 +868,7 @@ export class RequestComponent implements OnInit {
          "errorMessage":null,
          "totalRecordsCount":"0",
          "pageNumber":0,
-         "pageSize":10,
+         "pageSize":3,
          "totalPageCount":0,
          "submitted":false,
          "showResults":false,
@@ -895,7 +891,7 @@ export class RequestComponent implements OnInit {
          ],
          "disableRequestingInstitution":false,
          "onChange":false,
-         "institution":null,
+         "institution":this.searchInstitutionList,
          "showRequestErrorMsg":null,
          "requestingInstituionHidden":null,
          "itemBarcodeHidden":null,
@@ -991,7 +987,7 @@ export class RequestComponent implements OnInit {
       "errorMessage":null,
       "totalRecordsCount":"0",
       "pageNumber":0,
-      "pageSize":10,
+      "pageSize":3,
       "totalPageCount":0,
       "submitted":false,
       "showResults":false,
@@ -1062,7 +1058,7 @@ export class RequestComponent implements OnInit {
       "errorMessage":null,
       "totalRecordsCount":"0",
       "pageNumber":0,
-      "pageSize":10,
+      "pageSize":3,
       "totalPageCount":0,
       "submitted":false,
       "showResults":false,
@@ -1120,7 +1116,7 @@ export class RequestComponent implements OnInit {
       "itemTitle":null,
       "itemOwningInstitution":null,
       "patronEmailAddress":null,
-      "requestingInstitution":this.searchInstitutionList,
+      "requestingInstitution":null,
       "requestType":null,
       "requestNotes":null,
       "startPage":null,
@@ -1156,7 +1152,7 @@ export class RequestComponent implements OnInit {
       ],
       "disableRequestingInstitution":false,
       "onChange":false,
-      "institution":null,
+      "institution":this.searchInstitutionList,
       "showRequestErrorMsg":null,
       "requestingInstituionHidden":null,
       "itemBarcodeHidden":null,
@@ -1186,7 +1182,7 @@ export class RequestComponent implements OnInit {
       "itemTitle":null,
       "itemOwningInstitution":null,
       "patronEmailAddress":null,
-      "requestingInstitution":this.searchInstitutionList,
+      "requestingInstitution":null,
       "requestType":null,
       "requestNotes":null,
       "startPage":null,
@@ -1222,7 +1218,7 @@ export class RequestComponent implements OnInit {
       ],
       "disableRequestingInstitution":false,
       "onChange":false,
-      "institution":null,
+      "institution":this.searchInstitutionList,
       "showRequestErrorMsg":null,
       "requestingInstituionHidden":null,
       "itemBarcodeHidden":null,
@@ -1251,7 +1247,7 @@ export class RequestComponent implements OnInit {
       "itemTitle":null,
       "itemOwningInstitution":null,
       "patronEmailAddress":null,
-      "requestingInstitution":this.searchInstitutionList,
+      "requestingInstitution":null,
       "requestType":null,
       "requestNotes":null,
       "startPage":null,
@@ -1287,7 +1283,7 @@ export class RequestComponent implements OnInit {
       ],
       "disableRequestingInstitution":false,
       "onChange":false,
-      "institution":null,
+      "institution":this.searchInstitutionList,
       "showRequestErrorMsg":null,
       "requestingInstituionHidden":null,
       "itemBarcodeHidden":null,
@@ -1316,7 +1312,7 @@ export class RequestComponent implements OnInit {
       "itemTitle":null,
       "itemOwningInstitution":null,
       "patronEmailAddress":null,
-      "requestingInstitution":this.searchInstitutionList,
+      "requestingInstitution":null,
       "requestType":null,
       "requestNotes":null,
       "startPage":null,
@@ -1352,7 +1348,7 @@ export class RequestComponent implements OnInit {
       ],
       "disableRequestingInstitution":false,
       "onChange":false,
-      "institution":null,
+      "institution":this.searchInstitutionList,
       "showRequestErrorMsg":null,
       "requestingInstituionHidden":null,
       "itemBarcodeHidden":null,
@@ -1384,7 +1380,7 @@ export class RequestComponent implements OnInit {
       "itemTitle":null,
       "itemOwningInstitution":null,
       "patronEmailAddress":null,
-      "requestingInstitution":this.searchInstitutionList,
+      "requestingInstitution":null,
       "requestType":null,
       "requestNotes":null,
       "startPage":null,
@@ -1420,7 +1416,7 @@ export class RequestComponent implements OnInit {
       ],
       "disableRequestingInstitution":false,
       "onChange":false,
-      "institution":null,
+      "institution":this.searchInstitutionList,
       "showRequestErrorMsg":null,
       "requestingInstituionHidden":null,
       "itemBarcodeHidden":null,
