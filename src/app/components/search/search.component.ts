@@ -6,7 +6,7 @@ import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
 import { Router } from '@angular/router';
-
+declare var $: any;
 
 @Component({
   selector: 'app-search',
@@ -290,6 +290,7 @@ export class SearchComponent implements OnInit {
 
   //show entries api end
   searchRecord() {
+    $("#search-filter").slideUp();
     this.nextvalue = 0;
     this.showentries = 10;
     this.owningInstitutions = [];
@@ -373,31 +374,38 @@ export class SearchComponent implements OnInit {
       "errorMessage": null
     }
 
-    this.showresultdiv = true;
-    this.searchService.getSearch(this.postData).subscribe(files => this.searchVal = files);
+    this.searchService.getSearch(this.postData).subscribe(
+      (files) => {
+        this.searchVal = files
+        this.showresultdiv = true;
+        this.cols = [
+          { field: 'title', header: 'Title' },
+          { field: 'author', header: 'Author' },
+          { field: 'publisher', header: 'Publisher' },
+          { field: 'publisherDate', header: 'Publisher Date' },
+          { field: 'owningInstitution', header: 'OI' },
+          { field: 'customerCode', header: 'CC' },
+          { field: 'collectionGroupDesignation', header: 'CGD' },
+          { field: 'useRestriction', header: 'Use Restriction' },
+          { field: 'barcode', header: 'Barcode' },
+          { field: 'summaryHoldings', header: 'SH' }
+        ];
+    
+        this.cols1 = [
+          { field: 'callNumber', header: 'Call Number' },
+          { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
+          { field: 'customerCode', header: 'CC' },
+          { field: 'collectionGroupDesignation', header: 'CGD' },
+          { field: 'useRestriction', header: 'Use Restriction' },
+          { field: 'barcode', header: 'Barcode' },
+        ];
+    
+      },
+      (error) => {
+        //Called when error
+      })
 
-    this.cols = [
-      { field: 'title', header: 'Title' },
-      { field: 'author', header: 'Author' },
-      { field: 'publisher', header: 'Publisher' },
-      { field: 'publisherDate', header: 'Publisher Date' },
-      { field: 'owningInstitution', header: 'OI' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-      { field: 'summaryHoldings', header: 'SH' }
-    ];
-
-    this.cols1 = [
-      { field: 'callNumber', header: 'Call Number' },
-      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-    ];
-  }
+    }
 
   //next api start
   nextapi() {
@@ -970,5 +978,9 @@ export class SearchComponent implements OnInit {
     }
     var barcode=barcode1.join();
     this.router.navigate(['/dashboard/request', barcode]);
+  }
+
+  facetsshowhide(){
+    $("#search-filter").slideToggle();
   }
 }

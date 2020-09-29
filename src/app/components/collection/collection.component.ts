@@ -113,7 +113,7 @@ export class CollectionComponent implements OnInit {
     this.showresultdiv = false;
   }
   displayRecords() {
-    console.log("vall", this.barcodeFieldName);
+    //console.log("vall", this.barcodeFieldName);
     this.barerrmsg = '';
     this.showresultdiv = true;
     if (this.barcodeFieldName != null && this.barcodeFieldName != undefined && this.barcodeFieldName != '') {
@@ -192,7 +192,7 @@ export class CollectionComponent implements OnInit {
 
       );
     } else {
-      console.log("nb")
+      //console.log("nb")
       this.norecord = true;
       this.resultdiv = false;
       this.barcodesNotFoundErrorMessageId = false;
@@ -315,6 +315,20 @@ export class CollectionComponent implements OnInit {
         this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
           (res) => {
             this.crossinstitutionVal = res;
+            $('#collection-result-inner').modal({ show: true });
+            if(this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null){
+              this.collectionUpdateErrorMessage = true;
+              this.collectionUpdateWarningMessage = true;
+            }else if(this.crossinstitutionVal['warningMessage'] != null){
+              this.collectionUpdateErrorMessage = false;
+              this.collectionUpdateWarningMessage = true;
+            } else if(this.crossinstitutionVal['errorMessage'] != null){
+              this.collectionUpdateErrorMessage = true;
+              this.collectionUpdateWarningMessage = false;
+            }else{
+              this.collectionUpdateErrorMessage = false;
+              this.collectionUpdateWarningMessage = false;
+            }
           },
           (error) => {
             //Called when error
@@ -322,7 +336,7 @@ export class CollectionComponent implements OnInit {
 
         );
         //cross institue tend
-        $('#collection-result-inner').modal({ show: true });
+        
 
 
       },
@@ -331,19 +345,7 @@ export class CollectionComponent implements OnInit {
       }
 
     );
-    if(this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null){
-      this.collectionUpdateErrorMessage = true;
-      this.collectionUpdateWarningMessage = true;
-    }else if(this.crossinstitutionVal['warningMessage'] != null){
-      this.collectionUpdateErrorMessage = false;
-      this.collectionUpdateWarningMessage = true;
-    } else if(this.crossinstitutionVal['errorMessage'] != null){
-      this.collectionUpdateErrorMessage = true;
-      this.collectionUpdateWarningMessage = false;
-    }else{
-      this.collectionUpdateErrorMessage = false;
-      this.collectionUpdateWarningMessage = false;
-    }
+    
 
   }
 
@@ -401,6 +403,19 @@ export class CollectionComponent implements OnInit {
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
        (res) => {
          this.crossinstitutionVal=res;
+         if(this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null){
+          this.collectionUpdateErrorMessage = true;
+          this.collectionUpdateWarningMessage = true;
+        }else if(this.crossinstitutionVal['warningMessage'] != null){
+          this.collectionUpdateErrorMessage = false;
+          this.collectionUpdateWarningMessage = true;
+        } else if(this.crossinstitutionVal['errorMessage'] != null){
+          this.collectionUpdateErrorMessage = true;
+          this.collectionUpdateWarningMessage = false;
+        }else{
+          this.collectionUpdateErrorMessage = false;
+          this.collectionUpdateWarningMessage = false;
+        }
        },
       (error) => {
          //Called when error
@@ -408,19 +423,7 @@ export class CollectionComponent implements OnInit {
 
        );
     //cross institue tend
-    if(this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null){
-      this.collectionUpdateErrorMessage = true;
-      this.collectionUpdateWarningMessage = true;
-    }else if(this.crossinstitutionVal['warningMessage'] != null){
-      this.collectionUpdateErrorMessage = false;
-      this.collectionUpdateWarningMessage = true;
-    } else if(this.crossinstitutionVal['errorMessage'] != null){
-      this.collectionUpdateErrorMessage = true;
-      this.collectionUpdateWarningMessage = false;
-    }else{
-      this.collectionUpdateErrorMessage = false;
-      this.collectionUpdateWarningMessage = false;
-    }
+    
     this.editCDGsection = true;
     this.Deaccessionsection = false;
   }
@@ -482,6 +485,19 @@ export class CollectionComponent implements OnInit {
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
        (res) => {
          this.crossinstitutionVal=res;
+         if(this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null){
+          this.collectionUpdateErrorMessage = true;
+          this.collectionUpdateWarningMessage = true;
+        }else if(this.crossinstitutionVal['warningMessage'] != null){
+          this.collectionUpdateErrorMessage = false;
+          this.collectionUpdateWarningMessage = true;
+        } else if(this.crossinstitutionVal['errorMessage'] != null){
+          this.collectionUpdateErrorMessage = true;
+          this.collectionUpdateWarningMessage = false;
+        }else{
+          this.collectionUpdateErrorMessage = false;
+          this.collectionUpdateWarningMessage = false;
+        }
        },
       (error) => {
          //Called when error
@@ -489,28 +505,16 @@ export class CollectionComponent implements OnInit {
 
        );
     //cross institue tend
-    if(this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null){
-      this.collectionUpdateErrorMessage = true;
-      this.collectionUpdateWarningMessage = true;
-    }else if(this.crossinstitutionVal['warningMessage'] != null){
-      this.collectionUpdateErrorMessage = false;
-      this.collectionUpdateWarningMessage = true;
-    } else if(this.crossinstitutionVal['errorMessage'] != null){
-      this.collectionUpdateErrorMessage = true;
-      this.collectionUpdateWarningMessage = false;
-    }else{
-      this.collectionUpdateErrorMessage = false;
-      this.collectionUpdateWarningMessage = false;
-    }
+   
     this.editCDGsection = false;
     this.Deaccessionsection = true;
   }
 
   CGDChangeNotesFunc(val) {
-    console.log("vall", val)
+    //console.log("vall", val)
     var CGDChangeNotes = $('#CGDChangeNotes').val();
     var cgdNoteLength = CGDChangeNotes.length;
-    console.log("ll", cgdNoteLength)
+    //console.log("ll", cgdNoteLength)
     var len = val.length;
     if (len > 2000) {
       val = val.substring(0, 2000);
@@ -521,10 +525,10 @@ export class CollectionComponent implements OnInit {
   }
 
   DeaccessionNotesFunc(val) {
-    console.log("vall1", val)
+   // console.log("vall1", val)
     var DeaccessionNotes = $('#DeaccessionNotes').val();
     var deaNoteLength = DeaccessionNotes.length;
-    console.log("ll", deaNoteLength)
+    //console.log("ll", deaNoteLength)
     var len = val.length;
     if (len > 2000) {
       val = val.substring(0, 2000);
@@ -593,7 +597,7 @@ export class CollectionComponent implements OnInit {
         // (res) => this.collectionupdateVal=res
         (res) => {
           this.collectionupdateVal = res;
-          console.log("updatesave", this.collectionupdateVal['newCollectionGroupDesignation'])
+          //console.log("updatesave", this.collectionupdateVal['newCollectionGroupDesignation'])
           this.newCGD = this.collectionupdateVal['newCollectionGroupDesignation'];
           this.newCGDnote = this.collectionupdateVal['cgdChangeNotes'];
           this.collectionmsg = this.collectionupdateVal['message'];
@@ -615,7 +619,7 @@ export class CollectionComponent implements OnInit {
       } else if (this.CGDChangeNotes == undefined || this.CGDChangeNotes == '') {
         this.cgdNotesErrorMessage = true;
       }
-      console.log("err")
+      //console.log("err")
     }
   }
   //save cgd end
@@ -676,7 +680,7 @@ export class CollectionComponent implements OnInit {
         // (res) => this.collectionupdateVal=res
         (res) => {
           this.collectionupdateVal = res;
-          console.log("updatesave", this.collectionupdateVal['deaccessionType']);
+          //console.log("updatesave", this.collectionupdateVal['deaccessionType']);
           this.newdeaccessionType = this.collectionupdateVal['deaccessionType'];
           this.newDeliveryLocation = this.collectionupdateVal['deliveryLocation'];
           this.newdeaccessionnote = this.collectionupdateVal['deaccessionNotes'];
@@ -692,8 +696,8 @@ export class CollectionComponent implements OnInit {
       );
 
     } else {
-      console.log("111", this.deaccessionType)
-      console.log("22", this.CGDChangeNotes)
+     // console.log("111", this.deaccessionType)
+      //console.log("22", this.CGDChangeNotes)
       if (this.deaccessionType == '' || this.deaccessionType == undefined) {
 
       } else if (this.DeliveryLocation == undefined || this.DeliveryLocation == '') {
@@ -702,7 +706,7 @@ export class CollectionComponent implements OnInit {
       else if (this.DeaccessionNotes == undefined || this.DeaccessionNotes == '') {
         this.deaccessionNotesErrorMessage = true;
       }
-      console.log("err")
+      //console.log("err")
     }
   }
   //save deacc end
