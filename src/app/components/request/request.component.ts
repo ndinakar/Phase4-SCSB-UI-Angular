@@ -81,13 +81,27 @@ export class RequestComponent implements OnInit {
   lastValue=0;
   showentries = 3;
 
+  barcode_id:string;
+
   constructor(private formBuilder: FormBuilder,private requestService: RequestService, private router:ActivatedRoute) { }
   
   ngOnInit(): void {
+    this.router.paramMap.subscribe(params => {
+      this.barcode_id = params.get('barcode');
+      console.log("barcodeeee",this.barcode_id)
+      if(this.barcode_id){
+      this.itemBarcodeId=this.barcode_id;
+      this.populateItemDetails(this.barcode_id);
+      this.initialloadroute();
+      }else{
+        this.initialload();
+      }
+    });
+
     this.requestForm = this.formBuilder.group({
       barcodeFieldName: ['']
     });
-    this.initialload();
+    
   }
 
   
@@ -177,6 +191,37 @@ export class RequestComponent implements OnInit {
   
     );
   }
+
+  initialloadroute(){
+    this.requestService.loadCreateRequest().subscribe(
+     (res) => {
+       this.requestVal=res;
+       this.requestTypeId=this.requestVal['requestType'];
+ 
+       //this.itemBarcodeId='';
+       this.requestingInstitutionId='';
+      // this.itemTitleId='';
+       //this.itemOwningInstitutionId='';
+       this.patronBarcodeId='';
+       this.patronEmailId='';
+       this.deliveryLocationId='';
+       this.requestNotesId='';
+ 
+ 
+       this.StartPage='';
+       this.EndPage='';
+       this.VolumeNumber='';
+       this.Issue='';
+       this.ArticleAuthor='';
+       this.ChapterTitle='';
+ 
+     },
+    (error) => {
+       
+    }
+   
+     );
+   }
  
   loadSearchRequest() {
     this.requestStatus='';

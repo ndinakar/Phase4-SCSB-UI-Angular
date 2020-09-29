@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -29,7 +30,7 @@ import { SearchService } from 'src/app/services/search/search.service';
 export class SearchComponent implements OnInit {
 
   searchVal: TreeNode[];
-  selectedNodes1: TreeNode[];
+  selectedNodes1: any[];
   selectedNodes2: TreeNode[];
 
   cols: any[];
@@ -116,7 +117,7 @@ export class SearchComponent implements OnInit {
   ];
 
   @ViewChild('dt') dt: Table;
-  constructor(private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder) {
+  constructor(private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder, private router: Router) {
 
   }
   public data: Object[];
@@ -962,7 +963,14 @@ export class SearchComponent implements OnInit {
       new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'UTC');
   }
   routeToRequest(){
-    console.log(this.selectedNodes1)
-    console.log(this.selectedNodes1[0]);
+    var barcode1=[];
+    var i;
+    for(i=0;i<this.selectedNodes1.length;i++){
+      barcode1.push(this.selectedNodes1[i].barcode);
+    }
+    var barcode=barcode1.join();
+    // console.log(this.selectedNodes1)
+    // console.log(barcode);
+    this.router.navigate(['/dashboard/request', barcode]);
   }
 }
