@@ -252,6 +252,7 @@ export class CollectionComponent implements OnInit {
         this.deaccessionType = this.openmarcVal['deaccessionType'];
         this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
         this.radioSwitchEditCGD = true;
+
         //cross institute
         this.postData =
         {
@@ -321,7 +322,8 @@ export class CollectionComponent implements OnInit {
       }
 
     );
-
+    this.editCDGsection = true;
+    this.Deaccessionsection = false;
 
   }
 
@@ -674,27 +676,22 @@ export class CollectionComponent implements OnInit {
     this.message = this.crossinstitutionVal['message'];
     this.warningMessage = this.crossinstitutionVal['warningMessage'];
     this.errorMessage = this.crossinstitutionVal['errorMessage'];
-
-    if (this.crossinstitutionVal['warningMessage'] != null && this.crossinstitutionVal['errorMessage'] != null) {
-      this.collectionUpdateErrorMessage = true;
-      this.collectionUpdateWarningMessage = true;
-      this.collectionUpdateMessage = false;
-      console.log("1");
-    } else if (this.crossinstitutionVal['warningMessage'] != null) {
+    if (this.crossinstitutionVal['warningMessage'] != null) {
       this.collectionUpdateErrorMessage = false;
       this.collectionUpdateWarningMessage = true;
       this.collectionUpdateMessage = false;
-      console.log("2");
     } else if (this.crossinstitutionVal['errorMessage'] != null) {
       this.collectionUpdateErrorMessage = true;
       this.collectionUpdateWarningMessage = false;
       this.collectionUpdateMessage = false;
-      console.log("3");
     } else if (this.crossinstitutionVal['message'] != null) {
       this.collectionUpdateMessage = true;
       this.collectionUpdateWarningMessage = false;
       this.collectionUpdateErrorMessage = false;
-      console.log("4");
+    }else{
+      this.collectionUpdateMessage = false;
+      this.collectionUpdateWarningMessage = false;
+      this.collectionUpdateErrorMessage = false;
     }
   }
   //save deacc end

@@ -266,11 +266,11 @@
                         </div>
                     </div>
                     <div *ngIf="create_request" id="createRequestSection" class="create-request-section">
-                        <!-- <div th:if="${requestForm.showRequestErrorMsg}" id="errorMessageId1" class="row margin-btm-10">
+                        <div *ngIf="createRequestError" id="errorMessageId1" class="row margin-btm-10">
                             <div class="col-sm-12">
-                                <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpanId1" th:text="${requestForm.errorMessage}"></span></div>
+                                <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{errorMessage}}</span></div>
                             </div>
-                        </div> -->
+                        </div>
                         <input id="deliveryLocationInRequestHdn" name="deliveryLocationInRequestHdn" type="text" value="" hidden="hidden"/>
                         <input id="patronEmailIdHdn" name="patronEmailIdHdn" type="text" value="" hidden="hidden"/>
                         <input id="requestingInstitutionHdn" name="requestingInstitutionHdn" type="text" value="" hidden="hidden"/>
@@ -622,7 +622,7 @@
                                                     <span id="resubmitRequestStatus" class="text-success">{{resubmitResponseMessage}}</span>
                                                 </div>
                                                 <div *ngIf="!status">
-                                                    <span id="resubmitRequestStatus" class="text-failure">{{resubmitResponseMessage}}</span>
+                                                    <span id="resubmitRequestStatus" class="error-color">{{resubmitResponseMessage}}</span>
                                                 </div>
                                             </div>
                                         </div>

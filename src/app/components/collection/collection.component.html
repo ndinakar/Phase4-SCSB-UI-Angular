@@ -112,7 +112,9 @@
                                         </thead>
                                         <tbody>
                                         <tr *ngFor="let item of collectionVal['searchResultRows']">
-                                            <th>{{ item.barcode }}</th>
+                                            <th><img *ngIf="item.availability =='Available'"class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP"
+                                                style="width:20px;height:25px;margin-bottom: 3px;"/> <img *ngIf="item.availability =='Not Available'"class="status" src="../../../../assets/images/out.png"alt="In ReCAP"
+                                                style="width:20px;height:25px;margin-bottom: 3px;"/> &nbsp;&nbsp;{{ item.barcode }}</th>
                                             <td (click)="openMarcView(item.bibId,item.barcode,item.itemId)" style="cursor: pointer;color:#337ab7"><a>{{ item.title }}</a></td>
                                             <td>{{ item.collectionGroupDesignation }}</td>
                                         </tr>

@@ -350,7 +350,9 @@
                                             </a>
                                         </td>
                                        
-                                        <td *ngFor="let col of columns">
+                                        <td *ngFor="let col of columns"><img *ngIf="col.field=='title' && rowData.availability =='Available'"class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP"
+                                            style="width:20px;height:25px;margin-bottom: 3px;"/> <img *ngIf="col.field=='title' && rowData.availability =='Not Available'"class="status" src="../../../../assets/images/out.png"alt="In ReCAP"
+                                            style="width:20px;height:25px;margin-bottom: 3px;"/> &nbsp;&nbsp;
                                             {{rowData[col.field]}}
                                         </td>
                                     </tr>
@@ -378,7 +380,9 @@
                                                                     <td>
                                                                         <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                                                     </td>
-                                                                    <td *ngFor="let col of columns">
+                                                                    <td *ngFor="let col of columns"><img *ngIf="col.field=='callNumber' && rowData.availability =='Available'"class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP"
+                                                                        style="width:20px;height:25px;margin-bottom: 3px;"/> <img *ngIf="col.field=='callNumber' && rowData.availability =='Not Available'"class="status" src="../../../../assets/images/out.png"alt="In ReCAP"
+                                                                        style="width:20px;height:25px;margin-bottom: 3px;"/> &nbsp;&nbsp;
                                                                         {{rowData[col.field]}}
                                                                     </td>
                                                                 </tr>

@@ -85,9 +85,10 @@ export class RequestComponent implements OnInit {
 
   resubmitResponse: TreeNode[];
   resubmitResponseMessage: string;
-
+  createResponse : TreeNode[];
   status: boolean;
-
+  createRequestError: boolean;
+  errorMessage: string;
   constructor(private formBuilder: FormBuilder,private requestService: RequestService, private router:ActivatedRoute) { }
   
   ngOnInit(): void {
@@ -442,12 +443,6 @@ export class RequestComponent implements OnInit {
     }
   }
   createRequest() { 
-    console.log("sd",this.itemBarcodeId)
-    console.log("InstitutionId",this.requestingInstitutionId)
-    console.log("sd",this.patronBarcodeId)
-    console.log("start",this.StartPage)
-    console.log("arrr",this.ChapterTitle)
-    console.log("DeliveryLOcations",this.deliveryLocationId)
     if(this.eddshow){
     //with edd start
     if((this.itemBarcodeId ==undefined || this.itemBarcodeId =='') && (this.requestingInstitutionId==undefined || this.requestingInstitutionId=='') && (this.patronBarcodeId==undefined || this.patronBarcodeId=='') && (this.patronEmailId==undefined || this.patronEmailId=='')  && (this.StartPage==undefined || this.StartPage=='') && (this.StartPage==undefined || this.StartPage=='') && (this.EndPage==undefined || this.EndPage=='') && (this.ChapterTitle==undefined || this.ChapterTitle=='')){
@@ -552,8 +547,8 @@ export class RequestComponent implements OnInit {
      
       this.requestService.createRequest(this.postData).subscribe(
         (res) => {
-          this.createsubmit=true;
-          console.log("sucesss apiiiiiiii")
+            this.createsubmit=true;
+         
         },
         (error) => {
           //Called when error
@@ -649,8 +644,14 @@ export class RequestComponent implements OnInit {
        
         this.requestService.createRequest(this.postData).subscribe(
           (res) => {
-            this.createsubmit=true;
-            console.log("sucesss apiiiiiiii222222")
+            this.createResponse = res;
+            if(this.createResponse['errorMessage'] != null){
+              this.errorMessage = this.createResponse['errorMessage'];
+              this.createRequestError = true;
+            }else{
+              this.createsubmit=true;
+              this.createRequestError = false;
+            }
           },
           (error) => {
             //Called when error
@@ -828,7 +829,7 @@ export class RequestComponent implements OnInit {
         "errorMessage":null,
         "totalRecordsCount":"0",
         "pageNumber":0,
-        "pageSize":this.showentries,
+        "pageSize":10,
         "totalPageCount":0,
         "submitted":false,
         "showResults":false,

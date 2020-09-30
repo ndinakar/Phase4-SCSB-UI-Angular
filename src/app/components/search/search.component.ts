@@ -149,6 +149,7 @@ export class SearchComponent implements OnInit {
 
   //show entries api start
     onPageSizeChange(value) {
+      console.log
     this.showentries = value;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -230,31 +231,12 @@ export class SearchComponent implements OnInit {
       "index": null,
       "errorMessage": null
     }
-    this.showresultdiv = true;
+   
     this.searchService.onPageSizeChange(this.postData).subscribe((res) => {
-      this.searchVal = res;
-
-    this.cols = [
-      { field: 'title', header: 'Title' },
-      { field: 'author', header: 'Author' },
-      { field: 'publisher', header: 'Publisher' },
-      { field: 'publisherDate', header: 'Publisher Date' },
-      { field: 'owningInstitution', header: 'OI' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-      { field: 'summaryHoldings', header: 'SH' }
-    ];
-
-    this.cols1 = [
-      { field: 'callNumber', header: 'Call Number' },
-      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-    ];
+      
+    this.showresultdiv = true;
+    this.searchVal = res;
+    console.log(this.searchVal)
     if(this.searchVal['pageNumber'] == 0 && (this.searchVal['totalPageCount']-1 >0)){
       this.firstbutton = true;
       this.previousbutton = true;
@@ -277,6 +259,28 @@ export class SearchComponent implements OnInit {
       this.nextbutton = false;
       this.lastbutton = false;
     }
+    this.cols = [
+      { field: 'title', header: 'Title' },
+      { field: 'author', header: 'Author' },
+      { field: 'publisher', header: 'Publisher' },
+      { field: 'publisherDate', header: 'Publisher Date' },
+      { field: 'owningInstitution', header: 'OI' },
+      { field: 'customerCode', header: 'CC' },
+      { field: 'collectionGroupDesignation', header: 'CGD' },
+      { field: 'useRestriction', header: 'Use Restriction' },
+      { field: 'barcode', header: 'Barcode' },
+      { field: 'summaryHoldings', header: 'SH' }
+    ];
+
+    this.cols1 = [
+      { field: 'callNumber', header: 'Call Number' },
+      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
+      { field: 'customerCode', header: 'CC' },
+      { field: 'collectionGroupDesignation', header: 'CGD' },
+      { field: 'useRestriction', header: 'Use Restriction' },
+      { field: 'barcode', header: 'Barcode' },
+    ];
+    
     },
     (error) => {
       //Called when error
@@ -399,7 +403,13 @@ export class SearchComponent implements OnInit {
           { field: 'useRestriction', header: 'Use Restriction' },
           { field: 'barcode', header: 'Barcode' },
         ];
-    
+    if(this.searchVal['totalPageCount']-1>0){
+      this.nextbutton = false;
+      this.lastbutton = false;
+    }else{
+      this.nextbutton = true;
+      this.lastbutton = true;
+    }
       },
       (error) => {
         //Called when error
@@ -945,7 +955,7 @@ export class SearchComponent implements OnInit {
     }
   }
   onReset() {
-
+    this.showresultdiv = false;
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],
