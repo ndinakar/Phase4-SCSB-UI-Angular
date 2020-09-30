@@ -142,7 +142,7 @@
                                                         <button (click)="cancelRequest(item.requestId)" *ngIf="item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='LAS REFILE REQUEST PLACED'"  style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" th:title="'Cancel Request'"  type="button" class="btn btn-round" name="action" >Cancel Note
                                                         </button>
 
-                                                        <button *ngIf="item.status=='EXCEPTION'"  (click)="resubmitReq(item.barcode,item.requestId)" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" name="action" >Resubmit Request
+                                                        <button *ngIf="item.status=='EXCEPTION'"  [disabled]="item.availability == 'Not Available'" (click)="resubmitReq(item.barcode,item.requestId)" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" name="action" >Resubmit Request
                                                         </button> 
                                                     </td>
                                                 </tr>
@@ -618,8 +618,11 @@
                                                 <div>
                                                     <span>Barcode : <span id="resubmitReqItemBarcode">{{resubmitReqConfirmItemBarcode}}</span></span>
                                                 </div>
-                                                <div>
-                                                    <span id="resubmitRequestStatus"></span>
+                                                <div *ngIf="status">
+                                                    <span id="resubmitRequestStatus" class="text-success">{{resubmitResponseMessage}}</span>
+                                                </div>
+                                                <div *ngIf="!status">
+                                                    <span id="resubmitRequestStatus" class="text-failure">{{resubmitResponseMessage}}</span>
                                                 </div>
                                             </div>
                                         </div>

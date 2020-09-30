@@ -83,6 +83,11 @@ export class RequestComponent implements OnInit {
 
   barcode_id:string;
 
+  resubmitResponse: TreeNode[];
+  resubmitResponseMessage: string;
+
+  status: boolean;
+
   constructor(private formBuilder: FormBuilder,private requestService: RequestService, private router:ActivatedRoute) { }
   
   ngOnInit(): void {
@@ -1057,7 +1062,7 @@ export class RequestComponent implements OnInit {
       "onChange":false,
       "institution":null,
       "showRequestErrorMsg":null,
-      "requestingInstituionHidden":null,
+      "requestingInstituionHidden":this.resubmitReqConfirmItemBarcode,
       "itemBarcodeHidden":null,
       "disableSearchInstitution":false,
       "searchInstitutionHdn":null
@@ -1067,7 +1072,10 @@ export class RequestComponent implements OnInit {
     this.requestService.resubmitRequest(this.postData).subscribe(
       (res) => {
         this.resubmitRequestConfirmBodyId=false;
-        this.searchRequests();
+        this.resubmitResponse=res;
+        this.resubmitResponseMessage = this.resubmitResponse['Message'];
+        this.status = this.resubmitResponse['Status'];
+        //this.searchRequests();
       },
       (error) => {
         //Called when error

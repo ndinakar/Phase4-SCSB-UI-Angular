@@ -55,6 +55,8 @@ export class CollectionComponent implements OnInit {
   message: string;
   warningMessage: string;
   errorMessage: string;
+  radioSwitchEditCGD: boolean;
+  radioSwitchDeaccession: boolean;
   constructor(private formBuilder: FormBuilder, private collectionService: CollectionService) { }
 
   ngOnInit(): void {
@@ -190,6 +192,7 @@ export class CollectionComponent implements OnInit {
   }
 
   openMarcView(bibid, barcode, itemId) {
+    this.radioSwitchDeaccession = false;
     this.CGDselect = '';
     this.DeliveryLocation = '';
     this.collectionUpdateMessage = false;
@@ -248,6 +251,7 @@ export class CollectionComponent implements OnInit {
         this.CGDselect = this.openmarcVal['collectionGroupDesignation'];
         this.deaccessionType = this.openmarcVal['deaccessionType'];
         this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
+        this.radioSwitchEditCGD = true;
         //cross institute
         this.postData =
         {
@@ -323,6 +327,8 @@ export class CollectionComponent implements OnInit {
 
   editCgdcontrol() {
     //cross institute
+    this.radioSwitchDeaccession = false;
+    this.radioSwitchEditCGD = true;
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
     this.bibId = this.openmarcVal['bibId'];
     this.itemId = this.openmarcVal['itemId']
@@ -394,6 +400,8 @@ export class CollectionComponent implements OnInit {
 
     //cross institute
     //The item has been successfully deaccessioned.
+    this.radioSwitchDeaccession = true;
+    this.radioSwitchEditCGD = false;
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
     this.bibId = this.openmarcVal['bibId'];
     this.customerCode = this.openmarcVal['customerCode'];
