@@ -33,4 +33,60 @@ export class RequestService {
         headers: appHeaders.getHeaders()
       });
   }
+  searchRequests(postData: RequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchRequests", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  loadSearchRequest(): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/loadSearchRequest",
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+
+  resubmitRequest(postData: RequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/resubmitRequest", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  cancelRequest(postData: RequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/cancelRequest", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  firstCall(postData: RequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/first", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  nextCall(postData: RequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/next", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  previousCall(postData: RequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  lastCall(postData: RequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  onRequestPageSizeChange(postData: RequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/requestPageSizeChange", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  
 }

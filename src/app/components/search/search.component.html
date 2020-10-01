@@ -1,13 +1,9 @@
 <!-- Search Tab-->
-<div id="searchContentId" name="searchContentName" th:fragment="content" xmlns:th="http://www.thymeleaf.org"
+<div id="searchContentId" name="searchContentName" 
      role="tabpanel" class="tab-pane active">
-    <!-- <script type="text/javascript" th:src="@{../js/jquery.tablesorter.js}"></script>
-    <link rel="stylesheet" th:href="@{../css/search.css}"/>
-    <script type="text/javascript" th:src="@{../js/search.js}"></script>
-    <script type="text/javascript" th:src="@{../js/bootstrap-add-clear.min.js}"></script> -->
-    <div id="searchFormDivId" name="searchFormDivName" th:fragment="search-form" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+    <div id="searchFormDivId" name="searchFormDivName">
         <form [formGroup]="searchForm" >
-            <input type="hidden"  th:name="${_csrf.parameterName}"   th:value="${_csrf.token}"/>
+            <input type="hidden"/>
             <fieldset>
                 <div class="search-bar">
                     <div class="row margin-0">
@@ -65,8 +61,9 @@
                                             Reset Search
                                         </button>
                                     </div>
+                                
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn themed-button themed-button-facet dropdown-toggle" data-toggle="collapse" data-target="#search-filter">
+                                        <button (click)="facetsshowhide()" type="button" class="btn themed-button themed-button-facet dropdown-toggle" >
                                             <span id="showFacets" class="pull-left">Show Facets</span> <span class="glyphicon glyphicon-menu-down small pull-right"></span>
                                         </button>
                                     </div>
@@ -260,12 +257,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                            <!-- <div class="row margin-btm-10" data-th-if="">
-                                <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:text="*{errorMessage}"></span></div>
-                                </div>
-                            </div> -->
-                            <div id="searchResultsDiv" name="searchResultsDiv" th:if="*{searchResultRows.size() &gt; 0 &amp;&amp; showResults}">
+                            <div id="searchResultsDiv" name="searchResultsDiv">
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="pull-left margin-btm-0 margin-right-35" style="margin-top: -20px; margin-bottom: -10px;">
@@ -338,7 +330,6 @@
                                         <th style="width: 3em">
                                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                         </th>
-                                        <!-- <th style="width: 3em"></th> -->
                                         
                                         <th *ngFor="let col of columns" [pSortableColumn]="col.field">
                                             
@@ -346,20 +337,6 @@
                                             <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                         </th>
                                     </tr>
-                                    
-                                       
-                                        <!-- <tr>
-                                            
-                                        <th style="width: 3em">
-                                        </th>
-                                        
-                                        <th *ngFor="let col of columns" [ngSwitch]="col.field">
-                                            <input  style="width:100px" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
-                                           &nbsp;
-                                        </th>
-                                    </tr>  -->
-                                   
-                                    
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
                                     <tr>
@@ -373,7 +350,9 @@
                                             </a>
                                         </td>
                                        
-                                        <td *ngFor="let col of columns">
+                                        <td *ngFor="let col of columns"><img *ngIf="col.field=='title' && rowData.availability =='Available'"class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP"
+                                            style="width:20px;height:25px;margin-bottom: 3px;"/> <img *ngIf="col.field=='title' && rowData.availability =='Not Available'"class="status" src="../../../../assets/images/out.png"alt="In ReCAP"
+                                            style="width:20px;height:25px;margin-bottom: 3px;"/> &nbsp;&nbsp;
                                             {{rowData[col.field]}}
                                         </td>
                                     </tr>
@@ -401,7 +380,9 @@
                                                                     <td>
                                                                         <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                                                     </td>
-                                                                    <td *ngFor="let col of columns">
+                                                                    <td *ngFor="let col of columns"><img *ngIf="col.field=='callNumber' && rowData.availability =='Available'"class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP"
+                                                                        style="width:20px;height:25px;margin-bottom: 3px;"/> <img *ngIf="col.field=='callNumber' && rowData.availability =='Not Available'"class="status" src="../../../../assets/images/out.png"alt="In ReCAP"
+                                                                        style="width:20px;height:25px;margin-bottom: 3px;"/> &nbsp;&nbsp;
                                                                         {{rowData[col.field]}}
                                                                     </td>
                                                                 </tr>
@@ -414,20 +395,6 @@
                                         </td>
                                     </tr>
                                 </ng-template>
-                                <!-- <ng-template pTemplate="summary">
-                                    <ul>
-                                        <li *ngFor="let car of selectedNodes1" style="text-align: left">
-                                            {{car.vin + ' - ' + car.brand + ' - ' + car.year + ' - ' + car.color}}
-                                        </li>
-                                    </ul>
-                                </ng-template> -->
-                                <!-- <ng-template pTemplate="summary">
-                                    <ul>
-                                        <li *ngFor="let car of selectedNodes2" style="text-align: left">
-                                            {{car.callNumber }}
-                                        </li>
-                                    </ul>
-                                </ng-template> -->
                             </p-table>
                              <!--tree grid end-->
                         
@@ -460,7 +427,7 @@
                             <div style="margin-top: -20px;">
                             <button id="export" [disabled]="clicked" (click)="setFileName();dt.exportCSV({selectionOnly:true})" name="action" value="export" type="button" class="btn btn-primary pull-right" style="margin-right: 10px;">Export Selected Records
                             </button>
-                            <button id="requestButton" [disabled]="clicked" type="button" name="action" value="request" class="btn btn-primary pull-right" style="margin-right: 10px;">Request Selected
+                            <button id="requestButton" (click)="routeToRequest()" [disabled]="clicked" type="button" name="action" value="request" class="btn btn-primary pull-right" style="margin-right: 10px;">Request Selected
                             Items(s)
                             </button>
                             </div>

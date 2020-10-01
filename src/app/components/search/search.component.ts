@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
-
+import { Router } from '@angular/router';
+declare var $: any;
 
 @Component({
   selector: 'app-search',
@@ -29,7 +30,7 @@ import { SearchService } from 'src/app/services/search/search.service';
 export class SearchComponent implements OnInit {
 
   searchVal: TreeNode[];
-  selectedNodes1: TreeNode[];
+  selectedNodes1: any[];
   selectedNodes2: TreeNode[];
 
   cols: any[];
@@ -116,7 +117,7 @@ export class SearchComponent implements OnInit {
   ];
 
   @ViewChild('dt') dt: Table;
-  constructor(private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder) {
+  constructor(private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder, private router: Router) {
 
   }
   public data: Object[];
@@ -148,6 +149,7 @@ export class SearchComponent implements OnInit {
 
   //show entries api start
     onPageSizeChange(value) {
+      console.log
     this.showentries = value;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -229,31 +231,12 @@ export class SearchComponent implements OnInit {
       "index": null,
       "errorMessage": null
     }
-    this.showresultdiv = true;
+   
     this.searchService.onPageSizeChange(this.postData).subscribe((res) => {
-      this.searchVal = res;
-
-    this.cols = [
-      { field: 'title', header: 'Title' },
-      { field: 'author', header: 'Author' },
-      { field: 'publisher', header: 'Publisher' },
-      { field: 'publisherDate', header: 'Publisher Date' },
-      { field: 'owningInstitution', header: 'OI' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-      { field: 'summaryHoldings', header: 'SH' }
-    ];
-
-    this.cols1 = [
-      { field: 'callNumber', header: 'Call Number' },
-      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-    ];
+      
+    this.showresultdiv = true;
+    this.searchVal = res;
+    console.log(this.searchVal)
     if(this.searchVal['pageNumber'] == 0 && (this.searchVal['totalPageCount']-1 >0)){
       this.firstbutton = true;
       this.previousbutton = true;
@@ -276,6 +259,28 @@ export class SearchComponent implements OnInit {
       this.nextbutton = false;
       this.lastbutton = false;
     }
+    this.cols = [
+      { field: 'title', header: 'Title' },
+      { field: 'author', header: 'Author' },
+      { field: 'publisher', header: 'Publisher' },
+      { field: 'publisherDate', header: 'Publisher Date' },
+      { field: 'owningInstitution', header: 'OI' },
+      { field: 'customerCode', header: 'CC' },
+      { field: 'collectionGroupDesignation', header: 'CGD' },
+      { field: 'useRestriction', header: 'Use Restriction' },
+      { field: 'barcode', header: 'Barcode' },
+      { field: 'summaryHoldings', header: 'SH' }
+    ];
+
+    this.cols1 = [
+      { field: 'callNumber', header: 'Call Number' },
+      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
+      { field: 'customerCode', header: 'CC' },
+      { field: 'collectionGroupDesignation', header: 'CGD' },
+      { field: 'useRestriction', header: 'Use Restriction' },
+      { field: 'barcode', header: 'Barcode' },
+    ];
+    
     },
     (error) => {
       //Called when error
@@ -289,6 +294,7 @@ export class SearchComponent implements OnInit {
 
   //show entries api end
   searchRecord() {
+    $("#search-filter").slideUp();
     this.nextvalue = 0;
     this.showentries = 10;
     this.owningInstitutions = [];
@@ -372,31 +378,44 @@ export class SearchComponent implements OnInit {
       "errorMessage": null
     }
 
-    this.showresultdiv = true;
-    this.searchService.getSearch(this.postData).subscribe(files => this.searchVal = files);
+    this.searchService.getSearch(this.postData).subscribe(
+      (files) => {
+        this.searchVal = files
+        this.showresultdiv = true;
+        this.cols = [
+          { field: 'title', header: 'Title' },
+          { field: 'author', header: 'Author' },
+          { field: 'publisher', header: 'Publisher' },
+          { field: 'publisherDate', header: 'Publisher Date' },
+          { field: 'owningInstitution', header: 'OI' },
+          { field: 'customerCode', header: 'CC' },
+          { field: 'collectionGroupDesignation', header: 'CGD' },
+          { field: 'useRestriction', header: 'Use Restriction' },
+          { field: 'barcode', header: 'Barcode' },
+          { field: 'summaryHoldings', header: 'SH' }
+        ];
+    
+        this.cols1 = [
+          { field: 'callNumber', header: 'Call Number' },
+          { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
+          { field: 'customerCode', header: 'CC' },
+          { field: 'collectionGroupDesignation', header: 'CGD' },
+          { field: 'useRestriction', header: 'Use Restriction' },
+          { field: 'barcode', header: 'Barcode' },
+        ];
+    if(this.searchVal['totalPageCount']-1>0){
+      this.nextbutton = false;
+      this.lastbutton = false;
+    }else{
+      this.nextbutton = true;
+      this.lastbutton = true;
+    }
+      },
+      (error) => {
+        //Called when error
+      })
 
-    this.cols = [
-      { field: 'title', header: 'Title' },
-      { field: 'author', header: 'Author' },
-      { field: 'publisher', header: 'Publisher' },
-      { field: 'publisherDate', header: 'Publisher Date' },
-      { field: 'owningInstitution', header: 'OI' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-      { field: 'summaryHoldings', header: 'SH' }
-    ];
-
-    this.cols1 = [
-      { field: 'callNumber', header: 'Call Number' },
-      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-    ];
-  }
+    }
 
   //next api start
   nextapi() {
@@ -936,7 +955,7 @@ export class SearchComponent implements OnInit {
     }
   }
   onReset() {
-
+    this.showresultdiv = false;
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],
@@ -960,5 +979,18 @@ export class SearchComponent implements OnInit {
   setFileName() {
     this.dt.exportFilename = 'ExportRecords' + '_' +
       new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'UTC');
+  }
+  routeToRequest(){
+    var barcode1=[];
+    var i;
+    for(i=0;i<this.selectedNodes1.length;i++){
+      barcode1.push(this.selectedNodes1[i].barcode);
+    }
+    var barcode=barcode1.join();
+    this.router.navigate(['/dashboard/request', barcode]);
+  }
+
+  facetsshowhide(){
+    $("#search-filter").slideToggle();
   }
 }

@@ -23,6 +23,10 @@ const routes: Routes = [
         component: CollectionComponent,
       },
       {
+        path: 'request/:barcode', 
+        component: RequestComponent,
+      },
+      {
         path: 'request', 
         component: RequestComponent,
       }
