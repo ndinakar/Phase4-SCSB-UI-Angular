@@ -358,7 +358,7 @@
                                                                     <select [(ngModel)]="DeliveryLocation" class="form-control themed-input themed-select"
                                                                             name="DeliveryLocation" [ngModelOptions]="{standalone: true}" >
                                                                         <option value=""></option>
-                                                                        <option *ngFor="let del of openmarcVal['deliveryLocations']" [ngValue]="del.customerCode">
+                                                                        <option *ngFor="let del of crossinstitutionVal['deliveryLocations']" [ngValue]="del.customerCode">
                                                                             {{del.description}}-{{del.customerCode}}
                                                                           </option>
                                                                     </select>

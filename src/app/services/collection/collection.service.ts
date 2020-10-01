@@ -40,10 +40,4 @@ export class CollectionService {
         headers: appHeaders.getHeaders()
       });
   }
-  checkCrossInstitution(postData: CollectionForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/checkCrossInstitutionBorrowed", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
-  }
 }
