@@ -384,7 +384,7 @@ export class CollectionComponent implements OnInit {
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
       (res) => {
         this.crossinstitutionVal = res;
-        console.log(this.crossinstitutionVal['warningMessage']);
+        console.log("editCGD");
         this.validateResponse();
       },
       (error) => {
@@ -410,7 +410,7 @@ export class CollectionComponent implements OnInit {
     this.itemId = this.openmarcVal['itemId']
     this.postData =
     {
-      "itemBarcodes": "",
+      "itemBarcodes": null,
       "showResults": false,
       "selectAll": false,
       "errorMessage": null,
@@ -455,12 +455,14 @@ export class CollectionComponent implements OnInit {
       "allowEdit": false,
       "username": null
     }
+    console.log(this.postData)
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
       (res) => {
         this.crossinstitutionVal = res;
         this.validateResponse();
       },
       (error) => {
+        console.log("err",error)
         //Called when error
       }
 
