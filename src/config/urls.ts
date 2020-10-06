@@ -7,5 +7,6 @@ export const urls = {
     reports: '/reports',
     jobs: '/jobs',
     userRoles:'/userRoles',
-    roles: '/roles'
+    roles: '/roles',
+    bulkRequest: '/bulkRequest'
 }
