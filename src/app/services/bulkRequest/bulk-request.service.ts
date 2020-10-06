@@ -17,8 +17,8 @@ export class BulkRequestService {
 
   constructor(@Inject(HttpClient) private httpClient: HttpClient) { }
 
-  loadCreateRequest(postData: BulkRequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/loadCreateRequest", postData,
+  loadCreateRequest(): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/loadCreateRequest",
       {
         headers: appHeaders.getHeaders()
       });

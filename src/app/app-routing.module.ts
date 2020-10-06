@@ -6,6 +6,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { SearchComponent } from './components/search/search.component';
 import { CollectionComponent } from './components/collection/collection.component';
 import { RequestComponent } from './components/request/request.component';
+import { BulkrequestComponent } from './components/bulkrequest/bulkrequest.component';
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'request', 
         component: RequestComponent,
+      },
+      {
+        path: 'bulkrequest', 
+        component: BulkrequestComponent,
       }
       
     ]

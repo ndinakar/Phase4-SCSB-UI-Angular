@@ -1,0 +1,400 @@
+<!-- Request Tab-->
+<div id="requestContentId" name="requestContentName" >
+    <div id="requestFormDivId" name="requestFormDivName" >
+        <form id="bulkRequest-form" name="bulkRequest-form" class="form-horizontal" method="post" enctype="multipart/form-data">
+            
+            <fieldset>
+                <div role="tabpanel" class="tab-pane" id="request">
+                    <div class="row margin-btm-10">
+                        <div class="col-sm-12 text-right backtext"><a  id="goBackLink" *ngIf="searchReqsection" (click)="loadCreateRequest()"><span class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
+                    </div>
+                    <div *ngIf="searchReqsection" id="searchRequestsSection" class="request-main-section" >
+                        
+                        <div class="search-bar">
+                            <div class="row margin-0">
+                                <div class="col-xs-12  padding-0">
+                                    <form>
+                                        <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" style="background: #F0F1F1">
+                                            <div class="col-md-32 col-sm-3 col-lg-2 padding-right-20 padding-left-0">
+                                                <label class="fontcolor-dark margin-btm-10">Bulk Request Id</label>
+                                                <input id="bulkRequestIdSearch" name="bulkRequestIdSearch" type="text"  class="form-control themed-input" onkeyup="toggleBulkRequestIdSearch()"/>
+                                                <p id="bulkRequestIdSearchError" style="color: red;">Bulk Request Id should contain only numbers.</p>
+                                            </div>
+                                            <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
+                                                <label class="fontcolor-dark margin-btm-10">Bulk Request Name</label>
+                                                <input id="bulkRequestNameSearch" name="bulkRequestNameSearch" type="text"  class="form-control themed-input" onkeyup="toggleItemBarcodeSearch()"/>
+                                                <p id="bulkRequestNameSearchError" style="color: red;">Bulk Request Name is required.</p>
+                                            </div>
+                                            <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
+                                                <label class="fontcolor-dark margin-btm-10">Patron Barcode</label>
+                                                <input id="bulkPatronBarcodeSearch" name="bulkRequestNameSearch" type="text"  class="form-control themed-input" onkeyup="toggleItemBarcodeSearch()"/>
+                                                <p id="bulkPatronBarcodeSearchError" style="color: red;">Patron Barcode is required.</p>
+                                            </div>
+                                            <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
+                                                <label class="fontcolor-dark margin-btm-10">Institution</label>
+                                                <div class="select-holder">
+                                                    <select id="institutionList"
+                                                            name="institutionList"
+                                                            style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;"
+                                                           >
+                                                        <option value=""></option>
+                                                        <option ></option>
+                                                    </select>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-lg-3">
+                                                <div class="input-group-btn search-panel padding-right-10">
+                                                    <button id="searchRequestsButton" class="btn themed-button themed-button-search" type="button" name="searchRequestsButton" onclick="searchRequests()">Search</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" id="noteAll" style="">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-results-container" >
+                            <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
+                            <!-- <div class="row margin-btm-10" >
+                                <div class="col-sm-12">
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:text="${bulkRequestForm.message}"></span></div>
+                                </div>
+                            </div> -->
+                            <div >
+                                <div class="row">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 margin-top-05 show-entries-section">
+                                        <div class="">
+                                            <span class="show-title margin-right-05">Show Entries</span>
+                                            <select id="numOfRecordsId" name="numOfRecordsName" class="themed-input"
+                                                     onchange="requestsOnPageSizeChange()">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"><div class="row">RI - Requesting Institution, OI - Owning Institution, DL - Delivery Location</div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-3 text-right"><h4>Search Results Found: <span ></span></h4></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <table id="request-result-table" class="table table-striped margin-btm-0" style="text-align: center">
+                                            <thead class="tablesorter-headerRow">
+                                            <tr>
+                                                <th style="text-align: center">Bulk Request Id</th>
+                                                <th style="text-align: center">Bulk Request Name</th>
+                                                <th style="text-align: center">File Name</th>
+                                                <th style="text-align: center">Patron Barcode</th>
+                                                <th style="text-align: center">OI/RI</th>
+                                                <th style="text-align: center">DL</th>
+                                                <th style="text-align: center">Request Created By</th>
+                                                <th style="text-align: center">Patron Email Address</th>
+                                                <th style="text-align: center">Created Date</th>
+                                                <th style="text-align: center">Status</th>
+                                                <th style="text-align: center">Bulk Request Notes</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr  class="requestRow">
+                                                <!-- <td>
+                                                    <span th:text="${searchResult.bulkRequestId}"></span>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${searchResult.bulkRequestName}"></span>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${searchResult.fileName}"></span>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${searchResult.patronBarcode}"></span>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${searchResult.requestingInstitution}"></span>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${searchResult.deliveryLocation}"></span>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${searchResult.createdBy}"></span>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${searchResult.emailAddress}"></span>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${searchResult.createdDate} ? ${#dates.format(searchResult.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                                </td>
+                                                <td>
+                                                    <span><span th:text="${searchResult.status}"></span><br/>
+                                                        <a th:if="${searchResult.status == 'PROCESSED'}" th:href="${'/bulkRequest/downloadReports/'+{searchResult.bulkRequestId}}"><span th:text="'Results_'+${searchResult.fileName}"/></a></span>
+                                                </td>
+                                                <td width="" style="text-align: center">
+                                                    <input data-th-id="'notes-' + ${searchResultStat.index}" type="hidden" th:field="${bulkRequestForm.bulkSearchResultRows[__${searchResultStat.index}__].bulkRequestNotes}"/>
+                                                    <button th:if="${searchResult.bulkRequestNotes ne null &amp;&amp; searchResult.bulkRequestNotes ne ''}" th:title="'Show Notes'" data-th-id="'notesButton-' + ${searchResultStat.index}" type="button" name="action" th:onclick="'javascript:showNotesPopup('+${searchResultStat.index}+')'"><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                    </button>
+                                                </td> -->
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div id="requestPaginationDivId" name="requestPaginationDivName" class="col-md-12" style="margin-bottom: -20px;">
+                                        <div class="pull-right">
+                                            <div id="requestPaginationId" name="requestPaginationName" >
+                                                <ul class="pagination">
+                                                    <li th:class="${bulkRequestForm.pageNumber == 0} ? 'disabled' : ''">
+                                                        <span th:if="${bulkRequestForm.pageNumber == 0}">First</span>
+                                                        <a th:if="${bulkRequestForm.pageNumber != 0}" href="#"
+                                                           title="Go to first page"
+                                                           onclick="requestsFirstPage()">First</a>
+                                                    </li>
+                                                    <li th:class="${(bulkRequestForm.pageNumber != 0) &amp;&amp; (bulkRequestForm.totalPageCount &gt; 1)}? '' : 'disabled'">
+                                                        <span th:if="${bulkRequestForm.pageNumber == 0}">Previous</span>
+                                                        <a th:if="${bulkRequestForm.pageNumber != 0}" href="#"
+                                                           title="Go to previous page"
+                                                           onclick="requestsPreviousPage()">Previous</a>
+                                                    </li>
+                                                    <li th:class="${(bulkRequestForm.pageNumber+1 != bulkRequestForm.totalPageCount) &amp;&amp; (bulkRequestForm.totalPageCount &gt; 1)}? '' : 'disabled'">
+                                                        <span th:if="${bulkRequestForm.pageNumber+1 == bulkRequestForm.totalPageCount}">Next</span>
+                                                        <a th:if="${bulkRequestForm.pageNumber+1 != bulkRequestForm.totalPageCount}"
+                                                           href="#" title="Go to next page"
+                                                           onclick="requestsNextPage()">Next</a>
+                                                    </li>
+                                                    <li th:class="${bulkRequestForm.pageNumber+1 == bulkRequestForm.totalPageCount}? 'disabled' : ''">
+                                                        <span th:if="${bulkRequestForm.pageNumber+1 == bulkRequestForm.totalPageCount}">Last</span>
+                                                        <a th:if="${bulkRequestForm.pageNumber+1 != bulkRequestForm.totalPageCount}"
+                                                           href="#"
+                                                           onclick="requestsLastPage()">Last</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="createReqsection" id="createRequestSection" class="create-request-section">
+                        <div *ngIf="createRequestError" id="errorMessageId1" class="row margin-btm-10">
+                            <div class="col-sm-12">
+                                <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{errorMessage}}</span></div>
+                            </div>
+                        </div>
+                        <input id="deliveryLocationInRequestHdn" name="deliveryLocationInRequestHdn" type="text" value="" hidden="hidden"/>
+                        <input id="patronEmailIdHdn" name="patronEmailIdHdn" type="text" value="" hidden="hidden"/>
+                        <input id="requestingInstitutionHdn" name="requestingInstitutionHdn" type="text" value="" hidden="hidden"/>
+                        <input id="requestTypesHdn" name="requestIdHdn" type="text"  hidden="hidden"/>
+                        <div class="row margin-top-0">
+                            <div class="col-sm-6 margin-top-0"><h3 class="margin-0">Create Request</h3></div>
+                            <div class="col-sm-6 text-right search-request"><a  name="searchRequestlink" (click)="loadSearchRequest()">Search Requests</a></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 divider-horizontal margin-top-10 margin-btm-10"></div>
+                        </div>
+                        <div class="buscador-principal">
+                            <div  id="successTextIdForRequest" class="text-success" *ngIf="createsubmit">
+                                Your bulk request was received successfully and will be processed.To track the bulk request's status, please <a   onclick="goToSearchRequest(this.getAttribute('data1'))">click here</a><br />
+                                To create another bulk request for the same patron, please <a  (click)="loadCreateRequestForSamePatron()">click here</a><br />
+                                To create another bulk request for a different patron, please <a  (click)="loadCreateRequest()">click here</a>
+                            </div>
+                            <div class="row margin-top-25 margin-btm-30">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-md-3 col-sm-4 text-right margin-top-15"><label for="BulkRequestName" class="fontcolor-dark">Bulk Request Name<span class="error-color" *ngIf="!createsubmit">*</span></label></div>
+                                                <div class="col-md-9 col-sm-8">
+                                                    <input type="text"
+                                                           [(ngModel)]="BulkRequestName"
+                                                           id="BulkRequestName"
+                                                           [disabled]="createsubmit"
+                                                           name="BulkRequestName"
+                                                           class="form-control themed-input"
+                                                           maxlength="255"
+                                                           >
+                                                    <span *ngIf="BulkRequestNameErrorMessage" id="BulkRequestNameErrorMessage" style="color: red;">Bulk Request Name is required.</span>
+                                                    <span *ngIf="BulkRequestNameLengthError" id="BulkRequestNameLengthError" style="color: red;">Bulk Request Name cannot exceed 255 characters.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-sm-6 text-right margin-top-15"><label for="requestingInstitutionId" class="fontcolor-dark">Item Owning/Requesting Institution <span class="error-color" *ngIf="!createsubmit">*</span></label></div>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="select-holder">
+                                                        <select id="requestingInstitutionId"
+                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="requestingInstitutionId"
+                                                                name="requestingInstitutionName"
+                                                                class="form-control themed-input themed-select"
+                                                                [disabled]="createsubmit"
+                                                                (change)="populateDeliveryLocations(requestingInstitutionId)">
+                                                            <option value=""></option>
+                                                            <option *ngFor="let del of bulkrequestVal['requestingInstitutions']" [ngValue]="del">
+                                                                {{del}}
+                                                              </option>
+                                                        </select>
+                                                        <span *ngIf="requestingInstitutionErrorMessage" id="requestingInstitutionErrorMessage" style="color: red;">Requesting institution is required.</span>
+                                                        
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-md-3 col-sm-4 text-right margin-top-15"><label class="fontcolor-dark">Upload File (CSV file only)<span class="error-color" *ngIf="!createsubmit">*</span></label></div>
+                                                <div class="col-md-9 col-sm-8">
+                                                    <input type="file" (change)="onChange($event)" accept=".csv,.xlsx" data-size="nr" class="filestyle" data-buttonname="btn-primary" id="file"  name="file" tabindex="-1" style="position: absolute; clip: rect(0px, 0px, 0px, 0px);">
+                                                    <div class="bootstrap-filestyle input-group">
+                                                        <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="chosenFile" class="form-control " placeholder="" disabled=""> <span *ngIf="!createsubmit" class="group-span-filestyle input-group-btn" tabindex="0"><label for="file" class="btn btn-primary "><span style="margin-right: 3px;" class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label></span>
+                                                    </div>
+                                                    
+                                                    <span *ngIf="invalidBulkRequestFile" id="invalidBulkRequestFile" style="color: red;">Only CSV file can be uploaded.</span>
+                                                    <span *ngIf="bulkRequestFileRequired" id="bulkRequestFileRequired" style="color: red;">CSV file is required</span> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-sm-6 text-right margin-top-15"><label for="deliveryLocation" class="fontcolor-dark">Delivery Location<span class="error-color" *ngIf="!createsubmit">*</span></label></div>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="select-holder">
+                                                        <select id="deliveryLocation"
+                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="deliveryLocation"
+                                                                name="deliveryLocation"
+                                                                class="form-control themed-input themed-select"
+                                                                [disabled]="createsubmit"
+                                                                >
+                                                        <option value=""></option>
+                                                        <option *ngFor="let del1 of deliveryLocVal" [ngValue]="del1[1].description+'-'+del1[1].customerCode">
+                                                            {{del1[1].description}}-{{del1[1].customerCode}}
+                                                          </option>
+                                                        </select>
+                                                        <span *ngIf="deliveryLocationErrorMessage" id="deliveryLocationErrorMessage" style="color: red;">Delivery location is required.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-sm-4 text-right margin-top-15"><label for="patronBarcodeId" class="fontcolor-dark">Patron Barcode <span class="error-color" *ngIf="!createsubmit">*</span></label></div>
+                                                        <div class="col-md-6 col-sm-8">
+                                                            <input type="text"
+                                                            [(ngModel)]="patronBarcodeId"
+                                                                   id="patronBarcodeId"
+                                                                   name="patronBarcodeName"
+                                                                   class="form-control themed-input"
+                                                                   [disabled]="createsubmit"
+                                                                   >
+                                                            <span *ngIf="patronBarcodeErrorMessage" id="patronBarcodeErrorMessage" style="color: red;">Patron barcode is required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="col-md-4 col-sm-6 text-right margin-top-05"><label for="patronEmailId" class="fontcolor-dark">Patron <span id="emailMandatory" class="error-color" *ngIf="!createsubmit">*</span><br/>Email Address</label></div>
+                                                        <div class="col-md-8 col-sm-6">
+                                                            <input type="email"
+                                                            [(ngModel)]="patronEmailId"
+                                                                   id="patronEmailId"
+                                                                   name="patronEmailName"
+                                                                   class="form-control themed-input"
+                                                                   [disabled]="createsubmit"
+                                                                   (blur)="validateEmailAddress(patronEmailId)"
+                                                                   >
+                                                            <span *ngIf="patronEmailIdErrorMessage" id="patronEmailIdErrorMessage" style="color: red;">Email address is invalid.</span>
+                                                            <span *ngIf="EmailMandatoryErrorMessage" id="EmailMandatoryErrorMessage" style="color: red;;">Patron Email Address is required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-12">
+                                            <div class="form-group">
+                                                <div class="col-md-3 col-sm-2 text-right margin-top-15"><label for="requestNotesId" class="fontcolor-dark">Request Notes</label>
+                                                </div>
+                                                <div class="col-md-9 col-sm-10">
+                                                    <textarea type="text"
+                                                    [(ngModel)]="requestNotesId"
+                                                              id="requestNotesId"
+                                                              name="requestNotesName"
+                                                              class="form-control themed-input"
+                                                              [disabled]="createsubmit"
+                                                              (keyup)="NotesLengthValidation(requestNotesId)"
+                                                              style="overflow:hidden"
+                                                              rows="5"
+                                                              maxlength="1000">
+                                                    </textarea>
+                                                    <span *ngIf="notesLengthErrMsg" id="notesLengthErrMsg" style="color: red;">Only 1000 characters are allowed.</span>
+                                                    <p *ngIf="!createsubmit" id="requestNotesRemainingCharacters">Remaining Characters : <span id="remainingCharacters">1000</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" *ngIf="!createsubmit">
+                                        <div class="col-md-8 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-md-3 col-sm-2 text-right margin-top-15"></div>
+                                                <div id="textField"  class="col-md-9 col-sm-10">
+                                                    Fields marked with asterisk(<span class="error-color">*</span>) are mandatory.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row" *ngIf="!createsubmit">
+                                <div class="col-xs-12 text-center">
+                                    <button  type="button" class="btn btn-default themed-button btn-primary" id="createrequestsubmit" name="createrequestsubmit" (click)="createBulkRequest()">Create Bulk Request</button>
+                                    <button  type="button" class="pull-right btn btn-default themed-button themed-button-cancel" id="createrequestclear" (click)="resetDefaults()">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes Modal Data-->
+                <div id="requestNotesModal" class="modal fade create-request-details" tabindex="-2" role="dialog" aria-labelledby="requestNotesLargeModalLabel" data-keyboard="false" data-backdrop="static">
+                    <div class="modal-dialog" role="document">
+                        <div id="requestNotesModalContent" class="modal-content">
+                            <div class="modal-header bg-success">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h2 class="modal-title text-center text-success" id="requestNotesModalLabel">Bulk Request Notes</h2>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p id="requestNotesData" style="white-space: pre-wrap;word-wrap: break-word;"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Notes Modal Data-->
+
+            </fieldset>
+        </form>
+
+    </div>
+</div>
+<!-- Request Tab Ends-->
