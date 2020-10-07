@@ -26,11 +26,17 @@ export class BulkRequestService {
   createBulkRequest(postData: BulkRequestForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createBulkRequest", postData,
       {
-        headers: appHeaders.getHeaders()
+        headers: appHeaders.getHeaders_formData()
       });
   }  
   populateDeliveryLocations(postData: BulkRequestForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/populateDeliveryLocations", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  searchRequest(postData: BulkRequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchRequest", postData,
       {
         headers: appHeaders.getHeaders()
       });

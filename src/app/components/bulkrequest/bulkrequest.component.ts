@@ -183,7 +183,7 @@ if(fileList.length > 0) {
     console.log('fileeee',file)
     this.chosenFile=file.name;
     
-    this.formData.append('file', file);
+    this.formData.append('file', file,file[0]);
     // console.log(JSON.stringify(this.formData))
     // this.formData.forEach((value,key) => {
     //   console.log(key+" "+value)
