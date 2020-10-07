@@ -41,4 +41,35 @@ export class BulkRequestService {
         headers: appHeaders.getHeaders()
       });
   }
+
+  firstCall(postData: BulkRequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/first", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  nextCall(postData: BulkRequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/next", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  previousCall(postData: BulkRequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  lastCall(postData: BulkRequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  onRequestPageSizeChange(postData: BulkRequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/requestPageSizeChange", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
 }

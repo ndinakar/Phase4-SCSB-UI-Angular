@@ -17,35 +17,39 @@
                                         <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" style="background: #F0F1F1">
                                             <div class="col-md-32 col-sm-3 col-lg-2 padding-right-20 padding-left-0">
                                                 <label class="fontcolor-dark margin-btm-10">Bulk Request Id</label>
-                                                <input id="bulkRequestIdSearch" name="bulkRequestIdSearch" type="text"  class="form-control themed-input" onkeyup="toggleBulkRequestIdSearch()"/>
-                                                <p id="bulkRequestIdSearchError" style="color: red;">Bulk Request Id should contain only numbers.</p>
+                                                <input id="bulkRequestIdSearch" [(ngModel)]="bulkRequestIdSearch" name="bulkRequestIdSearch" type="text"  class="form-control themed-input" onkeyup="toggleBulkRequestIdSearch()"/>
+                                                <p *ngIf="bulkRequestIdSearchError" id="bulkRequestIdSearchError" style="color: red;">Bulk Request Id should contain only numbers.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Bulk Request Name</label>
-                                                <input id="bulkRequestNameSearch" name="bulkRequestNameSearch" type="text"  class="form-control themed-input" onkeyup="toggleItemBarcodeSearch()"/>
-                                                <p id="bulkRequestNameSearchError" style="color: red;">Bulk Request Name is required.</p>
+                                                <input id="bulkRequestNameSearch" [(ngModel)]="bulkRequestNameSearch" name="bulkRequestNameSearch" type="text"  class="form-control themed-input" onkeyup="toggleItemBarcodeSearch()"/>
+                                                <p *ngIf="bulkRequestNameSearchError" id="bulkRequestNameSearchError" style="color: red;">Bulk Request Name is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Patron Barcode</label>
-                                                <input id="bulkPatronBarcodeSearch" name="bulkRequestNameSearch" type="text"  class="form-control themed-input" onkeyup="toggleItemBarcodeSearch()"/>
-                                                <p id="bulkPatronBarcodeSearchError" style="color: red;">Patron Barcode is required.</p>
+                                                <input id="bulkPatronBarcodeSearch" [(ngModel)]="bulkPatronBarcodeSearch" name="bulkRequestNameSearch" type="text"  class="form-control themed-input" onkeyup="toggleItemBarcodeSearch()"/>
+                                                <p *ngIf="bulkPatronBarcodeSearchError" id="bulkPatronBarcodeSearchError" style="color: red;">Patron Barcode is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Institution</label>
                                                 <div class="select-holder">
                                                     <select id="institutionList"
-                                                            name="institutionList"
-                                                            style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;"
-                                                           >
-                                                        <option value=""></option>
-                                                        <option ></option>
-                                                    </select>
+                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="institutionList"
+                                                                name="institutionList"
+                                                                class="themed-input themed-select"
+                                                                style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;"
+                                                                >
+                                                            <option value=""></option>
+                                                            <option *ngFor="let del4 of bulkrequestVal['requestingInstitutions']" [ngValue]="del4">
+                                                                {{del4}}
+                                                              </option>
+                                                        </select>
                                                 </div>
                                                 
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-lg-3">
                                                 <div class="input-group-btn search-panel padding-right-10">
-                                                    <button id="searchRequestsButton" class="btn themed-button themed-button-search" type="button" name="searchRequestsButton" onclick="searchRequests()">Search</button>
+                                                    <button id="searchRequestsButton" class="btn themed-button themed-button-search" type="button" name="searchRequestsButton" (click)="searchRequests()">Search</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -68,8 +72,8 @@
                                         <div class="">
                                             <span class="show-title margin-right-05">Show Entries</span>
                                             <select id="numOfRecordsId" name="numOfRecordsName" class="themed-input"
-                                                     onchange="requestsOnPageSizeChange()">
-                                                <option value="10">10</option>
+                                            [(ngModel)]="showentries" class="themed-input" (change)="onPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}">  
+                                                <option value="10" selected="selected">10</option>
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
                                                 <option value="100">100</option>
@@ -79,7 +83,7 @@
                                     </div>
                                     <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"><div class="row">RI - Requesting Institution, OI - Owning Institution, DL - Delivery Location</div>
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-3 text-right"><h4>Search Results Found: <span ></span></h4></div>
+                                    <div class="col-sm-12 col-md-12 col-lg-3 text-right"><h4>Search Results Found: <span >{{searchRequestVal['totalRecordsCount']}}</span></h4></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -100,6 +104,19 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                                <tr class="requestRow" *ngFor="let item of searchRequestVal['bulkSearchResultRows']">
+                                                    <th>{{ item.bulkRequestId }}</th>
+                                                    <td >{{ item.bulkRequestName }}</td>
+                                                    <td><a>{{ item.fileName }}</a></td>
+                                                    <td>{{ item.patronBarcode }}</td>
+                                                    <td></td>
+                                                    <td>{{ item.deliveryLocation }}</td>
+                                                    <td></td>
+                                                    <td>{{ item.emailAddress }}</td>
+                                                    <td>{{ item.createdDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
+                                                    <td>{{ item.status }}</td>
+                                                    <td style="text-align: center"><button style="border-radius: revert;" type="button" (click)="reqNotemodal(item.bulkRequestNotes)" name="action"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
+                                                </tr>
                                             <tr  class="requestRow">
                                                 <!-- <td>
                                                     <span th:text="${searchResult.bulkRequestId}"></span>
@@ -145,29 +162,19 @@
                                         <div class="pull-right">
                                             <div id="requestPaginationId" name="requestPaginationName" >
                                                 <ul class="pagination">
-                                                    <li th:class="${bulkRequestForm.pageNumber == 0} ? 'disabled' : ''">
-                                                        <span th:if="${bulkRequestForm.pageNumber == 0}">First</span>
-                                                        <a th:if="${bulkRequestForm.pageNumber != 0}" href="#"
-                                                           title="Go to first page"
-                                                           onclick="requestsFirstPage()">First</a>
+                                                    <li [ngClass]="(firstbutton==true)?'disabled':''">
+                                                        <span (click)="firstCall()">First</span>
                                                     </li>
-                                                    <li th:class="${(bulkRequestForm.pageNumber != 0) &amp;&amp; (bulkRequestForm.totalPageCount &gt; 1)}? '' : 'disabled'">
-                                                        <span th:if="${bulkRequestForm.pageNumber == 0}">Previous</span>
-                                                        <a th:if="${bulkRequestForm.pageNumber != 0}" href="#"
-                                                           title="Go to previous page"
-                                                           onclick="requestsPreviousPage()">Previous</a>
+                                                    <li [ngClass]="(previousbutton==true)?'disabled':''">
+                                                        <span (click)="previousCall()">Previous</span>
                                                     </li>
-                                                    <li th:class="${(bulkRequestForm.pageNumber+1 != bulkRequestForm.totalPageCount) &amp;&amp; (bulkRequestForm.totalPageCount &gt; 1)}? '' : 'disabled'">
-                                                        <span th:if="${bulkRequestForm.pageNumber+1 == bulkRequestForm.totalPageCount}">Next</span>
-                                                        <a th:if="${bulkRequestForm.pageNumber+1 != bulkRequestForm.totalPageCount}"
-                                                           href="#" title="Go to next page"
-                                                           onclick="requestsNextPage()">Next</a>
+                                                    <li [ngClass]="(nextbutton==true)?'disabled':''">
+                                                        <span (click)="nextCall()">Next</span>
+                                                      
                                                     </li>
-                                                    <li th:class="${bulkRequestForm.pageNumber+1 == bulkRequestForm.totalPageCount}? 'disabled' : ''">
-                                                        <span th:if="${bulkRequestForm.pageNumber+1 == bulkRequestForm.totalPageCount}">Last</span>
-                                                        <a th:if="${bulkRequestForm.pageNumber+1 != bulkRequestForm.totalPageCount}"
-                                                           href="#"
-                                                           onclick="requestsLastPage()">Last</a>
+                                                    <li [ngClass]="(lastbutton==true)?'disabled':''">
+                                                        <span (click)="lastCall()">Last</span>
+                                                       
                                                     </li>
                                                 </ul>
                                             </div>
@@ -383,7 +390,7 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <p id="requestNotesData" style="white-space: pre-wrap;word-wrap: break-word;"></p>
+                                        <p id="requestNotesData" style="white-space: pre-wrap;word-wrap: break-word;">{{this.bulkrequestNotesData}}</p>
                                     </div>
                                 </div>
                             </div>

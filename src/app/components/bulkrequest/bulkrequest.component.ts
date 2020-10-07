@@ -39,6 +39,26 @@ export class BulkrequestComponent implements OnInit {
   errorMessage: string;
   createsubmit=false;
 
+  bulkRequestIdSearchError=false;
+  bulkRequestNameSearchError=false;
+  bulkPatronBarcodeSearchError=false;
+  bulkRequestIdSearch:string;
+  bulkRequestNameSearch:string;
+  bulkPatronBarcodeSearch:string;
+  institutionList:string;
+  searchRequestVal: TreeNode[];
+  bulkrequestNotesData:string;
+
+  nextvalue = 0;
+  previousValue=0;
+  lastValue=0;
+  showentries = 10;
+  firstbutton = true;
+  previousbutton = true;
+  nextbutton = false;
+  lastbutton = false;
+
+
   constructor(private formBuilder: FormBuilder,private bulkrequestService: BulkRequestService) { }
 
   ngOnInit(): void {
@@ -367,5 +387,374 @@ if(fileList.length > 0) {
     this.patronBarcodeErrorMessage=false;
     this.EmailMandatoryErrorMessage=false;
   }
+
+  //**********************search Request start*******************
+  searchRequests(){
+    this.postData={
+      "requestId" : this.bulkRequestIdSearch,
+      "patronBarcode" : null,
+      "itemBarcode" : null,
+      "status" : null,
+      "deliveryLocation" : null,
+      "deliveryLocationInRequest" : null,
+      "itemTitle" : null,
+      "itemOwningInstitution" : "PUL",
+      "patronEmailAddress" : null,
+      "requestingInstitution" : "PUL",
+      "requestType" : null,
+      "requestNotes" : null,
+      "message" : null,
+      "errorMessage" : null,
+      "totalRecordsCount" : "0",
+      "pageNumber" : 0,
+      "pageSize" : 10,
+      "totalPageCount" :0,
+      "submitted" : false,
+      "showResults" : false,
+      "requestingInstitutions" :[],
+      "requestTypes" : [],
+      "deliveryLocations" : [],
+      "bulkSearchResultRows" :[],
+      "requestStatuses" : [],
+      "institutionList" : [],
+      "disableRequestingInstitution" : false,
+      "onChange" : null,
+      "showRequestErrorMsg" : false,
+      "requestingInstituionHidden" : null,
+      "disableSearchInstitution" : false,
+      "searchInstitutionHdn" : null,
+      "file" : null,
+      "requestIdSearch" : null,
+      "requestNameSearch" : null,
+      "patronBarcodeSearch" : null,
+      "institution" : this.institutionList,
+      "bulkRequestName" : this.bulkRequestNameSearch,
+      "patronBarcodeInRequest" : this.bulkPatronBarcodeSearch,
+      "fileName" : null
+      }
+    this.bulkrequestService.searchRequest(this.postData).subscribe(
+      (res) => {
+        this.searchRequestVal=res;
+        this.pagination();
+      },
+     (error) => {
+        
+     }
+    
+      );
+  }
+
+  reqNotemodal(notes){
+    this.bulkrequestNotesData=notes;
+    $('#requestNotesModal').modal({ show: true });
+  }
+
+  firstCall(){
+    this.showentries = this.searchRequestVal['pageSize'];
+    this.postData={
+      "requestId" : this.bulkRequestIdSearch,
+      "patronBarcode" : null,
+      "itemBarcode" : null,
+      "status" : null,
+      "deliveryLocation" : null,
+      "deliveryLocationInRequest" : null,
+      "itemTitle" : null,
+      "itemOwningInstitution" : "PUL",
+      "patronEmailAddress" : null,
+      "requestingInstitution" : "PUL",
+      "requestType" : null,
+      "requestNotes" : null,
+      "message" : null,
+      "errorMessage" : null,
+      "totalRecordsCount" : "0",
+      "pageNumber" : 0,
+      "pageSize" : this.showentries,
+      "totalPageCount" :0,
+      "submitted" : false,
+      "showResults" : false,
+      "requestingInstitutions" :[],
+      "requestTypes" : [],
+      "deliveryLocations" : [],
+      "bulkSearchResultRows" :[],
+      "requestStatuses" : [],
+      "institutionList" : [],
+      "disableRequestingInstitution" : false,
+      "onChange" : null,
+      "showRequestErrorMsg" : false,
+      "requestingInstituionHidden" : null,
+      "disableSearchInstitution" : false,
+      "searchInstitutionHdn" : null,
+      "file" : null,
+      "requestIdSearch" : null,
+      "requestNameSearch" : null,
+      "patronBarcodeSearch" : null,
+      "institution" : this.institutionList,
+      "bulkRequestName" : this.bulkRequestNameSearch,
+      "patronBarcodeInRequest" : this.bulkPatronBarcodeSearch,
+      "fileName" : null
+      }
+    this.bulkrequestService.firstCall(this.postData).subscribe(
+      (res) => {
+        this.searchRequestVal=res;
+        this.pagination();
+      },
+     (error) => {
+        
+     }
+    
+      );
+  }
+
+  previousCall(){
+    this.showentries = this.searchRequestVal['pageSize'];
+    this.postData={
+      "requestId" : this.bulkRequestIdSearch,
+      "patronBarcode" : null,
+      "itemBarcode" : null,
+      "status" : null,
+      "deliveryLocation" : null,
+      "deliveryLocationInRequest" : null,
+      "itemTitle" : null,
+      "itemOwningInstitution" : "PUL",
+      "patronEmailAddress" : null,
+      "requestingInstitution" : "PUL",
+      "requestType" : null,
+      "requestNotes" : null,
+      "message" : null,
+      "errorMessage" : null,
+      "totalRecordsCount" : "0",
+      "pageNumber" : 0,
+      "pageSize" : this.showentries,
+      "totalPageCount" :0,
+      "submitted" : false,
+      "showResults" : false,
+      "requestingInstitutions" :[],
+      "requestTypes" : [],
+      "deliveryLocations" : [],
+      "bulkSearchResultRows" :[],
+      "requestStatuses" : [],
+      "institutionList" : [],
+      "disableRequestingInstitution" : false,
+      "onChange" : null,
+      "showRequestErrorMsg" : false,
+      "requestingInstituionHidden" : null,
+      "disableSearchInstitution" : false,
+      "searchInstitutionHdn" : null,
+      "file" : null,
+      "requestIdSearch" : null,
+      "requestNameSearch" : null,
+      "patronBarcodeSearch" : null,
+      "institution" : this.institutionList,
+      "bulkRequestName" : this.bulkRequestNameSearch,
+      "patronBarcodeInRequest" : this.bulkPatronBarcodeSearch,
+      "fileName" : null
+      }
+    this.bulkrequestService.previousCall(this.postData).subscribe(
+      (res) => {
+        this.searchRequestVal=res;
+        this.pagination();
+      },
+     (error) => {
+        
+     }
+    
+      );
+  }
+
+  nextCall(){
+    this.showentries = this.searchRequestVal['pageSize'];
+    this.postData={
+      "requestId" : this.bulkRequestIdSearch,
+      "patronBarcode" : null,
+      "itemBarcode" : null,
+      "status" : null,
+      "deliveryLocation" : null,
+      "deliveryLocationInRequest" : null,
+      "itemTitle" : null,
+      "itemOwningInstitution" : "PUL",
+      "patronEmailAddress" : null,
+      "requestingInstitution" : "PUL",
+      "requestType" : null,
+      "requestNotes" : null,
+      "message" : null,
+      "errorMessage" : null,
+      "totalRecordsCount" : "0",
+      "pageNumber" : 0,
+      "pageSize" : this.showentries,
+      "totalPageCount" :0,
+      "submitted" : false,
+      "showResults" : false,
+      "requestingInstitutions" :[],
+      "requestTypes" : [],
+      "deliveryLocations" : [],
+      "bulkSearchResultRows" :[],
+      "requestStatuses" : [],
+      "institutionList" : [],
+      "disableRequestingInstitution" : false,
+      "onChange" : null,
+      "showRequestErrorMsg" : false,
+      "requestingInstituionHidden" : null,
+      "disableSearchInstitution" : false,
+      "searchInstitutionHdn" : null,
+      "file" : null,
+      "requestIdSearch" : null,
+      "requestNameSearch" : null,
+      "patronBarcodeSearch" : null,
+      "institution" : this.institutionList,
+      "bulkRequestName" : this.bulkRequestNameSearch,
+      "patronBarcodeInRequest" : this.bulkPatronBarcodeSearch,
+      "fileName" : null
+      }
+    this.bulkrequestService.nextCall(this.postData).subscribe(
+      (res) => {
+        this.searchRequestVal=res;
+        this.pagination();
+      },
+     (error) => {
+        
+     }
+    
+      );
+  }
+
+  lastCall(){
+    this.showentries = this.searchRequestVal['pageSize'];
+    this.postData={
+      "requestId" : this.bulkRequestIdSearch,
+      "patronBarcode" : null,
+      "itemBarcode" : null,
+      "status" : null,
+      "deliveryLocation" : null,
+      "deliveryLocationInRequest" : null,
+      "itemTitle" : null,
+      "itemOwningInstitution" : "PUL",
+      "patronEmailAddress" : null,
+      "requestingInstitution" : "PUL",
+      "requestType" : null,
+      "requestNotes" : null,
+      "message" : null,
+      "errorMessage" : null,
+      "totalRecordsCount" : "0",
+      "pageNumber" : 0,
+      "pageSize" : this.showentries,
+      "totalPageCount" :0,
+      "submitted" : false,
+      "showResults" : false,
+      "requestingInstitutions" :[],
+      "requestTypes" : [],
+      "deliveryLocations" : [],
+      "bulkSearchResultRows" :[],
+      "requestStatuses" : [],
+      "institutionList" : [],
+      "disableRequestingInstitution" : false,
+      "onChange" : null,
+      "showRequestErrorMsg" : false,
+      "requestingInstituionHidden" : null,
+      "disableSearchInstitution" : false,
+      "searchInstitutionHdn" : null,
+      "file" : null,
+      "requestIdSearch" : null,
+      "requestNameSearch" : null,
+      "patronBarcodeSearch" : null,
+      "institution" : this.institutionList,
+      "bulkRequestName" : this.bulkRequestNameSearch,
+      "patronBarcodeInRequest" : this.bulkPatronBarcodeSearch,
+      "fileName" : null
+      }
+    this.bulkrequestService.lastCall(this.postData).subscribe(
+      (res) => {
+        this.searchRequestVal=res;
+        this.pagination();
+      },
+     (error) => {
+        
+     }
+    
+      );
+  }
+
+
+  onPageSizeChange(value) {
+    console.log("showEntries value",value)
+    this.showentries = value;
+    this.postData={
+      "requestId" : this.bulkRequestIdSearch,
+      "patronBarcode" : null,
+      "itemBarcode" : null,
+      "status" : null,
+      "deliveryLocation" : null,
+      "deliveryLocationInRequest" : null,
+      "itemTitle" : null,
+      "itemOwningInstitution" : "PUL",
+      "patronEmailAddress" : null,
+      "requestingInstitution" : "PUL",
+      "requestType" : null,
+      "requestNotes" : null,
+      "message" : null,
+      "errorMessage" : null,
+      "totalRecordsCount" : "0",
+      "pageNumber" : 0,
+      "pageSize" : this.showentries,
+      "totalPageCount" :0,
+      "submitted" : false,
+      "showResults" : false,
+      "requestingInstitutions" :[],
+      "requestTypes" : [],
+      "deliveryLocations" : [],
+      "bulkSearchResultRows" :[],
+      "requestStatuses" : [],
+      "institutionList" : [],
+      "disableRequestingInstitution" : false,
+      "onChange" : null,
+      "showRequestErrorMsg" : false,
+      "requestingInstituionHidden" : null,
+      "disableSearchInstitution" : false,
+      "searchInstitutionHdn" : null,
+      "file" : null,
+      "requestIdSearch" : null,
+      "requestNameSearch" : null,
+      "patronBarcodeSearch" : null,
+      "institution" : this.institutionList,
+      "bulkRequestName" : this.bulkRequestNameSearch,
+      "patronBarcodeInRequest" : this.bulkPatronBarcodeSearch,
+      "fileName" : null
+      }
+    this.bulkrequestService.onRequestPageSizeChange(this.postData).subscribe(
+      (res) => {
+        this.searchRequestVal=res;
+        this.pagination();
+      },
+     (error) => {
+        
+     }
+    
+      );
+  }
+
+  pagination(){
+    if(this.searchRequestVal['pageNumber'] == 0 && (this.searchRequestVal['totalPageCount']-1 >0)){
+      this.firstbutton = true;
+      this.previousbutton = true;
+      this.nextbutton = false;
+      this.lastbutton = false;
+     }else if(this.searchRequestVal['pageNumber'] == 0 && (this.searchRequestVal['pageNumber'] == this.searchRequestVal['totalPageCount']-1)){
+      this.firstbutton = true;
+      this.previousbutton = true;
+      this.nextbutton = true;
+      this.lastbutton = true;
+    }
+    else if((this.searchRequestVal['pageNumber'] == this.searchRequestVal['totalPageCount']-1)&&this.searchRequestVal['totalPageCount']-1>0){
+      this.firstbutton = false;
+      this.previousbutton = false;
+      this.nextbutton = true;
+      this.lastbutton = true;
+    }else if((this.searchRequestVal['pageNumber'] < this.searchRequestVal['totalPageCount']-1)&&(this.searchRequestVal['pageNumber'] != 0)){
+      this.firstbutton = false;
+      this.previousbutton = false;
+      this.nextbutton = false;
+      this.lastbutton = false;
+    }
+}
+
 
 }
