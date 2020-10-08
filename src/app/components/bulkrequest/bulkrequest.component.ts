@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, Input, ViewChild } from '@angular/core';
 declare var $: any;
 import { TreeNode } from 'primeng/api';
+import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BulkRequestService } from 'src/app/services/bulkRequest/bulk-request.service';
 
@@ -48,7 +49,7 @@ export class BulkrequestComponent implements OnInit {
   institutionList: string;
   searchRequestVal: TreeNode[];
   bulkrequestNotesData: string;
-
+  requestId : string;
   nextvalue = 0;
   previousValue = 0;
   lastValue = 0;
@@ -59,6 +60,10 @@ export class BulkrequestComponent implements OnInit {
   lastbutton = false;
   results_container = false;
   errorResponse = false;
+  results_container_table = false;
+  download_response : TreeNode[];
+  fileName: string;
+  dataDecode: string;
   constructor(private formBuilder: FormBuilder, private bulkrequestService: BulkRequestService) { }
 
   ngOnInit(): void {
@@ -159,6 +164,13 @@ export class BulkrequestComponent implements OnInit {
     this.deliveryLocVal = [];
     this.initialload();
     this.createsubmit = false;
+    this.results_container_table = false;
+    this.results_container = false;
+    this.bulkRequestIdSearch = '';
+    this.bulkRequestNameSearch = '';
+    this.bulkPatronBarcodeSearch = '';
+    this.institutionList = '';
+    this.errorResponse = false;
   }
 
   loadCreateRequestForSamePatron() {
@@ -170,10 +182,8 @@ export class BulkrequestComponent implements OnInit {
   }
 
   NotesLengthValidation(val) {
-    console.log("vall", val)
     var requestNotesId = $('#requestNotesId').val();
     var NoteLength = requestNotesId.length;
-    console.log("ll", NoteLength)
     var len = val.length;
     if (len > 2000) {
       val = val.substring(0, 2000);
@@ -184,7 +194,6 @@ export class BulkrequestComponent implements OnInit {
   }
 
   validateEmailAddress(val) {
-    console.log("jjjj", val)
     var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
 
     if (!pattern.test(val)) {
@@ -194,21 +203,13 @@ export class BulkrequestComponent implements OnInit {
     }
   }
 
-
-
   onChange(event: any) {
     let fileList: FileList = event.target.files;
-    console.log('fileeee', event.target.files)
     if (fileList.length > 0) {
       let file = fileList[0];
-      console.log('fileeee', file)
       this.chosenFile = file.name;
 
       this.formData.append('file', file, file[0]);
-      // console.log(JSON.stringify(this.formData))
-      // this.formData.forEach((value,key) => {
-      //   console.log(key+" "+value)
-      // });
 
     }
   }
@@ -259,15 +260,10 @@ export class BulkrequestComponent implements OnInit {
 
     this.bulkrequestService.populateDeliveryLocations(this.postData).subscribe(
       (res) => {
-        console.log("response", res);
         var del = res['deliveryLocations'];
-        //   this.deliveryLocVal = $.map(del, function(value, index) {
-        //     return [value];
-        // });
         this.deliveryLocVal = Object.keys(del).map(function (data) {
           return [data, del[data]];
         });
-        console.log("DeliveryLocations", this.deliveryLocVal);
 
       },
       (error) => {
@@ -280,7 +276,6 @@ export class BulkrequestComponent implements OnInit {
 
   createBulkRequest() {
     if ((this.BulkRequestName == undefined || this.BulkRequestName == '') && (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') && (this.chosenFile == undefined || this.chosenFile == '') && (this.deliveryLocation == undefined || this.deliveryLocation == '') && (this.patronBarcodeId == undefined || this.patronBarcodeId == '') && (this.patronEmailId == undefined || this.patronEmailId == '')) {
-      console.log("1")
       this.BulkRequestNameErrorMessage = true;
       this.requestingInstitutionErrorMessage = true;
       this.bulkRequestFileRequired = true;
@@ -289,23 +284,17 @@ export class BulkrequestComponent implements OnInit {
       this.EmailMandatoryErrorMessage = true;
     }
     else if (this.BulkRequestName == undefined || this.BulkRequestName == '') {
-      console.log("2")
       this.BulkRequestNameErrorMessage = true;
     }
     else if (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') {
-      console.log("3")
       this.requestingInstitutionErrorMessage = true;
     } else if (this.chosenFile == undefined || this.chosenFile == '') {
-      console.log("4")
       this.bulkRequestFileRequired = true;
     } else if (this.patronEmailId == undefined || this.patronEmailId == '' || this.patronEmailIdErrorMessage == true) {
-      console.log("5")
       this.EmailMandatoryErrorMessage = true;
     } else if (this.deliveryLocation == undefined || this.deliveryLocation == '') {
-      console.log("6")
       this.deliveryLocationErrorMessage = true;
     } else if (this.patronBarcodeId == undefined || this.patronBarcodeId == '') {
-      console.log("7")
       this.patronBarcodeErrorMessage = true;
     } else {
       this.BulkRequestNameErrorMessage = false;
@@ -437,9 +426,13 @@ export class BulkrequestComponent implements OnInit {
       (res) => {
         this.searchRequestVal = res;
         this.results_container = true;
+        this.results_container_table = true;
+        this.errorResponse = false;
         this.pagination();
         if (this.searchRequestVal['message'] != null) {
           this.errorResponse = true;
+          this.results_container = false;
+          this.results_container_table = false;
         }
       },
       (error) => {
@@ -499,7 +492,6 @@ export class BulkrequestComponent implements OnInit {
     }
     this.bulkrequestService.firstCall(this.postData).subscribe(
       (res) => {
-        console.log
         this.searchRequestVal = res;
         this.pagination();
       },
@@ -680,7 +672,6 @@ export class BulkrequestComponent implements OnInit {
 
 
   onPageSizeChange(value) {
-    console.log("showEntries value", value)
     this.showentries = value;
     this.postData = {
       "requestId": null,
@@ -760,6 +751,27 @@ export class BulkrequestComponent implements OnInit {
       this.lastbutton = false;
     }
   }
+  downloadReports(requestId){
+  this.bulkrequestService.downloadReports(requestId).subscribe(
+    (res) => {
+      this.download_response = res;
+      this.fileName = this.download_response['fileName'];
+      var contentType = "application/vnd.ms-excel"; 
+      this.dataDecode = atob(this.download_response['content']);
+      var file = new Blob([this.dataDecode], { type: contentType }); 
+        var link = document.createElement('a'); 
+        link.href = window.URL.createObjectURL(file); 
+        link.setAttribute('download', this.fileName); 
+        document.body.appendChild(link); 
+        link.click(); 
+        document.body.removeChild(link); 
+    },
+    (error) => {
+    }
 
+  );
+
+ 
+  } 
 
 }
