@@ -72,4 +72,10 @@ export class BulkRequestService {
         headers: appHeaders.getHeaders()
       });
   }
+  downloadReports(requestId: string): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + this.prefix+'/'+requestId,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
 }
