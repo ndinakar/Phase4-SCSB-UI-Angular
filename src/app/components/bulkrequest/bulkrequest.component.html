@@ -59,13 +59,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="search-results-container" >
+                        <div class="search-results-container" *ngIf="results_container">
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                            <!-- <div class="row margin-btm-10" >
+                             <div class="row margin-btm-10" *ngIf="errorResponse">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:text="${bulkRequestForm.message}"></span></div>
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span>{{searchRequestVal['message']}}}<span></span></div>
                                 </div>
-                            </div> -->
+                            </div> 
                             <div >
                                 <div class="row">
                                     <div class="col-sm-3 col-md-2 col-lg-2 margin-top-05 show-entries-section">
@@ -105,16 +105,18 @@
                                             </thead>
                                             <tbody>
                                                 <tr class="requestRow" *ngFor="let item of searchRequestVal['bulkSearchResultRows']">
-                                                    <th>{{ item.bulkRequestId }}</th>
-                                                    <td >{{ item.bulkRequestName }}</td>
-                                                    <td><a>{{ item.fileName }}</a></td>
+                                                    <th style="text-align: center">{{ item.bulkRequestId }}</th>
+                                                    <td>{{ item.bulkRequestName }}</td>
+                                                    <td>{{ item.fileName }}</td>
                                                     <td>{{ item.patronBarcode }}</td>
-                                                    <td></td>
+                                                    <td>{{item.requestingInstitution}}</td>
                                                     <td>{{ item.deliveryLocation }}</td>
-                                                    <td></td>
+                                                    <td>{{item.createdBy}}</td>
                                                     <td>{{ item.emailAddress }}</td>
                                                     <td>{{ item.createdDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
-                                                    <td>{{ item.status }}</td>
+                                                    <td> <span>{{item.status}}</span><br>
+                                                    <span><a *ngIf="item.status == 'PROCESSED'"><span>Results_</span>{{item.fileName}}</a></span>
+                                                    </td>
                                                     <td style="text-align: center"><button style="border-radius: revert;" type="button" (click)="reqNotemodal(item.bulkRequestNotes)" name="action"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
                                                 </tr>
                                             <tr  class="requestRow">

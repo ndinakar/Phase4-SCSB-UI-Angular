@@ -28,4 +28,8 @@ export class BulkRequestForm {
     requestStatuses : string[];
     institutionList: string[];
     disableRequestingInstitution : boolean;
+    requestIdSearch: string;
+    requestNameSearch: string;
+    patronBarcodeSearch:string ;
+    institution: string;
 }
