@@ -31,7 +31,7 @@ export class SearchComponent implements OnInit {
 
   searchVal: TreeNode[];
   selectedNodes1: any[];
-  selectedNodes2: TreeNode[];
+  selectedNodes2: any[];
 
   cols: any[];
   cols1: any[];
@@ -983,9 +983,15 @@ export class SearchComponent implements OnInit {
   routeToRequest(){
     var barcode1=[];
     var i;
+    if(this.selectedNodes1 == undefined){
+    for(i=0;i<this.selectedNodes2.length;i++){
+      barcode1.push(this.selectedNodes2[i].barcode);
+    }
+  }else{
     for(i=0;i<this.selectedNodes1.length;i++){
       barcode1.push(this.selectedNodes1[i].barcode);
     }
+  }
     var barcode=barcode1.join();
     this.router.navigate(['/dashboard/request', barcode]);
   }

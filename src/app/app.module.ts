@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { RequestComponent } from './components/request/request.component';
-
+import { BulkrequestComponent } from './components/bulkrequest/bulkrequest.component';
 
 
 @NgModule({
@@ -17,7 +17,8 @@ import { RequestComponent } from './components/request/request.component';
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
-    RequestComponent, 
+    RequestComponent,
+    BulkrequestComponent, 
   ],
   imports: [
     BrowserModule,

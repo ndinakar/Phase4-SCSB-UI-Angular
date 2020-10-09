@@ -328,9 +328,12 @@ export class RequestComponent implements OnInit {
 
     this.requestService.populateItemtDetails(this.postData).subscribe(
       (res) => {
-        this.itemBarcodeNotFoundErrorMessage=false;
+      
+        
         this.itembarcodeVal=res;
-        if(!this.itembarcodeVal['errorMessage']){
+        console.log("response",this.itembarcodeVal);
+        if(!this.itembarcodeVal['notAvailableErrorMessage']){
+        this.itemBarcodeNotFoundErrorMessage=false;
         this.itemTitleId=this.itembarcodeVal['itemTitle'];
         this.itemOwningInstitutionId=this.itembarcodeVal['itemOwningInstitution'];
         }else{
@@ -369,7 +372,7 @@ export class RequestComponent implements OnInit {
       "articleTitle":null,
       "message":null,
       "errorMessage":null,
-      "totalRecordsCount":"0",
+      "totalRecordsCount":null,
       "pageNumber":0,
       "pageSize":this.showentries,
       "totalPageCount":0,
@@ -402,9 +405,10 @@ export class RequestComponent implements OnInit {
       "searchInstitutionHdn":null
    }
    
-
+//if(this.itembarcodeVal['itemOwningInstitution']this.itembarcodeVal['itemOwningInstitution'])
     this.requestService.populateItemtDetails(this.postData).subscribe(
       (res) => {
+        console.log("response",res);
         var del=res['deliveryLocation'];
       //   this.deliveryLocVal = $.map(del, function(value, index) {
       //     return [value];

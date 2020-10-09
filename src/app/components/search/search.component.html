@@ -364,7 +364,7 @@
                                                 <div class="p-col-12 p-md-9">
                                                     <div class="p-grid" *ngIf="rowData.searchItemResultRows==''"></div>
                                                     <div class="p-grid" *ngIf="rowData.searchItemResultRows!=''">
-                                                        <p-table [columns]="cols1" selectionMode="checkbox" [(selection)]="selectedNodes2" [value]="rowData.searchItemResultRows" >
+                                                        <p-table [columns]="cols1" selectionMode="checkbox" [(selection)]="selectedNodes2" [value]="rowData.searchItemResultRows" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                                                             <ng-template pTemplate="header" let-columns>
                                                                 <tr>
                                                                     <th style="width: 3em">
