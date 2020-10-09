@@ -59,15 +59,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="search-results-container" *ngIf="results_container">
+                        <div class="search-results-container">
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
                              <div class="row margin-btm-10" *ngIf="errorResponse">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span>{{searchRequestVal['message']}}}<span></span></div>
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span>{{searchRequestVal['message']}}<span></span></div>
                                 </div>
                             </div> 
                             <div >
-                                <div class="row">
+                                <div class="row" *ngIf="results_container">
                                     <div class="col-sm-3 col-md-2 col-lg-2 margin-top-05 show-entries-section">
                                         <div class="">
                                             <span class="show-title margin-right-05">Show Entries</span>
@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-12 col-lg-3 text-right"><h4>Search Results Found: <span >{{searchRequestVal['totalRecordsCount']}}</span></h4></div>
                                 </div>
-                                <div class="row">
+                                <div class="row" *ngIf="results_container_table">
                                     <div class="col-xs-12">
                                         <table id="request-result-table" class="table table-striped margin-btm-0" style="text-align: center">
                                             <thead class="tablesorter-headerRow">
@@ -115,7 +115,7 @@
                                                     <td>{{ item.emailAddress }}</td>
                                                     <td>{{ item.createdDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
                                                     <td> <span>{{item.status}}</span><br>
-                                                    <span><a *ngIf="item.status == 'PROCESSED'"><span>Results_</span>{{item.fileName}}</a></span>
+                                                    <span><a *ngIf="item.status == 'PROCESSED'" (click)="downloadReports(item.bulkRequestId)"><span>Results_</span>{{item.fileName}}</a></span>
                                                     </td>
                                                     <td style="text-align: center"><button style="border-radius: revert;" type="button" (click)="reqNotemodal(item.bulkRequestNotes)" name="action"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
                                                 </tr>

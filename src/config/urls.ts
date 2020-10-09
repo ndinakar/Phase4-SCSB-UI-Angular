@@ -1,6 +1,6 @@
 
 export const urls = {
-    baseUrl: 'http://172.17.0.1:9089',
+    baseUrl: 'http://localhost:9089',
     search: '/search',
     collection: '/collection',
     requests: '/request',
