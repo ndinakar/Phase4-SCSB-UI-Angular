@@ -331,13 +331,13 @@ export class RequestComponent implements OnInit {
       
         
         this.itembarcodeVal=res;
-        console.log("response",this.itembarcodeVal);
-        if(!this.itembarcodeVal['notAvailableErrorMessage']){
-        this.itemBarcodeNotFoundErrorMessage=false;
-        this.itemTitleId=this.itembarcodeVal['itemTitle'];
-        this.itemOwningInstitutionId=this.itembarcodeVal['itemOwningInstitution'];
-        }else{
+        console.log("response",this.itembarcodeVal['errorMessage']);
+        if(this.itembarcodeVal['errorMessage'] != null){
           this.itemBarcodeNotFoundErrorMessage=true;
+        }else{
+          this.itemBarcodeNotFoundErrorMessage=false;
+          this.itemTitleId=this.itembarcodeVal['itemTitle'];
+          this.itemOwningInstitutionId=this.itembarcodeVal['itemOwningInstitution'];
         }
   
       },
