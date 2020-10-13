@@ -14,7 +14,7 @@ export class appHeaders {
     public static getHeaders_formData() {
         return new HttpHeaders({
             //'Content-Type': 'multipart/form-data; charset=utf-8',
-            'Content-Type': 'undefined',
+            'Content-Type': 'multipart/form-data;',
             'Accept': 'application/json',
             'api_key':'recap'
         });

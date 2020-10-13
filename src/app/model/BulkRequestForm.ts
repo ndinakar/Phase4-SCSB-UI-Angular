@@ -32,4 +32,5 @@ export class BulkRequestForm {
     requestNameSearch: string;
     patronBarcodeSearch:string ;
     institution: string;
+    file: File;
 }

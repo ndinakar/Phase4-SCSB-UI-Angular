@@ -64,6 +64,7 @@ export class BulkrequestComponent implements OnInit {
   download_response : TreeNode[];
   fileName: string;
   dataDecode: string;
+  file: File = null;
   constructor(private formBuilder: FormBuilder, private bulkrequestService: BulkRequestService) { }
 
   ngOnInit(): void {
@@ -206,10 +207,10 @@ export class BulkrequestComponent implements OnInit {
   onChange(event: any) {
     let fileList: FileList = event.target.files;
     if (fileList.length > 0) {
-      let file = fileList[0];
-      this.chosenFile = file.name;
+       this.file = fileList[0];
+      this.chosenFile = this.file.name;
 
-      this.formData.append('file', file, file[0]);
+      this.formData.append('file', this.file);
 
     }
   }
@@ -336,7 +337,7 @@ export class BulkrequestComponent implements OnInit {
         "requestingInstituionHidden": null,
         "disableSearchInstitution": false,
         "searchInstitutionHdn": null,
-        "file": this.formData,
+        "file": this.formData['file'],
         "requestIdSearch": null,
         "requestNameSearch": null,
         "patronBarcodeSearch": null,
@@ -345,6 +346,7 @@ export class BulkrequestComponent implements OnInit {
         "patronBarcodeInRequest": this.patronBarcodeId,
         "fileName": this.chosenFile
       }
+      console.log(this.formData['file']);
       this.bulkrequestService.createBulkRequest(this.postData).subscribe(
         (res) => {
           this.createResponse = res;
