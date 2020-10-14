@@ -1,6 +1,6 @@
 
 export const urls = {
-    baseUrl: 'http://172.31.27.8:9089',
+    baseUrl: 'http://52.203.96.232:9089',
     search: '/search',
     collection: '/collection',
     requests: '/request',
