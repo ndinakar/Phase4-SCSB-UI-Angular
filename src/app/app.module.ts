@@ -10,6 +10,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { HomeComponent } from './components/home/home.component';
 import { RequestComponent } from './components/request/request.component';
 import { BulkrequestComponent } from './components/bulkrequest/bulkrequest.component';
+import { ReportsComponent } from './components/reports/reports.component';
+import { RolesComponent } from './components/roles/roles.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { BulkrequestComponent } from './components/bulkrequest/bulkrequest.compo
     PageNotFoundComponent,
     HomeComponent,
     RequestComponent,
-    BulkrequestComponent, 
+    BulkrequestComponent,
+    ReportsComponent,
+    RolesComponent, 
   ],
   imports: [
     BrowserModule,

@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
     var formVal = this.registerForm.value;
     //console.log("kkk",formVal.institution)
     if (formVal.institution === 'HTC') {
-      this.router.navigate(['/dashboard/search']);
+      this.router.navigate(['/search']);
     }
     // display form values on success
     //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));

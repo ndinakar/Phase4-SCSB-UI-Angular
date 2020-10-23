@@ -2,10 +2,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
-import { Router } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -149,7 +149,6 @@ export class SearchComponent implements OnInit {
 
   //show entries api start
     onPageSizeChange(value) {
-      console.log
     this.showentries = value;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -217,7 +216,7 @@ export class SearchComponent implements OnInit {
       "useRestrictions": this.useRestrictions,
       "searchResultRows": [],
       "catalogingStatus": "Complete",
-      "pageNumber": this.nextvalue,
+      "pageNumber": this.searchVal['pageNumber'],
       "pageSize": this.showentries,
       "isDeleted": false,
       "totalPageCount": 0,
@@ -233,10 +232,10 @@ export class SearchComponent implements OnInit {
     }
    
     this.searchService.onPageSizeChange(this.postData).subscribe((res) => {
+    this.searchVal = res;
       
     this.showresultdiv = true;
-    this.searchVal = res;
-    console.log(this.searchVal)
+    this.nextvalue = this.searchVal['PageNumber'];
     if(this.searchVal['pageNumber'] == 0 && (this.searchVal['totalPageCount']-1 >0)){
       this.firstbutton = true;
       this.previousbutton = true;
@@ -379,8 +378,10 @@ export class SearchComponent implements OnInit {
     }
 
     this.searchService.getSearch(this.postData).subscribe(
-      (files) => {
-        this.searchVal = files
+      (res) => {
+        this.searchVal = res
+        //this.nextvalue = 0;
+        this.searchVal['pageNumber']=0;
         this.showresultdiv = true;
         this.cols = [
           { field: 'title', header: 'Title' },
@@ -753,8 +754,11 @@ export class SearchComponent implements OnInit {
       "errorMessage": null
     }
 
-    this.showresultdiv = true;
-    this.searchService.searchFirst(this.postData).subscribe(files => this.searchVal = files);
+    this.searchService.searchFirst(this.postData).subscribe(
+      (res) => {
+        this.searchVal = res;
+        this.searchVal['pageNumber']=0;
+      });
 
     this.cols = [
       { field: 'title', header: 'Title' },
@@ -993,7 +997,7 @@ export class SearchComponent implements OnInit {
     }
   }
     var barcode=barcode1.join();
-    this.router.navigate(['/dashboard/request', barcode]);
+    this.router.navigate(['/request', barcode]);
   }
 
   facetsshowhide(){

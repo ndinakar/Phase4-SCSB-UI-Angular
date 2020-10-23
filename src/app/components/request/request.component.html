@@ -17,12 +17,12 @@
                                         <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12">
                                             <div class="col-md-32 col-sm-3 col-lg-2 padding-right-20 padding-left-0">
                                                 <label class="fontcolor-dark margin-btm-10">Patron Barcode</label>
-                                                <input id="patronBarcode" name="patronBarcode" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchPatronBarcode" type="text"  class="form-control themed-input" onkeyup="togglePatronBarcodeSearch()"/>
+                                                <input id="patronBarcode" name="patronBarcode" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchPatronBarcode" type="text"  class="form-control themed-input"/>
                                                 <p id="patronBarcodeSearchError" *ngIf="patronBarcodeSearchError" style="color: red;">Patron barcode is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Item Barcode</label>
-                                                <input id="itemBarcode" name="itemBarcode" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchItemBarcode" class="form-control themed-input" onkeyup="toggleItemBarcodeSearch()"/>
+                                                <input id="itemBarcode" name="itemBarcode" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchItemBarcode" class="form-control themed-input"/>
                                                 <p id="itemBarcodeSearchError" *ngIf="itemBarcodeSearchError" style="color: red;">Item barcode is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
@@ -254,8 +254,7 @@
                                                       
                                                     </li>
                                                     <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                                        <span (click)="lastCall()">Last</span>
-                                                       
+                                                        <span (click)="lastCall()">Last</span> 
                                                     </li>
                                                 </ul>
                                             </div>

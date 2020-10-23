@@ -769,11 +769,7 @@ export class BulkrequestComponent implements OnInit {
         document.body.removeChild(link); 
     },
     (error) => {
-    }
-
-  );
-
- 
+    });
   } 
 
 }
