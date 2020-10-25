@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~9.1.12",
     "@angular/platform-browser-dynamic": "~9.1.12",
     "@angular/router": "~9.1.12",
+    "@ng-select/ng-select": "^5.0.8",
     "@syncfusion/ej2-angular-grids": "^18.2.56",
     "@syncfusion/ej2-angular-treegrid": "^18.2.56",
     "@syncfusion/ej2-treegrid": "^18.2.56",

@@ -400,14 +400,9 @@ export class RequestComponent implements OnInit {
       "disableSearchInstitution": false,
       "searchInstitutionHdn": null
     }
-
-    //if(this.itembarcodeVal['itemOwningInstitution']this.itembarcodeVal['itemOwningInstitution'])
     this.requestService.populateItemtDetails(this.postData).subscribe(
       (res) => {
         var del = res['deliveryLocation'];
-        //   this.deliveryLocVal = $.map(del, function(value, index) {
-        //     return [value];
-        // });
         this.deliveryLocVal = Object.keys(del).map(function (data) {
           return [data, del[data]];
         });

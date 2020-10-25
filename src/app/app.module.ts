@@ -4,6 +4,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { AppRoutingModule } from './app-routing.module';
+import { NgSelectModule } from '@ng-select/ng-select'; 
 
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -30,7 +31,8 @@ import { RolesComponent } from './components/roles/roles.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    DashboardModule
+    DashboardModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

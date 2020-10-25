@@ -1,40 +1,34 @@
 <!-- Request Tab-->
 <div id="requestContentId" name="requestContentName">
-     <link rel="stylesheet"/>
+    <link rel="stylesheet" />
     <script type="text/javascript"></script>
     <div id="requestFormDivId" name="requestFormDivName">
         <form id="request-form" name="request-form" class="form-horizontal" method="post">
             <fieldset>
-                <div  role="tabpanel" class="tab-pane" id="request">
+                <div role="tabpanel" class="tab-pane" id="request">
                     <div class="row margin-btm-10" *ngIf="searchBar">
-                        <div  class="col-sm-12 text-right backtext"><a   (click)="loadCreateRequestnew()"><span class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
+                        <div class="col-sm-12 text-right backtext"><a (click)="loadCreateRequestnew()"><span class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
                     </div>
-                    <div *ngIf="searchBar" id="searchRequestsSection" class="request-main-section" >
-                        <div  class="search-bar">
+                    <div *ngIf="searchBar" id="searchRequestsSection" class="request-main-section">
+                        <div class="search-bar">
                             <div class="row margin-0">
                                 <div class="col-xs-12  padding-0">
                                     <form>
                                         <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12">
                                             <div class="col-md-32 col-sm-3 col-lg-2 padding-right-20 padding-left-0">
                                                 <label class="fontcolor-dark margin-btm-10">Patron Barcode</label>
-                                                <input id="patronBarcode" name="patronBarcode" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchPatronBarcode" type="text"  class="form-control themed-input"/>
+                                                <input id="patronBarcode" name="patronBarcode" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchPatronBarcode" type="text" class="form-control themed-input" />
                                                 <p id="patronBarcodeSearchError" *ngIf="patronBarcodeSearchError" style="color: red;">Patron barcode is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Item Barcode</label>
-                                                <input id="itemBarcode" name="itemBarcode" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchItemBarcode" class="form-control themed-input"/>
+                                                <input id="itemBarcode" name="itemBarcode" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchItemBarcode" class="form-control themed-input" />
                                                 <p id="itemBarcodeSearchError" *ngIf="itemBarcodeSearchError" style="color: red;">Item barcode is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Status</label>
                                                 <div class="select-holder">
-                                                    <select id="requestStatus"
-                                                            name="requestStatus"
-                                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="requestStatus"
-                                                            class="themed-input themed-select"
-                                                            style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;"
-                                                            
-                                                            (change)="onChangeRequestStatus(requestStatus)">
+                                                    <select id="requestStatus" name="requestStatus" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestStatus" class="themed-input themed-select" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;" (change)="onChangeRequestStatus(requestStatus)">
                                                         <option value="">ALL</option>
                                                         <option *ngFor="let del4 of searchReqVal['requestStatuses']" [ngValue]="del4">
                                                             {{del4}}
@@ -46,13 +40,7 @@
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Institution</label>
                                                 <div class="select-holder">
-                                                    <select id="searchInstitutionList"
-                                                            name="searchInstitutionList"
-                                                            class="themed-input themed-select"
-                                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="searchInstitutionList"
-                                                            style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;"
-                                                            
-                                                           >
+                                                    <select id="searchInstitutionList" name="searchInstitutionList" class="themed-input themed-select" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchInstitutionList" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;">
                                                         <option value=""></option>
                                                         <option *ngFor="let del5 of searchReqVal['institutionList']" [ngValue]="del5">
                                                             {{del5}}
@@ -68,7 +56,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" id="noteAll" *ngIf="noteAll" >
+                                        <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" id="noteAll" *ngIf="noteAll">
                                             <strong>Note:</strong> 'Patron Barcode' or 'Item Barcode' needs to be provided to search with request status as 'All'. Neither are mandatory when searching with other request statuses.
                                         </div>
                                         <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" id="noteActive" *ngIf="noteActive">
@@ -78,20 +66,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div  class="search-results-container" *ngIf="searchReqresultFirst">
+                        <div class="search-results-container" *ngIf="searchReqresultFirst">
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                            <div *ngIf="messageNoSearchRecords"class="row margin-btm-10">
+                            <div *ngIf="messageNoSearchRecords" class="row margin-btm-10">
                                 <div class="col-sm-12">
                                     <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span> {{searchreqResultVal['message']}}</span></div>
                                 </div>
-                            </div> 
+                            </div>
                             <div *ngIf="searchReqresult">
                                 <div class="row">
                                     <div class="col-sm-3 col-md-2 col-lg-2 margin-top-05 show-entries-section">
                                         <div class="">
                                             <span class="show-title margin-right-05">Show Entries</span>
-                                            <select id="numOfRecordsId" name="numOfRecordsName" class="themed-input"
-                                            [(ngModel)]="showentries" class="themed-input" (change)="onPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}">  
+                                            <select id="numOfRecordsId" name="numOfRecordsName" class="themed-input" [(ngModel)]="showentries" class="themed-input" (change)="onPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}">  
                                                 <option value="10" selected="selected">10</option>
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
@@ -100,34 +87,37 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"><div class="row">RI - Requesting Institution, RT - Request Type, OI - Owning Institution, DL - Delivery Location</div>
+                                    <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10">
+                                        <div class="row">RI - Requesting Institution, RT - Request Type, OI - Owning Institution, DL - Delivery Location</div>
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-3 text-right"><h4>Search Results Found: <span >{{searchreqResultVal['totalRecordsCount']}}</span></h4></div>
+                                    <div class="col-sm-12 col-md-12 col-lg-3 text-right">
+                                        <h4>Search Results Found: <span>{{searchreqResultVal['totalRecordsCount']}}</span></h4>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <table id="request-result-table" class="table table-striped margin-btm-0">
                                             <thead class="tablesorter-headerRow">
-                                            <tr>
-                                                <th>Patron Barcode</th>
-                                                <th title="'Request Institution'">RI</th>
-                                                <th>Item Barcode</th>
-                                                <th title="'Item Owning Institution'">Item OI</th>
-                                                <th title="'Delivery Location'">DL</th>
-                                                <th title="'Request Type'">RT</th>
-                                                <th>Request Created By</th>
-                                                <th>Patron Email Address</th>
-                                                <th>Created Date</th>
-                                                <th>Last Updated Date</th>
-                                                <th>Status</th>
-                                                <th>Request Notes</th>
-                                                <th>Action</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>Patron Barcode</th>
+                                                    <th title="'Request Institution'">RI</th>
+                                                    <th>Item Barcode</th>
+                                                    <th title="'Item Owning Institution'">Item OI</th>
+                                                    <th title="'Delivery Location'">DL</th>
+                                                    <th title="'Request Type'">RT</th>
+                                                    <th>Request Created By</th>
+                                                    <th>Patron Email Address</th>
+                                                    <th>Created Date</th>
+                                                    <th>Last Updated Date</th>
+                                                    <th>Status</th>
+                                                    <th>Request Notes</th>
+                                                    <th>Action</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 <tr class="requestRow" *ngFor="let item of searchreqResultVal['searchResultRows']">
                                                     <th>{{ item.patronBarcode }}</th>
-                                                    <td >{{ item.requestingInstitution }}</td>
+                                                    <td>{{ item.requestingInstitution }}</td>
                                                     <td><a>{{ item.barcode }}</a></td>
                                                     <td>{{ item.owningInstitution }}</td>
                                                     <td>{{ item.deliveryLocation }}</td>
@@ -138,57 +128,59 @@
                                                     <td>{{ item.lastUpdatedDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
                                                     <td>{{ item.status }}</td>
                                                     <td style="text-align: center"><button style="border-radius: revert;" type="button" (click)="reqNotemodal(item.requestNotes)" name="action"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
-                                                    <td> 
-                                                        <button (click)="cancelRequest(item.requestId)" *ngIf="item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='LAS REFILE REQUEST PLACED'"  style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" th:title="'Cancel Request'"  type="button" class="btn btn-round" name="action" >Cancel Note
+                                                    <td>
+                                                        <button (click)="cancelRequest(item.requestId)" *ngIf="item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='LAS REFILE REQUEST PLACED'" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7"
+                                                            th:title="'Cancel Request'" type="button" class="btn btn-round" name="action">Cancel Note
                                                         </button>
 
-                                                        <button *ngIf="item.status=='EXCEPTION'"  [disabled]="item.availability == 'Not Available'" (click)="resubmitReq(item.barcode,item.requestId)" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" name="action" >Resubmit Request
-                                                        </button> 
+                                                        <button *ngIf="item.status=='EXCEPTION'" [disabled]="item.availability == 'Not Available'" (click)="resubmitReq(item.barcode,item.requestId)" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7"
+                                                            name="action">Resubmit Request
+                                                        </button>
                                                     </td>
                                                 </tr>
-                                                <tr   class="requestRow">
+                                                <tr class="requestRow">
                                                     <!-- <input data-th-id="'requestRowBibId-'+ ${searchResultStat.index}" name="requestRowBibId" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].bibId}"/>
                                                     <input data-th-id="'requestRowItemId-'+ ${searchResultStat.index}" name="requestRowItemId" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].itemId}"/>
                                                     <input data-th-id="'requestRowRequestId-'+ ${searchResultStat.index}" name="requestRowRequestId" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].requestId}"/> -->
                                                     <td>
                                                         <input type="hidden" />
-                                                        <span ></span>
+                                                        <span></span>
                                                     </td>
                                                     <td>
                                                         <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].requestingInstitution}"/> -->
-                                                        <span ></span>
+                                                        <span></span>
                                                     </td>
                                                     <td>
                                                         <!-- <input data-th-id="'requestRowItemBarcode-'+ ${searchResultStat.index}" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].barcode}"/> -->
-                                                        <a  target="_blank" ></a>
+                                                        <a target="_blank"></a>
                                                     </td>
                                                     <td>
                                                         <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].owningInstitution}"/> -->
-                                                        <span ></span>
+                                                        <span></span>
                                                     </td>
                                                     <td>
                                                         <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].deliveryLocation}"/> -->
-                                                        <span ></span>
+                                                        <span></span>
                                                     </td>
                                                     <td>
                                                         <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].requestType}"/> -->
-                                                        <span ></span>
+                                                        <span></span>
                                                     </td>
                                                     <td>
                                                         <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].requestCreatedBy}"/> -->
-                                                        <span ></span>
+                                                        <span></span>
                                                     </td>
                                                     <td>
                                                         <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].patronEmailId}"/> -->
-                                                        <span ></span>
+                                                        <span></span>
                                                     </td>
                                                     <td width="">
                                                         <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].createdDate}"/> -->
-                                                        <span ></span>
+                                                        <span></span>
                                                     </td>
                                                     <td width="">
                                                         <!-- <input type="hidden"  th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].lastUpdatedDate}"/> -->
-                                                        <span ></span>
+                                                        <span></span>
                                                     </td>
                                                     <td width="">
                                                         <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].status}"/>
@@ -221,13 +213,11 @@
                                                                 <div class="modal-body" style="height: 100px;">
                                                                     <p>Do you want to cancel the existing request?</p>
                                                                     <div class="col-sm-4 pull-right">
-                                                                        <input id="cancelConfirmIndexId" name="cancelConfirmIndexId" type="text" hidden="hidden"/>
-                                                                        <input id="cancelConfirmRequestId" name="cancelConfirmRequestId" type="text" hidden="hidden"/>
-                                                                        <button id="proceedBtn"  type="button" name="action" style="margin-right: 6px;"
-                                                                                class="btn btn-primary" (click)="cancelRequestItem()">Proceed
+                                                                        <input id="cancelConfirmIndexId" name="cancelConfirmIndexId" type="text" hidden="hidden" />
+                                                                        <input id="cancelConfirmRequestId" name="cancelConfirmRequestId" type="text" hidden="hidden" />
+                                                                        <button id="proceedBtn" type="button" name="action" style="margin-right: 6px;" class="btn btn-primary" (click)="cancelRequestItem()">Proceed
                                                                         </button>
-                                                                        <button id="cancelBtn" type="button" name="cancel" data-dismiss="modal"
-                                                                                class="btn btn-danger">Cancel
+                                                                        <button id="cancelBtn" type="button" name="cancel" data-dismiss="modal" class="btn btn-danger">Cancel
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -251,10 +241,10 @@
                                                     </li>
                                                     <li [ngClass]="(nextbutton==true)?'disabled':''">
                                                         <span (click)="nextCall()">Next</span>
-                                                      
+
                                                     </li>
                                                     <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                                        <span (click)="lastCall()">Last</span> 
+                                                        <span (click)="lastCall()">Last</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -270,22 +260,24 @@
                                 <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{errorMessage}}</span></div>
                             </div>
                         </div>
-                        <input id="deliveryLocationInRequestHdn" name="deliveryLocationInRequestHdn" type="text" value="" hidden="hidden"/>
-                        <input id="patronEmailIdHdn" name="patronEmailIdHdn" type="text" value="" hidden="hidden"/>
-                        <input id="requestingInstitutionHdn" name="requestingInstitutionHdn" type="text" value="" hidden="hidden"/>
-                        <input id="requestTypesHdn" name="requestIdHdn" type="text"  hidden="hidden"/>
-                        <div  class="row margin-top-0">
-                            <div class="col-sm-6 margin-top-0"><h3 class="margin-0">Create Request</h3></div>
+                        <input id="deliveryLocationInRequestHdn" name="deliveryLocationInRequestHdn" type="text" value="" hidden="hidden" />
+                        <input id="patronEmailIdHdn" name="patronEmailIdHdn" type="text" value="" hidden="hidden" />
+                        <input id="requestingInstitutionHdn" name="requestingInstitutionHdn" type="text" value="" hidden="hidden" />
+                        <input id="requestTypesHdn" name="requestIdHdn" type="text" hidden="hidden" />
+                        <div class="row margin-top-0">
+                            <div class="col-sm-6 margin-top-0">
+                                <h3 class="margin-0">Create Request</h3>
+                            </div>
                             <div class="col-sm-6 text-right search-request"><a (click)="loadSearchRequest()">Search Requests</a></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 divider-horizontal margin-top-10 margin-btm-10"></div>
                         </div>
-                        <div  class="buscador-principal">
+                        <div class="buscador-principal">
                             <div *ngIf="createsubmit" id="successTextIdForRequest" class="text-success">
-                                Your request was received and will be processed.To track the request's status, please <a  style="cursor: pointer" (click)="goToSearchRequest(this.patronBarcodeId)"><b><u>click here</u></b></a><br />
-                                To create another request for the same patron, please <a  style="cursor: pointer" (click)="loadCreateRequestForSamePatron(this.patronBarcodeId,this.requestingInstitutionId)"><b><u>click here</u></b></a><br />
-                                To create another request for a different patron, please <a  style="cursor: pointer" (click)="differentpatron()"><b><u>click here</u></b></a>
+                                Your request was received and will be processed.To track the request's status, please <a style="cursor: pointer" (click)="goToSearchRequest(this.patronBarcodeId)"><b><u>click here</u></b></a><br /> To create another request
+                                for the same patron, please <a style="cursor: pointer" (click)="loadCreateRequestForSamePatron(this.patronBarcodeId,this.requestingInstitutionId)"><b><u>click here</u></b></a><br /> To create another request for a different
+                                patron, please <a style="cursor: pointer" (click)="differentpatron()"><b><u>click here</u></b></a>
                             </div>
                             <div class="row margin-top-25 margin-btm-30">
                                 <div class="col-sm-12">
@@ -294,14 +286,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-3 col-sm-4 text-right margin-top-15"><label for="itemBarcodeId" class="fontcolor-dark">Item Barcode <span class="error-color">*</span></label></div>
                                                 <div class="col-md-9 col-sm-8">
-                                                    <input type="text"
-                                                           [(ngModel)]="itemBarcodeId"
-                                                           [disabled]="createsubmit"
-                                                           id="itemBarcodeId"
-                                                           name="itemBarcodeName"
-                                                           class="form-control themed-input"
-                                                           (blur)="populateItemDetails(itemBarcodeId)"
-                                                           />
+                                                    <input type="text" [(ngModel)]="itemBarcodeId" [disabled]="createsubmit" id="itemBarcodeId" name="itemBarcodeName" class="form-control themed-input" (blur)="populateItemDetails(itemBarcodeId)" />
                                                     <span id="itemBarcodeErrorMessage" *ngIf="itemBarcodeErrorMessage" style="color: red;">Item barcode is required.</span>
                                                     <span id="itemBarcodeNotFoundErrorMessage" *ngIf="itemBarcodeNotFoundErrorMessage" style="color: red;">{{itembarcodeVal['errorMessage']}}</span>
                                                 </div>
@@ -312,13 +297,7 @@
                                                 <div class="col-md-6 col-sm-6 text-right margin-top-15"><label for="requestingInstitutionId" class="fontcolor-dark">Requesting Institution <span class="error-color">*</span></label></div>
                                                 <div class="col-md-6 col-sm-6">
                                                     <div class="select-holder">
-                                                        <select id="requestingInstitutionId"
-                                                               [ngModelOptions]="{standalone: true}" [(ngModel)]="requestingInstitutionId"
-                                                                name="requestingInstitutionName"
-                                                                class="form-control themed-input themed-select"
-                                                                [disabled]="createsubmit"
-                                                                (change)="populateDeliveryLocations(requestingInstitutionId)"
-                                                                >
+                                                        <select id="requestingInstitutionId" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestingInstitutionId" name="requestingInstitutionName" class="form-control themed-input themed-select" [disabled]="createsubmit" (change)="populateDeliveryLocations(requestingInstitutionId)">
                                                             <option value=""></option>
                                                             <option *ngFor="let del2 of requestVal['requestingInstitutions']" [ngValue]="del2">
                                                                 {{del2}}
@@ -338,14 +317,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-3 col-sm-4 text-right margin-top-15"><label for="itemTitleId" class="fontcolor-dark">Item Title</label></div>
                                                 <div class="col-md-9 col-sm-8">
-                                                    <textarea type="text" tabindex="-1"
-                                                              [(ngModel)]="itemTitleId"
-                                                              [disabled]="createsubmit"
-                                                              id="itemTitleId"
-                                                              name="itemTitleName"
-                                                              class="form-control themed-input"
-                                                             
-                                                              readonly="readonly">
+                                                    <textarea type="text" tabindex="-1" [(ngModel)]="itemTitleId" [disabled]="createsubmit" id="itemTitleId" name="itemTitleName" class="form-control themed-input" readonly="readonly">
                                                     </textarea>
                                                 </div>
                                             </div>
@@ -354,14 +326,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 text-right margin-top-15"><label for="itemOwningInstitutionId" class="fontcolor-dark">Item Owning Institution</label></div>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input type="text" tabindex="-1"
-                                                           [(ngModel)]="itemOwningInstitutionId"
-                                                           [disabled]="createsubmit"
-                                                           id="itemOwningInstitutionId"
-                                                           name="itemOwningInstitutionName"
-                                                           class="form-control themed-input"
-                                                           
-                                                           readonly="readonly"/>
+                                                    <input type="text" tabindex="-1" [(ngModel)]="itemOwningInstitutionId" [disabled]="createsubmit" id="itemOwningInstitutionId" name="itemOwningInstitutionName" class="form-control themed-input" readonly="readonly" />
                                                     <input type="hidden" id="onChangeOwnInst" />
                                                 </div>
                                             </div>
@@ -374,12 +339,7 @@
                                                     <div class="form-group">
                                                         <div class="col-md-6 col-sm-4 text-right margin-top-15"><label for="patronBarcodeId" class="fontcolor-dark">Patron Barcode <span class="error-color">*</span></label></div>
                                                         <div class="col-md-6 col-sm-8">
-                                                            <input type="text"
-                                                                   [(ngModel)]="patronBarcodeId"
-                                                                   [disabled]="createsubmit"
-                                                                   id="patronBarcodeId"
-                                                                   name="patronBarcodeName"
-                                                                   class="form-control themed-input"/>
+                                                            <input type="text" [(ngModel)]="patronBarcodeId" [disabled]="createsubmit" id="patronBarcodeId" name="patronBarcodeName" class="form-control themed-input" />
                                                             <span id="patronBarcodeErrorMessage" *ngIf="patronBarcodeErrorMessage" style="color: red;">Patron barcode is required.</span>
                                                         </div>
                                                     </div>
@@ -388,15 +348,7 @@
                                                     <div class="form-group">
                                                         <div class="col-md-4 col-sm-6 text-right margin-top-05"><label for="patronEmailId" class="fontcolor-dark">Patron <span id="emailMandatory" class="error-color" *ngIf="eddshow">*</span><br/>Email Address</label></div>
                                                         <div class="col-md-8 col-sm-6">
-                                                            <input type="email"
-                                                                   [(ngModel)]="patronEmailId"
-                                                                   [disabled]="createsubmit"
-                                                                   id="patronEmailId"
-                                                                   name="patronEmailName"
-                                                                   class="form-control themed-input"
-                                                                  
-                                                                   (blur)="validateEmailAddress(patronEmailId)"
-                                                                   />
+                                                            <input type="email" [(ngModel)]="patronEmailId" [disabled]="createsubmit" id="patronEmailId" name="patronEmailName" class="form-control themed-input" (blur)="validateEmailAddress(patronEmailId)" />
                                                             <span id="patronEmailIdErrorMessage" *ngIf="patronEmailIdErrorMessage" style="color: red;">Email address is invalid.</span>
                                                             <span id="EmailMandatoryErrorMessage" *ngIf="EmailMandatoryErrorMessage" style="color: red;">Patron Email Address is required.</span>
                                                         </div>
@@ -415,13 +367,7 @@
                                                         <div class="col-md-6 col-sm-4 text-right margin-top-15"><label for="requestTypeId" class="fontcolor-dark">Request Type <span class="error-color">*</span></label></div>
                                                         <div class="col-md-6 col-sm-8">
                                                             <div class="select-holder">
-                                                                <select id="requestTypeId"
-                                                                       [ngModelOptions]="{standalone: true}" [(ngModel)]="requestTypeId"
-                                                                       [disabled]="createsubmit"
-                                                                        name="requestTypeName"
-                                                                        class="form-control themed-input themed-select"
-                                                                        
-                                                                        (change)="reqTpeEDD(requestTypeId)">
+                                                                <select id="requestTypeId" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestTypeId" [disabled]="createsubmit" name="requestTypeName" class="form-control themed-input themed-select" (change)="reqTpeEDD(requestTypeId)">
                                                                         <option *ngFor="let del1 of requestVal['requestTypes']" [ngValue]="del1">
                                                                             {{del1}}
                                                                           </option>
@@ -437,12 +383,8 @@
                                                             <br/>Location <span class="error-color">*</span></label></div>
                                                         <div class="col-md-8 col-sm-6">
                                                             <div class="select-holder">
-                                                                
-                                                                <select id="deliveryLocationId"
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="deliveryLocationId"
-                                                                        [disabled]="createsubmit"
-                                                                        name="deliveryLocationName"
-                                                                        class="form-control themed-input themed-select">
+
+                                                                <select id="deliveryLocationId" [ngModelOptions]="{standalone: true}" [(ngModel)]="deliveryLocationId" [disabled]="createsubmit" name="deliveryLocationName" class="form-control themed-input themed-select">
                                                                     <option value=""></option>
                                                                     <option *ngFor="let del3 of deliveryLocVal" [ngValue]="del3[0]">
                                                                         {{del3[1]}}-{{del3[0]}}
@@ -467,7 +409,7 @@
                                                     <div class="form-group">
                                                         <div class="col-md-6 col-sm-4 margin-top-15"><label for="StartPage" class="fontcolor-dark">Start Page <span class="error-color">*</span></label></div>
                                                         <div class="col-md-6 col-sm-8">
-                                                            <input type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="StartPage"  class="form-control themed-input" id="StartPage" name="StartPage"/>
+                                                            <input type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="StartPage" class="form-control themed-input" id="StartPage" name="StartPage" />
                                                             <span id="startPageErrorMessage" *ngIf="startPageErrorMessage" style="color: red;">Start page is required.</span>
                                                         </div>
                                                     </div>
@@ -476,7 +418,7 @@
                                                     <div class="form-group">
                                                         <div class="col-md-6 col-sm-4 text-right margin-top-15"><label for="EndPage" class="fontcolor-dark">End Page <span class="error-color">*</span></label></div>
                                                         <div class="col-md-6 col-sm-8">
-                                                            <input type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="EndPage"  class="form-control themed-input" id="EndPage" name="EndPage"/>
+                                                            <input type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="EndPage" class="form-control themed-input" id="EndPage" name="EndPage" />
                                                             <span id="endPageErrorMessage" *ngIf="endPageErrorMessage" style="color: red;">End page is required.</span>
                                                         </div>
                                                     </div>
@@ -486,7 +428,7 @@
                                                     <div class="form-group">
                                                         <div class="col-md-6 col-sm-4 text-right margin-top-15"><label for="VolumeNumber" class="fontcolor-dark">Volume Number</label></div>
                                                         <div class="col-md-6 col-sm-8">
-                                                            <input type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="VolumeNumber"  class="form-control themed-input" id="VolumeNumber" name="VolumeNumber" />
+                                                            <input type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="VolumeNumber" class="form-control themed-input" id="VolumeNumber" name="VolumeNumber" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -504,7 +446,7 @@
                                                     <div class="form-group">
                                                         <div class="col-md-3 col-sm-4 text-right margin-top-15"><label for="ArticleAuthor" class="fontcolor-dark">Article Author</label></div>
                                                         <div class="col-md-9 col-sm-8">
-                                                            <input type="text" maxlength="150" [disabled]="createsubmit" [(ngModel)]="ArticleAuthor"  class="form-control themed-input" id="ArticleAuthor" name="ArticleAuthor" />
+                                                            <input type="text" maxlength="150" [disabled]="createsubmit" [(ngModel)]="ArticleAuthor" class="form-control themed-input" id="ArticleAuthor" name="ArticleAuthor" />
                                                         </div>
                                                     </div>
 
@@ -517,7 +459,7 @@
                                                         <div class="col-md-2 col-sm-4 margin-top-15"><label for="ArticleChapterTitle" class="fontcolor-dark">Article /
                                                             Chapter Title <span class="error-color">*</span></label></div>
                                                         <div class="col-md-10 col-sm-8">
-                                                            <input  type="text" maxlength="150"  [disabled]="createsubmit" [ngModelOptions]="{standalone: true}" [(ngModel)]="ChapterTitle" class="form-control themed-input" id="ArticleChapterTitle"  />
+                                                            <input type="text" maxlength="150" [disabled]="createsubmit" [ngModelOptions]="{standalone: true}" [(ngModel)]="ChapterTitle" class="form-control themed-input" id="ArticleChapterTitle" />
                                                             <span id="articleTitleErrorMessage" *ngIf="articleTitleErrorMessage" style="color: red;">Article / Chapter title is required.</span>
                                                         </div>
                                                     </div>
@@ -531,17 +473,7 @@
                                                 <div class="col-md-3 col-sm-2 text-right margin-top-15"><label for="requestNotesId" class="fontcolor-dark">Request Notes</label>
                                                 </div>
                                                 <div class="col-md-9 col-sm-10">
-                                                    <textarea type="text"
-                                                             [(ngModel)]="requestNotesId"
-                                                             [disabled]="createsubmit"
-                                                              id="requestNotesId"
-                                                              name="requestNotesName"
-                                                              class="form-control themed-input"
-                                                              
-                                                              (keyup)="NotesLengthValidation(requestNotesId)"
-                                                              style="overflow:hidden"
-                                                              rows="5"
-                                                              maxlength="1000">
+                                                    <textarea type="text" [(ngModel)]="requestNotesId" [disabled]="createsubmit" id="requestNotesId" name="requestNotesName" class="form-control themed-input" (keyup)="NotesLengthValidation(requestNotesId)" style="overflow:hidden" rows="5" maxlength="1000">
                                                     </textarea>
                                                     <span *ngIf="notesLengthErrMsg" id="notesLengthErrMsg" style="color: red;">Only 1000 characters are allowed.</span>
                                                     <p id="requestNotesRemainingCharacters" *ngIf="!createsubmit">Remaining Characters : <span id="remainingCharacters">1000</span></p>
@@ -555,7 +487,7 @@
                                         <div class="col-md-8 col-sm-12">
                                             <div class="row">
                                                 <div class="col-md-3 col-sm-2 text-right margin-top-15"></div>
-                                                <div id="textField"  class="col-md-9 col-sm-10">
+                                                <div id="textField" class="col-md-9 col-sm-10">
                                                     Fields marked with asterisk(<span class="error-color">*</span>) are mandatory.
                                                 </div>
                                             </div>
@@ -568,8 +500,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 text-center">
-                                    <button  type="button" *ngIf="!createsubmit" class="btn btn-default themed-button btn-primary" id="createrequestsubmit" (click)="createRequest()">Create Request</button>
-                                    <button  type="button" *ngIf="!createsubmit" class="pull-right btn btn-default themed-button themed-button-cancel" id="createrequestclear" (click)="resetDefaults()">Clear</button>
+                                    <button type="button" *ngIf="!createsubmit" class="btn btn-default themed-button btn-primary" id="createrequestsubmit" (click)="createRequest()">Create Request</button>
+                                    <button type="button" *ngIf="!createsubmit" class="pull-right btn btn-default themed-button themed-button-cancel" id="createrequestclear" (click)="resetDefaults()">Clear</button>
                                 </div>
                             </div>
                         </div>

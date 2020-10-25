@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { ReportsService } from 'src/app/services/reports/reports.service';
@@ -92,6 +93,8 @@ export class ReportsComponent implements OnInit {
   dateFrom: string;
   dateTo: string;
 
+  dFromDate: string;
+  dToDate: string;
   start: any;
   end: any;
 
@@ -99,6 +102,18 @@ export class ReportsComponent implements OnInit {
   fileName: string;
   dataDecode: string;
   file: File = null;
+  //pagination
+  //totalRecordsCount: string;
+  pageNumber: number;
+  pageSize: number;
+  totalPageCount: number
+  //pagination Incomplete
+  incompletePageNumber: number;
+  incompletePageSize = 10;
+  incompleteTotalPageCount: 0;
+  incompleteTotalRecordsCount: string;
+  showBy: string;
+  requestType: string;
 
   postData = {
     "showBy": null,
@@ -417,10 +432,12 @@ export class ReportsComponent implements OnInit {
     if (this.AccessionDeaccessionDateRangefrom == '' || this.AccessionDeaccessionDateRangefrom == undefined) {
       this.accessionErrorText = true;
       this.statusRequest = true;
+      $('#mydiv').hide();
     }
     if (this.AccessionDeaccessionDateRangeto == '' || this.AccessionDeaccessionDateRangeto == undefined) {
       this.deaccessionErrorText = true;
       this.statusRequest = true;
+      $('#mydiv').hide();
     }
     this.dateAccessionFrom = this.toDate(this.AccessionDeaccessionDateRangefrom);
     this.dateAccessionTo = this.toDate(this.AccessionDeaccessionDateRangeto);
@@ -428,6 +445,7 @@ export class ReportsComponent implements OnInit {
     if (this.compareDate(this.dateAccessionFrom, this.dateAccessionTo)) {
       this.accessionFromToError = true;
       this.statusRequest = true;
+      $('#mydiv').hide();
     }
 
     if (!this.statusRequest) {
@@ -550,7 +568,6 @@ export class ReportsComponent implements OnInit {
           this.subtotalEDDPULDeaccession = this.reportstVal['deaccessionPrivatePulCount'] + this.reportstVal['deaccessionSharedPulCount'] + this.reportstVal['deaccessionOpenPulCount'];
           this.subtotalEDDCULDeaccession = this.reportstVal['deaccessionPrivateCulCount'] + this.reportstVal['deaccessionSharedCulCount'] + this.reportstVal['deaccessionOpenCulCount'];
           this.subtotalEDDNYPLDeaccession = this.reportstVal['deaccessionPrivateNyplCount'] + this.reportstVal['deaccessionSharedNyplCount'] + this.reportstVal['deaccessionOpenNyplCount'];
-
         },
         (error) => {
 
@@ -566,122 +583,14 @@ export class ReportsComponent implements OnInit {
     if (this.incompleteShowBy == '' || this.incompleteShowBy == undefined) {
       this.incompleteErrorText = true;
       this.statusRequest = true;
+      $('#mydiv').hide();
     }
     if (!this.statusRequest) {
       this.errorMessageId = false;
       this.requestResultsPage = false;
       this.accessionPageResponse = false;
-      this.postData = {
-        "showBy": "Partners",
-        "requestType": null,
-        "requestFromDate": null,
-        "requestToDate": null,
-        "accessionDeaccessionFromDate": null,
-        "accessionDeaccessionToDate": null,
 
-        "retrievalRequestPulCount": null,
-        "retrievalRequestCulCount": null,
-        "retrievalRequestNyplCount": null,
-
-        "recallRequestPulCount": null,
-        "recallRequestCulCount": null,
-        "recallRequestNyplCount": null,
-
-        "physicalPrivatePulCount": null,
-        "physicalPrivateCulCount": null,
-        "physicalPrivateNyplCount": null,
-
-        "physicalSharedPulCount": null,
-        "physicalSharedCulCount": null,
-        "physicalSharedNyplCount": null,
-
-        "eddPrivatePulCount": null,
-        "eddPrivateCulCount": null,
-        "eddPrivateNyplCount": null,
-
-        "eddSharedOpenPulCount": null,
-        "eddSharedOpenCulCount": null,
-        "eddSharedOpenNyplCount": null,
-
-        "accessionPrivatePulCount": null,
-        "accessionPrivateCulCount": null,
-        "accessionPrivateNyplCount": null,
-        "accessionSharedPulCount": null,
-        "accessionSharedCulCount": null,
-        "accessionSharedNyplCount": null,
-        "accessionOpenPulCount": null,
-        "accessionOpenCulCount": null,
-        "accessionOpenNyplCount": null,
-
-        "deaccessionPrivatePulCount": null,
-        "deaccessionPrivateCulCount": null,
-        "deaccessionPrivateNyplCount": null,
-        "deaccessionSharedPulCount": null,
-        "deaccessionSharedCulCount": null,
-        "deaccessionSharedNyplCount": null,
-        "deaccessionOpenPulCount": null,
-        "deaccessionOpenCulCount": null,
-        "deaccessionOpenNyplCount": null,
-
-        "openPulCgdCount": null,
-        "openCulCgdCount": null,
-        "openNyplCgdCount": null,
-        "sharedPulCgdCount": null,
-        "sharedCulCgdCount": null,
-        "sharedNyplCgdCount": null,
-        "privatePulCgdCount": null,
-        "privateCulCgdCount": null,
-        "privateNyplCgdCount": null,
-
-        "showILBDResults": false,
-        "showPartners": false,
-        "showRequestTypeTable": false,
-        "showAccessionDeaccessionTable": false,
-        "showReportResultsText": false,
-        "showNoteILBD": false,
-        "showNotePartners": false,
-        "showNoteRequestType": false,
-
-        "showRetrievalTable": false,
-        "showRecallTable": false,
-        "showRequestTypeShow": false,
-
-        "reportRequestType": [],
-        "owningInstitutions": [],
-        "collectionGroupDesignations": [],
-        "deaccessionItemResultsRows": [],
-
-        "showDeaccessionInformationTable": false,
-
-        "totalRecordsCount": "0",
-        "pageNumber": 0,
-        "pageSize": 10,
-        "totalPageCount": 0,
-        "deaccessionOwnInst": null,
-        "incompleteRequestingInstitution": this.incompleteShowBy,
-        "incompletePageNumber": 0,
-        "incompletePageSize": 10,
-        "incompleteTotalRecordsCount": "0",
-        "incompleteTotalPageCount": 0,
-        "incompleteReportResultsRows": [],
-        "incompleteShowByInst": [],
-        "showIncompleteResults": false,
-        "errorMessage": null,
-        "showIncompletePagination": false,
-        "export": false,
-
-        "physicalPartnerSharedPulCount": null,
-        "physicalPartnerSharedCulCount": null,
-        "physicalPartnerSharedNyplCount": null,
-        "eddPartnerSharedOpenPulCount": null,
-        "eddPartnerSharedOpenCulCount": null,
-        "eddPartnerSharedOpenNyplCount": null,
-        "eddRequestPulCount": null,
-        "eddRequestCulCount": null,
-        "eddRequestNyplCount": null
-      }
-
-      this.reportsService.incompleteRecords(this.postData).subscribe(
+      this.reportsService.incompleteRecords(this.setPostData('incompleteRecords', 'incomplete')).subscribe(
         (res) => {
           this.reportstVal = res;
           $('#mydiv').hide();
@@ -752,243 +661,29 @@ export class ReportsComponent implements OnInit {
     this.getInstitutions();
   }
   incompleteReportPageSizeChange(value) {
-    this.showentries = value;
-    this.postData = {
-      "showBy": null,
-      "requestType": null,
-      "requestFromDate": null,
-      "requestToDate": null,
-      "accessionDeaccessionFromDate": null,
-      "accessionDeaccessionToDate": null,
-
-      "retrievalRequestPulCount": null,
-      "retrievalRequestCulCount": null,
-      "retrievalRequestNyplCount": null,
-
-      "recallRequestPulCount": null,
-      "recallRequestCulCount": null,
-      "recallRequestNyplCount": null,
-
-      "physicalPrivatePulCount": null,
-      "physicalPrivateCulCount": null,
-      "physicalPrivateNyplCount": null,
-
-      "physicalSharedPulCount": null,
-      "physicalSharedCulCount": null,
-      "physicalSharedNyplCount": null,
-
-      "eddPrivatePulCount": null,
-      "eddPrivateCulCount": null,
-      "eddPrivateNyplCount": null,
-
-      "eddSharedOpenPulCount": null,
-      "eddSharedOpenCulCount": null,
-      "eddSharedOpenNyplCount": null,
-
-      "accessionPrivatePulCount": null,
-      "accessionPrivateCulCount": null,
-      "accessionPrivateNyplCount": null,
-      "accessionSharedPulCount": null,
-      "accessionSharedCulCount": null,
-      "accessionSharedNyplCount": null,
-      "accessionOpenPulCount": null,
-      "accessionOpenCulCount": null,
-      "accessionOpenNyplCount": null,
-
-      "deaccessionPrivatePulCount": null,
-      "deaccessionPrivateCulCount": null,
-      "deaccessionPrivateNyplCount": null,
-      "deaccessionSharedPulCount": null,
-      "deaccessionSharedCulCount": null,
-      "deaccessionSharedNyplCount": null,
-      "deaccessionOpenPulCount": null,
-      "deaccessionOpenCulCount": null,
-      "deaccessionOpenNyplCount": null,
-
-      "openPulCgdCount": null,
-      "openCulCgdCount": null,
-      "openNyplCgdCount": null,
-      "sharedPulCgdCount": null,
-      "sharedCulCgdCount": null,
-      "sharedNyplCgdCount": null,
-      "privatePulCgdCount": null,
-      "privateCulCgdCount": null,
-      "privateNyplCgdCount": null,
-
-      "showILBDResults": false,
-      "showPartners": false,
-      "showRequestTypeTable": false,
-      "showAccessionDeaccessionTable": false,
-      "showReportResultsText": false,
-      "showNoteILBD": false,
-      "showNotePartners": false,
-      "showNoteRequestType": false,
-
-      "showRetrievalTable": false,
-      "showRecallTable": false,
-      "showRequestTypeShow": false,
-
-      "reportRequestType": [],
-      "owningInstitutions": [],
-      "collectionGroupDesignations": [],
-      "deaccessionItemResultsRows": [],
-
-      "showDeaccessionInformationTable": false,
-
-      "totalRecordsCount": "0",
-      "pageNumber": this.reportstVal['pageNumber'],
-      "pageSize": this.showentries,
-      "totalPageCount": this.reportstVal['totalPageCount'],
-      "deaccessionOwnInst": null,
-      "incompleteRequestingInstitution": null,
-      "incompletePageNumber": 0,
-      "incompletePageSize": 10,
-      "incompleteTotalRecordsCount": "0",
-      "incompleteTotalPageCount": 0,
-      "incompleteReportResultsRows": [],
-      "incompleteShowByInst": [],
-      "showIncompleteResults": false,
-      "errorMessage": null,
-      "showIncompletePagination": false,
-      "export": false,
-
-      "physicalPartnerSharedPulCount": null,
-      "physicalPartnerSharedCulCount": null,
-      "physicalPartnerSharedNyplCount": null,
-      "eddPartnerSharedOpenPulCount": null,
-      "eddPartnerSharedOpenCulCount": null,
-      "eddPartnerSharedOpenNyplCount": null,
-      "eddRequestPulCount": null,
-      "eddRequestCulCount": null,
-      "eddRequestNyplCount": null
-    }
-
-    this.reportsService.incompleteReportPageSizeChange(this.postData).subscribe(
+    this.incompletePageSize = value;
+    this.reportsService.incompleteReportPageSizeChange(this.setPostData('pageSize', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
       },
       (error) => {
 
       }
-
     );
   }
-  deaccessionInformationOnChange(entriesSize) {
-    this.showentries = entriesSize;
-    this.deaccessionInformation();
+  deaccessionInformationOnChange(value) {
+    this.showentries = value;
+    this.reportsService.incompleteReportPageSizeChange(this.setPostData('pageSize', 'deaccession')).subscribe(
+      (res) => {
+        this.reportstVal = res;
+      },
+      (error) => {
+
+      }
+    );
   }
   deaccessionInformation() {
-    this.postData = {
-      "showBy": "Partners",
-      "requestType": "Accession/Deaccesion",
-      "requestFromDate": null,
-      "requestToDate": null,
-      "accessionDeaccessionFromDate": this.toDate(this.AccessionDeaccessionDateRangefrom),
-      "accessionDeaccessionToDate": this.toDate(this.AccessionDeaccessionDateRangeto),
-
-      "retrievalRequestPulCount": null,
-      "retrievalRequestCulCount": null,
-      "retrievalRequestNyplCount": null,
-
-      "recallRequestPulCount": null,
-      "recallRequestCulCount": null,
-      "recallRequestNyplCount": null,
-
-      "physicalPrivatePulCount": null,
-      "physicalPrivateCulCount": null,
-      "physicalPrivateNyplCount": null,
-
-      "physicalSharedPulCount": null,
-      "physicalSharedCulCount": null,
-      "physicalSharedNyplCount": null,
-
-      "eddPrivatePulCount": null,
-      "eddPrivateCulCount": null,
-      "eddPrivateNyplCount": null,
-
-      "eddSharedOpenPulCount": null,
-      "eddSharedOpenCulCount": null,
-      "eddSharedOpenNyplCount": null,
-
-      "accessionPrivatePulCount": null,
-      "accessionPrivateCulCount": null,
-      "accessionPrivateNyplCount": null,
-      "accessionSharedPulCount": null,
-      "accessionSharedCulCount": null,
-      "accessionSharedNyplCount": null,
-      "accessionOpenPulCount": null,
-      "accessionOpenCulCount": null,
-      "accessionOpenNyplCount": null,
-
-      "deaccessionPrivatePulCount": null,
-      "deaccessionPrivateCulCount": null,
-      "deaccessionPrivateNyplCount": null,
-      "deaccessionSharedPulCount": null,
-      "deaccessionSharedCulCount": null,
-      "deaccessionSharedNyplCount": null,
-      "deaccessionOpenPulCount": null,
-      "deaccessionOpenCulCount": null,
-      "deaccessionOpenNyplCount": null,
-
-      "openPulCgdCount": null,
-      "openCulCgdCount": null,
-      "openNyplCgdCount": null,
-      "sharedPulCgdCount": null,
-      "sharedCulCgdCount": null,
-      "sharedNyplCgdCount": null,
-      "privatePulCgdCount": null,
-      "privateCulCgdCount": null,
-      "privateNyplCgdCount": null,
-
-      "showILBDResults": false,
-      "showPartners": false,
-      "showRequestTypeTable": false,
-      "showAccessionDeaccessionTable": false,
-      "showReportResultsText": false,
-      "showNoteILBD": false,
-      "showNotePartners": false,
-      "showNoteRequestType": false,
-
-      "showRetrievalTable": false,
-      "showRecallTable": false,
-      "showRequestTypeShow": false,
-
-      "reportRequestType": [],
-      "owningInstitutions": [],
-      "collectionGroupDesignations": [],
-      "deaccessionItemResultsRows": [],
-
-      "showDeaccessionInformationTable": false,
-
-      "totalRecordsCount": "0",
-      "pageNumber": 0,
-      "pageSize": this.showentries,
-      "totalPageCount": 0,
-      "deaccessionOwnInst": this.deaccessionOwnInst,
-      "incompleteRequestingInstitution": null,
-      "incompletePageNumber": 0,
-      "incompletePageSize": 10,
-      "incompleteTotalRecordsCount": "0",
-      "incompleteTotalPageCount": 0,
-      "incompleteReportResultsRows": [],
-      "incompleteShowByInst": [],
-      "showIncompleteResults": false,
-      "errorMessage": null,
-      "showIncompletePagination": false,
-      "export": false,
-
-      "physicalPartnerSharedPulCount": null,
-      "physicalPartnerSharedCulCount": null,
-      "physicalPartnerSharedNyplCount": null,
-      "eddPartnerSharedOpenPulCount": null,
-      "eddPartnerSharedOpenCulCount": null,
-      "eddPartnerSharedOpenNyplCount": null,
-      "eddRequestPulCount": null,
-      "eddRequestCulCount": null,
-      "eddRequestNyplCount": null
-    }
-
-    this.reportsService.deaccessionInformation(this.postData).subscribe(
+    this.reportsService.deaccessionInformation(this.setPostData('deaccessionInfo','deaccession')).subscribe(
       (res) => {
         this.deaccessionRes = res;
         this.accessionPageResponse = false;
@@ -1003,118 +698,54 @@ export class ReportsComponent implements OnInit {
 
     );
   }
+  deaccessionfirstCall(){
+    this.reportsService.firstCall(this.setPostData('firstCall', 'deaccession')).subscribe(
+      (res) => {
+        this.deaccessionRes = res;
+        this.pagination();
+      },
+      (error) => {
+
+      }
+
+    );
+  }
+  deaccessionlastCall(){
+    this.reportsService.lastCall(this.setPostData('lastCall', 'deaccession')).subscribe(
+      (res) => {
+        this.deaccessionRes = res;
+        this.pagination();
+      },
+      (error) => {
+
+      }
+    );
+  }
+  deaccessionnextCall(){
+    this.reportsService.nextCall(this.setPostData('nextCall', 'deaccession')).subscribe(
+      (res) => {
+        this.deaccessionRes = res;
+        this.pagination();
+      },
+      (error) => {
+
+      }
+    );
+  }
+  deaccessionpreviousCall(){
+    this.reportsService.previousCall(this.setPostData('previousCall', 'deaccession')).subscribe(
+      (res) => {
+        this.deaccessionRes = res;
+        this.pagination();
+      },
+      (error) => {
+
+      }
+    );
+  }
+
   firstCall() {
-    this.postData = {
-      "showBy": null,
-      "requestType": null,
-      "requestFromDate": null,
-      "requestToDate": null,
-      "accessionDeaccessionFromDate": null,
-      "accessionDeaccessionToDate": null,
-
-      "retrievalRequestPulCount": null,
-      "retrievalRequestCulCount": null,
-      "retrievalRequestNyplCount": null,
-
-      "recallRequestPulCount": null,
-      "recallRequestCulCount": null,
-      "recallRequestNyplCount": null,
-
-      "physicalPrivatePulCount": null,
-      "physicalPrivateCulCount": null,
-      "physicalPrivateNyplCount": null,
-
-      "physicalSharedPulCount": null,
-      "physicalSharedCulCount": null,
-      "physicalSharedNyplCount": null,
-
-      "eddPrivatePulCount": null,
-      "eddPrivateCulCount": null,
-      "eddPrivateNyplCount": null,
-
-      "eddSharedOpenPulCount": null,
-      "eddSharedOpenCulCount": null,
-      "eddSharedOpenNyplCount": null,
-
-      "accessionPrivatePulCount": null,
-      "accessionPrivateCulCount": null,
-      "accessionPrivateNyplCount": null,
-      "accessionSharedPulCount": null,
-      "accessionSharedCulCount": null,
-      "accessionSharedNyplCount": null,
-      "accessionOpenPulCount": null,
-      "accessionOpenCulCount": null,
-      "accessionOpenNyplCount": null,
-
-      "deaccessionPrivatePulCount": null,
-      "deaccessionPrivateCulCount": null,
-      "deaccessionPrivateNyplCount": null,
-      "deaccessionSharedPulCount": null,
-      "deaccessionSharedCulCount": null,
-      "deaccessionSharedNyplCount": null,
-      "deaccessionOpenPulCount": null,
-      "deaccessionOpenCulCount": null,
-      "deaccessionOpenNyplCount": null,
-
-      "openPulCgdCount": null,
-      "openCulCgdCount": null,
-      "openNyplCgdCount": null,
-      "sharedPulCgdCount": null,
-      "sharedCulCgdCount": null,
-      "sharedNyplCgdCount": null,
-      "privatePulCgdCount": null,
-      "privateCulCgdCount": null,
-      "privateNyplCgdCount": null,
-
-      "showILBDResults": false,
-      "showPartners": false,
-      "showRequestTypeTable": false,
-      "showAccessionDeaccessionTable": false,
-      "showReportResultsText": false,
-      "showNoteILBD": false,
-      "showNotePartners": false,
-      "showNoteRequestType": false,
-
-      "showRetrievalTable": false,
-      "showRecallTable": false,
-      "showRequestTypeShow": false,
-
-      "reportRequestType": [],
-      "owningInstitutions": [],
-      "collectionGroupDesignations": [],
-      "deaccessionItemResultsRows": [],
-
-      "showDeaccessionInformationTable": false,
-
-      "totalRecordsCount": "0",
-      "pageNumber": 0,
-      "pageSize": this.showentries,
-      "totalPageCount": 0,
-      "deaccessionOwnInst": null,
-      "incompleteRequestingInstitution": null,
-      "incompletePageNumber": 0,
-      "incompletePageSize": 10,
-      "incompleteTotalRecordsCount": "0",
-      "incompleteTotalPageCount": 0,
-      "incompleteReportResultsRows": [],
-      "incompleteShowByInst": [],
-      "showIncompleteResults": false,
-      "errorMessage": null,
-      "showIncompletePagination": false,
-      "export": false,
-
-      "physicalPartnerSharedPulCount": null,
-      "physicalPartnerSharedCulCount": null,
-      "physicalPartnerSharedNyplCount": null,
-      "eddPartnerSharedOpenPulCount": null,
-      "eddPartnerSharedOpenCulCount": null,
-      "eddPartnerSharedOpenNyplCount": null,
-      "eddRequestPulCount": null,
-      "eddRequestCulCount": null,
-      "eddRequestNyplCount": null
-    }
-
-    this.reportsService.firstCall(this.postData).subscribe(
+    this.reportsService.firstCall(this.setPostData('firstCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
         this.pagination();
@@ -1126,117 +757,7 @@ export class ReportsComponent implements OnInit {
     );
   }
   nextCall() {
-    this.postData = {
-      "showBy": null,
-      "requestType": null,
-      "requestFromDate": null,
-      "requestToDate": null,
-      "accessionDeaccessionFromDate": null,
-      "accessionDeaccessionToDate": null,
-
-      "retrievalRequestPulCount": null,
-      "retrievalRequestCulCount": null,
-      "retrievalRequestNyplCount": null,
-
-      "recallRequestPulCount": null,
-      "recallRequestCulCount": null,
-      "recallRequestNyplCount": null,
-
-      "physicalPrivatePulCount": null,
-      "physicalPrivateCulCount": null,
-      "physicalPrivateNyplCount": null,
-
-      "physicalSharedPulCount": null,
-      "physicalSharedCulCount": null,
-      "physicalSharedNyplCount": null,
-
-      "eddPrivatePulCount": null,
-      "eddPrivateCulCount": null,
-      "eddPrivateNyplCount": null,
-
-      "eddSharedOpenPulCount": null,
-      "eddSharedOpenCulCount": null,
-      "eddSharedOpenNyplCount": null,
-
-      "accessionPrivatePulCount": null,
-      "accessionPrivateCulCount": null,
-      "accessionPrivateNyplCount": null,
-      "accessionSharedPulCount": null,
-      "accessionSharedCulCount": null,
-      "accessionSharedNyplCount": null,
-      "accessionOpenPulCount": null,
-      "accessionOpenCulCount": null,
-      "accessionOpenNyplCount": null,
-
-      "deaccessionPrivatePulCount": null,
-      "deaccessionPrivateCulCount": null,
-      "deaccessionPrivateNyplCount": null,
-      "deaccessionSharedPulCount": null,
-      "deaccessionSharedCulCount": null,
-      "deaccessionSharedNyplCount": null,
-      "deaccessionOpenPulCount": null,
-      "deaccessionOpenCulCount": null,
-      "deaccessionOpenNyplCount": null,
-
-      "openPulCgdCount": null,
-      "openCulCgdCount": null,
-      "openNyplCgdCount": null,
-      "sharedPulCgdCount": null,
-      "sharedCulCgdCount": null,
-      "sharedNyplCgdCount": null,
-      "privatePulCgdCount": null,
-      "privateCulCgdCount": null,
-      "privateNyplCgdCount": null,
-
-      "showILBDResults": false,
-      "showPartners": false,
-      "showRequestTypeTable": false,
-      "showAccessionDeaccessionTable": false,
-      "showReportResultsText": false,
-      "showNoteILBD": false,
-      "showNotePartners": false,
-      "showNoteRequestType": false,
-
-      "showRetrievalTable": false,
-      "showRecallTable": false,
-      "showRequestTypeShow": false,
-
-      "reportRequestType": [],
-      "owningInstitutions": [],
-      "collectionGroupDesignations": [],
-      "deaccessionItemResultsRows": [],
-
-      "showDeaccessionInformationTable": false,
-
-      "totalRecordsCount": "0",
-      "pageNumber": this.reportstVal['pageNumber'],
-      "pageSize": this.showentries,
-      "totalPageCount": 0,
-      "deaccessionOwnInst": null,
-      "incompleteRequestingInstitution": null,
-      "incompletePageNumber": 0,
-      "incompletePageSize": 10,
-      "incompleteTotalRecordsCount": "0",
-      "incompleteTotalPageCount": 0,
-      "incompleteReportResultsRows": [],
-      "incompleteShowByInst": [],
-      "showIncompleteResults": false,
-      "errorMessage": null,
-      "showIncompletePagination": false,
-      "export": false,
-
-      "physicalPartnerSharedPulCount": null,
-      "physicalPartnerSharedCulCount": null,
-      "physicalPartnerSharedNyplCount": null,
-      "eddPartnerSharedOpenPulCount": null,
-      "eddPartnerSharedOpenCulCount": null,
-      "eddPartnerSharedOpenNyplCount": null,
-      "eddRequestPulCount": null,
-      "eddRequestCulCount": null,
-      "eddRequestNyplCount": null
-    }
-
-    this.reportsService.nextCall(this.postData).subscribe(
+    this.reportsService.nextCall(this.setPostData('nextCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
         this.pagination();
@@ -1244,121 +765,10 @@ export class ReportsComponent implements OnInit {
       (error) => {
 
       }
-
     );
   }
   previousCall() {
-    this.postData = {
-      "showBy": null,
-      "requestType": null,
-      "requestFromDate": null,
-      "requestToDate": null,
-      "accessionDeaccessionFromDate": null,
-      "accessionDeaccessionToDate": null,
-
-      "retrievalRequestPulCount": null,
-      "retrievalRequestCulCount": null,
-      "retrievalRequestNyplCount": null,
-
-      "recallRequestPulCount": null,
-      "recallRequestCulCount": null,
-      "recallRequestNyplCount": null,
-
-      "physicalPrivatePulCount": null,
-      "physicalPrivateCulCount": null,
-      "physicalPrivateNyplCount": null,
-
-      "physicalSharedPulCount": null,
-      "physicalSharedCulCount": null,
-      "physicalSharedNyplCount": null,
-
-      "eddPrivatePulCount": null,
-      "eddPrivateCulCount": null,
-      "eddPrivateNyplCount": null,
-
-      "eddSharedOpenPulCount": null,
-      "eddSharedOpenCulCount": null,
-      "eddSharedOpenNyplCount": null,
-
-      "accessionPrivatePulCount": null,
-      "accessionPrivateCulCount": null,
-      "accessionPrivateNyplCount": null,
-      "accessionSharedPulCount": null,
-      "accessionSharedCulCount": null,
-      "accessionSharedNyplCount": null,
-      "accessionOpenPulCount": null,
-      "accessionOpenCulCount": null,
-      "accessionOpenNyplCount": null,
-
-      "deaccessionPrivatePulCount": null,
-      "deaccessionPrivateCulCount": null,
-      "deaccessionPrivateNyplCount": null,
-      "deaccessionSharedPulCount": null,
-      "deaccessionSharedCulCount": null,
-      "deaccessionSharedNyplCount": null,
-      "deaccessionOpenPulCount": null,
-      "deaccessionOpenCulCount": null,
-      "deaccessionOpenNyplCount": null,
-
-      "openPulCgdCount": null,
-      "openCulCgdCount": null,
-      "openNyplCgdCount": null,
-      "sharedPulCgdCount": null,
-      "sharedCulCgdCount": null,
-      "sharedNyplCgdCount": null,
-      "privatePulCgdCount": null,
-      "privateCulCgdCount": null,
-      "privateNyplCgdCount": null,
-
-      "showILBDResults": false,
-      "showPartners": false,
-      "showRequestTypeTable": false,
-      "showAccessionDeaccessionTable": false,
-      "showReportResultsText": false,
-      "showNoteILBD": false,
-      "showNotePartners": false,
-      "showNoteRequestType": false,
-
-      "showRetrievalTable": false,
-      "showRecallTable": false,
-      "showRequestTypeShow": false,
-
-      "reportRequestType": [],
-      "owningInstitutions": [],
-      "collectionGroupDesignations": [],
-      "deaccessionItemResultsRows": [],
-
-      "showDeaccessionInformationTable": false,
-
-      "totalRecordsCount": "0",
-      "pageNumber": this.reportstVal['pageNumber'],
-      "pageSize": this.showentries,
-      "totalPageCount": 0,
-      "deaccessionOwnInst": null,
-      "incompleteRequestingInstitution": null,
-      "incompletePageNumber": 0,
-      "incompletePageSize": 10,
-      "incompleteTotalRecordsCount": "0",
-      "incompleteTotalPageCount": 0,
-      "incompleteReportResultsRows": [],
-      "incompleteShowByInst": [],
-      "showIncompleteResults": false,
-      "errorMessage": null,
-      "showIncompletePagination": false,
-      "export": false,
-
-      "physicalPartnerSharedPulCount": null,
-      "physicalPartnerSharedCulCount": null,
-      "physicalPartnerSharedNyplCount": null,
-      "eddPartnerSharedOpenPulCount": null,
-      "eddPartnerSharedOpenCulCount": null,
-      "eddPartnerSharedOpenNyplCount": null,
-      "eddRequestPulCount": null,
-      "eddRequestCulCount": null,
-      "eddRequestNyplCount": null
-    }
-
-    this.reportsService.previousCall(this.postData).subscribe(
+    this.reportsService.previousCall(this.setPostData('previousCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
         this.pagination();
@@ -1366,121 +776,10 @@ export class ReportsComponent implements OnInit {
       (error) => {
 
       }
-
     );
   }
   lastCall() {
-    this.postData = {
-      "showBy": null,
-      "requestType": null,
-      "requestFromDate": null,
-      "requestToDate": null,
-      "accessionDeaccessionFromDate": null,
-      "accessionDeaccessionToDate": null,
-
-      "retrievalRequestPulCount": null,
-      "retrievalRequestCulCount": null,
-      "retrievalRequestNyplCount": null,
-
-      "recallRequestPulCount": null,
-      "recallRequestCulCount": null,
-      "recallRequestNyplCount": null,
-
-      "physicalPrivatePulCount": null,
-      "physicalPrivateCulCount": null,
-      "physicalPrivateNyplCount": null,
-
-      "physicalSharedPulCount": null,
-      "physicalSharedCulCount": null,
-      "physicalSharedNyplCount": null,
-
-      "eddPrivatePulCount": null,
-      "eddPrivateCulCount": null,
-      "eddPrivateNyplCount": null,
-
-      "eddSharedOpenPulCount": null,
-      "eddSharedOpenCulCount": null,
-      "eddSharedOpenNyplCount": null,
-
-      "accessionPrivatePulCount": null,
-      "accessionPrivateCulCount": null,
-      "accessionPrivateNyplCount": null,
-      "accessionSharedPulCount": null,
-      "accessionSharedCulCount": null,
-      "accessionSharedNyplCount": null,
-      "accessionOpenPulCount": null,
-      "accessionOpenCulCount": null,
-      "accessionOpenNyplCount": null,
-
-      "deaccessionPrivatePulCount": null,
-      "deaccessionPrivateCulCount": null,
-      "deaccessionPrivateNyplCount": null,
-      "deaccessionSharedPulCount": null,
-      "deaccessionSharedCulCount": null,
-      "deaccessionSharedNyplCount": null,
-      "deaccessionOpenPulCount": null,
-      "deaccessionOpenCulCount": null,
-      "deaccessionOpenNyplCount": null,
-
-      "openPulCgdCount": null,
-      "openCulCgdCount": null,
-      "openNyplCgdCount": null,
-      "sharedPulCgdCount": null,
-      "sharedCulCgdCount": null,
-      "sharedNyplCgdCount": null,
-      "privatePulCgdCount": null,
-      "privateCulCgdCount": null,
-      "privateNyplCgdCount": null,
-
-      "showILBDResults": false,
-      "showPartners": false,
-      "showRequestTypeTable": false,
-      "showAccessionDeaccessionTable": false,
-      "showReportResultsText": false,
-      "showNoteILBD": false,
-      "showNotePartners": false,
-      "showNoteRequestType": false,
-
-      "showRetrievalTable": false,
-      "showRecallTable": false,
-      "showRequestTypeShow": false,
-
-      "reportRequestType": [],
-      "owningInstitutions": [],
-      "collectionGroupDesignations": [],
-      "deaccessionItemResultsRows": [],
-
-      "showDeaccessionInformationTable": false,
-
-      "totalRecordsCount": "0",
-      "pageNumber": this.reportstVal['pageNumber'],
-      "pageSize": this.showentries,
-      "totalPageCount": this.reportstVal['totalPageCount'],
-      "deaccessionOwnInst": null,
-      "incompleteRequestingInstitution": null,
-      "incompletePageNumber": 0,
-      "incompletePageSize": 10,
-      "incompleteTotalRecordsCount": "0",
-      "incompleteTotalPageCount": 0,
-      "incompleteReportResultsRows": [],
-      "incompleteShowByInst": [],
-      "showIncompleteResults": false,
-      "errorMessage": null,
-      "showIncompletePagination": false,
-      "export": false,
-
-      "physicalPartnerSharedPulCount": null,
-      "physicalPartnerSharedCulCount": null,
-      "physicalPartnerSharedNyplCount": null,
-      "eddPartnerSharedOpenPulCount": null,
-      "eddPartnerSharedOpenCulCount": null,
-      "eddPartnerSharedOpenNyplCount": null,
-      "eddRequestPulCount": null,
-      "eddRequestCulCount": null,
-      "eddRequestNyplCount": null
-    }
-
-    this.reportsService.lastCall(this.postData).subscribe(
+    this.reportsService.lastCall(this.setPostData('lastCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
         this.pagination();
@@ -1488,7 +787,6 @@ export class ReportsComponent implements OnInit {
       (error) => {
 
       }
-
     );
   }
   getInstitutions() {
@@ -1532,19 +830,6 @@ export class ReportsComponent implements OnInit {
       this.lastbutton = true;
     }
   }
-
-  getInstitutionsShowBy(inst) {
-    this.reportsService.getInstitutions().subscribe(
-      (res) => {
-        this.reportstVal = res;
-        this.incompleteShowBy = inst;
-      },
-      (error) => {
-
-      }
-
-    );
-  }
   deaccessionPul() {
     this.deaccessionOwnInst = 'PUL';
     this.deaccessionInformation();
@@ -1576,14 +861,45 @@ export class ReportsComponent implements OnInit {
     this.isChecked = true;
   }
   exportRecords() {
-    console.log("test");
+    this.reportsService.exportData(this.setPostData('export','incomplete')).subscribe(
+      (res) => {
+        this.download_response = res;
+        this.fileName = this.download_response['fileName'];
+        var contentType = "application/vnd.ms-excel";
+        this.dataDecode = atob(this.download_response['content']);
+        var file = new Blob([this.dataDecode], { type: contentType });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(file);
+        link.setAttribute('download', this.fileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
+      (error) => {
+      });
+  }
+  setPostData(actionName, actionType) {
+        this.showBy = "Partners";
+    if (actionType == 'incomplete') {
+        this.requestType = "IncompleteRecordsReport";
+        this.deaccessionOwnInst = null;
+        this.dFromDate = null;
+        this.dToDate = null;
+        this.onchangeValidationIncomplete(actionName);
+    } else {
+          this.incompleteShowBy = null;
+          this.requestType = "Accession/Deaccesion";
+          this.onchangeValidationDeaccession(actionName);
+          this.dFromDate = this.toDate(this.AccessionDeaccessionDateRangefrom);
+          this.dToDate = this.toDate(this.AccessionDeaccessionDateRangeto);
+    }
     this.postData = {
-      "showBy": "Partners",
-      "requestType": "IncompleteRecordsReport",
+      "showBy": this.showBy,
+      "requestType": this.requestType,
       "requestFromDate": null,
       "requestToDate": null,
-      "accessionDeaccessionFromDate": null,
-      "accessionDeaccessionToDate": null,
+      "accessionDeaccessionFromDate": this.dFromDate,
+      "accessionDeaccessionToDate": this.dToDate,
 
       "retrievalRequestPulCount": null,
       "retrievalRequestCulCount": null,
@@ -1660,15 +976,15 @@ export class ReportsComponent implements OnInit {
       "showDeaccessionInformationTable": false,
 
       "totalRecordsCount": "0",
-      "pageNumber": 0,
-      "pageSize": 10,
-      "totalPageCount": 0,
+      "pageNumber": this.pageNumber,
+      "pageSize": this.pageSize,
+      "totalPageCount": this.totalPageCount,
       "deaccessionOwnInst": null,
       "incompleteRequestingInstitution": this.incompleteShowBy,
-      "incompletePageNumber": 0,
-      "incompletePageSize": 10,
+      "incompletePageNumber": this.incompletePageNumber,
+      "incompletePageSize": this.incompletePageSize,
       "incompleteTotalRecordsCount": "0",
-      "incompleteTotalPageCount": 0,
+      "incompleteTotalPageCount": this.incompleteTotalPageCount,
       "incompleteReportResultsRows": [],
       "incompleteShowByInst": [],
       "showIncompleteResults": false,
@@ -1686,21 +1002,59 @@ export class ReportsComponent implements OnInit {
       "eddRequestCulCount": null,
       "eddRequestNyplCount": null
     }
-    this.reportsService.exportData(this.postData).subscribe(
-      (res) => {
-        this.download_response = res;
-        this.fileName = this.download_response['fileName'];
-        var contentType = "application/vnd.ms-excel";
-        this.dataDecode = atob(this.download_response['content']);
-        var file = new Blob([this.dataDecode], { type: contentType });
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(file);
-        link.setAttribute('download', this.fileName);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      },
-      (error) => {
-      });
+    return this.postData;
+  }
+  onchangeValidationDeaccession(actionName){
+    if (actionName == 'firstCall') {
+      this.pageNumber = 0;
+      this.pageSize = this.showentries;
+    } else if (actionName == 'lastCall') {
+      this.pageNumber = this.deaccessionRes['pageNumber'];
+      this.pageSize = this.showentries,
+        this.totalPageCount = this.deaccessionRes['totalPageCount'];
+    } else if (actionName == 'previousCall') {
+      this.pageNumber = this.deaccessionRes['pageNumber'];
+      this.pageSize = this.showentries,
+        this.totalPageCount = this.deaccessionRes['totalPageCount'];
+    } else if (actionName == 'nextCall') {
+      this.pageNumber = this.deaccessionRes['pageNumber'];
+      this.pageSize = this.showentries,
+        this.totalPageCount = this.deaccessionRes['totalPageCount'];
+    } else if (actionName == 'pageSize') {
+      this.pageNumber = this.deaccessionRes['pageNumber'];
+      this.totalPageCount = this.deaccessionRes['totalPageCount'];
+    } else if (actionName == 'deaccessionInfo') {
+      this.pageNumber = 0;
+      this.pageSize = 10;
+    } 
+  }
+  onchangeValidationIncomplete(actionName){
+    if (actionName == 'firstCall') {
+      this.incompletePageNumber = 0;
+      this.incompletePageSize = this.showentries;
+    } else if (actionName == 'lastCall') {
+      this.incompletePageNumber = this.reportstVal['incompletePageNumber'];
+      this.incompletePageSize = this.showentries,
+      this.incompleteTotalPageCount = this.reportstVal['incompleteTotalPageCount'];
+    } else if (actionName == 'previousCall') {
+      this.incompletePageNumber = this.reportstVal['incompletePageNumber'];
+      this.incompletePageSize = this.showentries,
+        this.incompleteTotalPageCount = this.reportstVal['incompleteTotalPageCount'];
+    } else if (actionName == 'nextCall') {
+      this.incompletePageNumber = this.reportstVal['incompletePageNumber'];
+      this.incompletePageSize = this.showentries,
+        this.incompleteTotalPageCount = this.reportstVal['incompleteTotalPageCount'];
+    } else if (actionName == 'pageSize') {
+      this.incompletePageNumber = this.reportstVal['incompletePageNumber'];
+      this.incompleteTotalPageCount = this.reportstVal['incompleteTotalPageCount'];
+    } else if (actionName == 'incompleteRecords') {
+      this.incompletePageNumber = 0;
+      this.incompletePageSize = 10;
+    }else if(actionName == 'export'){
+      this.incompletePageNumber = this.reportstVal['incompletePageNumber'];
+      this.incompletePageSize = this.reportstVal['incompletePageSize'];
+      this.incompleteTotalPageCount = this.reportstVal['incompleteTotalPageCount'];
+      this.incompleteTotalRecordsCount = this.reportstVal['incompleteTotalRecordsCount'];
+    }
   }
 }

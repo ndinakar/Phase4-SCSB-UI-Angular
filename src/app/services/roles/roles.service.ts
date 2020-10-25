@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -26,20 +26,31 @@ export class RolesService {
         headers: appHeaders.getHeaders()
       });
   }
-  loadCreateRole(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/loadCreateRole", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+  createRole(postData: RolesForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createRole", postData,
+    {
+      headers: appHeaders.getHeaders()
+    });
   }
-  saveEditedRole(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/saveEditedRole", postData,
+  saveEditedRole(roleId, roleName, roleDescription, permissionNames): Observable<TreeNode[]> {
+    let headers = appHeaders.getHeaders();
+    let parames = new HttpParams()
+      .set('roleId', roleId)
+      .set('roleName', roleName)
+      .set('roleDescription', roleDescription)
+      .set('editPermissionNames', permissionNames);
+    const options = { params: parames, headers: headers };
+    return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/saveEditedRole", options);
+  }
+  editRole(postData: RolesForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/editRole", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   delete(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/delete", postData,
+    console.log();
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/delete",postData,
       {
         headers: appHeaders.getHeaders()
       });
@@ -50,7 +61,7 @@ export class RolesService {
         headers: appHeaders.getHeaders()
       });
   }
-  previous(postData: RolesForm): Observable<TreeNode[]> {
+  previousCall(postData: RolesForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData,
       {
         headers: appHeaders.getHeaders()
