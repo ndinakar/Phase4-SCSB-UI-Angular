@@ -211,10 +211,12 @@ export class RolesComponent implements OnInit {
           this.successMessageEditRoleDiv = false;
           this.successMessageDeleteRoleDiv = false;
           this.successMessageRoleCreateionDiv = true;
+          this.errorMessageRoleCreateionDiv = false;
         } else if (this.rolesVal['errorMessage'] != null) {
           this.errorMessageEditRoleDiv = false;
           this.errorMessageDeleteRoleDiv = false;
           this.errorMessageRoleCreateionDiv = true;
+          this.successMessageRoleCreateionDiv = false;
         }
         this.roleNameId = '';
         this.roleDescriptionId = '';
@@ -311,6 +313,7 @@ export class RolesComponent implements OnInit {
     } else if (actionName == 'searchRole') {
       this.validateInput();
       this.showentries = 10;
+      this.pageNumber = 0;
     } else if (actionName == 'firstCall') {
       this.validateInput();
       this.pageNumber = 0;
