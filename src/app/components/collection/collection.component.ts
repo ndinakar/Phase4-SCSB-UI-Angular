@@ -118,7 +118,6 @@ export class CollectionComponent implements OnInit {
     this.showresultdiv = false;
   }
   displayRecords() {
-    //console.log("vall", this.barcodeFieldName);
     this.barerrmsg = '';
     this.showresultdiv = true;
     if (this.barcodeFieldName != null && this.barcodeFieldName != undefined && this.barcodeFieldName != '') {
