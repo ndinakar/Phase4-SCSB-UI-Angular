@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
+import { AppConfig } from 'src/config/app.config.service';
 declare var $: any;
 
 @Component({

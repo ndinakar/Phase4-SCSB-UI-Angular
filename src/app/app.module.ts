@@ -13,8 +13,17 @@ import { RequestComponent } from './components/request/request.component';
 import { BulkrequestComponent } from './components/bulkrequest/bulkrequest.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { RolesComponent } from './components/roles/roles.component';
+import { AppConfig } from 'src/config/app.config.service';
+import { APP_INITIALIZER } from '@angular/core';
+import { UserRolesComponent } from './components/user-roles/user-roles.component';
+import { JobsComponent } from './components/jobs/jobs.component';
+import { MonitoringComponent } from './components/monitoring/monitoring.component';
+import { LoggingComponent } from './components/logging/logging.component';
 
 
+export function appInit(appConfig: AppConfig) {
+  return () => appConfig.load();
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +32,11 @@ import { RolesComponent } from './components/roles/roles.component';
     RequestComponent,
     BulkrequestComponent,
     ReportsComponent,
-    RolesComponent, 
+    RolesComponent,
+    UserRolesComponent,
+    JobsComponent,
+    MonitoringComponent,
+    LoggingComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,9 +45,15 @@ import { RolesComponent } from './components/roles/roles.component';
     HttpClientModule,
     ReactiveFormsModule,
     DashboardModule,
-    NgSelectModule
+    NgSelectModule,
   ],
-  providers: [],
+  providers: [ AppConfig,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInit,
+      multi: true,
+      deps: [AppConfig]
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

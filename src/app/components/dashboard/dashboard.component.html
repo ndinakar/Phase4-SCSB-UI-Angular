@@ -1,10 +1,12 @@
-<div><app-header></app-header></div>
+<div>
+    <app-header></app-header>
+</div>
 <section style="background: #EEF3F2">
     <div class="container-fluid" style="min-height: 781px;">
         <div class="row">
             <div class="dashboard-content col-sm-12">
-                <ul  id="search-content-tab" class="nav nav-tabs" role="tablist">
-                    <li  routerLinkActive="tab-collection-holder active">
+                <ul id="search-content-tab" class="nav nav-tabs" role="tablist">
+                    <li routerLinkActive="tab-collection-holder active">
                         <a routerLink="/search" aria-controls="search" class="tab-search"><span class="icons"></span><span>Search</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active">
@@ -23,7 +25,7 @@
                         <a routerLink="/roles" aria-controls="roles" class="tab-role"><span class="icons"></span><span>Roles</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active">
-                        <a href="/userRoles" aria-controls="users" class="tab-users"><span class="icons"></span><span>Users</span></a>
+                        <a routerLink="/userRoles" aria-controls="users" class="tab-users"><span class="icons"></span><span>Users</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active">
                         <a routerLink="/jobs" aria-controls="jobs" class="tab-users"><span class="icons"></span><span>Jobs</span></a>
@@ -36,7 +38,7 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div >
+                    <div>
                         <!-- <app-search></app-search> -->
                         <router-outlet></router-outlet>
                         <!-- <app-checking></app-checking> -->

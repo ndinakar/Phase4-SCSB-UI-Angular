@@ -1,4 +1,3 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { EMPTY } from 'rxjs';
@@ -109,11 +108,11 @@ export class RolesComponent implements OnInit {
     "showIntial": true
   }
   searchRoles() {
-
+    $('#mydiv').show();
     this.rolesService.searchRoles(this.setPostData('searchRole')).subscribe(
       (res) => {
         this.rolesVal = res;
-        
+        $('#mydiv').hide();
         if (this.rolesVal['rolesSearchResults'] != EMPTY) {
           this.rolesSearchResultsDiv = true;
           this.errorMessageDiv = false;

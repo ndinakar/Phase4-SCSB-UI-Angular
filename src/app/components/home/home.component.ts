@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 // export class User {
 //   public institution: object
@@ -17,10 +17,6 @@ export class HomeComponent implements OnInit {
 
   registerForm: FormGroup;
   submitted = false;
-
-  // model = new User();
-
-  // Institution: object[] = [
   Institution = [
     { id: 'PUL', name: "Princeton" },
     { id: 'CUL', name: "Columbia" },
@@ -28,40 +24,28 @@ export class HomeComponent implements OnInit {
     { id: 'HTC', name: "HTC" }
   ];
 
-
-
   constructor(private formBuilder: FormBuilder, private router: Router) { }
 
-
+  ngAfterViewInit() {
+    // @ts-ignore
+    twttr.widgets.load();
+  }
 
   ngOnInit(): void {
-
     this.registerForm = this.formBuilder.group({
       institution: ['', Validators.required]
     });
   }
-
-  // onSubmit(dd) { 
-  //   console.log("lll",dd);
-  //   if(dd==='HTC'){
-  //     this.router.navigate(['/login']);
-  //   }
-  //  }
   get f() { return this.registerForm.controls; }
   onSubmit() {
     this.submitted = true;
-
-    // stop here if form is invalid
     if (this.registerForm.invalid) {
       return;
     }
     var formVal = this.registerForm.value;
-    //console.log("kkk",formVal.institution)
     if (formVal.institution === 'HTC') {
       this.router.navigate(['/search']);
     }
-    // display form values on success
-    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
   }
 
   getinTouch: any[] = [{
