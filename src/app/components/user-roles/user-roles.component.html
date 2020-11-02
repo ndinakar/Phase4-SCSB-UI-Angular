@@ -233,7 +233,7 @@
                                                 </select> -->
                                                 <ng-select id="rolesOption" [items]="userRoleListVal" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="rolesOption" placeholder="Select One or More">
                                                     <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                                        <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item[1]}}
+                                                        <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item.name}}
                                                     </ng-template>
                                                 </ng-select>
                                                 <span *ngIf="roleIdErrMsgDiv" id="roleIdErrMsg" style="color: red;">Please select
@@ -271,7 +271,7 @@
                                 </div>
                                 <div class="col-sm-6 col-md-6 col-lg-6 text-center" style="margin-top: -10px;">
                                     <div class="margin-btm-10 users-createrequest-button">
-                                        <button id="createButton" type="button" (click)="createUser(emailId,userDescription,rolesOption,institutionId,networkLoginId)" class="pull-right btn btn-default themed-button btn-primary text-center">Create
+                                        <button id="createButton" type="button" (click)="createUser(emailId,userDescription,institutionId,networkLoginId)" class="pull-right btn btn-default themed-button btn-primary text-center">Create
                                             User
                                         </button>
                                     </div>
@@ -356,7 +356,7 @@
                                                 </select> -->
                                                 <ng-select id="editroleId" [items]="userRoleListVal" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="editroleId" placeholder="Select One or More">
                                                     <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                                        <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item[1]}}
+                                                        <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item.name}}
                                                     </ng-template>
                                                 </ng-select>
                                                 <span *ngIf="editroleIdErrMsgDiv" id="editroleIdErrMsg" style="color: red;display: none">Please
@@ -393,7 +393,7 @@
                                 </div>
                                 <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: -10px;">
                                     <div class="margin-btm-10 users-createrequest-button">
-                                        <button id="editcreateButton" type="button" (click)="saveEditUser(editroleId, editnetworkLoginId, edituserDescription, editinstitutionId, editEmailId)" class="pull-right btn btn-default themed-button btn-primary text-center col-md-2 col-md-offset-5">Edit
+                                        <button id="editcreateButton" type="button" (click)="saveEditUser(editnetworkLoginId, edituserDescription, editinstitutionId, editEmailId)" class="pull-right btn btn-default themed-button btn-primary text-center col-md-2 col-md-offset-5">Edit
                                             User
                                         </button>
                                     </div>
@@ -474,7 +474,7 @@
                                             <ng-select id="deletedRoleId" [items]="userRoleListVal" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="deletedRoleId"
                                                 placeholder="Select One or More" disabled>
                                                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                                    <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item[1]}}
+                                                    <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item.name}}
                                                 </ng-template>
                                             </ng-select>
                                         </div>
