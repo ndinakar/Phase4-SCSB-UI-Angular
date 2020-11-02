@@ -16,7 +16,6 @@ export class UserRolesComponent implements OnInit {
   roleId: string;
   searchNetworkId: string;
   userEmailId: string;
-  userRoleList: string[];
   showUserSearchView = true;
   showSearchResultsDiv = false;
   errorMessageforSearchDiv = false;
@@ -53,7 +52,7 @@ export class UserRolesComponent implements OnInit {
   edituserDescription: string;
   editnetworkLoginId: string;
   editinstitutionId: string;
-  editroleId: string[];
+  editroleId: number[];
   editsuccessMsgDiv = false;
   editerrormsgDiv = false;
   editinstitutionIdErrMsgDiv = false;
@@ -70,12 +69,11 @@ export class UserRolesComponent implements OnInit {
   //create User
   emailId: string;
   userDescription: string;
-  rolesOption: string;
+  rolesOption: number[];
   //institutionId : string;
   networkLoginId: string;
   selectedForCreate: number[];
   editUserId: number;
-  numOfRecordsId: number;
   userId: number;
   searchBarDiv = true;
   postData = {
@@ -164,13 +162,14 @@ export class UserRolesComponent implements OnInit {
     this.userRolesService.editUser(userId, networkLoginId).subscribe(
       (res) => {
         this.userResponse = res;
-        this.userRoleListVal = this.userResponse['roles'];
+        this.userRoleListVal = this.userResponse['roles'].map(function(x) { return { id: x[0], name: x[1] }; }); 
+        this.editroleId = this.userResponse['editSelectedForCreate'];
         this.editEmailId = this.userResponse['editEmailId'];
         this.edituserDescription = this.userResponse['editUserDescription'];
         this.editnetworkLoginId = this.userResponse['editNetworkLoginId'];
         this.editinstitutionId = this.userResponse['editInstitutionId'];
-        this.editroleId = roleName;
-        console.log("roleName", roleName);
+        console.log("roleName", this.editroleId);
+        console.log("userResponse", this.userResponse);
 
       });
   }
@@ -189,12 +188,12 @@ export class UserRolesComponent implements OnInit {
     this.userRolesService.editUser(userId, networkLoginId).subscribe(
       (res) => {
         this.userResponse = res;
-        this.userRoleListVal = this.userResponse['roles'];
+        this.userRoleListVal = this.userResponse['roles'].map(function(x) { return { id: x[0], name: x[1] }; }); 
         this.deleteEmailId = this.userResponse['editEmailId'];
         this.deleteUserDescription = this.userResponse['editUserDescription'];
         this.deleteNetworkLoginId = this.userResponse['editNetworkLoginId'];
         this.deleteInstitutionId = this.userResponse['editInstitutionId'];
-        this.deletedRoleId = roleName;
+        this.deletedRoleId = this.userResponse['editSelectedForCreate'];
       });
   }
   searchUserRoles() {
@@ -238,11 +237,10 @@ export class UserRolesComponent implements OnInit {
         this.pagination();
       });
   }
-  createUser(emailId, userDescription, roleOptions, institutionId, networkLoginId) {
-
+  createUser(emailId, userDescription, institutionId, networkLoginId) {
     this.emailId = emailId;
     this.userDescription = userDescription;
-    this.selectedForCreate = [1];
+    this.selectedForCreate = this.rolesOption;
     this.institutionId = institutionId;
     this.networkLoginId = networkLoginId;
 
@@ -266,13 +264,13 @@ export class UserRolesComponent implements OnInit {
         }
         this.emailId = '';
         this.userDescription = '';
-        this.rolesOption = '';
+        this.rolesOption = null;
         this.institutionId = null;
         this.networkLoginId = '';
       });
   }
-  saveEditUser(roleIds, networkLoginId, userDescription, institutionId, userEmailId) {
-    this.userRolesService.saveEditUser(this.userId, 1, networkLoginId, userDescription, institutionId, userEmailId).subscribe(
+  saveEditUser(networkLoginId, userDescription, institutionId, userEmailId) {
+    this.userRolesService.saveEditUser(this.userId, this.editroleId, networkLoginId, userDescription, institutionId, userEmailId).subscribe(
       (res) => {
         this.userRoleFormVal = res;
         this.editusersDiv = true;
@@ -309,7 +307,6 @@ export class UserRolesComponent implements OnInit {
           this.showUserSearchView = true;
           this.errorMessageDiv = false;
           this.errorMessageforSearchDiv = false;
-          console.log(this.userRoleFormVal['message']);
         } else if (this.userRoleFormVal['errorMessage'] != null) {
           this.deletedSuccessMsgDiv = false;
           this.deleteErrorMsgDiv = true;
@@ -320,8 +317,8 @@ export class UserRolesComponent implements OnInit {
     this.userRolesService.userRoles().subscribe(
       (res) => {
         this.userRolesVal = res;
-        this.userRoleListVal = this.userRolesVal['roles'];
-        this.userRoleList = this.userRoleListVal[''];
+        this.userRoleListVal = this.userRolesVal['roles'].map(function(x) { return { id: x[0], name: x[1] }; }); 
+        console.log(this.userRoleListVal); 
       });
   }
   lastCall() {
@@ -388,7 +385,7 @@ export class UserRolesComponent implements OnInit {
   }
   setPostData(actionName) {
     if (actionName == 'createUser') {
-      this.resetFields();
+       this.resetFields();
     } else if (actionName == 'searchUsers') {
       this.numOfRecordsId = 10;
       this.pageNumber = 0;
@@ -466,7 +463,7 @@ export class UserRolesComponent implements OnInit {
       "roles": [],
       "institutions": [],
       "showSelectedForCreate": [],
-      "selectedForCreate": [],
+      "selectedForCreate": this.selectedForCreate,
       "editSelectedForCreate": [],
       "userRoleFormList": [],
 
