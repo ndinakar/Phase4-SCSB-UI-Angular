@@ -1,12 +1,12 @@
-FROM node:latest as build-step
+FROM node:latest as node
 
 RUN mkdir -p /app
 WORKDIR /app
 COPY package.json ./
-RUN npm i || true
+RUN npm install
 COPY . .
 RUN npm run build
 
 FROM nginx:alpine as stage
-COPY --from=build-step  /app/dist/phase4-scsb-ui-angular /usr/share/nginx/html
+COPY --from=node  /app/dist/phase4-scsb-ui-angular /usr/share/nginx/html
 EXPOSE 80
