@@ -1,0 +1,9 @@
+.ng-select .ng-select-container {
+    border: 1px solid #888988 !important;
+    min-height: 50px !important;
+    border-radius: 0px !important;
+}
+
+.ng-placeholder {
+    margin-top: 8px !important;
+}
