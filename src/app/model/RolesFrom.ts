@@ -1,4 +1,3 @@
-import { from } from 'rxjs';
 import { RolesSearchResult } from '../model/RolesSearchResult';
 export class RolesForm {
     roleName: string;

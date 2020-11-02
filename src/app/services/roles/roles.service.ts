@@ -49,7 +49,6 @@ export class RolesService {
       });
   }
   delete(postData: RolesForm): Observable<TreeNode[]> {
-    console.log();
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/delete",postData,
       {
         headers: appHeaders.getHeaders()
