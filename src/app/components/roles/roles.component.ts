@@ -3,6 +3,7 @@ import { TreeNode } from 'primeng/api';
 import { EMPTY } from 'rxjs';
 import { RolesService } from 'src/app/services/roles/roles.service';
 import {Location} from '@angular/common';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
   selector: 'app-roles',
@@ -11,7 +12,7 @@ declare var $: any;
 })
 export class RolesComponent implements OnInit {
 
-  constructor(private rolesService: RolesService,private _location: Location) { }
+  constructor(private rolesService: RolesService,private _location: Location,private router:Router) { }
 
   ngOnInit(): void {
     $('#mydiv').hide();
@@ -385,7 +386,16 @@ export class RolesComponent implements OnInit {
     this.newRoleDescription = null;
     this.newRolePermissionNames = null;
   }
-  goBack(){
-    this._location.back();
+  goBack($event){
+    $event.stopPropagation();
+    //$event.preventDefault();
+    this.rolesPanel = true;
+    this.showResults = false;
+    this.createRoleSectionDiv = false;
+    // this.accessionPageResponse = true;
+    // this.accesionPage = true;
+    // this.reportType_panel = true;
+    // this.Deaccessiontableshow = false;
+    // this.isChecked = true;
   }
 }
