@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { EMPTY } from 'rxjs';
 import { RolesService } from 'src/app/services/roles/roles.service';
-import {Location} from '@angular/common';
-import { Router } from '@angular/router';
-declare var $: any;
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
@@ -12,10 +10,10 @@ declare var $: any;
 })
 export class RolesComponent implements OnInit {
 
-  constructor(private rolesService: RolesService,private _location: Location,private router:Router) { }
+  constructor(private rolesService: RolesService,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    $('#mydiv').hide();
+    this.spinner.hide();
   }
   rolesVal: TreeNode[];
   permissionNames: TreeNode[];
@@ -110,11 +108,10 @@ export class RolesComponent implements OnInit {
     "showIntial": true
   }
   searchRoles() {
-    $('#mydiv').show();
+    this.spinner.show();
     this.rolesService.searchRoles(this.setPostData('searchRole')).subscribe(
       (res) => {
         this.rolesVal = res;
-        $('#mydiv').hide();
         if (this.rolesVal['rolesSearchResults'] != EMPTY) {
           this.rolesSearchResultsDiv = true;
           this.errorMessageDiv = false;
@@ -129,6 +126,7 @@ export class RolesComponent implements OnInit {
           this.successDiv = false;
         }
         this.pagination();
+        this.spinner.hide();
       });
   }
   resetFields() {
@@ -136,8 +134,10 @@ export class RolesComponent implements OnInit {
     this.permissionName = "";
   }
   saveEditedRole(roleId, roleName, roleDescription, permissionNames) {
+    this.spinner.show();
     this.rolesService.saveEditedRole(roleId, roleName, roleDescription, permissionNames).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
         if (this.rolesVal['message'] != null) {
           this.successMessageEditRoleDiv = true;
@@ -181,8 +181,10 @@ export class RolesComponent implements OnInit {
     this.roleId = roleId;
   }
   deleteFromDb(){
+    this.spinner.show();
     this.rolesService.delete(this.setPostData('deleteRole')).subscribe(
       (res)=>{
+        this.spinner.hide();
         this.deleteResponse =res ;
         this.rolesVal = this.deleteResponse;
         if(this.deleteResponse['message'] !=null){
@@ -205,8 +207,10 @@ export class RolesComponent implements OnInit {
     this.populatePermissionNames();
   }
   saveCreateRole() {
+    this.spinner.show();
     this.rolesService.createRole(this.setPostData('createRole')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
         if (this.rolesVal['message'] != null) {
           this.successMessageEditRoleDiv = false;
@@ -235,32 +239,40 @@ export class RolesComponent implements OnInit {
 
   }
   firstCall() {
+    this.spinner.show();
     this.rolesService.firstCall(this.setPostData('firstCall')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
       });
   }
   lastCall() {
+    this.spinner.show();
     this.rolesService.lastCall(this.setPostData('lastCall')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
       });
   }
   previousCall() {
+    this.spinner.show();
     this.rolesService.previousCall(this.setPostData('previousCall')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
       });
   }
   nextCall() {
+    this.spinner.show();
     this.rolesService.nextCall(this.setPostData('nextCall')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
         this.successDiv = false;  
         this.pagination();

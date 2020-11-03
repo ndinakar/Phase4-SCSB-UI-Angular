@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
-import { EMPTY } from 'rxjs';
+import { NgxSpinnerService } from "ngx-spinner";
 import { UserRolesService } from 'src/app/services/userRoles/user-roles.service';
 @Component({
   selector: 'app-user-roles',
@@ -9,9 +9,10 @@ import { UserRolesService } from 'src/app/services/userRoles/user-roles.service'
 })
 export class UserRolesComponent implements OnInit {
 
-  constructor(private userRolesService: UserRolesService) { }
+  constructor(private userRolesService: UserRolesService,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.hide();
   }
   roleId: string;
   searchNetworkId: string;
@@ -157,6 +158,7 @@ export class UserRolesComponent implements OnInit {
     this.deleteUserDiv = false;
   }
   editUser(userId, networkLoginId, roleName) {
+    this.spinner.show();
     this.editusersDiv = true;
     this.createUserDiv = false;
     this.showSearchResultsDiv = false;
@@ -176,12 +178,11 @@ export class UserRolesComponent implements OnInit {
         this.edituserDescription = this.userResponse['editUserDescription'];
         this.editnetworkLoginId = this.userResponse['editNetworkLoginId'];
         this.editinstitutionId = this.userResponse['editInstitutionId'];
-        console.log("roleName", this.editroleId);
-        console.log("userResponse", this.userResponse);
-
+        this.spinner.hide();
       });
   }
   deleteUserRole(userId, networkLoginId, roleName) {
+    this.spinner.show();
     this.editusersDiv = false;
     this.createUserDiv = false;
     this.showSearchResultsDiv = false;
@@ -202,9 +203,11 @@ export class UserRolesComponent implements OnInit {
         this.deleteNetworkLoginId = this.userResponse['editNetworkLoginId'];
         this.deleteInstitutionId = this.userResponse['editInstitutionId'];
         this.deletedRoleId = this.userResponse['editSelectedForCreate'];
+        this.spinner.hide();
       });
   }
   searchUserRoles() {
+    this.spinner.show();
     this.userRolesService.searchRoles(this.setPostData('searchUsers')).subscribe(
       (res) => {
         this.userRoleFormVal = res;
@@ -233,7 +236,7 @@ export class UserRolesComponent implements OnInit {
           this.totalRecordsCountDiv = true;
           this.userRolePaginationDiv = true;
         }
-
+        this.spinner.hide();
       }
     );
   }
@@ -246,6 +249,7 @@ export class UserRolesComponent implements OnInit {
       });
   }
   createUser(emailId, userDescription, institutionId, networkLoginId) {
+    this.spinner.show();
     this.emailId = emailId;
     this.userDescription = userDescription;
     this.selectedForCreate = this.rolesOption;
@@ -255,6 +259,7 @@ export class UserRolesComponent implements OnInit {
       this.emailIdErrMsgDiv = true;
       this.userRolesService.createUser(this.setPostData('createUser')).subscribe(
         (res) => {
+          this.spinner.hide();
           this.userRoleFormVal = res;
           this.createUserDiv = true;
           this.showSearchResultsDiv = false;
@@ -334,6 +339,7 @@ export class UserRolesComponent implements OnInit {
     }
   }
   saveEditUser(networkLoginId, userDescription, institutionId, userEmailId) {
+    this.spinner.show();
     if (!this.check('saveUser')) {
       this.userRolesService.saveEditUser(this.userId, this.editroleId, networkLoginId, userDescription, institutionId, userEmailId).subscribe(
         (res) => {
@@ -354,10 +360,12 @@ export class UserRolesComponent implements OnInit {
             this.editsuccessMsgDiv = false;
             this.editerrormsgDiv = true;
           }
+          this.spinner.hide();
         });
     }
   }
   deleteUser(networkLoginId) {
+    this.spinner.show();
     this.userRolesService.delete(this.userId, networkLoginId, this.userRoleFormVal['pageNumber'], this.userRoleFormVal['totalPageCount'], this.userRoleFormVal['pageSize']).subscribe(
       (res) => {
         this.userRoleFormVal = res;
@@ -377,6 +385,7 @@ export class UserRolesComponent implements OnInit {
           this.deletedSuccessMsgDiv = false;
           this.deleteErrorMsgDiv = true;
         }
+        this.spinner.hide();
       });
   }
   userRoles() {

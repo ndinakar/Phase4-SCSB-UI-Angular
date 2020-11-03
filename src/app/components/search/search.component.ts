@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
-import { AppConfig } from 'src/config/app.config.service';
+import { NgxSpinnerService } from "ngx-spinner";
 declare var $: any;
 
 @Component({
@@ -118,7 +118,7 @@ export class SearchComponent implements OnInit {
   ];
 
   @ViewChild('dt') dt: Table;
-  constructor(private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,private spinner: NgxSpinnerService) {
 
   }
   public data: Object[];
@@ -150,6 +150,7 @@ export class SearchComponent implements OnInit {
 
   //show entries api start
     onPageSizeChange(value) {
+    this.spinner.show();
     this.showentries = value;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -234,7 +235,7 @@ export class SearchComponent implements OnInit {
    
     this.searchService.onPageSizeChange(this.postData).subscribe((res) => {
     this.searchVal = res;
-      
+    this.spinner.hide();
     this.showresultdiv = true;
     this.nextvalue = this.searchVal['PageNumber'];
     if(this.searchVal['pageNumber'] == 0 && (this.searchVal['totalPageCount']-1 >0)){
@@ -294,6 +295,7 @@ export class SearchComponent implements OnInit {
 
   //show entries api end
   searchRecord() {
+    this.spinner.show();
     $("#search-filter").slideUp();
     this.nextvalue = 0;
     this.showentries = 10;
@@ -380,6 +382,7 @@ export class SearchComponent implements OnInit {
 
     this.searchService.getSearch(this.postData).subscribe(
       (res) => {
+        this.spinner.hide();
         this.searchVal = res
         //this.nextvalue = 0;
         this.searchVal['pageNumber']=0;
@@ -421,6 +424,7 @@ export class SearchComponent implements OnInit {
 
   //next api start
   nextapi() {
+    this.spinner.show();
     if (this.searchVal['pageNumber'] == (this.searchVal['totalPageCount']-2)) {
       this.firstbutton = false;
       this.previousbutton = false;
@@ -517,7 +521,12 @@ export class SearchComponent implements OnInit {
     }
 
     this.showresultdiv = true;
-    this.searchService.searchNext(this.postData).subscribe(files => this.searchVal = files);
+    this.searchService.searchNext(this.postData).subscribe(
+      (res) => 
+      {
+        this.spinner.hide();
+        this.searchVal = res;
+      });
 
     this.cols = [
       { field: 'title', header: 'Title' },
@@ -545,6 +554,7 @@ export class SearchComponent implements OnInit {
 
   //previous api start
   previousapi() {
+    this.spinner.show();
     if (this.searchVal['pageNumber'] > 1) {
       this.firstbutton = false;
       this.previousbutton = false;
@@ -639,7 +649,11 @@ export class SearchComponent implements OnInit {
         "errorMessage": null
       }
       this.showresultdiv = true;
-      this.searchService.searchPrevious(this.postData).subscribe(files => this.searchVal = files);
+      this.searchService.searchPrevious(this.postData).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.searchVal = res
+        });
 
       this.cols = [
         { field: 'title', header: 'Title' },
@@ -668,6 +682,7 @@ export class SearchComponent implements OnInit {
 
   //first api start
   firstapi() {
+    this.spinner.show();
     this.firstbutton = true;
     this.previousbutton = true;
     this.nextbutton = false;
@@ -757,6 +772,7 @@ export class SearchComponent implements OnInit {
 
     this.searchService.searchFirst(this.postData).subscribe(
       (res) => {
+        this.spinner.hide();
         this.searchVal = res;
         this.searchVal['pageNumber']=0;
       });
@@ -788,6 +804,7 @@ export class SearchComponent implements OnInit {
 
   //last api start
   lastapi() {
+    this.spinner.show();
     this.firstbutton = false;
     this.previousbutton = false;
     this.nextbutton = true;
@@ -875,7 +892,12 @@ export class SearchComponent implements OnInit {
       "errorMessage": null
     }
     this.showresultdiv = true;
-    this.searchService.searchLast(this.postData).subscribe(files => this.searchVal = files);
+    this.searchService.searchLast(this.postData).subscribe(
+      (res) => 
+      {
+        this.spinner.hide();
+        this.searchVal = res;
+      });
 
     this.cols = [
       { field: 'title', header: 'Title' },

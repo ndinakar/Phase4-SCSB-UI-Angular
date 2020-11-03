@@ -19,7 +19,7 @@ import { UserRolesComponent } from './components/user-roles/user-roles.component
 import { JobsComponent } from './components/jobs/jobs.component';
 import { MonitoringComponent } from './components/monitoring/monitoring.component';
 import { LoggingComponent } from './components/logging/logging.component';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 export function appInit(appConfig: AppConfig) {
   return () => appConfig.load();
@@ -46,6 +46,7 @@ export function appInit(appConfig: AppConfig) {
     ReactiveFormsModule,
     DashboardModule,
     NgSelectModule,
+    NgxSpinnerModule
   ],
   providers: [ AppConfig,
     {
