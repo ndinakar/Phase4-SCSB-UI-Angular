@@ -16,7 +16,6 @@ constructor(private httpClient: HttpClient, private appConfig: AppConfig) { }
 baseUrl = urls.baseUrl;
 prefix = urls.search;
 getSearch(postData: SearchRecordRequest): Observable<TreeNode[]> {
-  console.log("property", this.baseUrl);
   return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/search", postData,
     {
       headers: appHeaders.getHeaders()

@@ -505,8 +505,8 @@
                                                             </td>
                                                             <td id="deacessionCulCount">
                                                                 <a href="#" id="deacessionCulCountHref" class="Deaccession-tableshow" (click)="deaccessionCul()">
-                                                                    <button *ngIf="subtotalEDDPULDeaccession ==0">{{subtotalEDDCULDeaccession}}</button></a>
-                                                                <span *ngIf="subtotalEDDPULDeaccession != 0 ">{{subtotalEDDCULDeaccession}}</span>
+                                                                    <button *ngIf="subtotalEDDPULDeaccession !=0">{{subtotalEDDCULDeaccession}}</button></a>
+                                                                <span *ngIf="subtotalEDDPULDeaccession == 0 ">{{subtotalEDDCULDeaccession}}</span>
                                                             </td>
                                                             <td>
                                                                 <a href="#" class="Deaccession-tableshow" (click)="deaccessionNypl()">
