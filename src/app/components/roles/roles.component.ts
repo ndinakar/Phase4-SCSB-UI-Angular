@@ -388,14 +388,11 @@ export class RolesComponent implements OnInit {
   }
   goBack($event){
     $event.stopPropagation();
-    //$event.preventDefault();
+    $event.preventDefault();
     this.rolesPanel = true;
     this.showResults = false;
     this.createRoleSectionDiv = false;
-    // this.accessionPageResponse = true;
-    // this.accesionPage = true;
-    // this.reportType_panel = true;
-    // this.Deaccessiontableshow = false;
-    // this.isChecked = true;
+    this.editRoleSectionDiv = false;
+    this.deleteRoleSectionDiv = false;
   }
 }

@@ -16,7 +16,7 @@ export class UserRolesComponent implements OnInit {
   roleId: string;
   searchNetworkId: string;
   userEmailId: string;
-  showUserSearchView = true;
+  UserPanel = true;
   showSearchResultsDiv = false;
   errorMessageforSearchDiv = false;
   deletedSuccessMsgDiv = false;
@@ -81,7 +81,7 @@ export class UserRolesComponent implements OnInit {
   edituserDescriptionErrMsgDiv = false;
   editEmailIdErrMsgDiv = false;
   emailIdErrMsgDiv = false;
-
+  showUserSearchView = true;
   postData = {
     "userId": null,
     "institutionId": null,
@@ -149,6 +149,8 @@ export class UserRolesComponent implements OnInit {
   }
   enableCreateUser() {
     this.userRoles();
+    //this.UserPanel = false;
+    //this.searchBarDiv =false;
     this.createUserDiv = true;
     this.errorMessageDiv = false;
     this.showUserSearchView = false;
@@ -551,6 +553,16 @@ export class UserRolesComponent implements OnInit {
     } else if (this.searchNetworkId == null) {
       this.searchNetworkId = "";
     }
+  }
+  goBack($event){
+    $event.stopPropagation();
+    $event.preventDefault();
+    this.UserPanel = true;
+    this.searchBarDiv =true;
+    this.showUserSearchView = true;
+    this.deleteUserDiv = false;
+    this.editusersDiv = false;
+    this.createUserDiv = false;
   }
 }
 

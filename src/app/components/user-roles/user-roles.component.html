@@ -5,7 +5,7 @@
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <fieldset>
                 <input type="text" id="editUserIdHidden" th:field="${userRoleForm.userId}" hidden="hidden" />
-                <div role="tabpanel" class="tab-pane" id="recapusers">
+                <div *ngIf="UserPanel" role="tabpanel" class="tab-pane" id="recapusers">
                     <div *ngIf="showUserSearchView" id="users-searchview" th:if="*{showUserSearchView}">
                         <div class="row margin-btm-10">
                             <div class="col-sm-7 margin-top-05">Provide one or more data to search. Empty search would return all data.
@@ -164,7 +164,7 @@
                                 <h3 class="margin-0">Create User</h3>
                             </div>
                             <div class="col-sm-6 text-right usersbacklink">
-                                <a href="/userRoles" class="" id="backLink"><span class="glyphicon glyphicon-menu-left" style="cursor: pointer;"></span>
+                                <a (click)="goBack($event)" class="" id="backLink"><span class="glyphicon glyphicon-menu-left" style="cursor: pointer;"></span>
                                     Go Back</a>
                             </div>
                         </div>
@@ -291,7 +291,7 @@
                                 <h3 class="margin-0">Edit User</h3>
                             </div>
                             <div class="col-sm-6 text-right usersbacklink">
-                                <a href="/userRoles" class="" id="editbackLink"><span
+                                <a (click)="goBack($event)" class="" id="editbackLink"><span
                                         class="glyphicon glyphicon-menu-left"></span> Go Back</a>
                             </div>
                         </div>
@@ -409,7 +409,7 @@
                             <h3 class="margin-0">Delete User</h3>
                         </div>
                         <div class="col-sm-6 text-right usersbacklink">
-                            <a href="/userRoles" class="" id="deletebackLink"><span class="glyphicon glyphicon-menu-left"></span>
+                            <a (click)="goBack($event)" class="" id="deletebackLink"><span class="glyphicon glyphicon-menu-left"></span>
                                 Go Back</a>
                         </div>
                     </div>

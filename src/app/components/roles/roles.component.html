@@ -256,7 +256,7 @@
                                 <div class="col-sm-6 margin-top-0">
                                     <h3 class="margin-0">Edit Role</h3>
                                 </div>
-                                <div class="col-sm-6 text-right backtext"><a href="/roles" id="editGoBackLink"><span
+                                <div class="col-sm-6 text-right backtext"><a (click)="goBack($event)" id="editGoBackLink"><span
                         class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
                             </div>
                             <div *ngIf="successMessageEditRoleDiv" class="row margin-btm-10">
@@ -349,7 +349,7 @@
                                 <div class="col-sm-6 margin-top-0">
                                     <h3 class="margin-0">Delete Role</h3>
                                 </div>
-                                <div class="col-sm-6 text-right backtext"><a href="/roles" id="deleteGoBackLink"><span
+                                <div class="col-sm-6 text-right backtext"><a (click)="goBack($event)" id="deleteGoBackLink"><span
                         class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
                             </div>
                             <input id="afterDelPageNumber" name="afterDelPageNumber" type="text" th:field="${rolesForm.afterDelPageNumber}" hidden="hidden" />
