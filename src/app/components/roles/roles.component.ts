@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { EMPTY } from 'rxjs';
 import { RolesService } from 'src/app/services/roles/roles.service';
+import {Location} from '@angular/common';
 declare var $: any;
 @Component({
   selector: 'app-roles',
@@ -10,7 +11,7 @@ declare var $: any;
 })
 export class RolesComponent implements OnInit {
 
-  constructor(private rolesService: RolesService) { }
+  constructor(private rolesService: RolesService,private _location: Location) { }
 
   ngOnInit(): void {
     $('#mydiv').hide();
@@ -383,5 +384,8 @@ export class RolesComponent implements OnInit {
     this.newRoleName = null;
     this.newRoleDescription = null;
     this.newRolePermissionNames = null;
+  }
+  goBack(){
+    this._location.back();
   }
 }
