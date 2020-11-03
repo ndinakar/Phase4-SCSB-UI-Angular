@@ -5,6 +5,7 @@ import { from, Observable } from 'rxjs';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
 import { UserRoleFormData } from 'src/app/model/UserRoleFormData';
+import 'rxjs/add/operator/delay';
 @Injectable({
   providedIn: 'root'
 })

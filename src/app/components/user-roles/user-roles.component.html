@@ -192,7 +192,7 @@
                                 <div class="col-md-8 col-sm-6 fontcolor-dark">
                                     <div class="form-group">
                                         <div class="col-md-3 text-right col-sm-4">
-                                            <label for="networkLoginId" class="margin-top-10">Network Login id <span
+                                            <label class="margin-top-10">Network Login id <span
                                                     class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
@@ -201,9 +201,9 @@
                                                 provide Network Login id </span>
                                         </div>
                                     </div>
-                                    <div class="form-group" id="">
+                                    <div class="form-group">
                                         <div class="col-md-3 text-right col-sm-4">
-                                            <label for="institutionId" class="margin-top-10">Institution<span
+                                            <label class="margin-top-10">Institution<span
                                                     class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
@@ -248,11 +248,10 @@
                                                     class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
-                                            <input class="form-control themed-input" name="userDescription" id="userDescription" [ngModelOptions]="{standalone: true}" [(ngModel)]="userDescription" placeholder="" type="text" th:onkeyup="'javascript:toggleUserDescriptionValidation(this)'" maxlength="45"
-                                            />
-                                            <span id="userDescriptionErrMsg" style="color: red;display: none">Please
+                                            <input class="form-control themed-input" name="userDescription" id="userDescription" [ngModelOptions]="{standalone: true}" [(ngModel)]="userDescription" placeholder="" type="text" maxlength="45" />
+                                            <span *ngIf="userDescriptionErrMsgDiv" id="userDescriptionErrMsg" style="color: red;">Please
                                                 provide User Name </span>
-                                            <p>Remaining Characters : <span id="remainingCharacters">45</span></p>
+                                            <p>Remaining Characters : <span id="remainingCharacters">{{45 - userDescription.length}}</span></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -262,7 +261,7 @@
                                         </div>
                                         <div class="col-sm- col-sm-6">
                                             <input class="form-control themed-input" name="emailId" id="emailId" [ngModelOptions]="{standalone: true}" [(ngModel)]="emailId" placeholder="" type="email" />
-                                            <span id="emailIdErrMsg" style="color: red;display: none">Please provide
+                                            <span *ngIf="emailIdErrMsgDiv" id="emailIdErrMsg" style="color: red;">Please provide
                                                 valid email address </span>
                                             <p style="margin-top: 10px;margin-bottom: 20px;">Fields marked with asterisk(
                                                 <span class="error-color">*</span>) are mandatory.</p>
@@ -372,9 +371,9 @@
                                         </div>
                                         <div class="col-sm- col-sm-6">
                                             <input class="form-control themed-input" name="edituserDescription" id="edituserDescription" [ngModelOptions]="{standalone: true}" [(ngModel)]="edituserDescription" placeholder="" type="text" maxlength="45" />
-                                            <span id="edituserDescriptionErrMsg" style="color: red;display: none">Please
+                                            <span *ngIf="edituserDescriptionErrMsgDiv" id="edituserDescriptionErrMsg" style="color: red;">Please
                                                 provide user description </span>
-                                            <p id="editTextCharactersRemaining" style="display: none">Characters Remaining : <span id="editCharactersRemaining">45</span></p>
+                                            <p id="editTextCharactersRemaining">Characters Remaining : <span id="editCharactersRemaining">{{ 45 - edituserDescription.length}}</span></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -384,7 +383,7 @@
                                         </div>
                                         <div class="col-sm- col-sm-6">
                                             <input class="form-control themed-input" name="editEmailId" id="editEmailId" [ngModelOptions]="{standalone: true}" [(ngModel)]="editEmailId" placeholder="" type="email" onblur="validateEditEmailAddress()" />
-                                            <span id="editEmailIdErrMsg" style="color: red;display: none">Please provide
+                                            <span *ngIf="editEmailIdErrMsgDiv" id="editEmailIdErrMsg" style="color: red;">Please provide
                                                 valid email address </span>
                                             <p style="margin-bottom: 20px;margin-top: 10px;">Fields marked with asterisk(
                                                 <span class="error-color">*</span>) are mandatory.</p>
