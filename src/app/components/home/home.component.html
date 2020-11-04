@@ -35,34 +35,6 @@
                                     <label for="institution" class="margin-top-10">Institution</label>
                                 </div>
                                 <div class="col-md-9">
-
-                                    <!-- <select class="form-control themed-input themed-select" id="institution"
-                                        [(ngModel)]="model.institution" required>
-                                            <option value="">Select One</option>
-                                            <option value="PUL">Princeton</option>
-                                            <option value="CUL">Columbia</option>
-                                            <option value="NYPL">New York Public Library</option>
-                                            <option value="HTC">HTC</option>
-                                        </select> -->
-
-                                    <!-- <select class="form-control" name="Institution" [(ngModel)]="Institution" >
-                                            <option value="">Select an option</option>
-                                            <option *ngFor="let hoby of Institution" [value]="hoby.id">
-                                              {{hoby.name}}
-                                            </option>
-                                          </select> -->
-
-
-                                    <!-- <select class="form-control" placeholder="select" id="Institution"  required  [(ngModel)]="Institution" name="Institution">
-                                            <option value="">Select an option</option>
-                                            <option *ngFor="let ins of Institution" [value]="ins.id">{{ins.name}}</option>
-                                  </select> -->
-
-
-                                    <!-- <div *ngIf="Institution.invalid" class="alert alert-danger">
-                                    Institution is required
-                                  </div> -->
-
                                     <select name="institution" formControlName="institution" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.institution.errors }">
                                     <option value="">Select One</option>
                                     <option *ngFor="let ins of Institution" [value]="ins.id">{{ins.name}}</option>
@@ -70,9 +42,6 @@
                                     <div style="color:red" *ngIf="submitted && f.institution.errors" class="invalid-feedback">
                                         <div *ngIf="f.institution.errors.required">Institution is required</div>
                                     </div>
-
-
-                                    <!-- <span [hidden]="institution.valid || institution.pristine" class="alert alert-danger">Institution is required.</span> -->
                                 </div>
                             </div>
                             <div class="row">
@@ -165,7 +134,7 @@
                 <div class="col-sm-3">
                     <h3 class="margin-btm-0">ReCAP</h3>
                     <ul class="border-style-left">
-                        <li><a href="https://recap.princeton.edu/" target="_blank">Home</a></li>
+                        <li><a name="home" href="https://recap.princeton.edu/" target="_blank">Home</a></li>
                         <li><a name="facility" href="https://recap.princeton.edu/facility-storage" target="_blank">Facility &amp;
                             Storage</a></li>
                         <li><a name="0perations" href="https://recap.princeton.edu/operations-statistics" target="_blank">Operations &amp;

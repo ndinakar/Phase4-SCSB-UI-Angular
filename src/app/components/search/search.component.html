@@ -377,19 +377,19 @@
                                 <div class="pull-left" style="margin-top: -20px;">
                                     <div id="paginationId" name="paginationName">
                                         <ul class="pagination">
-                                            <li name="first" [ngClass]="(firstbutton==true)?'disabled':''">
+                                            <li id="first" [ngClass]="(firstbutton==true)?'disabled':''">
                                                 <span (click)="firstapi()">First</span>
 
                                             </li>
-                                            <li name="previous" [ngClass]="(previousbutton==true)?'disabled':''">
+                                            <li id="previous" [ngClass]="(previousbutton==true)?'disabled':''">
                                                 <span (click)="previousapi()">Previous</span>
 
                                             </li>
-                                            <li name="next" [ngClass]="(nextbutton==true)?'disabled':''">
+                                            <li id="next" [ngClass]="(nextbutton==true)?'disabled':''">
                                                 <span (click)="nextapi()">Next</span>
 
                                             </li>
-                                            <li name="last" [ngClass]="(lastbutton==true)?'disabled':''">
+                                            <li id="last" [ngClass]="(lastbutton==true)?'disabled':''">
                                                 <span (click)="lastapi()">Last</span>
 
                                             </li>
