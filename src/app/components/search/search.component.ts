@@ -417,6 +417,7 @@ export class SearchComponent implements OnInit {
     }
       },
       (error) => {
+        this.spinner.hide();
         //Called when error
       })
 
