@@ -11,6 +11,7 @@ import { BulkRequestService } from 'src/app/services/bulkRequest/bulk-request.se
   styleUrls: ['./bulkrequest.component.css']
 })
 export class BulkrequestComponent implements OnInit {
+  uploadedFile : any;
   BulkRequestForm: FormGroup;
   bulkrequestVal: TreeNode[];
   deliveryLocVal: any[];
@@ -205,12 +206,13 @@ export class BulkrequestComponent implements OnInit {
   }
 
   onChange(event: any) {
+    this.uploadedFile = new FormData();
     let fileList: FileList = event.target.files;
     if (fileList.length > 0) {
        this.file = fileList[0];
       this.chosenFile = this.file.name;
 
-      this.formData.append('file', this.file);
+      this.uploadedFile.append('file', new Blob([this.file], { type: 'multipart/form-data' }), this.file.name);
 
     }
   }
@@ -337,7 +339,7 @@ export class BulkrequestComponent implements OnInit {
         "requestingInstituionHidden": null,
         "disableSearchInstitution": false,
         "searchInstitutionHdn": null,
-        "file": this.formData['file'],
+        "file": this.uploadedFile,
         "requestIdSearch": null,
         "requestNameSearch": null,
         "patronBarcodeSearch": null,
@@ -346,7 +348,8 @@ export class BulkrequestComponent implements OnInit {
         "patronBarcodeInRequest": this.patronBarcodeId,
         "fileName": this.chosenFile
       }
-      console.log(this.formData['file']);
+      console.log("File Name",this.chosenFile);
+      console.log("File Name",this.uploadedFile);
       this.bulkrequestService.createBulkRequest(this.postData).subscribe(
         (res) => {
           this.createResponse = res;
@@ -415,7 +418,7 @@ export class BulkrequestComponent implements OnInit {
       "requestingInstituionHidden": null,
       "disableSearchInstitution": false,
       "searchInstitutionHdn": null,
-      "file": null,
+      "file": {},
       "requestIdSearch": this.bulkRequestIdSearch,
       "requestNameSearch": this.bulkRequestNameSearch,
       "patronBarcodeSearch": this.bulkPatronBarcodeSearch,
@@ -424,6 +427,7 @@ export class BulkrequestComponent implements OnInit {
       "patronBarcodeInRequest": null,
       "fileName": null
     }
+    console.log("Search Request",this.bulkRequestIdSearch,this.bulkRequestNameSearch);
     this.bulkrequestService.searchRequest(this.postData).subscribe(
       (res) => {
         this.searchRequestVal = res;
