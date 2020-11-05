@@ -318,20 +318,20 @@
                                             <td id="rowData_searchItem" *ngIf="rowData.searchItemResultRows==''">
                                                 <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                             </td>
-                                            <td *ngIf="rowData.searchItemResultRows!=''">
+                                            <td id="rowData_searchItem_not" *ngIf="rowData.searchItemResultRows!=''">
                                                 <a id="row_Data" href="#" [pRowToggler]="rowData">
                                                     <i name="rowExpand" [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                                 </a>
                                             </td>
 
-                                            <td *ngFor="let col of columns"><img *ngIf="col.field=='title' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> <img *ngIf="col.field=='title' && rowData.availability =='Not Available'"
+                                            <td id="rowData_searchItem_col" *ngFor="let col of columns"><img *ngIf="col.field=='title' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> <img *ngIf="col.field=='title' && rowData.availability =='Not Available'"
                                                     class="status" src="../../../../assets/images/out.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> &nbsp;&nbsp; {{rowData[col.field]}}
                                             </td>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
                                         <tr>
-                                            <td [attr.colspan]="columns.length + 1">
+                                            <td name="column_len" [attr.colspan]="columns.length + 1">
                                                 <div class="p-grid ui-fluid" style="font-size:16px;padding:20px" [@rowExpansionTrigger]="'active'">
                                                     <div class="p-col-12 p-md-9">
                                                         <div class="p-grid" *ngIf="rowData.searchItemResultRows==''"></div>
@@ -339,7 +339,7 @@
                                                             <p-table name="p_tablesub" [columns]="cols1" selectionMode="checkbox" [(selection)]="selectedNodes2" [value]="rowData.searchItemResultRows" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                                                                 <ng-template pTemplate="header" let-columns>
                                                                     <tr name="subRow">
-                                                                        <th style="width: 3em">
+                                                                        <th name="header_table" style="width: 3em">
                                                                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                                                         </th>
                                                                         <th name="column_sub_header" *ngFor="let col of columns">
@@ -349,7 +349,7 @@
                                                                 </ng-template>
                                                                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                                                                     <tr name="row_sub">
-                                                                        <td>
+                                                                        <td name="col_row_sub">
                                                                             <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                                                         </td>
                                                                         <td name="clumns_sub" *ngFor="let col of columns"><img *ngIf="col.field=='callNumber' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;"
