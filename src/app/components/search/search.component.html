@@ -301,11 +301,11 @@
 
                                     <ng-template pTemplate="header" let-columns>
                                         <tr>
-                                            <th style="width: 3em">
+                                            <th id="header_checkBox" style="width: 3em">
                                                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                             </th>
 
-                                            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                                            <th id="col_field" *ngFor="let col of columns" [pSortableColumn]="col.field">
 
                                                 {{col.header}}
                                                 <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
@@ -315,11 +315,11 @@
                                     <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
                                         <tr>
 
-                                            <td *ngIf="rowData.searchItemResultRows==''">
+                                            <td id="rowData_searchItem" *ngIf="rowData.searchItemResultRows==''">
                                                 <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                             </td>
                                             <td *ngIf="rowData.searchItemResultRows!=''">
-                                                <a href="#" [pRowToggler]="rowData">
+                                                <a id="row_Data" href="#" [pRowToggler]="rowData">
                                                     <i name="rowExpand" [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                                 </a>
                                             </td>
@@ -338,21 +338,21 @@
                                                         <div class="p-grid" *ngIf="rowData.searchItemResultRows!=''">
                                                             <p-table name="p_tablesub" [columns]="cols1" selectionMode="checkbox" [(selection)]="selectedNodes2" [value]="rowData.searchItemResultRows" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                                                                 <ng-template pTemplate="header" let-columns>
-                                                                    <tr>
+                                                                    <tr name="subRow">
                                                                         <th style="width: 3em">
                                                                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                                                         </th>
-                                                                        <th *ngFor="let col of columns">
+                                                                        <th name="column_sub_header" *ngFor="let col of columns">
                                                                             {{col.header}}
                                                                         </th>
                                                                     </tr>
                                                                 </ng-template>
                                                                 <ng-template pTemplate="body" let-rowData let-columns="columns">
-                                                                    <tr>
+                                                                    <tr name="row_sub">
                                                                         <td>
                                                                             <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                                                         </td>
-                                                                        <td *ngFor="let col of columns"><img *ngIf="col.field=='callNumber' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;"
+                                                                        <td name="clumns_sub" *ngFor="let col of columns"><img *ngIf="col.field=='callNumber' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;"
                                                                             /> <img *ngIf="col.field=='callNumber' && rowData.availability =='Not Available'" class="status" src="../../../../assets/images/out.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;"
                                                                             /> &nbsp;&nbsp; {{rowData[col.field]}}
                                                                         </td>
