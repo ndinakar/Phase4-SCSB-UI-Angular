@@ -128,7 +128,7 @@
                                                                     <span class="glyphicon glyphicon-pencil" title="Edit Role" (click)="editRole(searchResult['roleId'],searchResult['rolesName'],searchResult['rolesDescription'],searchResult['permissionName'])" style="cursor: pointer;">
                                                             </span>
                                                                 </a>
-                                                                <a>
+                                                                <a id="deleteUserLink">
                                                                     <span class="glyphicon glyphicon-trash" title="Delete Role" (click)="deleteRole(searchResult['roleId'],searchResult['rolesName'],searchResult['rolesDescription'],searchResult['permissionName'])" style="cursor: pointer;margin-left: 5px;">
                                                              </span>
                                                                 </a>
@@ -143,17 +143,16 @@
                                                 <div class="margin-btm-0 pull-right" style="margin-top:-10px; margin-bottom:-30px;">
                                                     <div id="reportPaginationId" name="reportPaginationName" class="pull-right">
                                                         <ul class="pagination" id="reportPaginationUl">
-                                                            <li [ngClass]="(firstbutton==true)?'disabled':''">
+                                                            <li id="btn_first" [ngClass]="(firstbutton==true)?'disabled':''">
                                                                 <span (click)="firstCall()">First</span>
                                                             </li>
-                                                            <li [ngClass]="(previousbutton==true)?'disabled':''">
+                                                            <li id="btn_previous" [ngClass]="(previousbutton==true)?'disabled':''">
                                                                 <span (click)="previousCall()">Previous</span>
                                                             </li>
-                                                            <li [ngClass]="(nextbutton==true)?'disabled':''">
+                                                            <li id="btn_next" [ngClass]="(nextbutton==true)?'disabled':''">
                                                                 <span (click)="nextCall()">Next</span>
-
                                                             </li>
-                                                            <li [ngClass]="(lastbutton==true)?'disabled':''">
+                                                            <li id="btn_last" [ngClass]="(lastbutton==true)?'disabled':''">
                                                                 <span (click)="lastCall()">Last</span>
                                                             </li>
                                                         </ul>
@@ -220,21 +219,13 @@
                                                         <div class="col-md-4 col-sm-6 text-right margin-top-05"><label for="permissionNameId" class="fontcolor-dark">Permission Names <span class="error-color">*</span></label></div>
                                                         <div class="col-md-8 col-sm-6">
                                                             <div class="">
-                                                                <!-- <select id="permissionNameId" (change)="togglePermissionValidation()"
-                                                        multiple
-                                                        class="form-control themed-input"
-                                                        name="newPermissionNames"
-                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionName">
-                                                    <option  value="none" style="margin-top: 8px;
-                                                        padding-bottom: 11px;" selected>Select One or More</option>
-                                                    <option  *ngFor = "let permission of permissionNames['permissionNameList']">{{permission}}</option>
-                                                </select> -->
-                                                                <ng-select [items]="permissionNamesList" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionNameId" placeholder="Select One or More">
-                                                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                                <ng-select id="permissionNameId" [items]="permissionNamesList" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="permissionNameId"
+                                                                    placeholder="Select One or More">
+                                                                    <ng-template name="itemList" ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                                                         <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item}}
                                                                     </ng-template>
                                                                 </ng-select>
-                                                                <span *ngIf="permissionNamesErrorMessageDiv" id="permissionNamesErrorMessage" style="color: red;">Permission Name is required.</span>
+                                                                <span id="permErrorMessage" *ngIf="permissionNamesErrorMessageDiv" id="permissionNamesErrorMessage" style="color: red;">Permission Name is required.</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -314,13 +305,7 @@
                                                         <div class="col-md-4 col-sm-6 text-right margin-top-05"><label for="editPermissionNameId" class="fontcolor-dark">Permission Names <span class="error-color">*</span></label></div>
                                                         <div class="col-md-8 col-sm-6">
                                                             <div class="" data-th-if="*{selectedPermissionNames ne null}">
-                                                                <!-- <select id="editPermissionNameId"
-                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="editPermissionNameId"
-                                                        class="form-control themed-input themed-select multiSelectPermissionName"
-                                                        name="editPermissionNameId" multiple>
-                                                    <option *ngFor="let permission of editPermissionNameId" [ngValue]="permission">{{permission}}</option>
-                                                </select> -->
-                                                                <ng-select [items]="permissionNamesList" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="editPermissionNameId">
+                                                                <ng-select id="editPermissionNameId" [items]="permissionNamesList" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="editPermissionNameId">
                                                                     <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                                                         <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item}}
                                                                     </ng-template>

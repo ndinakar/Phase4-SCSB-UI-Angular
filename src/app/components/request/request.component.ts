@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TreeNode } from 'primeng/api';
 import { RequestService } from 'src/app/services/request/request.service';
-
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 declare var $: any;
@@ -88,10 +88,10 @@ export class RequestComponent implements OnInit {
   status: boolean;
   createRequestError: boolean;
   errorMessage: string;
-  constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    $('#mydiv').hide();
+    this.spinner.hide();
     this.router.paramMap.subscribe(params => {
       this.barcode_id = params.get('barcode');
       if (this.barcode_id) {
@@ -202,11 +202,7 @@ export class RequestComponent implements OnInit {
       (res) => {
         this.requestVal = res;
         this.requestTypeId = this.requestVal['requestType'];
-
-        //this.itemBarcodeId='';
         this.requestingInstitutionId = '';
-        // this.itemTitleId='';
-        //this.itemOwningInstitutionId='';
         this.patronBarcodeId = '';
         this.patronEmailId = '';
         this.deliveryLocationId = '';
@@ -325,8 +321,6 @@ export class RequestComponent implements OnInit {
 
     this.requestService.populateItemtDetails(this.postData).subscribe(
       (res) => {
-
-
         this.itembarcodeVal = res;
         if (this.itembarcodeVal['errorMessage'] != null) {
           this.itemBarcodeNotFoundErrorMessage = true;
@@ -434,7 +428,7 @@ export class RequestComponent implements OnInit {
     }
   }
   createRequest() {
-    $('#mydiv').show();
+    this.spinner.show();
     if (this.eddshow) {
       if ((this.itemBarcodeId == undefined || this.itemBarcodeId == '') && (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') && (this.patronBarcodeId == undefined || this.patronBarcodeId == '') && (this.patronEmailId == undefined || this.patronEmailId == '') && (this.StartPage == undefined || this.StartPage == '') && (this.StartPage == undefined || this.StartPage == '') && (this.EndPage == undefined || this.EndPage == '') && (this.ChapterTitle == undefined || this.ChapterTitle == '')) {
         this.itemBarcodeErrorMessage = true;
@@ -529,9 +523,10 @@ export class RequestComponent implements OnInit {
         this.requestService.createRequest(this.postData).subscribe(
           (res) => {
             this.createsubmit = true;
-            $('#mydiv').hide();
+            this.spinner.hide();
           },
           (error) => {
+            this.spinner.hide();
             //Called when error
           })
       }

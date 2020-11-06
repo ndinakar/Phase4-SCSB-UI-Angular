@@ -31,7 +31,7 @@
                                                 <button id="searchButton" class="btn themed-button themed-button-search" type="button" (click)="searchUserRoles()">
                                                     Search
                                                 </button>
-                                                <button class="btn themed-button themed-button-cancel margin-left-10" type="reset" name="clearSearch" style="margin-left: 12px;" (click)="resetFields()">Clear Search
+                                                <button id="resetSearch" class="btn themed-button themed-button-cancel margin-left-10" type="reset" name="clearSearch" style="margin-left: 12px;" (click)="resetFields()">Clear Search
                                                 </button>
                                             </div>
                                         </div>
@@ -131,17 +131,16 @@
                                                 <div class="pull-right">
                                                     <div id="userRolePaginationId" name="userRolePaginationName">
                                                         <ul class="pagination">
-                                                            <li [ngClass]="(firstbutton==true)?'disabled':''">
+                                                            <li id="btn_first" [ngClass]="(firstbutton==true)?'disabled':''">
                                                                 <span (click)="firstCall()">First</span>
                                                             </li>
-                                                            <li [ngClass]="(previousbutton==true)?'disabled':''">
+                                                            <li id="btn_pre" [ngClass]="(previousbutton==true)?'disabled':''">
                                                                 <span (click)="previousCall()">Previous</span>
                                                             </li>
-                                                            <li [ngClass]="(nextbutton==true)?'disabled':''">
+                                                            <li id="btn_next" [ngClass]="(nextbutton==true)?'disabled':''">
                                                                 <span (click)="nextCall()">Next</span>
-
                                                             </li>
-                                                            <li [ngClass]="(lastbutton==true)?'disabled':''">
+                                                            <li id="btn_last" [ngClass]="(lastbutton==true)?'disabled':''">
                                                                 <span (click)="lastCall()">Last</span>
                                                             </li>
                                                         </ul>
@@ -216,21 +215,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group" id="">
+                                    <div class="form-group">
                                         <div class="col-md-3 col-sm-4 text-right">
-                                            <label for="roleId" class="margin-top-10">Add Role <span
+                                            <label name="addRole" for="roleId" class="margin-top-10">Add Role <span
                                                     class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
                                             <div class="">
-                                                <!-- <select class="form-control themed-input themed-select" id="roleId" th:onchange="'javascript:toggleUserRolesValidation()'" name="roleId" multiple="multiple" data-actions-box="true" data-placement="right" data-toggle="tooltip" th:field="${userRoleForm.selectedForCreate}">
-                                                    <option id="rolesOption"
-                                                        th:each="roleValues : ${userRoleForm.roles}"
-                                                        data-toggle="tooltip" th:title="${roleValues[3]}"
-                                                        th:value="${roleValues[0]}" th:text="${roleValues[1]}"
-                                                        th:selected="${userRoleForm.showSelectedForCreate.contains(roleValues)}">
-                                                    </option>
-                                                </select> -->
                                                 <ng-select id="rolesOption" [items]="userRoleListVal" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="rolesOption" placeholder="Select One or More">
                                                     <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                                         <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item.name}}
@@ -339,20 +330,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group" id="addrole">
+                                    <div class="form-group">
                                         <div class="col-md-3 col-sm-4 text-right">
-                                            <label for="roleId" class="margin-top-10">Add Role <span
+                                            <label naem="addRole" for="roleId" class="margin-top-10">Add Role <span
                                                     class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
-                                            <div class="">
-                                                <!-- <select class="form-control themed-input themed-select" id="editroleId" th:onchange="'javascript:toggleEditRoleValidation()'" name="editroleId" multiple="multiple" [ngModelOptions]="{standalone: true}" [(ngModel)]="editroleId">
-                                                    <option th:each="roleValues : ${userRoleForm.roles}"
-                                                        data-toggle="tooltip" th:title="${roleValues[3]}"
-                                                        th:value="${roleValues[0]}" th:text="${roleValues[1]}"
-                                                        th:selected="${userRoleForm.showSelectedForCreate.contains(roleValues)}">
-                                                    </option>
-                                                </select> -->
+                                            <div class="" name="editRoleId">
                                                 <ng-select id="editroleId" [items]="userRoleListVal" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="editroleId" placeholder="Select One or More">
                                                     <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                                         <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item.name}}

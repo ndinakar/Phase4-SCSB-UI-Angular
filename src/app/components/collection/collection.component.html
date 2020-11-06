@@ -1,11 +1,10 @@
 <!-- Collection Tab-->
-<div id="collectionContentId" name="collectionContentName"  role="tabpanel" class="tab-pane active">
+<div id="collectionContentId" name="collectionContentName" role="tabpanel" class="tab-pane active">
     <link rel="stylesheet" />
-    <script type="text/javascript" ></script>
-    <div id="collectionFormDivId" name="collectionFormDivName" 
-         xmlns:th="http://www.thymeleaf.org" >
+    <script type="text/javascript"></script>
+    <div id="collectionFormDivId" name="collectionFormDivName" xmlns:th="http://www.thymeleaf.org">
         <form id="collection-form" name="collection-form" class="form-horizontal">
-            <input type="hidden"  />
+            <input type="hidden" />
             <fieldset>
                 <div class="search-bar">
                     <div class="row margin-0">
@@ -26,20 +25,16 @@
                                             <input id="callNumber" type="hidden" />
                                             <input id="showModal" type="hidden" />
                                             <div>
-                                                <input id="barcodeFieldId"  [(ngModel)]="barcodeFieldName" name="barcodeFieldName" type="text"
-                                                       placeholder="Type Text Here....."
-                                                       class="form-control">
-                                              
+                                                <input id="barcodeFieldId" [(ngModel)]="barcodeFieldName" name="barcodeFieldName" type="text" placeholder="Type Text Here....." class="form-control">
+
                                             </div>
                                             <div class="input-group-btn search-panel padding-right-10">
-                                                <button (click)="displayRecords()" id="displayRecords" type="button" name="action" value="displayRecords"
-                                                        class="btn themed-button themed-button-collection">Display
+                                                <button (click)="displayRecords()" id="displayRecords" type="button" name="action" value="displayRecords" class="btn themed-button themed-button-collection">Display
                                                     Records
                                                 </button>
                                             </div>
                                             <div class="input-group-btn">
-                                                <button  (click)="clearsearch()" id="clearSearch" type="button" name="clearSearch"
-                                                        class="btn themed-button themed-button-cancel">Clear Search
+                                                <button (click)="clearsearch()" id="clearSearch" type="button" name="clearSearch" class="btn themed-button themed-button-cancel">Clear Search
                                                 </button>
                                             </div>
                                         </div>
@@ -56,11 +51,11 @@
                         </div>
                     </div>
                 </div>
-                 <div *ngIf="showresultdiv" id="searchResultsContainer" class="search-results-container" >
+                <div *ngIf="showresultdiv" id="searchResultsContainer" class="search-results-container">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                             <div id="errorMessageId" class="row margin-btm-10" *ngIf="norecord">
+                            <div id="errorMessageId" class="row margin-btm-10" *ngIf="norecord">
                                 <div class="col-sm-12">
                                     <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpanId" text="">No results found.</span></div>
                                 </div>
@@ -70,25 +65,16 @@
                                     <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="barcodesNotFoundErrorMessageSpanId" text="">{{barerrmsg}}</span></div>
                                 </div>
                             </div>
-                            <!-- <div id="ignoredBarcodesErrorMessageId" class="row margin-btm-10" data-th-if="">
-                                <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="ignoredBarcodesErrorMessageSpanId" th:text=""></span></div>
-                                </div>
-                            </div>  -->
                             <div class="row" *ngIf="resultdiv">
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="pull-left col-sm-2">
                                             <div class="recap-status">
                                                 <div class="inline-box margin-right-10">
-                                                    <img class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP"
-                                                         style="width:20px;height:25px;"/><span
-                                                        class="align-middle padding-5">In ReCAP</span>
+                                                    <img class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;" /><span class="align-middle padding-5">In ReCAP</span>
                                                 </div>
                                                 <div class="inline-box">
-                                                    <img class="status" src="../../../../assets/images/out.png" alt="Out"
-                                                         style="width:20px;height:25px;"/><span
-                                                        class="align-middle padding-5">OUT</span>
+                                                    <img class="status" src="../../../../assets/images/out.png" alt="Out" style="width:20px;height:25px;" /><span class="align-middle padding-5">OUT</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,320 +84,315 @@
                                 <div class="col-xs-12">
                                     <table id="collection-result-table" class="table table-striped margin-btm-0">
                                         <thead class="tablesorter-headerRow">
-                                        <tr>
-                                            <th width="30%" height="40">
-                                                <div>Barcode</div>
-                                            </th>
-                                            <th width="50%">
-                                                <div>Title</div>
-                                            </th>
-                                            <th title="'Collection Group Designation'">
-                                                <div>CGD</div>
-                                            </th>
-                                        </tr>
+                                            <tr name="results_rowData_headers">
+                                                <th width="30%" height="40">
+                                                    <div>Barcode</div>
+                                                </th>
+                                                <th width="50%">
+                                                    <div>Title</div>
+                                                </th>
+                                                <th title="'Collection Group Designation'">
+                                                    <div>CGD</div>
+                                                </th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr *ngFor="let item of collectionVal['searchResultRows']">
-                                            <th><img *ngIf="item.availability =='Available'"class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP"
-                                                style="width:20px;height:25px;margin-bottom: 3px;"/> <img *ngIf="item.availability =='Not Available'"class="status" src="../../../../assets/images/out.png"alt="In ReCAP"
-                                                style="width:20px;height:25px;margin-bottom: 3px;"/> &nbsp;&nbsp;{{ item.barcode }}</th>
-                                            <td (click)="openMarcView(item.bibId,item.barcode,item.itemId)" style="cursor: pointer;color:#337ab7"><a>{{ item.title }}</a></td>
-                                            <td>{{ item.collectionGroupDesignation }}</td>
-                                        </tr>
+                                            <tr name="results_rowData" *ngFor="let item of collectionVal['searchResultRows']">
+                                                <th name="rowData_barcode"><img *ngIf="item.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> <img *ngIf="item.availability =='Not Available'"
+                                                        class="status" src="../../../../assets/images/out.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> &nbsp;&nbsp;{{ item.barcode }}</th>
+                                                <td (click)="openMarcView(item.bibId,item.barcode,item.itemId)" style="cursor: pointer;color:#337ab7"><a name="rowData_title">{{ item.title }}</a></td>
+                                                <td name="rowData_desc">{{ item.collectionGroupDesignation }}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
 
                 <div id="collectionUpdateModal" *ngIf='openmarcVal'>
                     <div id="collection-result-inner" class="modal fade collection-result-inner-table" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-                    <div class="modal-dialog modal-lg" role="document" style="width: 1200px;">
-                        <div id="collectionModalContent" class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title fontcolor-dark" id="myModalLabel"><span >{{openmarcVal['title']}}</span></h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="fulldetails">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="row margin-btm-05">
-                                                <div class="col-sm-5">Author</div>
-                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['author']}}</span></div>
+                        <div class="modal-dialog modal-lg" role="document" style="width: 1200px;">
+                            <div id="collectionModalContent" class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title fontcolor-dark" id="myModalLabel"><span>{{openmarcVal['title']}}</span></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="fulldetails">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row margin-btm-05">
+                                                    <div class="col-sm-5">Author</div>
+                                                    <div class="col-sm-7 fontcolor-light"><span>{{openmarcVal['author']}}</span></div>
+                                                </div>
+                                                <div class="row margin-btm-05">
+                                                    <div class="col-sm-5">Published Date</div>
+                                                    <div class="col-sm-7 fontcolor-light"><span>{{openmarcVal['publishedDate']}}</span></div>
+                                                </div>
+                                                <div class="row margin-btm-05">
+                                                    <div class="col-sm-5">Call Number</div>
+                                                    <div class="col-sm-7 fontcolor-light"><span>{{openmarcVal['callNumber']}}</span></div>
+                                                </div>
                                             </div>
-                                            <div class="row margin-btm-05">
-                                                <div class="col-sm-5">Published Date</div>
-                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['publishedDate']}}</span></div>
-                                            </div>
-                                            <div class="row margin-btm-05">
-                                                <div class="col-sm-5">Call Number</div>
-                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['callNumber']}}</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row margin-btm-05">
-                                                <div class="col-sm-5">Publisher</div>
-                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['publisher']}}</span></div>
-                                            </div>
-                                            <div class="row margin-btm-05">
-                                                <input type="hidden"/>
-                                                <div class="col-sm-5">Owning Institution</div>
-                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['owningInstitution']}}</span></div>
-                                            </div>
-                                            <div class="row margin-btm-05">
-                                                <div class="col-sm-5">Collection Group Designation (CGD)</div>
-                                                <div class="col-sm-7 fontcolor-light"><span >{{openmarcVal['collectionGroupDesignation']}}</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row margin-top-10 margin-btm-10"><div class="col-sm-12 divider-horizontal"></div></div>
-                                    <div class="row">
-                                        <div class="col-sm-7">
-                                            <div class="contentdetail">
-                                                <h4 class="border-style-bottom padding-10 margin-top-05 margin-btm-0">MARC Content</h4>
-                                                <div class="padding-10">
-                                                    <div style="max-height:425px;overflow:auto">
-                                                        <table class="table table-striped small margin-btm-0">
-                                                            <tr>
-                                                                <input type="hidden" />
-                                                                <td width="40%">tag000</td>
-                                                                <td><span >{{openmarcVal['tag000']}}</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <input type="hidden" />
-                                                                <td>Control Number (001)</td>
-                                                                <td><span >{{openmarcVal['controlNumber001']}}</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <input type="hidden" />
-                                                                <td>Date and Time (005)</td>
-                                                                <td><span >{{openmarcVal['controlNumber005']}}</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <input type="hidden" />
-                                                                <td>Fixed Length Data Element (008)</td>
-                                                                <td><span >{{openmarcVal['controlNumber008']}}</span></td>
-                                                            </tr>
-                                                            <tr *ngFor="let item of openmarcVal['bibDataFields']">
-                                                                <td>
-                                                                    <input type="hidden" />
-                                                                    <input type="hidden" />
-                                                                    <input type="hidden" />
-                                                                    <input type="hidden" />
-                                                                    <span style="margin-left: 30px;" >{{item.dataFieldTag}}</span>
-                                                                    <span >{{item.indicator1}}{{item.indicator2}}</span>
-                                                                </td>
-                                                                <td><span >{{item.dataFieldValue}}</span></td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
+                                            <div class="col-sm-6">
+                                                <div class="row margin-btm-05">
+                                                    <div class="col-sm-5">Publisher</div>
+                                                    <div class="col-sm-7 fontcolor-light"><span>{{openmarcVal['publisher']}}</span></div>
+                                                </div>
+                                                <div class="row margin-btm-05">
+                                                    <input type="hidden" />
+                                                    <div class="col-sm-5">Owning Institution</div>
+                                                    <div class="col-sm-7 fontcolor-light"><span>{{openmarcVal['owningInstitution']}}</span></div>
+                                                </div>
+                                                <div class="row margin-btm-05">
+                                                    <div class="col-sm-5">Collection Group Designation (CGD)</div>
+                                                    <div class="col-sm-7 fontcolor-light"><span>{{openmarcVal['collectionGroupDesignation']}}</span></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-5 padding-left-0">
-                                            <div class="itemdetail">
-                                                <h4 class="border-style-bottom padding-10 margin-top-05 margin-btm-0">Item Details</h4>
-                                                <div id="itemDetailsSection" class="padding-10">
-                                                    <input id="allowEdit" type="hidden" />
-                                                    <input id="warningMessage" type="hidden" />
-                                                    <div class="row form-group">
-                                                        <div id="collectionUpdateMessage" class="row margin-btm-10" *ngIf="collectionUpdateMessage">
-                                                            <div class="col-sm-12">
-                                                                <div class="bg-success text-success padding-10">
-                                                                    <span class="margin-right-05 glyphicon glyphicon-saved"></span><span>{{message}}</span>
-                                                                </div>
-                                                            </div>
+                                        <div class="row margin-top-10 margin-btm-10">
+                                            <div class="col-sm-12 divider-horizontal"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-7">
+                                                <div class="contentdetail">
+                                                    <h4 class="border-style-bottom padding-10 margin-top-05 margin-btm-0">MARC Content</h4>
+                                                    <div class="padding-10">
+                                                        <div style="max-height:425px;overflow:auto">
+                                                            <table class="table table-striped small margin-btm-0">
+                                                                <tr>
+                                                                    <input type="hidden" />
+                                                                    <td width="40%">tag000</td>
+                                                                    <td><span>{{openmarcVal['tag000']}}</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <input type="hidden" />
+                                                                    <td>Control Number (001)</td>
+                                                                    <td><span>{{openmarcVal['controlNumber001']}}</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <input type="hidden" />
+                                                                    <td>Date and Time (005)</td>
+                                                                    <td><span>{{openmarcVal['controlNumber005']}}</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <input type="hidden" />
+                                                                    <td>Fixed Length Data Element (008)</td>
+                                                                    <td><span>{{openmarcVal['controlNumber008']}}</span></td>
+                                                                </tr>
+                                                                <tr *ngFor="let item of openmarcVal['bibDataFields']">
+                                                                    <td>
+                                                                        <input type="hidden" />
+                                                                        <input type="hidden" />
+                                                                        <input type="hidden" />
+                                                                        <input type="hidden" />
+                                                                        <span style="margin-left: 30px;">{{item.dataFieldTag}}</span>
+                                                                        <span>{{item.indicator1}}{{item.indicator2}}</span>
+                                                                    </td>
+                                                                    <td><span>{{item.dataFieldValue}}</span></td>
+                                                                </tr>
+                                                            </table>
                                                         </div>
-                                                        <div *ngIf="collectionUpdateErrorMessage" id="collectionUpdateErrorMessage" class="row margin-btm-10" >
-                                                            <div class="col-sm-12">
-                                                                <div class="bg-danger text-danger padding-10">
-                                                                    <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span [innerHTML]="errorMessage"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div *ngIf="collectionUpdateWarningMessage" id="collectionUpdateWarningMessage" class="row margin-btm-10" >
-                                                            <div class="col-sm-12">
-                                                                <div class="bg-warning text-warning padding-10">
-                                                                    <span id="warningMessageId" class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{warningMessage}}</span>
-                                                                </div>
-                                                            </div>
-                                                        </div> 
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5 padding-left-0">
+                                                <div class="itemdetail">
+                                                    <h4 class="border-style-bottom padding-10 margin-top-05 margin-btm-0">Item Details</h4>
+                                                    <div id="itemDetailsSection" class="padding-10">
+                                                        <input id="allowEdit" type="hidden" />
+                                                        <input id="warningMessage" type="hidden" />
+                                                        <div class="row form-group">
+                                                            <div id="collectionUpdateMessage" class="row margin-btm-10" *ngIf="collectionUpdateMessage">
+                                                                <div class="col-sm-12">
+                                                                    <div class="bg-success text-success padding-10">
+                                                                        <span class="margin-right-05 glyphicon glyphicon-saved"></span><span>{{message}}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="collectionUpdateErrorMessage" id="collectionUpdateErrorMessage" class="row margin-btm-10">
+                                                                <div class="col-sm-12">
+                                                                    <div class="bg-danger text-danger padding-10">
+                                                                        <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span [innerHTML]="errorMessage"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="collectionUpdateWarningMessage" id="collectionUpdateWarningMessage" class="row margin-btm-10">
+                                                                <div class="col-sm-12">
+                                                                    <div class="bg-warning text-warning padding-10">
+                                                                        <span id="warningMessageId" class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{warningMessage}}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-                                                    <table class="table table-striped small margin-btm-0">
-                                                        <tr>
-                                                            <input type="hidden" />
-                                                            <td width="60%">Availability</td>
-                                                            <!-- <td th:if=""><span th:text="'In Recap'"></span></td>
+                                                        <table class="table table-striped small margin-btm-0">
+                                                            <tr>
+                                                                <input type="hidden" />
+                                                                <td width="60%">Availability</td>
+                                                                <!-- <td th:if=""><span th:text="'In Recap'"></span></td>
                                                             <td th:if=""><span th:text="'Out'"></span></td>
                                                             <td th:if=""><span th:text=""></span></td> -->
-                                                            <td ><span >{{openmarcVal['availability']}}</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <input type="hidden" />
-                                                            <td>Barcode</td>
-                                                            <td><span >{{openmarcVal['barcode']}}</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <input type="hidden" />
-                                                            <td>Customer Code</td>
-                                                            <td><span >{{openmarcVal['customerCode']}}</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <input type="hidden" />
-                                                            <td>Use Restriction</td>
-                                                            <td><span >{{openmarcVal['useRestriction']}}</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <input id="cgdField" type="hidden" />
-                                                            <td>Collection Group Designation (CGD)</td>
-                                                            <td><span >{{openmarcVal['collectionGroupDesignation']}}</span></td>
-                                                        </tr>
-                                                    </table>
-                                                    <div >
-                                                    <div id="collectionOptionsDiv" class="row radio-btn-warpper" *ngIf="!collectionUpdateMessage">
-                                                        <div class="col-sm-12" align="center">
-                                                            <div class="form-group margin-btm-10">
-                                                                <div class="radio-inline radio margin-0 padding-left-0">
-                                                                    <label>
+                                                                <td><span>{{openmarcVal['availability']}}</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <input type="hidden" />
+                                                                <td>Barcode</td>
+                                                                <td><span>{{openmarcVal['barcode']}}</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <input type="hidden" />
+                                                                <td>Customer Code</td>
+                                                                <td><span>{{openmarcVal['customerCode']}}</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <input type="hidden" />
+                                                                <td>Use Restriction</td>
+                                                                <td><span>{{openmarcVal['useRestriction']}}</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <input id="cgdField" type="hidden" />
+                                                                <td>Collection Group Designation (CGD)</td>
+                                                                <td><span>{{openmarcVal['collectionGroupDesignation']}}</span></td>
+                                                            </tr>
+                                                        </table>
+                                                        <div>
+                                                            <div id="collectionOptionsDiv" class="row radio-btn-warpper" *ngIf="!collectionUpdateMessage">
+                                                                <div class="col-sm-12" align="center">
+                                                                    <div class="form-group margin-btm-10">
+                                                                        <div class="radio-inline radio margin-0 padding-left-0">
+                                                                            <label>
                                                                         <input type="radio"  [checked]="radioSwitchEditCGD"  name="collectionoption"   (click)="editCgdcontrol()"/> Edit CGD
                                                                         <span class="cr"><i class="cr-icon radio-dot"></i></span>
                                                                     </label>
-                                                                </div>
+                                                                        </div>
 
-                                                                <div class="radio-inline radio padding-left-0 margin-left-15">
-                                                                    <label>
+                                                                        <div class="radio-inline radio padding-left-0 margin-left-15">
+                                                                            <label>
                                                                         <input type="radio" [checked]="radioSwitchDeaccession" name="collectionoption" id="deaccesionclick" value="Deaccession" (click)="deaccessioncontrol()"/> Deaccession
                                                                         <span class="cr"><i class="cr-icon radio-dot"></i></span>
                                                                     </label>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Edit CDG-->
+                                                            <!-- Edit CDG-->
 
-                                                    <div *ngIf="editCDGsection" id="editCDG-section" class="padding-top-20">
-                                                        <div class="row form-group">
-                                                            <div class="col-sm-4 text-right padding-right-30 margin-top-10">
-                                                                <label class="fontcolor-dark">New CGD <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
-                                                            </div>
-                                                            <div class="col-sm-8 padding-left-0">
-                                                                <div class="select-holder"  id="newCGDDiv" *ngIf="!collectionUpdateMessage">
-                                                                    <select class="form-control themed-input themed-select" [ngModelOptions]="{standalone: true}" [(ngModel)]="CGDselect">
-                                                                        <option value="">Select</option>
-                                                                        <option value="Shared">Shared</option>
-                                                                        <option value="Private">Private</option>
-                                                                        <option value="Open">Open</option>
+                                                            <div *ngIf="editCDGsection" id="editCDG-section" class="padding-top-20">
+                                                                <div class="row form-group">
+                                                                    <div class="col-sm-4 text-right padding-right-30 margin-top-10">
+                                                                        <label class="fontcolor-dark">New CGD <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
+                                                                    </div>
+                                                                    <div class="col-sm-8 padding-left-0">
+                                                                        <div class="select-holder" id="newCGDDiv" *ngIf="!collectionUpdateMessage">
+                                                                            <select id="newCGD_select" class="form-control themed-input themed-select" [ngModelOptions]="{standalone: true}" [(ngModel)]="CGDselect">
+                                                                        <option name="select" value="">Select</option>
+                                                                        <option name="Shared" value="Shared">Shared</option>
+                                                                        <option name="Private" value="Private">Private</option>
+                                                                        <option name="Open" value="Open">Open</option>
                                                                     </select>
+                                                                        </div>
+                                                                        <span *ngIf="cgdErrorMessage" id="cgdErrorMessage" style="color: red;">Choose a new CGD.</span>
+                                                                        <div class="form-group padding-top-10">
+                                                                            <span id="newCGDReadOnly" *ngIf="collectionUpdateMessage">{{newCGD}}</span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <span *ngIf="cgdErrorMessage" id="cgdErrorMessage" style="color: red;">Choose a new CGD.</span>
-                                                                <div class="form-group padding-top-10">
-                                                                    <span id="newCGDReadOnly" *ngIf="collectionUpdateMessage" >{{newCGD}}</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="row form-group">
-                                                            <div class="col-sm-4 text-right padding-right-30">
-                                                                <label for="CGDChangeNotes" class="fontcolor-dark">CGD Change Notes <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
-                                                            </div>
-                                                            <div class="col-sm-8 padding-left-0">
-                                                                <textarea *ngIf="!collectionUpdateMessage" class="form-control themed-input" name="CGDChangeNotes" id="CGDChangeNotes" [(ngModel)]="CGDChangeNotes" (keyup)="CGDChangeNotesFunc(CGDChangeNotes)" maxlength="2000"></textarea>
-                                                                <span *ngIf="cgdNotesErrorMessage" id="cgdNotesErrorMessage" style="color: red;">Please enter CGD change notes.</span>
-                                                                <p *ngIf="!collectionUpdateMessage" id="cgdRemainingCharacter">Remaining Characters : <span id="cgdNotesRemainingCharacters">2000</span></p>
-                                                                <div class="form-group">
-                                                                    <span id="CGDNoteReadOnly" *ngIf="collectionUpdateMessage" >{{newCGDnote}}</span>
+                                                                <div class="row form-group">
+                                                                    <div class="col-sm-4 text-right padding-right-30">
+                                                                        <label for="CGDChangeNotes" class="fontcolor-dark">CGD Change Notes <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
+                                                                    </div>
+                                                                    <div class="col-sm-8 padding-left-0">
+                                                                        <textarea *ngIf="!collectionUpdateMessage" class="form-control themed-input" name="CGDChangeNotes" id="CGDChangeNotes" [(ngModel)]="CGDChangeNotes" (keyup)="CGDChangeNotesFunc(CGDChangeNotes)" maxlength="2000"></textarea>
+                                                                        <span *ngIf="cgdNotesErrorMessage" id="cgdNotesErrorMessage" style="color: red;">Please enter CGD change notes.</span>
+                                                                        <p *ngIf="!collectionUpdateMessage" id="cgdRemainingCharacter">Remaining Characters : <span id="cgdNotesRemainingCharacters">2000</span></p>
+                                                                        <div class="form-group">
+                                                                            <span id="CGDNoteReadOnly" *ngIf="collectionUpdateMessage">{{newCGDnote}}</span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="row form-group" *ngIf="!collectionUpdateMessage">
-                                                            <div class="col-sm-6 text-right padding-right-30"></div>
-                                                            <div class="col-sm-6 padding-left-0">
-                                                                <button id="collectionUpdateCgdButton" class="btn btn-primary" (click)="saveCGD(openmarcVal['bibId'],openmarcVal['collectionGroupDesignation'])" type="button" name="action" >
+                                                                <div class="row form-group" *ngIf="!collectionUpdateMessage">
+                                                                    <div class="col-sm-6 text-right padding-right-30"></div>
+                                                                    <div class="col-sm-6 padding-left-0">
+                                                                        <button id="collectionUpdateCgdButton" class="btn btn-primary" (click)="saveCGD(openmarcVal['bibId'],openmarcVal['collectionGroupDesignation'])" type="button" name="action">
                                                                     Save
                                                                 </button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--Deaccession-->
-                                                    <div *ngIf="Deaccessionsection" id="Deaccession-section" class="padding-top-20">
-                                                        <div class="row form-group">
-                                                            <div class="col-sm-4 text-right padding-right-30 margin-top-10">
-                                                                <label for="deaccessionType" class="fontcolor-dark">Deaccession Type <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
-                                                            </div>
-                                                            <div class="col-sm-8 padding-left-0 padding-top-10">
-                                                                <input type="text" *ngIf="!collectionUpdateMessage" [(ngModel)]="deaccessionType" id="deaccessionType" name="deaccessionType" class="form-control themed-input disable-input" readonly="readonly"/>
-                                                                <span *ngIf="collectionUpdateMessage">{{newdeaccessionType}}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-group">
-                                                            <div class="col-sm-4 text-right padding-right-30 margin-top-10">
-                                                                <label for="DeliveryLocation" class="fontcolor-dark">Delivery Location <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
-                                                            </div>
-                                                            <div class="col-sm-8 padding-left-0">
-                                                                <div class="select-holder" *ngIf="!collectionUpdateMessage">
-                                                                    <input type="hidden" />
-                                                                    <select [(ngModel)]="DeliveryLocation" class="form-control themed-input themed-select"
-                                                                            name="DeliveryLocation" [ngModelOptions]="{standalone: true}" >
+                                                            <!--Deaccession-->
+                                                            <div *ngIf="Deaccessionsection" id="Deaccession-section" class="padding-top-20">
+                                                                <div class="row form-group">
+                                                                    <div class="col-sm-4 text-right padding-right-30 margin-top-10">
+                                                                        <label for="deaccessionType" class="fontcolor-dark">Deaccession Type <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
+                                                                    </div>
+                                                                    <div class="col-sm-8 padding-left-0 padding-top-10">
+                                                                        <input type="text" *ngIf="!collectionUpdateMessage" [(ngModel)]="deaccessionType" id="deaccessionType" name="deaccessionType" class="form-control themed-input disable-input" readonly="readonly" />
+                                                                        <span *ngIf="collectionUpdateMessage">{{newdeaccessionType}}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row form-group">
+                                                                    <div class="col-sm-4 text-right padding-right-30 margin-top-10">
+                                                                        <label for="DeliveryLocation" class="fontcolor-dark">Delivery Location <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
+                                                                    </div>
+                                                                    <div class="col-sm-8 padding-left-0">
+                                                                        <div class="select-holder" *ngIf="!collectionUpdateMessage">
+                                                                            <input type="hidden" />
+                                                                            <select [(ngModel)]="DeliveryLocation" class="form-control themed-input themed-select" name="DeliveryLocation" [ngModelOptions]="{standalone: true}">
                                                                         <option value=""></option>
                                                                         <option *ngFor="let del of crossinstitutionVal['deliveryLocations']" [ngValue]="del.customerCode">
                                                                             {{del.description}}-{{del.customerCode}}
                                                                           </option>
                                                                     </select>
+                                                                        </div>
+                                                                        <span *ngIf="locationErrorMessage" id="locationErrorMessage" style="color: red;">This is a mandatory field.</span>
+                                                                        <div class="form-group padding-left-10 padding-top-10">
+                                                                            <span *ngIf="collectionUpdateMessage">{{newDeliveryLocation}}</span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <span *ngIf="locationErrorMessage" id="locationErrorMessage" style="color: red;">This is a mandatory field.</span>
-                                                                <div class="form-group padding-left-10 padding-top-10">
-                                                                    <span *ngIf="collectionUpdateMessage">{{newDeliveryLocation}}</span>
+                                                                <div class="row form-group">
+                                                                    <div class="col-sm-4 text-right padding-right-30 margin-top-10"><label for="DeaccessionNotes" class="fontcolor-dark">Deaccession Notes <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label></div>
+                                                                    <div class="col-sm-8 padding-left-0 padding-top-10">
+                                                                        <textarea *ngIf="!collectionUpdateMessage" class="form-control themed-input" name="DeaccessionNotes" id="DeaccessionNotes" [(ngModel)]="DeaccessionNotes" (keyup)="DeaccessionNotesFunc(DeaccessionNotes)" maxlength="2000"></textarea>
+                                                                        <span *ngIf="deaccessionNotesErrorMessage" id="deaccessionNotesErrorMessage" style="color: red;">Please enter deaccession notes.</span>
+                                                                        <p *ngIf="!collectionUpdateMessage" id="deaccessionRemainingCharacters">Remaining Characters : <span id="deaccessionNotesRemainingCharacters">2000</span></p>
+                                                                        <span *ngIf="collectionUpdateMessage">{{newdeaccessionnote}}</span>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-group">
-                                                            <div class="col-sm-4 text-right padding-right-30 margin-top-10"><label for="DeaccessionNotes" class="fontcolor-dark">Deaccession Notes <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label></div>
-                                                            <div class="col-sm-8 padding-left-0 padding-top-10">
-                                                                <textarea *ngIf="!collectionUpdateMessage" class="form-control themed-input" name="DeaccessionNotes" id="DeaccessionNotes" [(ngModel)]="DeaccessionNotes" (keyup)="DeaccessionNotesFunc(DeaccessionNotes)" maxlength="2000"></textarea>
-                                                                <span *ngIf="deaccessionNotesErrorMessage" id="deaccessionNotesErrorMessage" style="color: red;">Please enter deaccession notes.</span>
-                                                                <p *ngIf="!collectionUpdateMessage" id="deaccessionRemainingCharacters">Remaining Characters : <span id="deaccessionNotesRemainingCharacters">2000</span></p>
-                                                                <span *ngIf="collectionUpdateMessage">{{newdeaccessionnote}}</span>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="row form-group" *ngIf="!collectionUpdateMessage">
-                                                            <div class="col-sm-6 text-right padding-right-30"></div>
-                                                            <div class="col-sm-6 padding-left-0">
-                                                                <button id="collectionDeaccessionButton"
-                                                                        type="button"
-                                                                        name="action"
-                                                                        (click)="saveDeaccession(openmarcVal['bibId'],openmarcVal['deaccessionType'],openmarcVal['itemBarcodes'])"
-                                                                        class="btn btn-primary"
-                                                                        >
+                                                                <div class="row form-group" *ngIf="!collectionUpdateMessage">
+                                                                    <div class="col-sm-6 text-right padding-right-30"></div>
+                                                                    <div class="col-sm-6 padding-left-0">
+                                                                        <button id="collectionDeaccessionButton" type="button" name="action" (click)="saveDeaccession(openmarcVal['bibId'],openmarcVal['deaccessionType'],openmarcVal['itemBarcodes'])" class="btn btn-primary">
                                                                     Deaccession Item
                                                                 </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div id="mandateText" *ngIf="!collectionUpdateMessage">
+                                                                Fields marked with asterisk(<span class="error-color">*</span>) are mandatory.
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-                                                    <div id="mandateText" *ngIf="!collectionUpdateMessage">
-                                                        Fields marked with asterisk(<span class="error-color">*</span>) are mandatory.
-                                                    </div>
-                                                </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                            <div class="modal-footer">
-                                <button class="btn themed-button themed-button-cancel padding-left-30 padding-right-30" data-dismiss="modal" aria-label="Close">Close</button>
+                                <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
+                                <div class="modal-footer">
+                                    <button id="btn_close" class="btn themed-button themed-button-cancel padding-left-30 padding-right-30" data-dismiss="modal" aria-label="Close">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </fieldset>
         </form>
