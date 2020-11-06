@@ -167,7 +167,8 @@ export class RequestComponent implements OnInit {
     "searchInstitutionHdn": null
   }
   initialload() {
-    this.requestService.loadCreateRequest().subscribe(
+    this.createRequestError = false;
+    this.requestService.loadCreateRequest().subscribe( 
       (res) => {
         this.requestVal = res;
         this.requestTypeId = this.requestVal['requestType'];
@@ -225,16 +226,17 @@ export class RequestComponent implements OnInit {
   }
 
   loadSearchRequest() {
+    this.searchInstitutionList= '';
     this.requestStatus = '';
     this.searchPatronBarcode = '';
     this.searchItemBarcode = '';
     this.searchReqresult = false;
     this.searchBar = true;
     this.create_request = false;
+    this.messageNoSearchRecords = false;
     this.requestService.loadSearchRequest().subscribe(
       (res) => {
         this.searchReqVal = res;
-
       },
       (error) => {
 
@@ -614,7 +616,6 @@ export class RequestComponent implements OnInit {
         this.requestService.createRequest(this.postData).subscribe(
           (res) => {
             this.createResponse = res;
-            $('#mydiv').hide();
             if (this.createResponse['errorMessage'] != null) {
               this.errorMessage = this.createResponse['errorMessage'];
               this.createRequestError = true;
@@ -622,8 +623,10 @@ export class RequestComponent implements OnInit {
               this.createsubmit = true;
               this.createRequestError = false;
             }
+            this.spinner.hide();
           },
           (error) => {
+            this.spinner.hide();
             //Called when error
           })
       }
@@ -681,11 +684,13 @@ export class RequestComponent implements OnInit {
   }
 
   goToSearchRequest(patronBarcode) {
+    this.spinner.show();
     this.searchPatronBarcode = patronBarcode;
     this.requestStatus = '';
     this.requestService.loadSearchRequest().subscribe(
       (res) => {
         this.searchReqVal = res;
+        this.spinner.hide();
         //search start
         this.postData = {
           "requestId": null,
@@ -751,8 +756,10 @@ export class RequestComponent implements OnInit {
             this.searchReqresult = true;
             this.searchreqResultVal = res;
             this.pagination();
+            this.spinner.hide();
           },
           (error) => {
+            this.spinner.hide();
             //Called when error
           })
         //search end
@@ -766,6 +773,7 @@ export class RequestComponent implements OnInit {
   }
 
   searchRequests() {
+    this.spinner.show();
     if (this.requestStatus == '' || this.requestStatus == undefined) {
       if (this.searchItemBarcode || this.searchPatronBarcode) {
         //search api call start
@@ -839,20 +847,23 @@ export class RequestComponent implements OnInit {
               this.messageNoSearchRecords = false;
               this.searchReqresult = true;
             }
+            this.spinner.hide();
           },
           (error) => {
-            //Called when error
+            this.spinner.hide();
           })
-        //search api call end
       } else if ((this.searchItemBarcode == undefined || this.searchItemBarcode == '') && (this.searchItemBarcode == undefined || this.searchItemBarcode == '')) {
 
         this.patronBarcodeSearchError = true;
         this.itemBarcodeSearchError = true;
+        this.spinner.hide();
       }
       else if (this.searchItemBarcode == undefined || this.searchItemBarcode == '') {
         this.patronBarcodeSearchError = true;
+        this.spinner.hide();
       } else if (this.searchItemBarcode == undefined || this.searchItemBarcode == '') {
         this.itemBarcodeSearchError = true;
+        this.spinner.hide();
       }
     } else {
       //search api call start
@@ -926,8 +937,10 @@ export class RequestComponent implements OnInit {
             this.messageNoSearchRecords = false;
             this.searchReqresult = true;
           }
+          this.spinner.hide();
         },
         (error) => {
+          this.spinner.hide();
           //Called when error
         })
       //search api call end
@@ -974,7 +987,7 @@ export class RequestComponent implements OnInit {
   }
 
   resubmitRequestItem() {
-
+    this.spinner.show();
     this.postData = {
       "requestId": this.requestId,
       "patronBarcode": null,
@@ -1039,8 +1052,10 @@ export class RequestComponent implements OnInit {
         this.resubmitResponseMessage = this.resubmitResponse['Message'];
         this.status = this.resubmitResponse['Status'];
         //this.searchRequests();
+        this.spinner.hide();
       },
       (error) => {
+        this.spinner.hide();
         //Called when error
       })
 
@@ -1048,7 +1063,7 @@ export class RequestComponent implements OnInit {
 
 
   cancelRequestItem() {
-
+    this.spinner.show();
     this.postData = {
       "requestId": this.requestId,
       "patronBarcode": null,
@@ -1113,8 +1128,10 @@ export class RequestComponent implements OnInit {
         $("#cancelBtn").trigger("click");
         $('#cancelRequestModal').modal({ show: true });
         this.searchRequests();
+        this.spinner.hide();
       },
       (error) => {
+        this.spinner.hide();
         //Called when error
       })
 

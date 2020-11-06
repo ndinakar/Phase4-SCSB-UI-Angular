@@ -7,7 +7,7 @@
             <fieldset>
                 <div role="tabpanel" class="tab-pane" id="request">
                     <div class="row margin-btm-10" *ngIf="searchBar">
-                        <div class="col-sm-12 text-right backtext"><a (click)="loadCreateRequestnew()"><span class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
+                        <div class="col-sm-12 text-right backtext"><a name="btn_loadCreateRequest" (click)="loadCreateRequestnew()" style="cursor: pointer;"><span class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
                     </div>
                     <div *ngIf="searchBar" id="searchRequestsSection" class="request-main-section">
                         <div class="search-bar">
@@ -268,7 +268,7 @@
                             <div class="col-sm-6 margin-top-0">
                                 <h3 class="margin-0">Create Request</h3>
                             </div>
-                            <div class="col-sm-6 text-right search-request"><a (click)="loadSearchRequest()">Search Requests</a></div>
+                            <div class="col-sm-6 text-right search-request"><a name="searchRequest" (click)="loadSearchRequest()" style="cursor: pointer;">Search Requests</a></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 divider-horizontal margin-top-10 margin-btm-10"></div>
