@@ -195,7 +195,7 @@
                                                     <div class="form-group">
                                                         <div class="col-sm-3 col-sm-4 text-right margin-top-15"><label for="roleNameId" class="fontcolor-dark">Role Name <span class="error-color">*</span></label></div>
                                                         <div class="col-sm- col-sm-6">
-                                                            <input type="text" id="roleNameId" th:onkeyup="'javascript:toggleRoleNameValidation()'" name="roleName" [ngModelOptions]="{standalone: true}" [(ngModel)]="roleNameId" class="form-control themed-input" />
+                                                            <input type="text" id="roleNameId" name="roleName" [ngModelOptions]="{standalone: true}" [(ngModel)]="roleNameId" class="form-control themed-input" />
                                                             <span *ngIf="roleNameErrorMessageDiv" id="roleNameErrorMessage" style="color: red;">Role Name is required.</span>
                                                         </div>
                                                     </div>
@@ -206,7 +206,7 @@
                                                     <div class="form-group">
                                                         <div class="col-sm-3 col-sm-4 text-right margin-top-15"><label for="roleDescriptionId" class="fontcolor-dark">Role Description <span class="error-color">*</span></label></div>
                                                         <div class="col-sm- col-sm-6">
-                                                            <input type="text" id="roleDescriptionId" onkeyup="toggleRoleDescriptionValidation(this)" name="roleDescriptionId" class="form-control themed-input" [ngModelOptions]="{standalone: true}" [(ngModel)]="roleDescriptionId" maxlength="45" />
+                                                            <input type="text" id="roleDescriptionId" name="roleDescriptionId" class="form-control themed-input" [ngModelOptions]="{standalone: true}" [(ngModel)]="roleDescriptionId" maxlength="45" />
                                                             <span *ngIf="roleDescriptionErrorMessageDiv" id="roleDescriptionErrorMessage" style="color: red;">Role description is required.</span>
                                                             <p>Characters Remaining : <span id="roleDescCharactersRemaining">45</span></p>
                                                         </div>

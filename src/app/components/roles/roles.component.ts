@@ -3,6 +3,7 @@ import { TreeNode } from 'primeng/api';
 import { EMPTY } from 'rxjs';
 import { RolesService } from 'src/app/services/roles/roles.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { NumberFilterUI } from '@syncfusion/ej2-angular-grids';
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
@@ -133,7 +134,27 @@ export class RolesComponent implements OnInit {
     this.roleName = "";
     this.permissionName = "";
   }
+  validateEditRole(){
+    this.editRoleNameErrorMessageDiv = false;
+    this.editRoleDescriptionErrorMessageDiv = false;
+    this.editPermissionNamesErrorMessageDiv = false;
+    var statusCreateRole = true;
+    if(this.editRoleName == '' || this.editRoleName == null || this.editRoleName == undefined){
+      this.editRoleNameErrorMessageDiv = true;
+      statusCreateRole = false;
+    }
+    if(this.editRoleDescription==null|| this.editRoleDescription=='' ||this.editRoleDescription==undefined){
+      this.editRoleDescriptionErrorMessageDiv = true
+      statusCreateRole = false;
+    }
+    if(this.editPermissionNameId== null|| this.editPermissionNameId==undefined || this.editPermissionNameId.length <=0){
+      this.editPermissionNamesErrorMessageDiv = true
+      statusCreateRole = false;
+    }
+    return statusCreateRole;
+  }
   saveEditedRole(roleId, roleName, roleDescription, permissionNames) {
+    if(this.validateEditRole()){
     this.spinner.show();
     this.rolesService.saveEditedRole(roleId, roleName, roleDescription, permissionNames).subscribe(
       (res) => {
@@ -149,6 +170,7 @@ export class RolesComponent implements OnInit {
           this.errorMessageRoleCreateionDiv = false;
         }
       });
+    }
   }
   editRole(roleId, roleName, roleDescription, permissionNames) {
     this.populatePermissionNames();
@@ -194,10 +216,11 @@ export class RolesComponent implements OnInit {
           this.successDiv = true;
           this.rolesPanel = true;
           this.showResults = true;
-        } else if(false){}
+        } 
       });
   }
   createRole() {
+    this.successMessageRoleCreateionDiv = false;
     this.showResults = false;
     this.rolesPanel = false;
     this.rolesSearchResultsDiv = false;
@@ -206,27 +229,54 @@ export class RolesComponent implements OnInit {
     this.createRoleSectionDiv = true;
     this.populatePermissionNames();
   }
+  validateCreateRole(){
+    this.roleNameErrorMessageDiv = false;
+    this.roleDescriptionErrorMessageDiv = false;
+    this.permissionNamesErrorMessageDiv = false;
+    var statusCreateRole = true;
+    if(this.roleNameId == '' || this.roleNameId == null || this.roleNameId == undefined){
+      this.roleNameErrorMessageDiv = true;
+      statusCreateRole = false;
+    }
+    if(this.roleDescriptionId==null|| this.roleDescriptionId=='' ||this.roleDescriptionId==undefined){
+      this.roleDescriptionErrorMessageDiv = true
+      statusCreateRole = false;
+    }
+    if(this.permissionNameId==null|| this.permissionNameId=='' ||this.permissionNameId==undefined){
+      this.permissionNamesErrorMessageDiv = true
+      statusCreateRole = false;
+    }
+    return statusCreateRole;
+  }
   saveCreateRole() {
+    if(this.validateCreateRole()){
     this.spinner.show();
     this.rolesService.createRole(this.setPostData('createRole')).subscribe(
       (res) => {
-        this.spinner.hide();
         this.rolesVal = res;
         if (this.rolesVal['message'] != null) {
           this.successMessageEditRoleDiv = false;
           this.successMessageDeleteRoleDiv = false;
           this.successMessageRoleCreateionDiv = true;
           this.errorMessageRoleCreateionDiv = false;
+          this.spinner.hide();
         } else if (this.rolesVal['errorMessage'] != null) {
           this.errorMessageEditRoleDiv = false;
           this.errorMessageDeleteRoleDiv = false;
           this.errorMessageRoleCreateionDiv = true;
           this.successMessageRoleCreateionDiv = false;
+          this.spinner.hide();
         }
         this.roleNameId = '';
         this.roleDescriptionId = '';
         this.permissionNameId = '';
+        this.spinner.hide();
+      },
+      (error) =>{
+      console.log(error);
+      this.spinner.hide();
       });
+    }
   }
   populatePermissionNames() {
     this.rolesService.populatePermissionName().subscribe(
@@ -406,5 +456,6 @@ export class RolesComponent implements OnInit {
     this.createRoleSectionDiv = false;
     this.editRoleSectionDiv = false;
     this.deleteRoleSectionDiv = false;
+    this.successMessageRoleCreateionDiv = false;
   }
 }

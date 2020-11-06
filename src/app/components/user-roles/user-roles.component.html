@@ -196,7 +196,7 @@
                                         </div>
                                         <div class="col-sm- col-sm-6">
                                             <input class="form-control themed-input" name="networkLoginId" id="networkLoginId" [ngModelOptions]="{standalone: true}" [(ngModel)]="networkLoginId" placeholder="" type="text" />
-                                            <span id="networkLoginIdErrMsg" style="color: red;display: none">Please
+                                            <span *ngIf="networkLoginIdErrMsg" style="color: red;">Please
                                                 provide Network Login id </span>
                                         </div>
                                     </div>
@@ -311,7 +311,7 @@
                                         </div>
                                         <div class="col-sm- col-sm-6">
                                             <input class="form-control themed-input" name="editnetworkLoginId" readonly="readonly" id="editnetworkLoginId" [ngModelOptions]="{standalone: true}" [(ngModel)]="editnetworkLoginId" placeholder="" type="text" />
-                                            <span id="editnetworkLoginIdErrMsg" style="color: red;display: none">Please
+                                            <span *ngIf="editnetworkLoginIdErrMsgDiv" style="color: red;display: none">Please
                                                 provide Network Login id </span>
                                         </div>
                                     </div>
@@ -336,13 +336,13 @@
                                                     class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
-                                            <div class="" name="editRoleId">
+                                            <div class="" name="editRoleIds">
                                                 <ng-select id="editroleId" [items]="userRoleListVal" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="editroleId" placeholder="Select One or More">
                                                     <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                                         <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected" /> {{item.name}}
                                                     </ng-template>
                                                 </ng-select>
-                                                <span *ngIf="editroleIdErrMsgDiv" id="editroleIdErrMsg" style="color: red;display: none">Please
+                                                <span *ngIf="editroleIdErrMsgDiv" id="editroleIdErrMsg" style="color: red;">Please
                                                     select roles</span>
                                             </div>
 

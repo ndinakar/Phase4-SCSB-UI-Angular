@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { ReportsService } from 'src/app/services/reports/reports.service';
 declare var $: any;
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -10,7 +11,7 @@ declare var $: any;
 })
 export class ReportsComponent implements OnInit {
 
-  constructor(private reportsService: ReportsService) { }
+  constructor(private reportsService: ReportsService,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     $('#mydiv').hide();
@@ -226,7 +227,7 @@ export class ReportsComponent implements OnInit {
   }
 
   submitRequest() {
-    $('#mydiv').show();
+    this.spinner.show();
     this.requestToDateErrorText = false;
     this.showByErrorText = false;
     this.requestFromDateErrorText = false;
@@ -374,7 +375,6 @@ export class ReportsComponent implements OnInit {
       this.reportsService.submit(this.postData).subscribe(
         (res) => {
           this.reportstVal = res;
-          $('#mydiv').hide();
           if (this.reportstVal['showBy'] == "Partners") {
             this.partnersResults = true;
             this.requestTypeResults = false;
@@ -394,10 +394,10 @@ export class ReportsComponent implements OnInit {
             this.totalCULRequest = this.reportstVal['retrievalRequestCulCount'] + this.reportstVal['recallRequestCulCount'] + this.reportstVal['eddRequestCulCount'];
             this.totalNYPLRequest = this.reportstVal['retrievalRequestNyplCount'] + this.reportstVal['recallRequestNyplCount'] + this.reportstVal['eddRequestNyplCount'];
           }
-
+          this.spinner.hide();
         },
         (error) => {
-
+          this.spinner.hide();
         }
 
       );
@@ -423,7 +423,7 @@ export class ReportsComponent implements OnInit {
     return (parseFloat(this.start) > parseFloat(this.end));
   }
   submitAccession() {
-    $('#mydiv').show();
+    this.spinner.show();
     this.accessionErrorText = false;
     this.deaccessionErrorText = false;
     this.accessionFromToError = false;
@@ -432,12 +432,12 @@ export class ReportsComponent implements OnInit {
     if (this.AccessionDeaccessionDateRangefrom == '' || this.AccessionDeaccessionDateRangefrom == undefined) {
       this.accessionErrorText = true;
       this.statusRequest = true;
-      $('#mydiv').hide();
+      this.spinner.hide();
     }
     if (this.AccessionDeaccessionDateRangeto == '' || this.AccessionDeaccessionDateRangeto == undefined) {
       this.deaccessionErrorText = true;
       this.statusRequest = true;
-      $('#mydiv').hide();
+      this.spinner.hide();
     }
     this.dateAccessionFrom = this.toDate(this.AccessionDeaccessionDateRangefrom);
     this.dateAccessionTo = this.toDate(this.AccessionDeaccessionDateRangeto);
@@ -445,7 +445,7 @@ export class ReportsComponent implements OnInit {
     if (this.compareDate(this.dateAccessionFrom, this.dateAccessionTo)) {
       this.accessionFromToError = true;
       this.statusRequest = true;
-      $('#mydiv').hide();
+      this.spinner.hide();
     }
 
     if (!this.statusRequest) {
@@ -564,26 +564,26 @@ export class ReportsComponent implements OnInit {
       this.reportsService.submit(this.postData).subscribe(
         (res) => {
           this.reportstVal = res;
-          $('#mydiv').hide();
           this.subtotalEDDPULDeaccession = this.reportstVal['deaccessionPrivatePulCount'] + this.reportstVal['deaccessionSharedPulCount'] + this.reportstVal['deaccessionOpenPulCount'];
           this.subtotalEDDCULDeaccession = this.reportstVal['deaccessionPrivateCulCount'] + this.reportstVal['deaccessionSharedCulCount'] + this.reportstVal['deaccessionOpenCulCount'];
           this.subtotalEDDNYPLDeaccession = this.reportstVal['deaccessionPrivateNyplCount'] + this.reportstVal['deaccessionSharedNyplCount'] + this.reportstVal['deaccessionOpenNyplCount'];
+          this.spinner.hide();
         },
         (error) => {
-
+          this.spinner.hide();
         }
 
       );
     }
   }
   incompleteRecords() {
-    $('#mydiv').show();
+    this.spinner.show();
     this.incompleteErrorText = false;
     this.statusRequest = false;
     if (this.incompleteShowBy == '' || this.incompleteShowBy == undefined) {
       this.incompleteErrorText = true;
       this.statusRequest = true;
-      $('#mydiv').hide();
+      this.spinner.hide();
     }
     if (!this.statusRequest) {
       this.errorMessageId = false;
@@ -593,7 +593,6 @@ export class ReportsComponent implements OnInit {
       this.reportsService.incompleteRecords(this.setPostData('incompleteRecords', 'incomplete')).subscribe(
         (res) => {
           this.reportstVal = res;
-          $('#mydiv').hide();
           this.incompleteResultsPage = true;
           if (this.reportstVal['errorMessage'] != null || this.reportstVal['errorMessage'] != undefined) {
             this.errorMessageId = true;
@@ -601,9 +600,10 @@ export class ReportsComponent implements OnInit {
             this.errorMessageId = false;
           }
           this.pagination();
+          this.spinner.hide();
         },
         (error) => {
-
+          this.spinner.hide();
         }
 
       );
@@ -635,7 +635,7 @@ export class ReportsComponent implements OnInit {
     this.isChecked = true;
   }
   enableCGDPage() {
-    $('#mydiv').show();
+    this.spinner.hide();
     this.resetFields();
     this.requestPage = false;
     this.accesionPage = false;
@@ -644,9 +644,10 @@ export class ReportsComponent implements OnInit {
     this.reportsService.collectionGroupDesignation().subscribe(
       (res) => {
         this.reportstVal = res;
-        $('#mydiv').hide();
+        this.spinner.hide();
       },
       (error) => {
+        this.spinner.hide();
 
       }
 
@@ -683,6 +684,7 @@ export class ReportsComponent implements OnInit {
     );
   }
   deaccessionInformation() {
+    this.spinner.show();
     this.reportsService.deaccessionInformation(this.setPostData('deaccessionInfo','deaccession')).subscribe(
       (res) => {
         this.deaccessionRes = res;
@@ -691,9 +693,10 @@ export class ReportsComponent implements OnInit {
         this.reportType_panel = false;
         this.Deaccessiontableshow = true;
         this.pagination();
+        this.spinner.hide();
       },
       (error) => {
-
+        this.spinner.hide();
       }
 
     );

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { NgxSpinnerService } from "ngx-spinner";
 import { UserRolesService } from 'src/app/services/userRoles/user-roles.service';
+import { EMPTY } from 'rxjs';
 @Component({
   selector: 'app-user-roles',
   templateUrl: './user-roles.component.html',
@@ -14,6 +15,7 @@ export class UserRolesComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.hide();
   }
+  networkLoginIdErrMsg: boolean;
   roleId: string;
   searchNetworkId: string;
   userEmailId: string;
@@ -37,7 +39,7 @@ export class UserRolesComponent implements OnInit {
   userRolesVal: TreeNode[];
   userRoleListVal: TreeNode[];
   userResponse: TreeNode[];
-
+  editnetworkLoginIdErrMsgDiv: boolean;
   lastbutton = true;
   firstbutton = true;
   previousbutton = true;
@@ -248,18 +250,49 @@ export class UserRolesComponent implements OnInit {
         this.pagination();
       });
   }
+  validateCreateUser(){
+    this.emailIdErrMsgDiv = false;
+    this.userDescriptionErrMsgDiv = false;
+    this.roleIdErrMsgDiv = false;
+    this.institutionIdErrMsgDiv = false;
+    this.networkLoginIdErrMsg = false;
+    var statusCreateRole = true;
+    if(this.emailId == '' || this.emailId == null || this.emailId == undefined){
+      this.emailIdErrMsgDiv = true;
+      statusCreateRole = false;
+    }
+    if(this.userDescription==null|| this.userDescription=='' ||this.userDescription==undefined){
+      this.userDescriptionErrMsgDiv = true
+      statusCreateRole = false;
+    }
+    if(this.institutionId==null || this.institutionId==undefined){
+      this.institutionIdErrMsgDiv = true
+      statusCreateRole = false;
+    }
+    if(this.networkLoginId==null|| this.networkLoginId=='' ||this.networkLoginId==undefined){
+      this.networkLoginIdErrMsg = true
+      statusCreateRole = false;
+    }
+    if(this.rolesOption==null || this.rolesOption==undefined){
+      this.roleIdErrMsgDiv = true
+      statusCreateRole = false;
+    }
+    if(! (this.validateEmailAddress(this.emailId))){
+      statusCreateRole = false;
+      this.emailIdErrMsgDiv = true;
+    }  
+    return statusCreateRole;
+  }
   createUser(emailId, userDescription, institutionId, networkLoginId) {
+    if(this.validateCreateUser()){
     this.spinner.show();
     this.emailId = emailId;
     this.userDescription = userDescription;
     this.selectedForCreate = this.rolesOption;
     this.institutionId = institutionId;
     this.networkLoginId = networkLoginId;
-    if (!this.check('createUser')) {
-      this.emailIdErrMsgDiv = true;
       this.userRolesService.createUser(this.setPostData('createUser')).subscribe(
         (res) => {
-          this.spinner.hide();
           this.userRoleFormVal = res;
           this.createUserDiv = true;
           this.showSearchResultsDiv = false;
@@ -281,6 +314,7 @@ export class UserRolesComponent implements OnInit {
           this.rolesOption = null;
           this.institutionId = null;
           this.networkLoginId = '';
+          this.spinner.hide();
         });
     }
   }
@@ -288,59 +322,47 @@ export class UserRolesComponent implements OnInit {
     var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 
     if (pattern.test(val)) {
-      return false
+      return true
     } else {
-      return true;
-    }
-  }
-  check(actionType) {
-    if (actionType == 'createUser') {
-      if (this.userDescription == '' && this.validateEmailAddress(this.emailId)) {
-        this.userDescriptionErrMsgDiv = true;
-        this.emailIdErrMsgDiv = true;
-        this.createSuccussMessageDiv = false;
-        this.createErrorMessageDiv = false;
-        return true;
-      } else if (this.userDescription == '') {
-        this.userDescriptionErrMsgDiv = true;
-        this.emailIdErrMsgDiv = false;
-        this.createSuccussMessageDiv = false;
-        this.createErrorMessageDiv = false;
-        return true;
-      } else if (this.validateEmailAddress(this.emailId)) {
-        this.userDescriptionErrMsgDiv = false;
-        this.emailIdErrMsgDiv = true;
-        this.createSuccussMessageDiv = false;
-        this.createErrorMessageDiv = false;
-        return true;
-      } else {
-        return false;
-      }
-    } else if (this.edituserDescription == '' && this.validateEmailAddress(this.editEmailId)) {
-      this.edituserDescriptionErrMsgDiv = true;
-      this.editEmailIdErrMsgDiv = true;
-      this.editsuccessMsgDiv = false;
-      this.editerrormsgDiv = false;
-      return true;
-    } else if (this.edituserDescription == '') {
-      this.edituserDescriptionErrMsgDiv = true;
-      this.editEmailIdErrMsgDiv = false;
-      this.editsuccessMsgDiv = false;
-      this.editerrormsgDiv = false;
-      return true;
-    } else if (this.validateEmailAddress(this.editEmailId)) {
-      this.edituserDescriptionErrMsgDiv = false;
-      this.editEmailIdErrMsgDiv = true;
-      this.editsuccessMsgDiv = false;
-      this.editerrormsgDiv = false;
-      return true;
-    }else{
       return false;
     }
   }
+  validateUpdateUser() {
+      this.edituserDescriptionErrMsgDiv = false;
+      this.editEmailIdErrMsgDiv = false;
+      this.editroleIdErrMsgDiv = false;
+      this.editnetworkLoginIdErrMsgDiv = false;
+      this.editnetworkLoginIdErrMsgDiv = false;
+    var statusCreateRole = true;
+    if(this.editEmailId == '' || this.editEmailId == null || this.editEmailId == undefined){
+      this.editEmailIdErrMsgDiv = true;
+      statusCreateRole = false;
+    }
+    if(this.edituserDescription==null|| this.edituserDescription=='' ||this.edituserDescription==undefined){
+      this.edituserDescriptionErrMsgDiv = true
+      statusCreateRole = false;
+    }
+    if(this.editinstitutionId==null || this.editinstitutionId==undefined){
+      this.editinstitutionIdErrMsgDiv = true
+      statusCreateRole = false;
+    }
+    if(this.editnetworkLoginId==null|| this.editnetworkLoginId=='' ||this.editnetworkLoginId==undefined){
+      this.editnetworkLoginIdErrMsgDiv = true;
+      statusCreateRole = false;
+    }
+    if(this.editroleId == null || this.editroleId == undefined || this.editroleId.length <= 0 ){
+      this.editroleIdErrMsgDiv = true;
+      statusCreateRole = false;
+    }
+    if(! (this.validateEmailAddress(this.editEmailId))){
+      statusCreateRole = false;
+      this.editEmailIdErrMsgDiv = true;
+    }  
+    return statusCreateRole;
+  }
   saveEditUser(networkLoginId, userDescription, institutionId, userEmailId) {
+    if(this.validateUpdateUser()){
     this.spinner.show();
-    if (!this.check('saveUser')) {
       this.userRolesService.saveEditUser(this.userId, this.editroleId, networkLoginId, userDescription, institutionId, userEmailId).subscribe(
         (res) => {
           this.userRoleFormVal = res;
@@ -362,7 +384,7 @@ export class UserRolesComponent implements OnInit {
           }
           this.spinner.hide();
         });
-    }
+      }
   }
   deleteUser(networkLoginId) {
     this.spinner.show();

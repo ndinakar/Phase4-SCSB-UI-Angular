@@ -508,13 +508,13 @@ export class CollectionComponent implements OnInit {
 
   //save cgd start
   saveCGD(bibid, cgdold) {
-    this.spinner.show();
     if (this.CGDselect != '' && this.CGDChangeNotes != '' && this.CGDselect != undefined && this.CGDChangeNotes != undefined) {
       this.cgdErrorMessage = false;
       this.cgdNotesErrorMessage = false;
       this.newCGDReadOnly = true;
       this.CGDNoteReadOnly = true;
       if (this.CGDselect != cgdold) {
+        this.spinner.show();
         this.postData = {
           "itemBarcodes": "",
           "showResults": false,
@@ -580,13 +580,16 @@ export class CollectionComponent implements OnInit {
         );
       } else {
         this.cgdErrorMessage = true;
+        this.spinner.hide();
       }
 
     } else {
       if (this.CGDselect == '' || this.CGDselect == undefined) {
         this.cgdErrorMessage = true;
+        this.spinner.hide();
       } else if (this.CGDChangeNotes == undefined || this.CGDChangeNotes == '') {
         this.cgdNotesErrorMessage = true;
+        this.spinner.hide();
       }
       //console.log("err")
     }
