@@ -312,19 +312,19 @@
                                             </th>
                                         </tr>
                                     </ng-template>
-                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
-                                        <tr>
+                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-rowIndex="rowIndex">
+                                        <tr id="rowData_{{rowIndex}}">
 
-                                            <td id="rowData_searchItem" *ngIf="rowData.searchItemResultRows==''">
-                                                <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                            <td id="rowData_searchItem_{{rowIndex}}" *ngIf="rowData.searchItemResultRows==''">
+                                                <p-tableCheckbox [value]="rowData" id="checkBox_{{rowIndex}}"></p-tableCheckbox>
                                             </td>
-                                            <td id="rowData_searchItem_not" *ngIf="rowData.searchItemResultRows!=''">
-                                                <a id="row_Data" href="#" [pRowToggler]="rowData">
-                                                    <i name="rowExpand" [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                            <td id="rowData_searchItem_not_{{rowIndex}}" *ngIf="rowData.searchItemResultRows!=''">
+                                                <a id="row_Data_{{rowIndex}}" href="#" [pRowToggler]="rowData">
+                                                    <i id="rowExpand_{{rowIndex}}" [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                                 </a>
                                             </td>
 
-                                            <td id="rowData_searchItem_col" *ngFor="let col of columns"><img *ngIf="col.field=='title' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> <img *ngIf="col.field=='title' && rowData.availability =='Not Available'"
+                                            <td id="rowData_searchItem_result_{{i}}" *ngFor="let col of columns;let i=index"><img *ngIf="col.field=='title' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> <img *ngIf="col.field=='title' && rowData.availability =='Not Available'"
                                                     class="status" src="../../../../assets/images/out.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> &nbsp;&nbsp; {{rowData[col.field]}}
                                             </td>
                                         </tr>
@@ -338,21 +338,21 @@
                                                         <div class="p-grid" *ngIf="rowData.searchItemResultRows!=''">
                                                             <p-table name="p_tablesub" [columns]="cols1" selectionMode="checkbox" [(selection)]="selectedNodes2" [value]="rowData.searchItemResultRows" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                                                                 <ng-template pTemplate="header" let-columns>
-                                                                    <tr name="subRow">
-                                                                        <th name="header_table" style="width: 3em">
+                                                                    <tr id="subRow_header">
+                                                                        <th id="header_table" style="width: 3em">
                                                                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                                                         </th>
-                                                                        <th name="column_sub_header" *ngFor="let col of columns">
+                                                                        <th id="column_sub_header" *ngFor="let col of columns">
                                                                             {{col.header}}
                                                                         </th>
                                                                     </tr>
                                                                 </ng-template>
-                                                                <ng-template pTemplate="body" let-rowData let-columns="columns">
-                                                                    <tr name="row_sub">
-                                                                        <td name="col_row_sub">
-                                                                            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                                                    <tr id="row_Data_sub_{{rowIndex}}">
+                                                                        <td id="row_sub_{{rowIndex}}">
+                                                                            <p-tableCheckbox [value]="rowData" id="sub_checkBox_{{rowIndex}}"></p-tableCheckbox>
                                                                         </td>
-                                                                        <td name="clumns_sub" *ngFor="let col of columns"><img *ngIf="col.field=='callNumber' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;"
+                                                                        <td id="row_DataResult_sub_{{i}}" *ngFor="let col of columns;let i=index"><img *ngIf="col.field=='callNumber' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;"
                                                                             /> <img *ngIf="col.field=='callNumber' && rowData.availability =='Not Available'" class="status" src="../../../../assets/images/out.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;"
                                                                             /> &nbsp;&nbsp; {{rowData[col.field]}}
                                                                         </td>

@@ -97,11 +97,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr name="results_rowData" *ngFor="let item of collectionVal['searchResultRows']">
-                                                <th name="rowData_barcode"><img *ngIf="item.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> <img *ngIf="item.availability =='Not Available'"
+                                            <tr id="results_rowData_{{i}}" *ngFor="let item of collectionVal['searchResultRows'];  let i = index">
+                                                <th id="rowData_barcode_{{i}}"><img *ngIf="item.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> <img *ngIf="item.availability =='Not Available'"
                                                         class="status" src="../../../../assets/images/out.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> &nbsp;&nbsp;{{ item.barcode }}</th>
-                                                <td (click)="openMarcView(item.bibId,item.barcode,item.itemId)" style="cursor: pointer;color:#337ab7"><a name="rowData_title">{{ item.title }}</a></td>
-                                                <td name="rowData_desc">{{ item.collectionGroupDesignation }}</td>
+                                                <td (click)="openMarcView(item.bibId,item.barcode,item.itemId)" style="cursor: pointer;color:#337ab7"><a id="rowData_title_{{i}}">{{ item.title }}</a></td>
+                                                <td id="rowData_desc_{{i}}">{{ item.collectionGroupDesignation }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
