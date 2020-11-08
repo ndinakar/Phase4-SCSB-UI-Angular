@@ -99,27 +99,23 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let userRolesList of userRoleFormVal['userRoleFormList']">
-                                                            <!--<input type="hidden" id="userId" name="userId"
-                                                    th:text="${userRolesL.userId}"/>
-                                            <input type="hidden" id="userdesc" name="userId"
-                                                    th:text="${userRolesL.userDescription}"/>-->
-                                                            <td>
+                                                        <tr id="rowData_results_{{i}}" *ngFor="let userRolesList of userRoleFormVal['userRoleFormList']; let i=index">
+                                                            <td id="colData_nlid_{{i}}">
                                                                 <span>{{userRolesList['networkLoginId']}}</span>
                                                             </td>
-                                                            <td>
+                                                            <td id="colData_ud_{{i}}">
                                                                 <span>{{userRolesList['userDescription']}}</span>
                                                             </td>
-                                                            <td>
+                                                            <td id="colData_in_{{i}}">
                                                                 <span>{{userRolesList['institutionName']}}</span>
                                                             </td>
-                                                            <td>
+                                                            <td id="colData_rn_{{i}}">
                                                                 <span>{{userRolesList['roleName']}}</span>
                                                             </td>
-                                                            <td class="text-center">
-                                                                <a id="userDataEdit">
+                                                            <td id="colData_editDelete_{{i}}" class="text-center">
+                                                                <a id="userDataEdit_{{i}}">
                                                                     <span class="glyphicon glyphicon-pencil" title="Edit User" (click)="editUser(userRolesList['userId'],userRolesList['networkLoginId'],userRolesList['roleName'])" style="cursor: pointer;"></span></a>
-                                                                <a id="userDataDelete">
+                                                                <a id="userDataDelete_{{i}}">
                                                                     <span class="glyphicon glyphicon-trash" title="Delete User" (click)="deleteUserRole(userRolesList['userId'],userRolesList['networkLoginId'],userRolesList['roleName'])" style="cursor: pointer;margin-left: 5px;"></span></a>
                                                             </td>
 

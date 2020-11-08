@@ -623,7 +623,7 @@
                                 <div class="">
                                     <span class="show-title">Show Entries</span>
                                     <select id="numOfRecordsId" name="numOfRecordsName" class="themed-input" [(ngModel)]="showentries" class="themed-input" [ngModelOptions]="{standalone: true}" style="margin-left: 5px;" (change)="deaccessionInformationOnChange(showentries)">
-                                        <option value="10">10</option>
+                                        <option value="10" selected>10</option>
                                         <option value="25">25</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -650,14 +650,14 @@
                                         <th width="15%" style="font-family:sans-serif;">DEACCESSION BY</th>
                                     </tr>
                                 </thead>
-                                <tr *ngFor="let deaccessionRow of deaccessionRes['deaccessionItemResultsRows']">
-                                    <td><span>{{deaccessionRow.deaccessionDate}}</span></td>
-                                    <td><span>{{deaccessionRow.title}}</span></td>
-                                    <td><span id="ownInstDeacc">{{deaccessionRow.deaccessionOwnInst}}</span></td>
-                                    <td><span>{{deaccessionRow.itemBarcode}}</span></td>
-                                    <td><span>{{deaccessionRow.cgd}}</span></td>
-                                    <td><span>{{deaccessionRow.deaccessionNotes}}</span></td>
-                                    <td><span>{{deaccessionRow.deaccessionCreatedBy}}</span></td>
+                                <tr id="rowData_results_de_{{i}}" *ngFor="let deaccessionRow of deaccessionRes['deaccessionItemResultsRows']; let i=index">
+                                    <td id="colData_dd_de_{{i}}"><span>{{deaccessionRow.deaccessionDate}}</span></td>
+                                    <td id="colData_dt_de_{{i}}"><span>{{deaccessionRow.title}}</span></td>
+                                    <td id="colData_di_de_{{i}}"><span id="ownInstDeacc_{{i}}">{{deaccessionRow.deaccessionOwnInst}}</span></td>
+                                    <td id="colData_ib_de_{{i}}"><span>{{deaccessionRow.itemBarcode}}</span></td>
+                                    <td id="colData_cgd_de_{{i}}"><span>{{deaccessionRow.cgd}}</span></td>
+                                    <td id="colData_dn_de_{{i}}"><span>{{deaccessionRow.deaccessionNotes}}</span></td>
+                                    <td id="colData_dcb_de_{{i}}"><span>{{deaccessionRow.deaccessionCreatedBy}}</span></td>
                                 </tr>
                             </table>
                             <input id="reportsPageNumber" name="reportsPageNumber" type="text" th:field="${reportsForm.pageNumber}" hidden="hidden" />
@@ -746,12 +746,12 @@
                                 <div class="col-sm-offset-2 show-entries-section " style="margin-top: -30px; ">
                                     <div class=" ">
                                         <span class="show-title ">Show Entries</span>
-                                        <select id="incompleteShowRecords " name="numOfRecordsName " class="themed-input " [(ngModel)]="showentries " class="themed-input " (change)="incompleteReportPageSizeChange(showentries) " [ngModelOptions]="{standalone:
+                                        <select id="incompleteShowRecords " name="numOfRecordsName " class="themed-input " [(ngModel)]="incompletePageSize " class="themed-input " (change)="incompleteReportPageSizeChange(showentries) " [ngModelOptions]="{standalone:
                                         true} " style="margin-left: 5px; ">
-                                            <option value="10 ">10</option>
-                                            <option value="25 ">25</option>
-                                            <option value="50 ">50</option>
-                                            <option value="100 ">100</option>
+                                            <option value="10" selected>10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
                                         </select>
                                     </div>
                                 </div>
@@ -774,20 +774,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let incompleteResult of reportstVal[ 'incompleteReportResultsRows'] " class="parentRow ">
-                                                    <td>
+                                                <tr id="rowData_results_{{i}}" *ngFor="let incompleteResult of reportstVal[ 'incompleteReportResultsRows']; let i=index" class="parentRow">
+                                                    <td id="colData_title_{{i}}">
                                                         <span>{{incompleteResult.title}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td id="colData_author_{{i}}">
                                                         <span>{{incompleteResult.author}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td id="colData_cd_{{i}}">
                                                         <span>{{incompleteResult.customerCode}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td id="colData_bd_{{i}}">
                                                         <span>{{incompleteResult.barcode}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td id="colData_cd_{{i}}">
                                                         <span>{{incompleteResult.createdDate}}</span>
                                                     </td>
                                                 </tr>

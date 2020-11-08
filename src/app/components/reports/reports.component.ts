@@ -14,10 +14,9 @@ export class ReportsComponent implements OnInit {
   constructor(private reportsService: ReportsService,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    $('#mydiv').hide();
+    this.spinner.hide();
     this.ReportShowBy = 'Partners';
   }
-
   subtotalPhysicalCUL: number;
   subtotalPhysicalPUL: number;
   subtotalPhysicalNYPL: number;
@@ -1014,11 +1013,11 @@ export class ReportsComponent implements OnInit {
     } else if (actionName == 'lastCall') {
       this.pageNumber = this.deaccessionRes['pageNumber'];
       this.pageSize = this.showentries,
-        this.totalPageCount = this.deaccessionRes['totalPageCount'];
+      this.totalPageCount = this.deaccessionRes['totalPageCount'];
     } else if (actionName == 'previousCall') {
       this.pageNumber = this.deaccessionRes['pageNumber'];
       this.pageSize = this.showentries,
-        this.totalPageCount = this.deaccessionRes['totalPageCount'];
+      this.totalPageCount = this.deaccessionRes['totalPageCount'];
     } else if (actionName == 'nextCall') {
       this.pageNumber = this.deaccessionRes['pageNumber'];
       this.pageSize = this.showentries,
@@ -1034,18 +1033,14 @@ export class ReportsComponent implements OnInit {
   onchangeValidationIncomplete(actionName){
     if (actionName == 'firstCall') {
       this.incompletePageNumber = 0;
-      this.incompletePageSize = this.showentries;
     } else if (actionName == 'lastCall') {
       this.incompletePageNumber = this.reportstVal['incompletePageNumber'];
-      this.incompletePageSize = this.showentries,
       this.incompleteTotalPageCount = this.reportstVal['incompleteTotalPageCount'];
     } else if (actionName == 'previousCall') {
       this.incompletePageNumber = this.reportstVal['incompletePageNumber'];
-      this.incompletePageSize = this.showentries,
         this.incompleteTotalPageCount = this.reportstVal['incompleteTotalPageCount'];
     } else if (actionName == 'nextCall') {
       this.incompletePageNumber = this.reportstVal['incompletePageNumber'];
-      this.incompletePageSize = this.showentries,
         this.incompleteTotalPageCount = this.reportstVal['incompleteTotalPageCount'];
     } else if (actionName == 'pageSize') {
       this.incompletePageNumber = this.reportstVal['incompletePageNumber'];

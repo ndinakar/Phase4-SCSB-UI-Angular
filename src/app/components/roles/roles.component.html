@@ -107,28 +107,28 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let searchResult of rolesVal['rolesSearchResults']" class="parentRow">
+                                                    <tr id="rowData_results_{{i}}" *ngFor="let searchResult of rolesVal['rolesSearchResults']; let i= index" class="parentRow">
 
                                                         <input type="hidden" />
-                                                        <td>
+                                                        <td id="colData_rn_{{i}}">
                                                             <input type="hidden" />
                                                             <span>{{searchResult.rolesName}}</span>
                                                         </td>
-                                                        <td>
+                                                        <td id="colData_rd_{{i}}">
                                                             <input type="hidden" />
                                                             <span>{{searchResult.rolesDescription}}</span>
                                                         </td>
-                                                        <td>
+                                                        <td id="colData_pn_{{i}}">
                                                             <input type="hidden" />
                                                             <span>{{searchResult.permissionName}}</span>
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td id="colData_editDelete_{{i}}" class="text-center">
                                                             <div class="edit-link margin-left-05 margin-right-05 editRole">
-                                                                <a id="editUserLink">
+                                                                <a id="editUserLink_{{i}}">
                                                                     <span class="glyphicon glyphicon-pencil" title="Edit Role" (click)="editRole(searchResult['roleId'],searchResult['rolesName'],searchResult['rolesDescription'],searchResult['permissionName'])" style="cursor: pointer;">
                                                             </span>
                                                                 </a>
-                                                                <a id="deleteUserLink">
+                                                                <a id="deleteUserLink_{{i}}">
                                                                     <span class="glyphicon glyphicon-trash" title="Delete Role" (click)="deleteRole(searchResult['roleId'],searchResult['rolesName'],searchResult['rolesDescription'],searchResult['permissionName'])" style="cursor: pointer;margin-left: 5px;">
                                                              </span>
                                                                 </a>
