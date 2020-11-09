@@ -673,10 +673,11 @@ export class ReportsComponent implements OnInit {
     );
   }
   deaccessionInformationOnChange(value) {
-    this.showentries = value;
+    this.pageSize = value;
     this.reportsService.incompleteReportPageSizeChange(this.setPostData('pageSize', 'deaccession')).subscribe(
       (res) => {
         this.reportstVal = res;
+        this.pagination('deaccession');
       },
       (error) => {
 
