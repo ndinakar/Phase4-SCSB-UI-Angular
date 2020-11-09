@@ -598,7 +598,7 @@ export class ReportsComponent implements OnInit {
           } else {
             this.errorMessageId = false;
           }
-          this.pagination();
+          this.pagination('incomplete');
           this.spinner.hide();
         },
         (error) => {
@@ -665,6 +665,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.incompleteReportPageSizeChange(this.setPostData('pageSize', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
+        this.pagination('incomplete');
       },
       (error) => {
 
@@ -691,7 +692,7 @@ export class ReportsComponent implements OnInit {
         this.accesionPage = false;
         this.reportType_panel = false;
         this.Deaccessiontableshow = true;
-        this.pagination();
+        this.pagination('deaccession');
         this.spinner.hide();
       },
       (error) => {
@@ -704,7 +705,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.firstCall(this.setPostData('firstCall', 'deaccession')).subscribe(
       (res) => {
         this.deaccessionRes = res;
-        this.pagination();
+        this.pagination('deaccession');
       },
       (error) => {
 
@@ -716,7 +717,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.lastCall(this.setPostData('lastCall', 'deaccession')).subscribe(
       (res) => {
         this.deaccessionRes = res;
-        this.pagination();
+        this.pagination('deaccession');
       },
       (error) => {
 
@@ -727,7 +728,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.nextCall(this.setPostData('nextCall', 'deaccession')).subscribe(
       (res) => {
         this.deaccessionRes = res;
-        this.pagination();
+        this.pagination('deaccession');
       },
       (error) => {
 
@@ -738,7 +739,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.previousCall(this.setPostData('previousCall', 'deaccession')).subscribe(
       (res) => {
         this.deaccessionRes = res;
-        this.pagination();
+        this.pagination('deaccession');
       },
       (error) => {
 
@@ -750,7 +751,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.firstCall(this.setPostData('firstCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
-        this.pagination();
+        this.pagination('incomplete');
       },
       (error) => {
 
@@ -762,7 +763,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.nextCall(this.setPostData('nextCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
-        this.pagination();
+        this.pagination('incomplete');
       },
       (error) => {
 
@@ -773,7 +774,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.previousCall(this.setPostData('previousCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
-        this.pagination();
+        this.pagination('incomplete');
       },
       (error) => {
 
@@ -784,7 +785,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.lastCall(this.setPostData('lastCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
-        this.pagination();
+        this.pagination('incomplete');
       },
       (error) => {
 
@@ -803,7 +804,36 @@ export class ReportsComponent implements OnInit {
 
     );
   }
-  pagination() {
+  pagination(actionName) {
+    if(actionName =='incomplete'){
+      if (this.reportstVal['incompletePageNumber'] == 0 && (this.reportstVal['incompleteTotalPageCount'] - 1 > 0)) {
+        this.firstbutton = true;
+        this.previousbutton = true;
+        this.nextbutton = false;
+        this.lastbutton = false;
+      } else if (this.reportstVal['incompletePageNumber'] == 0 && (this.reportstVal['pageNumber'] == this.reportstVal['incompleteTotalPageCount'] - 1)) {
+        this.firstbutton = true;
+        this.previousbutton = true;
+        this.nextbutton = true;
+        this.lastbutton = true;
+      }
+      else if ((this.reportstVal['incompletePageNumber'] == this.reportstVal['incompleteTotalPageCount'] - 1) && this.reportstVal['incompleteTotalPageCount'] - 1 > 0) {
+        this.firstbutton = false;
+        this.previousbutton = false;
+        this.nextbutton = true;
+        this.lastbutton = true;
+      } else if ((this.reportstVal['incompletePageNumber'] < this.reportstVal['incompleteTotalPageCount'] - 1) && (this.reportstVal['incompleteTotalPageCount'] != 0)) {
+        this.firstbutton = false;
+        this.previousbutton = false;
+        this.nextbutton = false;
+        this.lastbutton = false;
+      } else if (this.reportstVal['incompletePageNumber'] == 0 && this.reportstVal['incompleteTotalPageCount'] == 0) {
+        this.firstbutton = true;
+        this.previousbutton = true;
+        this.nextbutton = true;
+        this.lastbutton = true;
+      }
+    }else{
     if (this.reportstVal['pageNumber'] == 0 && (this.reportstVal['totalPageCount'] - 1 > 0)) {
       this.firstbutton = true;
       this.previousbutton = true;
@@ -831,6 +861,7 @@ export class ReportsComponent implements OnInit {
       this.nextbutton = true;
       this.lastbutton = true;
     }
+  }
   }
   deaccessionPul() {
     this.deaccessionOwnInst = 'PUL';
@@ -1004,6 +1035,7 @@ export class ReportsComponent implements OnInit {
       "eddRequestCulCount": null,
       "eddRequestNyplCount": null
     }
+    this.reportstVal = null;
     return this.postData;
   }
   onchangeValidationDeaccession(actionName){
