@@ -143,17 +143,17 @@
                                                 <div class="margin-btm-0 pull-right" style="margin-top:-10px; margin-bottom:-30px;">
                                                     <div id="reportPaginationId" name="reportPaginationName" class="pull-right">
                                                         <ul class="pagination" id="reportPaginationUl">
-                                                            <li id="btn_first" [ngClass]="(firstbutton==true)?'disabled':''">
-                                                                <span (click)="firstCall()">First</span>
+                                                            <li [ngClass]="(firstbutton==true)?'disabled':''">
+                                                                <span id="btn_first" (click)="firstCall()">First</span>
                                                             </li>
-                                                            <li id="btn_previous" [ngClass]="(previousbutton==true)?'disabled':''">
-                                                                <span (click)="previousCall()">Previous</span>
+                                                            <li [ngClass]="(previousbutton==true)?'disabled':''">
+                                                                <span id="btn_previous" (click)="previousCall()">Previous</span>
                                                             </li>
-                                                            <li id="btn_next" [ngClass]="(nextbutton==true)?'disabled':''">
-                                                                <span (click)="nextCall()">Next</span>
+                                                            <li [ngClass]="(nextbutton==true)?'disabled':''">
+                                                                <span id="btn_next" (click)="nextCall()">Next</span>
                                                             </li>
-                                                            <li id="btn_last" [ngClass]="(lastbutton==true)?'disabled':''">
-                                                                <span (click)="lastCall()">Last</span>
+                                                            <li [ngClass]="(lastbutton==true)?'disabled':''">
+                                                                <span id="btn_last" (click)="lastCall()">Last</span>
                                                             </li>
                                                         </ul>
                                                     </div>

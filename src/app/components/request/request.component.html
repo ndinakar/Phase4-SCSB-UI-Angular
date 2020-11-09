@@ -232,18 +232,18 @@
                                         <div class="pull-right">
                                             <div id="requestPaginationId" name="requestPaginationName" xmlns:th="http://www.w3.org/1999/xhtml">
                                                 <ul class="pagination">
-                                                    <li id="first" [ngClass]="(firstbutton==true)?'disabled':''">
-                                                        <span (click)="firstCall()">First</span>
+                                                    <li [ngClass]="(firstbutton==true)?'disabled':''">
+                                                        <span id="first" (click)="firstCall()">First</span>
                                                     </li>
-                                                    <li id="previous" [ngClass]="(previousbutton==true)?'disabled':''">
-                                                        <span (click)="previousCall()">Previous</span>
+                                                    <li [ngClass]="(previousbutton==true)?'disabled':''">
+                                                        <span id="previous" (click)="previousCall()">Previous</span>
                                                     </li>
-                                                    <li id="next" [ngClass]="(nextbutton==true)?'disabled':''">
-                                                        <span (click)="nextCall()">Next</span>
+                                                    <li [ngClass]="(nextbutton==true)?'disabled':''">
+                                                        <span id="next" (click)="nextCall()">Next</span>
 
                                                     </li>
-                                                    <li id="last" [ngClass]="(lastbutton==true)?'disabled':''">
-                                                        <span (click)="lastCall()">Last</span>
+                                                    <li [ngClass]="(lastbutton==true)?'disabled':''">
+                                                        <span id="last" (click)="lastCall()">Last</span>
                                                     </li>
                                                 </ul>
                                             </div>
