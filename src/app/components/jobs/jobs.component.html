@@ -1,1 +1,149 @@
-<p>jobs works!</p>
+<!-- Schedule Jobs Tab Start -->
+<div id="scheduleJobsContentId" name="scheduleJobsContentName" th:fragment="content" xmlns:th="http://www.thymeleaf.org">
+    <script type="text/javascript" th:src="@{../js/scheduleJobs.js}"></script>
+    <div id="scheduleJobsFormDivId" name="scheduleJobsFormDivName" th:fragment="scheduleJobs-form" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+        <form id="scheduleJobs-form" name="scheduleJobs-form" class="form-horizontal" th:action="@{/jobs}" th:object="${scheduleJobsForm}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <fieldset>
+                <div role="tabpanel" class="tab-pane" id="scheduleJobs">
+                    <div *ngIf="scheduleJobDetailsSectionDiv" id="scheduleJobDetailsSection" name="scheduleJobDetailsSection">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table id="scheduleJobs-table" class="table table-striped margin-btm-0">
+                                    <thead class="tablesorter-headerRow">
+                                        <tr>
+                                            <th>Job Name</th>
+                                            <th>Job Description</th>
+                                            <th>Last Executed <br>Time</th>
+                                            <th>Next Run <br> Time</th>
+                                            <th>Cron Expression</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                            <th>Executions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="scheduleJobs_{{i}}" *ngFor="let job of jobsResVal['jobEntities'];let i= index">
+                                            <input id="scheduleJobsRowJobId_{{i}}" name="scheduleJobsRowJobId" type="hidden" />
+                                            <td>
+                                                <input type="hidden" id="scheduleJobsRowJobName_{{i}}" />
+                                                <span>{{job['jobName']}}</span>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" id="scheduleJobsRowJobDescription_{{i}} " />
+                                                <span>{{job['jobDescription']}}</span>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" id="scheduleJobsRowLastExecutedTime_{{i}}" />
+                                                <span>{{job['lastExecutedTime'] | date:"yyyy-MM-dd HH:mm:ss"}}</span>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" id="scheduleJobsRowNextRunTime_{{i}} " />
+                                                <span>{{job['nextRunTime'] | date:"yyyy-MM-dd HH:mm:ss"}}</span>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" id="scheduleJobsRowCronExpression_{{i}}" />
+                                                <span>{{job['cronExpression']}}</span>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" id="scheduleJobsRowStatus_{{i}} " />
+                                                <span>{{job['status']}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span *ngIf="job.status=='Unscheduled' || job.cronExpression=='isEmpty' || job.status===null" class="btn btn-success " title="Schedule the job " id="scheduleButton_{{i}} " (click)="schedule(job['jobId'],job['jobName'],job['cronExpression'],job['jobDescription'])">
+                                                Schedule
+                                                </span>
+                                                <span *ngIf="job.status!='Unscheduled' && job.cronExpression!='isEmpty' && job.status!==null" class="btn btn-primary " title="Reschedule the job " id="RescheduleButton_{{i}} " (click)="Reschedule(job['jobId'],job['jobName'],job['cronExpression'],job['jobDescription'])">
+                                                Reschedule
+                                                </span>
+                                                <span *ngIf="job.status!='Unscheduled' && job.cronExpression!='isEmpty' && job.status!==null" class="btn btn-danger " title="Unschedule the job " id="UnscheduleButton_{{i}}" (click)="Unschedule(job['jobId'],job['jobName'],job['cronExpression'],job['jobDescription'])">
+                                                Unschedule
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a id="jobInstanceIdDetails_{{i}}" [href]="url+ job.jobName + '/' + job.jobInstanceId" target="_blank" style="cursor: pointer;">Details</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="scheduleJobSectionDiv" id="scheduleJobSection " name="scheduleJob ">
+                        <div class="row margin-top-0 ">
+                            <div class="col-sm-12 margin-top-0 ">
+                                <h3 class="margin-0 ">Schedule Job</h3>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-12 divider-horizontal margin-top-10 margin-btm-30 "></div>
+                        </div>
+                        <div class="buscador-principal ">
+                            <div *ngIf="errorMessageIdDiv" id="errorMessageId " class="row margin-btm-10 ">
+                                <div class="col-sm-12 ">
+                                    <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="errorMessageSpanId ">{{jobsResVal['errorMessage']}}</span></div>
+                                </div>
+                            </div>
+                            <div *ngIf="messageIdDiv" id="messageId " class="row margin-btm-10 ">
+                                <div class="col-sm-12 ">
+                                    <div class="bg-success text-success padding-10 "><span class="margin-right-05 glyphicon glyphicon-ok-sign "></span><span id="messageSpanId ">{{jobsResVal['message']}}</span></div>
+                                </div>
+                            </div>
+                            <div class="row margin-top-25 margin-btm-30 ">
+                                <div class="col-sm-12 ">
+                                    <div class="row ">
+                                        <div class="row ">
+                                            <input id="jobId " name="jobId " type="hidden" th:field="${scheduleJobsForm.jobId} " />
+                                            <input id="scheduleType " name="jobId " type="hidden" th:field="${scheduleJobsForm.scheduleType} " />
+                                            <div class="col-md-8 col-sm-6 ">
+                                                <div class="form-group ">
+                                                    <div class="col-sm-3 col-sm-4 text-right margin-top-15 "><label for="jobNameId " class="fontcolor-dark ">Job Name</label></div>
+                                                    <div class="col-sm- col-sm-6 ">
+                                                        <input type="text " id="jobNameId " [ngModelOptions]="{standalone: true}" [(ngModel)]="jobNameId" name="roleName " class="form-control themed-input " [readonly]="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-md-8 col-sm-6 ">
+                                                <div class="form-group ">
+                                                    <div class="col-sm-3 col-sm-4 text-right margin-top-15 "><label for="jobDescriptionId " class="fontcolor-dark ">Job Description</label></div>
+                                                    <div class="col-sm- col-sm-6 ">
+                                                        <input type="text " id="jobDescriptionId " [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDescriptionId" name="roleName " class="form-control themed-input " [readonly]="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-md-8 col-sm-6 ">
+                                                <div class="form-group ">
+                                                    <div class="col-sm-3 col-sm-4 text-right margin-top-15 "><label for="cronExpressionId " class="fontcolor-dark ">Cron Expression</label></div>
+                                                    <div class="col-sm- col-sm-6 ">
+                                                        <input type="text " id="cronExpressionId " [ngModelOptions]="{standalone: true}" [(ngModel)]="cronExpressionId" name="roleName " class="form-control themed-input " [readonly]="status_readOnly" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-xs-12 text-center ">
+                                            <button *ngIf="schedule_show" class="btn btn-default themed-button btn-primary " id="scheduleJobButtonId
+                                                    " (click)="invokeScheduleJob( 'Schedule') ">Schedule Job</button>
+                                            <button *ngIf="reschedule_show" class="btn btn-default themed-button btn-primary " id="rescheduleJobButtonId
+                                                    " (click)="invokeScheduleJob( 'Reschedule') ">Reschedule Job</button>
+                                            <button *ngIf="unschedule_show" class="btn btn-default themed-button btn-primary " id="unscheduleJobButtonId
+                                                    " (click)="invokeScheduleJob( 'Unschedule') ">Unschedule Job</button>
+                                            <button type="cancel " class="btn btn-default themed-button themed-button-cancel " id="cancelJobButtonId " style="margin-left: 5px;" (click)="closeScheduleJob()">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<!-- Schedule Jobs Tab End -->

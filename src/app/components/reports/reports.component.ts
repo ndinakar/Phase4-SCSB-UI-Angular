@@ -237,14 +237,17 @@ export class ReportsComponent implements OnInit {
     if (this.RequestDateRangeto == '' || this.RequestDateRangeto == undefined) {
       this.requestToDateErrorText = true;
       this.statusRequest = true;
+      this.spinner.hide();
     }
     if (this.ReportShowBy == '' || this.ReportShowBy == undefined) {
       this.showByErrorText = true;
       this.statusRequest = true;
+      this.spinner.hide();
     }
     if (this.RequestDateRangefrom == '' || this.RequestDateRangefrom == undefined) {
       this.requestFromDateErrorText = true;
       this.statusRequest = true;
+      this.spinner.hide();
     }
     this.dateFrom = this.toDate(this.RequestDateRangefrom);
     this.dateTo = this.toDate(this.RequestDateRangeto);
@@ -252,6 +255,7 @@ export class ReportsComponent implements OnInit {
     if (this.compareDate(this.dateFrom, this.dateTo)) {
       this.statusRequest = true;
       this.requestFromToError = true;
+      this.spinner.hide();
     }
 
     if (!this.statusRequest) {

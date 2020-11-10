@@ -1,6 +1,6 @@
 
 export const urls = {
-    baseUrl: 'http://52.203.96.232:9089',
+    baseUrl: 'http://localhost:9089',
     search: '/search',
     collection: '/collection',
     requests: '/request',
@@ -8,5 +8,6 @@ export const urls = {
     jobs: '/jobs',
     userRoles:'/userRoles',
     roles: '/roles',
-    bulkRequest: '/bulkRequest'
+    bulkRequest: '/bulkRequest',
+    batchScheduleUrl:'http://localhost:7096'
 }
