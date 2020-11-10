@@ -51,7 +51,6 @@
                                                    name="selectAllFacets" value="" 
                                                     (click)="checkUncheckAll()" class="facetCheckBox">
                                             <span class="cr margin-top-15"></span>
-                                            
                                             <span name="selectAndUnselect"class="facet-text">&nbsp;Select / Unselect All Facets   </span>
                                         </label>
                                     </div>
@@ -290,7 +289,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-7 margin-top-10">
-                                        <div class="row" style="font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 17px !important;">OI - Owning Institution, CC - Customer Code, CGD - Collection Group Designation, SH - Summary Holdings</div>
+                                        <div class="row" style="font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">OI - Owning Institution, CC - Customer Code, CGD - Collection Group Designation, SH - Summary Holdings</div>
                                     </div>
                                     <div class="col-sm-3 text-right" style="text-align: right;font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 17px !important;">
                                         <span>Bibliographic Results Found: <span>{{searchVal['totalBibRecordsCount']}}</span></span><br>
@@ -310,7 +309,6 @@
                                                 <p-tableHeaderCheckbox id="hdr_checkbox"></p-tableHeaderCheckbox>
                                             </th>
                                             <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-
                                                 {{col.header}}
                                                 <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                             </th>
@@ -327,7 +325,8 @@
                                                 </a>
                                             </td>
                                             <td id="colData_column_{{i}}" *ngFor="let col of columns;let i=index"><img *ngIf="col.field=='title' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> <img *ngIf="col.field=='title' && rowData.availability =='Not Available'"
-                                                    class="status" src="../../../../assets/images/out.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> &nbsp;&nbsp; {{rowData[col.field]}}
+                                                    class="status" src="../../../../assets/images/out.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> &nbsp;&nbsp;
+                                                <a target="_blank" routerLink="/openMarcRecord" [queryParams]="{bibId: rowData['bibId']}" *ngIf="col.field=='title'" style="cursor: pointer;">{{rowData[col.field]}}</a><span *ngIf="col.field!='title'">{{rowData[col.field]}}</span>
                                             </td>
                                         </tr>
                                     </ng-template>

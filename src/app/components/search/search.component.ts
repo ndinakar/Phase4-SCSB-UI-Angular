@@ -7,6 +7,7 @@ import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { urls } from 'src/config/urls';
 declare var $: any;
 
 @Component({
@@ -29,7 +30,6 @@ declare var $: any;
   ]
 })
 export class SearchComponent implements OnInit {
-
   searchVal: TreeNode[];
   selectedNodes1: any[];
   selectedNodes2: any[];
@@ -46,7 +46,7 @@ export class SearchComponent implements OnInit {
   lastbutton = false;
   showentries = 10;
   pageNumber = 0;
-  totalPageCount : number = 0;
+  totalPageCount: number = 0;
   owningInstitutions: any = [];
   collectionGroupDesignations: any = [];
   availability: any = [];
@@ -118,11 +118,10 @@ export class SearchComponent implements OnInit {
   ];
 
   @ViewChild('dt') dt: Table;
-  constructor(private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,private spinner: NgxSpinnerService) {
+  constructor(private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder, private router: Router, private spinner: NgxSpinnerService) {
 
   }
   public data: Object[];
-
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
@@ -142,13 +141,11 @@ export class SearchComponent implements OnInit {
       NoRestrictions: [true],
       InLibraryUse: [true],
       SupervisedUse: [true]
-
     });
-
   }
 
   //show entries api start
-    onPageSizeChange(value) {
+  onPageSizeChange(value) {
     this.spinner.show();
     this.showentries = value;
     this.owningInstitutions = [];
@@ -158,17 +155,17 @@ export class SearchComponent implements OnInit {
     this.useRestrictions = [];
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
-    this.searchService.onPageSizeChange(this.setPostData(searchfullrec,'pageSize')).subscribe((res) => {
-    this.searchVal = res;
-    this.spinner.hide();
-    this.showresultdiv = true;
-    this.mappingResults();
-    this.pagination();
+    this.searchService.onPageSizeChange(this.setPostData(searchfullrec, 'pageSize')).subscribe((res) => {
+      this.searchVal = res;
+      this.spinner.hide();
+      this.showresultdiv = true;
+      this.mappingResults();
+      this.pagination();
     },
-    (error) => {
-      //Called when error
-    }
-  );
+      (error) => {
+        //Called when error
+      }
+    );
   }
 
   //show entries api end
@@ -183,17 +180,17 @@ export class SearchComponent implements OnInit {
     this.useRestrictions = [];
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
-    this.searchService.getSearch(this.setPostData(searchfullrec,'search')).subscribe(
+    this.searchService.getSearch(this.setPostData(searchfullrec, 'search')).subscribe(
       (res) => {
         this.spinner.hide();
         this.searchVal = res
-        if(this.searchVal['errorMessage'] !=null){
+        if (this.searchVal['errorMessage'] != null) {
           this.showresultdiv = true;
           this.errorMessage_Div = true;
           this.searchResultsDiv = false;
           this.paginationBtmDiv = false;
           this.searchVal['pageNumber'] = 0;
-        } else{
+        } else {
           this.showresultdiv = true;
           this.errorMessage_Div = false;
           this.searchResultsDiv = true;
@@ -202,14 +199,14 @@ export class SearchComponent implements OnInit {
           this.searchVal['pageNumber'] = 0;
           this.pagination();
         }
-         
+
       },
       (error) => {
         this.spinner.hide();
         //Called when error
       })
 
-    }
+  }
 
   //next api start
   nextapi() {
@@ -222,36 +219,35 @@ export class SearchComponent implements OnInit {
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
     this.showresultdiv = true;
-    this.searchService.searchNext(this.setPostData(searchfullrec,'nextCall')).subscribe(
-      (res) => 
-      {
+    this.searchService.searchNext(this.setPostData(searchfullrec, 'nextCall')).subscribe(
+      (res) => {
         this.spinner.hide();
         this.searchVal = res;
         this.pagination();
       });
-      this.mappingResults();
+    this.mappingResults();
   }
   //next api end
 
   //previous api start
   previousapi() {
     this.spinner.show();
-      this.owningInstitutions = [];
-      this.collectionGroupDesignations = [];
-      this.availability = [];
-      this.materialTypes = [];
-      this.useRestrictions = [];
+    this.owningInstitutions = [];
+    this.collectionGroupDesignations = [];
+    this.availability = [];
+    this.materialTypes = [];
+    this.useRestrictions = [];
 
-      var searchfullrec = this.searchForm.value;
-      this.validateInputs(searchfullrec);
-      this.showresultdiv = true;
-      this.searchService.searchPrevious(this.setPostData(searchfullrec,'previousCall')).subscribe(
-        (res) => {
-          this.spinner.hide();
-          this.searchVal = res
-          this.pagination();
-        });
-        this.mappingResults();
+    var searchfullrec = this.searchForm.value;
+    this.validateInputs(searchfullrec);
+    this.showresultdiv = true;
+    this.searchService.searchPrevious(this.setPostData(searchfullrec, 'previousCall')).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.searchVal = res
+        this.pagination();
+      });
+    this.mappingResults();
   }
   //previous api end
 
@@ -266,14 +262,14 @@ export class SearchComponent implements OnInit {
 
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
-    this.searchService.searchFirst(this.setPostData(searchfullrec,'firstCall')).subscribe(
+    this.searchService.searchFirst(this.setPostData(searchfullrec, 'firstCall')).subscribe(
       (res) => {
         this.spinner.hide();
         this.searchVal = res;
-        this.searchVal['pageNumber']=0;
+        this.searchVal['pageNumber'] = 0;
         this.pagination();
       });
-      this.mappingResults();
+    this.mappingResults();
   }
   //first api end
   //last api start
@@ -287,14 +283,13 @@ export class SearchComponent implements OnInit {
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
     this.showresultdiv = true;
-    this.searchService.searchLast(this.setPostData(searchfullrec,'lastCall')).subscribe(
-      (res) => 
-      {
+    this.searchService.searchLast(this.setPostData(searchfullrec, 'lastCall')).subscribe(
+      (res) => {
         this.spinner.hide();
         this.searchVal = res;
         this.pagination();
       });
-      this.mappingResults();
+    this.mappingResults();
   }
   //last api end
 
@@ -358,6 +353,7 @@ export class SearchComponent implements OnInit {
   }
   onReset() {
     this.showresultdiv = false;
+    this.checked =true;
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],
@@ -375,34 +371,33 @@ export class SearchComponent implements OnInit {
       NoRestrictions: [true],
       InLibraryUse: [true],
       SupervisedUse: [true]
-
     });
   }
   setFileName() {
     this.dt.exportFilename = 'ExportRecords' + '_' +
       new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'UTC');
   }
-  routeToRequest(){
-    var barcode1=[];
+  routeToRequest() {
+    var barcode1 = [];
     var i;
-    if(this.selectedNodes1 == undefined){
-    for(i=0;i<this.selectedNodes2.length;i++){
-      barcode1.push(this.selectedNodes2[i].barcode);
+    if (this.selectedNodes1 == undefined) {
+      for (i = 0; i < this.selectedNodes2.length; i++) {
+        barcode1.push(this.selectedNodes2[i].barcode);
+      }
+    } else {
+      for (i = 0; i < this.selectedNodes1.length; i++) {
+        barcode1.push(this.selectedNodes1[i].barcode);
+      }
     }
-  }else{
-    for(i=0;i<this.selectedNodes1.length;i++){
-      barcode1.push(this.selectedNodes1[i].barcode);
-    }
-  }
-    var barcode=barcode1.join();
+    var barcode = barcode1.join();
     this.router.navigate(['/request', barcode]);
   }
 
-  facetsshowhide(){
+  facetsshowhide() {
     $("#search-filter").slideToggle();
   }
 
-  validateInputs(searchfullrec){
+  validateInputs(searchfullrec) {
     if (searchfullrec.owningInstitutionNYPL == true) {
       this.owningInstitutions.push('NYPL')
     }
@@ -476,7 +471,7 @@ export class SearchComponent implements OnInit {
       this.lastbutton = false;
     }
   }
-  mappingResults(){
+  mappingResults() {
     this.cols = [
       { field: 'title', header: 'Title' },
       { field: 'author', header: 'Author' },
@@ -499,7 +494,7 @@ export class SearchComponent implements OnInit {
       { field: 'barcode', header: 'Barcode' },
     ];
   }
-  setPostData(searchfullrec,actionName){
+  setPostData(searchfullrec, actionName) {
     if (actionName == 'search') {
       this.showentries = 10;
       this.pageNumber = 0;

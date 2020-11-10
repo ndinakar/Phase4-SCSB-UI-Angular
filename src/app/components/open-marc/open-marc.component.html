@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Marc Record</title>
+</head>
+
+<body class="dashboard-detailpage dashboard-page">
+    <div>
+        <app-header></app-header>
+    </div>
+    <section>
+        <div class="container-fluid" style="min-height: 781px;">
+            <div *ngIf="successMessageDiv" class="row">
+                <div class="col-sm-12">
+                    <div class="padding-left-15 padding-right-15">
+                        <div id="marcRecordViewDivId" name="marcRecordViewDivName">
+                            <div id="marcRecordFormDivId" name="marcRecordFormDivName">
+                                <form id="marcRecord-form" name="marcRecord-form" class="form-horizontal">
+                                    <input type="hidden" />
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3 class="pull-left padding-left-20 fontcolor-dark margin-top-15"><span>{{bibliographicMarcForm['title']}}</span></h3>
+                                            </div>
+                                        </div>
+                                        <div class="margin-top-10 margin-btm-20 padding-top-20 padding-left-20 padding-right-20 bg-white">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="row margin-btm-05">
+                                                        <div class="col-sm-5">Author</div>
+                                                        <div class="col-sm-7 fontcolor-light">: <span>{{bibliographicMarcForm['author']}}</span></div>
+                                                    </div>
+                                                    <div class="row margin-btm-05">
+                                                        <div class="col-sm-5">Published Date</div>
+                                                        <div class="col-sm-7 fontcolor-light">: <span>{{bibliographicMarcForm['publishedDate']}}</span></div>
+                                                    </div>
+                                                    <div class="row margin-btm-05">
+                                                        <div class="col-sm-5">Call Number</div>
+                                                        <div class="col-sm-7 fontcolor-light">: <span>{{bibliographicMarcForm['callNumber']}}</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row margin-btm-05">
+                                                        <div class="col-sm-5">Publisher</div>
+                                                        <div class="col-sm-7 fontcolor-light">: <span>{{bibliographicMarcForm['publisher']}}</span></div>
+                                                    </div>
+                                                    <div class="row margin-btm-05">
+                                                        <div class="col-sm-5">Owning Institution</div>
+                                                        <div class="col-sm-7 fontcolor-light">: <span>{{bibliographicMarcForm['owningInstitution']}}</span></div>
+                                                    </div>
+                                                    <div class="row margin-btm-05">
+                                                        <div class="col-sm-5">Collection Group Designation (CGD)</div>
+                                                        <div class="col-sm-7 fontcolor-light">: <span>{{bibliographicMarcForm['monographCollectionGroupDesignation']}}</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="divider-horizontal margin-top-10 margin-btm-20"></div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="contentdetail">
+                                                        <h4 class="border-style-bottom padding-10 margin-top-05 margin-btm-0">MARC Content</h4>
+                                                        <div class="padding-10">
+                                                            <div>
+                                                                <table class="table table-striped margin-btm-0">
+                                                                    <tr>
+                                                                        <td width="20%" class="tb-mrc">tag000</td>
+                                                                        <td class="tb-mrc"><span>{{bibliographicMarcForm['tag000']}}</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="tb-mrc">Control Number (001)</td>
+                                                                        <td class="tb-mrc"><span>{{bibliographicMarcForm['controlNumber001']}}</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="tb-mrc">Date and Time (005)</td>
+                                                                        <td class="tb-mrc"><span>{{bibliographicMarcForm['controlNumber005']}}</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="tb-mrc">Fixed Length Data Element (008)</td>
+                                                                        <td class="tb-mrc"><span>{{bibliographicMarcForm['controlNumber008']}}</span></td>
+                                                                    </tr>
+                                                                    <tr *ngFor="let bibDataField of bibliographicMarcForm['bibDataFields']">
+                                                                        <td class="tb-mrc">
+                                                                            <span style="margin-left: 30px;">{{bibDataField['dataFieldTag']}}</span>
+                                                                            <span inline="text">{{bibDataField.indicator1}}{{bibDataField.indicator2}}</span>
+                                                                        </td>
+                                                                        <td class="tb-mrc"><span>{{bibDataField['dataFieldValue']}}</span></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="errorMessageDiv" class="row margin-btm-10 margin-top-20">
+                <div class="col-sm-12 ">
+                    <div class="bg-danger text-danger padding-10 ">
+                        <span class="margin-right-05 glyphicon glyphicon-warning-sign "></span>
+                        <span style="margin-left: 5px;">{{bibliographicMarcForm['errorMessage']}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <div>
+        <app-footer></app-footer>
+    </div>
+</body>
+
+</html>

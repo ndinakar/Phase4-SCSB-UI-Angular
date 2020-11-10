@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CollectionComponent } from '../collection/collection.component';
 import { DashboardComponent } from './dashboard.component';
+import { OpenMarcComponent } from '../open-marc/open-marc.component';
 import { SearchComponent } from '../search/search.component';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -24,7 +25,9 @@ import { FooterComponent } from '../footer/footer.component';
     SearchComponent,
     HeaderComponent,
     FooterComponent,
-    CollectionComponent],
+    CollectionComponent,
+    OpenMarcComponent,
+  ],
   imports: [
     CommonModule,
     TreeTableModule,
@@ -41,7 +44,8 @@ import { FooterComponent } from '../footer/footer.component';
   ],
   exports: [
     DashboardComponent,
-    SearchComponent
+    SearchComponent,
+    OpenMarcComponent,
   ],
   providers: []
 })

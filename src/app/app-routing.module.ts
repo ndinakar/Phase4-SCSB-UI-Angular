@@ -13,10 +13,12 @@ import { UserRolesComponent } from './components/user-roles/user-roles.component
 import { JobsComponent } from './components/jobs/jobs.component';
 import { MonitoringComponent } from './components/monitoring/monitoring.component';
 import { LoggingComponent } from './components/logging/logging.component';
+import { OpenMarcComponent } from './components/open-marc/open-marc.component';
 const routes: Routes = [
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'logout', component: HomeComponent },
+  { path: 'openMarcRecord', component: OpenMarcComponent },
   {
     path: '',
     component: DashboardComponent, // this is the component with the <router-outlet> in the template

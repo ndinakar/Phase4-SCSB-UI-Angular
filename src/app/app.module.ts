@@ -20,6 +20,7 @@ import { JobsComponent } from './components/jobs/jobs.component';
 import { MonitoringComponent } from './components/monitoring/monitoring.component';
 import { LoggingComponent } from './components/logging/logging.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { OpenMarcComponent } from './components/open-marc/open-marc.component';
 
 export function appInit(appConfig: AppConfig) {
   return () => appConfig.load();
