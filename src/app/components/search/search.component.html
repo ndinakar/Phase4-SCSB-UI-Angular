@@ -230,7 +230,12 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                            <div id="searchResultsDiv" name="searchResultsDiv">
+                            <div class="row margin-btm-10" *ngIf="errorMessage_Div">
+                                <div class="col-sm-12">
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{searchVal['errorMessage']}}</span></div>
+                                </div>
+                            </div>
+                            <div *ngIf="searchResultsDiv" id="searchResultsDiv" name="searchResultsDiv">
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="pull-left margin-btm-0 margin-right-35" style="margin-top: -20px; margin-bottom: -10px;">
@@ -370,7 +375,7 @@
                             <!--show result div end-->
                             <div style="clear:both">&nbsp;</div>
                             <!--show entries export start-->
-                            <div id="paginationAndButtons" name="paginationAndButtons" class="margin-top-15 export-buttons">
+                            <div *ngIf="paginationBtmDiv" id="paginationAndButtons" name="paginationAndButtons" class="margin-top-15 export-buttons">
                                 <div class="pull-left" style="margin-top: -20px;">
                                     <div id="paginationId" name="paginationName">
                                         <ul class="pagination">

@@ -44,18 +44,18 @@ export class SearchComponent implements OnInit {
   previousbutton = true;
   nextbutton = false;
   lastbutton = false;
-  nextvalue = 0;
-  previousValue=0;
-  lastValue=0;
   showentries = 10;
-
+  pageNumber = 0;
+  totalPageCount : number = 0;
   owningInstitutions: any = [];
   collectionGroupDesignations: any = [];
   availability: any = [];
   materialTypes: any = [];
   useRestrictions: any = [];
   searchForm: FormGroup;
-
+  errorMessage_Div = false;
+  searchResultsDiv = false;
+  paginationBtmDiv = false;
   postData = {
     "fieldValue": "",
     "fieldName": "",
@@ -125,7 +125,6 @@ export class SearchComponent implements OnInit {
 
 
   ngOnInit(): void {
-
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],
@@ -157,264 +156,53 @@ export class SearchComponent implements OnInit {
     this.availability = [];
     this.materialTypes = [];
     this.useRestrictions = [];
-    this.nextvalue = this.searchVal['pageNumber'];
-
     var searchfullrec = this.searchForm.value;
-    if (searchfullrec.owningInstitutionNYPL == true) {
-      this.owningInstitutions.push('NYPL')
-    }
-    if (searchfullrec.owningInstitutionCUL == true) {
-      this.owningInstitutions.push('CUL')
-    }
-    if (searchfullrec.owningInstitutionPUL == true) {
-      this.owningInstitutions.push('PUL')
-    }
-
-    if (searchfullrec.shared == true) {
-      this.collectionGroupDesignations.push('Shared')
-    }
-    if (searchfullrec.private == true) {
-      this.collectionGroupDesignations.push('Private')
-    }
-    if (searchfullrec.open == true) {
-      this.collectionGroupDesignations.push('Open')
-    }
-
-    if (searchfullrec.Available == true) {
-      this.availability.push('Available')
-    }
-    if (searchfullrec.notAvailable == true) {
-      this.availability.push('NotAvailable')
-    }
-
-    if (searchfullrec.Monograph == true) {
-      this.materialTypes.push('Monograph')
-    }
-    if (searchfullrec.Serial == true) {
-      this.materialTypes.push('Serial')
-    }
-    if (searchfullrec.others == true) {
-      this.materialTypes.push('Others')
-    }
-
-    if (searchfullrec.NoRestrictions == true) {
-      this.useRestrictions.push('NoRestrictions')
-    }
-
-    if (searchfullrec.InLibraryUse == true) {
-      this.useRestrictions.push('InLibraryUse')
-    }
-
-    if (searchfullrec.SupervisedUse == true) {
-      this.useRestrictions.push('SupervisedUse')
-    }
-    this.postData = {
-      "fieldValue": searchfullrec.fieldValue,
-      "fieldName": searchfullrec.fieldName,
-      "owningInstitutions": this.owningInstitutions,
-      "collectionGroupDesignations": this.collectionGroupDesignations,
-      "availability": this.availability,
-      "materialTypes": this.materialTypes,
-      "useRestrictions": this.useRestrictions,
-      "searchResultRows": [],
-      "catalogingStatus": "Complete",
-      "pageNumber": this.searchVal['pageNumber'],
-      "pageSize": this.showentries,
-      "isDeleted": false,
-      "totalPageCount": 0,
-      "totalBibRecordsCount": "0",
-      "totalItemRecordsCount": "0",
-      "totalRecordsCount": "0",
-      "showResults": false,
-      "selectAll": false,
-      "selectAllFacets": true,
-      "showTotalCount": false,
-      "index": null,
-      "errorMessage": null
-    }
-   
-    this.searchService.onPageSizeChange(this.postData).subscribe((res) => {
+    this.validateInputs(searchfullrec);
+    this.searchService.onPageSizeChange(this.setPostData(searchfullrec,'pageSize')).subscribe((res) => {
     this.searchVal = res;
     this.spinner.hide();
     this.showresultdiv = true;
-    this.nextvalue = this.searchVal['PageNumber'];
-    if(this.searchVal['pageNumber'] == 0 && (this.searchVal['totalPageCount']-1 >0)){
-      this.firstbutton = true;
-      this.previousbutton = true;
-      this.nextbutton = false;
-      this.lastbutton = false;
-     }else if(this.searchVal['pageNumber'] == 0 && (this.searchVal['pageNumber'] == this.searchVal['totalPageCount']-1)){
-      this.firstbutton = true;
-      this.previousbutton = true;
-      this.nextbutton = true;
-      this.lastbutton = true;
-    }
-    else if((this.searchVal['pageNumber'] == this.searchVal['totalPageCount']-1)&&this.searchVal['totalPageCount']-1>0){
-      this.firstbutton = false;
-      this.previousbutton = false;
-      this.nextbutton = true;
-      this.lastbutton = true;
-    }else if((this.searchVal['pageNumber'] < this.searchVal['totalPageCount']-1)&&(this.searchVal['pageNumber'] != 0)){
-      this.firstbutton = false;
-      this.previousbutton = false;
-      this.nextbutton = false;
-      this.lastbutton = false;
-    }
-    this.cols = [
-      { field: 'title', header: 'Title' },
-      { field: 'author', header: 'Author' },
-      { field: 'publisher', header: 'Publisher' },
-      { field: 'publisherDate', header: 'Publisher Date' },
-      { field: 'owningInstitution', header: 'OI' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-      { field: 'summaryHoldings', header: 'SH' }
-    ];
-
-    this.cols1 = [
-      { field: 'callNumber', header: 'Call Number' },
-      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-    ];
-    
+    this.mappingResults();
+    this.pagination();
     },
     (error) => {
       //Called when error
     }
-
   );
-
-    
-
   }
 
   //show entries api end
   searchRecord() {
     this.spinner.show();
     $("#search-filter").slideUp();
-    this.nextvalue = 0;
     this.showentries = 10;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
     this.useRestrictions = [];
-
     var searchfullrec = this.searchForm.value;
-    if (searchfullrec.owningInstitutionNYPL == true) {
-      this.owningInstitutions.push('NYPL')
-    }
-    if (searchfullrec.owningInstitutionCUL == true) {
-      this.owningInstitutions.push('CUL')
-    }
-    if (searchfullrec.owningInstitutionPUL == true) {
-      this.owningInstitutions.push('PUL')
-    }
-
-    if (searchfullrec.shared == true) {
-      this.collectionGroupDesignations.push('Shared')
-    }
-    if (searchfullrec.private == true) {
-      this.collectionGroupDesignations.push('Private')
-    }
-    if (searchfullrec.open == true) {
-      this.collectionGroupDesignations.push('Open')
-    }
-
-    if (searchfullrec.Available == true) {
-      this.availability.push('Available')
-    }
-    if (searchfullrec.notAvailable == true) {
-      this.availability.push('NotAvailable')
-    }
-
-    if (searchfullrec.Monograph == true) {
-      this.materialTypes.push('Monograph')
-    }
-    if (searchfullrec.Serial == true) {
-      this.materialTypes.push('Serial')
-    }
-    if (searchfullrec.others == true) {
-      this.materialTypes.push('Others')
-    }
-
-    if (searchfullrec.NoRestrictions == true) {
-      this.useRestrictions.push('NoRestrictions')
-    }
-
-    if (searchfullrec.InLibraryUse == true) {
-      this.useRestrictions.push('InLibraryUse')
-    }
-
-    if (searchfullrec.SupervisedUse == true) {
-      this.useRestrictions.push('SupervisedUse')
-    }
-
-    this.postData = {
-      "fieldValue": searchfullrec.fieldValue,
-      "fieldName": searchfullrec.fieldName,
-      "owningInstitutions": this.owningInstitutions,
-      "collectionGroupDesignations": this.collectionGroupDesignations,
-      "availability": this.availability,
-      "materialTypes": this.materialTypes,
-      "useRestrictions": this.useRestrictions,
-      "searchResultRows": [],
-      "catalogingStatus": "Complete",
-      "pageNumber": this.nextvalue,
-      "pageSize": this.showentries,
-      "isDeleted": false,
-      "totalPageCount": 0,
-      "totalBibRecordsCount": "0",
-      "totalItemRecordsCount": "0",
-      "totalRecordsCount": "0",
-      "showResults": false,
-      "selectAll": false,
-      "selectAllFacets": true,
-      "showTotalCount": false,
-      "index": null,
-      "errorMessage": null
-    }
-
-    this.searchService.getSearch(this.postData).subscribe(
+    this.validateInputs(searchfullrec);
+    this.searchService.getSearch(this.setPostData(searchfullrec,'search')).subscribe(
       (res) => {
         this.spinner.hide();
         this.searchVal = res
-        //this.nextvalue = 0;
-        this.searchVal['pageNumber']=0;
-        this.showresultdiv = true;
-        this.cols = [
-          { field: 'title', header: 'Title' },
-          { field: 'author', header: 'Author' },
-          { field: 'publisher', header: 'Publisher' },
-          { field: 'publisherDate', header: 'Publisher Date' },
-          { field: 'owningInstitution', header: 'OI' },
-          { field: 'customerCode', header: 'CC' },
-          { field: 'collectionGroupDesignation', header: 'CGD' },
-          { field: 'useRestriction', header: 'Use Restriction' },
-          { field: 'barcode', header: 'Barcode' },
-          { field: 'summaryHoldings', header: 'SH' }
-        ];
-    
-        this.cols1 = [
-          { field: 'callNumber', header: 'Call Number' },
-          { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-          { field: 'customerCode', header: 'CC' },
-          { field: 'collectionGroupDesignation', header: 'CGD' },
-          { field: 'useRestriction', header: 'Use Restriction' },
-          { field: 'barcode', header: 'Barcode' },
-        ];
-    if(this.searchVal['totalPageCount']-1>0){
-      this.nextbutton = false;
-      this.lastbutton = false;
-    }else{
-      this.nextbutton = true;
-      this.lastbutton = true;
-    }
+        if(this.searchVal['errorMessage'] !=null){
+          this.showresultdiv = true;
+          this.errorMessage_Div = true;
+          this.searchResultsDiv = false;
+          this.paginationBtmDiv = false;
+          this.searchVal['pageNumber'] = 0;
+        } else{
+          this.showresultdiv = true;
+          this.errorMessage_Div = false;
+          this.searchResultsDiv = true;
+          this.paginationBtmDiv = true;
+          this.mappingResults();
+          this.searchVal['pageNumber'] = 0;
+          this.pagination();
+        }
+         
       },
       (error) => {
         this.spinner.hide();
@@ -426,149 +214,28 @@ export class SearchComponent implements OnInit {
   //next api start
   nextapi() {
     this.spinner.show();
-    if (this.searchVal['pageNumber'] == (this.searchVal['totalPageCount']-2)) {
-      this.firstbutton = false;
-      this.previousbutton = false;
-      this.nextbutton = true;
-      this.lastbutton = true;
-    }else{
-      this.firstbutton = false;
-      this.previousbutton = false;
-      this.nextbutton = false;
-      this.lastbutton = false;
-    }
-   
-    this.nextvalue = this.searchVal['pageNumber'] + 1;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
     this.useRestrictions = [];
-
     var searchfullrec = this.searchForm.value;
-
-    if (searchfullrec.owningInstitutionNYPL == true) {
-      this.owningInstitutions.push('NYPL')
-    }
-    if (searchfullrec.owningInstitutionCUL == true) {
-      this.owningInstitutions.push('CUL')
-    }
-    if (searchfullrec.owningInstitutionPUL == true) {
-      this.owningInstitutions.push('PUL')
-    }
-
-    if (searchfullrec.shared == true) {
-      this.collectionGroupDesignations.push('Shared')
-    }
-    if (searchfullrec.private == true) {
-      this.collectionGroupDesignations.push('Private')
-    }
-    if (searchfullrec.open == true) {
-      this.collectionGroupDesignations.push('Open')
-    }
-
-    if (searchfullrec.Available == true) {
-      this.availability.push('Available')
-    }
-    if (searchfullrec.notAvailable == true) {
-      this.availability.push('NotAvailable')
-    }
-
-    if (searchfullrec.Monograph == true) {
-      this.materialTypes.push('Monograph')
-    }
-    if (searchfullrec.Serial == true) {
-      this.materialTypes.push('Serial')
-    }
-    if (searchfullrec.others == true) {
-      this.materialTypes.push('Others')
-    }
-
-    if (searchfullrec.NoRestrictions == true) {
-      this.useRestrictions.push('NoRestrictions')
-    }
-
-    if (searchfullrec.InLibraryUse == true) {
-      this.useRestrictions.push('InLibraryUse')
-    }
-
-    if (searchfullrec.SupervisedUse == true) {
-      this.useRestrictions.push('SupervisedUse')
-    }
-
-    this.postData = {
-      "fieldValue": searchfullrec.fieldValue,
-      "fieldName": searchfullrec.fieldName,
-      "owningInstitutions": this.owningInstitutions,
-      "collectionGroupDesignations": this.collectionGroupDesignations,
-      "availability": this.availability,
-      "materialTypes": this.materialTypes,
-      "useRestrictions": this.useRestrictions,
-      "searchResultRows": [],
-      "catalogingStatus": "Complete",
-      "pageNumber": this.nextvalue,
-      "pageSize": this.showentries,
-      "isDeleted": false,
-      "totalPageCount": this.searchVal['totalPageCount'],
-      "totalBibRecordsCount": "0",
-      "totalItemRecordsCount": "0",
-      "totalRecordsCount": "0",
-      "showResults": false,
-      "selectAll": false,
-      "selectAllFacets": true,
-      "showTotalCount": false,
-      "index": null,
-      "errorMessage": null
-    }
-
+    this.validateInputs(searchfullrec);
     this.showresultdiv = true;
-    this.searchService.searchNext(this.postData).subscribe(
+    this.searchService.searchNext(this.setPostData(searchfullrec,'nextCall')).subscribe(
       (res) => 
       {
         this.spinner.hide();
         this.searchVal = res;
+        this.pagination();
       });
-
-    this.cols = [
-      { field: 'title', header: 'Title' },
-      { field: 'author', header: 'Author' },
-      { field: 'publisher', header: 'Publisher' },
-      { field: 'publisherDate', header: 'Publisher Date' },
-      { field: 'owningInstitution', header: 'OI' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-      { field: 'summaryHoldings', header: 'SH' }
-    ];
-
-    this.cols1 = [
-      { field: 'callNumber', header: 'Call Number' },
-      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-    ];
+      this.mappingResults();
   }
   //next api end
 
   //previous api start
   previousapi() {
     this.spinner.show();
-    if (this.searchVal['pageNumber'] > 1) {
-      this.firstbutton = false;
-      this.previousbutton = false;
-      this.nextbutton = false;
-      this.lastbutton = false;
-      this.previousValue = this.searchVal['pageNumber'] - 1;
-    }else {
-      this.firstbutton = true;
-      this.previousbutton = true;
-      this.nextbutton = false;
-      this.lastbutton = false;
-      this.previousValue = 0;
-    }
       this.owningInstitutions = [];
       this.collectionGroupDesignations = [];
       this.availability = [];
@@ -576,120 +243,21 @@ export class SearchComponent implements OnInit {
       this.useRestrictions = [];
 
       var searchfullrec = this.searchForm.value;
-      if (searchfullrec.owningInstitutionNYPL == true) {
-        this.owningInstitutions.push('NYPL')
-      }
-      if (searchfullrec.owningInstitutionCUL == true) {
-        this.owningInstitutions.push('CUL')
-      }
-      if (searchfullrec.owningInstitutionPUL == true) {
-        this.owningInstitutions.push('PUL')
-      }
-
-      if (searchfullrec.shared == true) {
-        this.collectionGroupDesignations.push('Shared')
-      }
-      if (searchfullrec.private == true) {
-        this.collectionGroupDesignations.push('Private')
-      }
-      if (searchfullrec.open == true) {
-        this.collectionGroupDesignations.push('Open')
-      }
-
-      if (searchfullrec.Available == true) {
-        this.availability.push('Available')
-      }
-      if (searchfullrec.notAvailable == true) {
-        this.availability.push('NotAvailable')
-      }
-
-      if (searchfullrec.Monograph == true) {
-        this.materialTypes.push('Monograph')
-      }
-      if (searchfullrec.Serial == true) {
-        this.materialTypes.push('Serial')
-      }
-      if (searchfullrec.others == true) {
-        this.materialTypes.push('Others')
-      }
-
-      if (searchfullrec.NoRestrictions == true) {
-        this.useRestrictions.push('NoRestrictions')
-      }
-
-      if (searchfullrec.InLibraryUse == true) {
-        this.useRestrictions.push('InLibraryUse')
-      }
-
-      if (searchfullrec.SupervisedUse == true) {
-        this.useRestrictions.push('SupervisedUse')
-      }
-
-      this.postData = {
-        "fieldValue": searchfullrec.fieldValue,
-        "fieldName": searchfullrec.fieldName,
-        "owningInstitutions": this.owningInstitutions,
-        "collectionGroupDesignations": this.collectionGroupDesignations,
-        "availability": this.availability,
-        "materialTypes": this.materialTypes,
-        "useRestrictions": this.useRestrictions,
-        "searchResultRows": [],
-        "catalogingStatus": "Complete",
-        "pageNumber": this.previousValue,
-        "pageSize": this.showentries,
-        "isDeleted": false,
-        "totalPageCount": 0,
-        "totalBibRecordsCount": "0",
-        "totalItemRecordsCount": "0",
-        "totalRecordsCount": "0",
-        "showResults": false,
-        "selectAll": false,
-        "selectAllFacets": true,
-        "showTotalCount": false,
-        "index": null,
-        "errorMessage": null
-      }
+      this.validateInputs(searchfullrec);
       this.showresultdiv = true;
-      this.searchService.searchPrevious(this.postData).subscribe(
+      this.searchService.searchPrevious(this.setPostData(searchfullrec,'previousCall')).subscribe(
         (res) => {
           this.spinner.hide();
           this.searchVal = res
+          this.pagination();
         });
-
-      this.cols = [
-        { field: 'title', header: 'Title' },
-        { field: 'author', header: 'Author' },
-        { field: 'publisher', header: 'Publisher' },
-        { field: 'publisherDate', header: 'Publisher Date' },
-        { field: 'owningInstitution', header: 'OI' },
-        { field: 'customerCode', header: 'CC' },
-        { field: 'collectionGroupDesignation', header: 'CGD' },
-        { field: 'useRestriction', header: 'Use Restriction' },
-        { field: 'barcode', header: 'Barcode' },
-        { field: 'summaryHoldings', header: 'SH' }
-      ];
-
-      this.cols1 = [
-        { field: 'callNumber', header: 'Call Number' },
-        { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-        { field: 'customerCode', header: 'CC' },
-        { field: 'collectionGroupDesignation', header: 'CGD' },
-        { field: 'useRestriction', header: 'Use Restriction' },
-        { field: 'barcode', header: 'Barcode' },
-      ];
+        this.mappingResults();
   }
   //previous api end
-
 
   //first api start
   firstapi() {
     this.spinner.show();
-    this.firstbutton = true;
-    this.previousbutton = true;
-    this.nextbutton = false;
-    this.lastbutton = false;
-    this.nextvalue = 0;
-    this.nextvalue = this.nextvalue;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
     this.availability = [];
@@ -697,230 +265,36 @@ export class SearchComponent implements OnInit {
     this.useRestrictions = [];
 
     var searchfullrec = this.searchForm.value;
-    if (searchfullrec.owningInstitutionNYPL == true) {
-      this.owningInstitutions.push('NYPL')
-    }
-    if (searchfullrec.owningInstitutionCUL == true) {
-      this.owningInstitutions.push('CUL')
-    }
-    if (searchfullrec.owningInstitutionPUL == true) {
-      this.owningInstitutions.push('PUL')
-    }
-
-    if (searchfullrec.shared == true) {
-      this.collectionGroupDesignations.push('Shared')
-    }
-    if (searchfullrec.private == true) {
-      this.collectionGroupDesignations.push('Private')
-    }
-    if (searchfullrec.open == true) {
-      this.collectionGroupDesignations.push('Open')
-    }
-
-    if (searchfullrec.Available == true) {
-      this.availability.push('Available')
-    }
-    if (searchfullrec.notAvailable == true) {
-      this.availability.push('NotAvailable')
-    }
-
-    if (searchfullrec.Monograph == true) {
-      this.materialTypes.push('Monograph')
-    }
-    if (searchfullrec.Serial == true) {
-      this.materialTypes.push('Serial')
-    }
-    if (searchfullrec.others == true) {
-      this.materialTypes.push('Others')
-    }
-
-    if (searchfullrec.NoRestrictions == true) {
-      this.useRestrictions.push('NoRestrictions')
-    }
-
-    if (searchfullrec.InLibraryUse == true) {
-      this.useRestrictions.push('InLibraryUse')
-    }
-
-    if (searchfullrec.SupervisedUse == true) {
-      this.useRestrictions.push('SupervisedUse')
-    }
-
-    this.postData = {
-      "fieldValue": searchfullrec.fieldValue,
-      "fieldName": searchfullrec.fieldName,
-      "owningInstitutions": this.owningInstitutions,
-      "collectionGroupDesignations": this.collectionGroupDesignations,
-      "availability": this.availability,
-      "materialTypes": this.materialTypes,
-      "useRestrictions": this.useRestrictions,
-      "searchResultRows": [],
-      "catalogingStatus": "Complete",
-      "pageNumber": this.nextvalue,
-      "pageSize": this.showentries,
-      "isDeleted": false,
-      "totalPageCount": 0,
-      "totalBibRecordsCount": "0",
-      "totalItemRecordsCount": "0",
-      "totalRecordsCount": "0",
-      "showResults": false,
-      "selectAll": false,
-      "selectAllFacets": true,
-      "showTotalCount": false,
-      "index": null,
-      "errorMessage": null
-    }
-
-    this.searchService.searchFirst(this.postData).subscribe(
+    this.validateInputs(searchfullrec);
+    this.searchService.searchFirst(this.setPostData(searchfullrec,'firstCall')).subscribe(
       (res) => {
         this.spinner.hide();
         this.searchVal = res;
         this.searchVal['pageNumber']=0;
+        this.pagination();
       });
-
-    this.cols = [
-      { field: 'title', header: 'Title' },
-      { field: 'author', header: 'Author' },
-      { field: 'publisher', header: 'Publisher' },
-      { field: 'publisherDate', header: 'Publisher Date' },
-      { field: 'owningInstitution', header: 'OI' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-      { field: 'summaryHoldings', header: 'SH' }
-    ];
-
-    this.cols1 = [
-      { field: 'callNumber', header: 'Call Number' },
-      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-    ];
+      this.mappingResults();
   }
   //first api end
-
-
   //last api start
   lastapi() {
     this.spinner.show();
-    this.firstbutton = false;
-    this.previousbutton = false;
-    this.nextbutton = true;
-    this.lastbutton = true;
-    this.lastValue = this.searchVal['totalPageCount']-1;
-    this.nextvalue = this.nextvalue;
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
     this.useRestrictions = [];
-
     var searchfullrec = this.searchForm.value;
-    if (searchfullrec.owningInstitutionNYPL == true) {
-      this.owningInstitutions.push('NYPL')
-    }
-    if (searchfullrec.owningInstitutionCUL == true) {
-      this.owningInstitutions.push('CUL')
-    }
-    if (searchfullrec.owningInstitutionPUL == true) {
-      this.owningInstitutions.push('PUL')
-    }
-
-    if (searchfullrec.shared == true) {
-      this.collectionGroupDesignations.push('Shared')
-    }
-    if (searchfullrec.private == true) {
-      this.collectionGroupDesignations.push('Private')
-    }
-    if (searchfullrec.open == true) {
-      this.collectionGroupDesignations.push('Open')
-    }
-
-    if (searchfullrec.Available == true) {
-      this.availability.push('Available')
-    }
-    if (searchfullrec.notAvailable == true) {
-      this.availability.push('NotAvailable')
-    }
-
-    if (searchfullrec.Monograph == true) {
-      this.materialTypes.push('Monograph')
-    }
-    if (searchfullrec.Serial == true) {
-      this.materialTypes.push('Serial')
-    }
-    if (searchfullrec.others == true) {
-      this.materialTypes.push('Others')
-    }
-
-    if (searchfullrec.NoRestrictions == true) {
-      this.useRestrictions.push('NoRestrictions')
-    }
-
-    if (searchfullrec.InLibraryUse == true) {
-      this.useRestrictions.push('InLibraryUse')
-    }
-
-    if (searchfullrec.SupervisedUse == true) {
-      this.useRestrictions.push('SupervisedUse')
-    }
-
-    this.postData = {
-      "fieldValue": searchfullrec.fieldValue,
-      "fieldName": searchfullrec.fieldName,
-      "owningInstitutions": this.owningInstitutions,
-      "collectionGroupDesignations": this.collectionGroupDesignations,
-      "availability": this.availability,
-      "materialTypes": this.materialTypes,
-      "useRestrictions": this.useRestrictions,
-      "searchResultRows": [],
-      "catalogingStatus": "Complete",
-      "pageNumber": this.lastValue,
-      "pageSize": this.showentries,
-      "isDeleted": false,
-      "totalPageCount": 0,
-      "totalBibRecordsCount": "0",
-      "totalItemRecordsCount": "0",
-      "totalRecordsCount": "0",
-      "showResults": false,
-      "selectAll": false,
-      "selectAllFacets": true,
-      "showTotalCount": false,
-      "index": null,
-      "errorMessage": null
-    }
+    this.validateInputs(searchfullrec);
     this.showresultdiv = true;
-    this.searchService.searchLast(this.postData).subscribe(
+    this.searchService.searchLast(this.setPostData(searchfullrec,'lastCall')).subscribe(
       (res) => 
       {
         this.spinner.hide();
         this.searchVal = res;
+        this.pagination();
       });
-
-    this.cols = [
-      { field: 'title', header: 'Title' },
-      { field: 'author', header: 'Author' },
-      { field: 'publisher', header: 'Publisher' },
-      { field: 'publisherDate', header: 'Publisher Date' },
-      { field: 'owningInstitution', header: 'OI' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-      { field: 'summaryHoldings', header: 'SH' }
-    ];
-
-    this.cols1 = [
-      { field: 'callNumber', header: 'Call Number' },
-      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-    ];
+      this.mappingResults();
   }
   //last api end
 
@@ -1026,5 +400,145 @@ export class SearchComponent implements OnInit {
 
   facetsshowhide(){
     $("#search-filter").slideToggle();
+  }
+
+  validateInputs(searchfullrec){
+    if (searchfullrec.owningInstitutionNYPL == true) {
+      this.owningInstitutions.push('NYPL')
+    }
+    if (searchfullrec.owningInstitutionCUL == true) {
+      this.owningInstitutions.push('CUL')
+    }
+    if (searchfullrec.owningInstitutionPUL == true) {
+      this.owningInstitutions.push('PUL')
+    }
+
+    if (searchfullrec.shared == true) {
+      this.collectionGroupDesignations.push('Shared')
+    }
+    if (searchfullrec.private == true) {
+      this.collectionGroupDesignations.push('Private')
+    }
+    if (searchfullrec.open == true) {
+      this.collectionGroupDesignations.push('Open')
+    }
+
+    if (searchfullrec.Available == true) {
+      this.availability.push('Available')
+    }
+    if (searchfullrec.notAvailable == true) {
+      this.availability.push('NotAvailable')
+    }
+
+    if (searchfullrec.Monograph == true) {
+      this.materialTypes.push('Monograph')
+    }
+    if (searchfullrec.Serial == true) {
+      this.materialTypes.push('Serial')
+    }
+    if (searchfullrec.others == true) {
+      this.materialTypes.push('Others')
+    }
+
+    if (searchfullrec.NoRestrictions == true) {
+      this.useRestrictions.push('NoRestrictions')
+    }
+
+    if (searchfullrec.InLibraryUse == true) {
+      this.useRestrictions.push('InLibraryUse')
+    }
+
+    if (searchfullrec.SupervisedUse == true) {
+      this.useRestrictions.push('SupervisedUse')
+    }
+  }
+  pagination() {
+    if (this.searchVal['pageNumber'] == 0 && (this.searchVal['totalPageCount'] - 1 > 0)) {
+      this.firstbutton = true;
+      this.previousbutton = true;
+      this.nextbutton = false;
+      this.lastbutton = false;
+    } else if (this.searchVal['pageNumber'] == 0 && (this.searchVal['pageNumber'] == this.searchVal['totalPageCount'] - 1)) {
+      this.firstbutton = true;
+      this.previousbutton = true;
+      this.nextbutton = true;
+      this.lastbutton = true;
+    }
+    else if ((this.searchVal['pageNumber'] == this.searchVal['totalPageCount'] - 1) && this.searchVal['totalPageCount'] - 1 > 0) {
+      this.firstbutton = false;
+      this.previousbutton = false;
+      this.nextbutton = true;
+      this.lastbutton = true;
+    } else if ((this.searchVal['pageNumber'] < this.searchVal['totalPageCount'] - 1) && (this.searchVal['pageNumber'] != 0)) {
+      this.firstbutton = false;
+      this.previousbutton = false;
+      this.nextbutton = false;
+      this.lastbutton = false;
+    }
+  }
+  mappingResults(){
+    this.cols = [
+      { field: 'title', header: 'Title' },
+      { field: 'author', header: 'Author' },
+      { field: 'publisher', header: 'Publisher' },
+      { field: 'publisherDate', header: 'Publisher Date' },
+      { field: 'owningInstitution', header: 'OI' },
+      { field: 'customerCode', header: 'CC' },
+      { field: 'collectionGroupDesignation', header: 'CGD' },
+      { field: 'useRestriction', header: 'Use Restriction' },
+      { field: 'barcode', header: 'Barcode' },
+      { field: 'summaryHoldings', header: 'SH' }
+    ];
+
+    this.cols1 = [
+      { field: 'callNumber', header: 'Call Number' },
+      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
+      { field: 'customerCode', header: 'CC' },
+      { field: 'collectionGroupDesignation', header: 'CGD' },
+      { field: 'useRestriction', header: 'Use Restriction' },
+      { field: 'barcode', header: 'Barcode' },
+    ];
+  }
+  setPostData(searchfullrec,actionName){
+    if (actionName == 'search') {
+      this.showentries = 10;
+      this.pageNumber = 0;
+    } else if (actionName == 'firstCall') {
+      this.pageNumber = 0;
+    } else if (actionName == 'lastCall') {
+      this.pageNumber = this.searchVal['totalPageCount'];
+      this.totalPageCount = this.searchVal['totalPageCount'];
+    } else if (actionName == 'previousCall') {
+      this.pageNumber = this.searchVal['pageNumber'];
+    } else if (actionName == 'nextCall') {
+      this.pageNumber = this.searchVal['pageNumber'];
+    } else if (actionName == 'pageSize') {
+      this.pageNumber = this.searchVal['pageNumber'];
+    }
+    this.postData = {
+      "fieldValue": searchfullrec.fieldValue,
+      "fieldName": searchfullrec.fieldName,
+      "owningInstitutions": this.owningInstitutions,
+      "collectionGroupDesignations": this.collectionGroupDesignations,
+      "availability": this.availability,
+      "materialTypes": this.materialTypes,
+      "useRestrictions": this.useRestrictions,
+      "searchResultRows": [],
+      "catalogingStatus": "Complete",
+      "pageNumber": this.pageNumber,
+      "pageSize": this.showentries,
+      "isDeleted": false,
+      "totalPageCount": this.totalPageCount,
+      "totalBibRecordsCount": "0",
+      "totalItemRecordsCount": "0",
+      "totalRecordsCount": "0",
+      "showResults": false,
+      "selectAll": false,
+      "selectAllFacets": true,
+      "showTotalCount": false,
+      "index": null,
+      "errorMessage": null
+    }
+    return this.postData;
   }
 }

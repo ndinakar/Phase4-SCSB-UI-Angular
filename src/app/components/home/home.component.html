@@ -40,7 +40,7 @@
                                     <option *ngFor="let ins of Institution" [value]="ins.id">{{ins.name}}</option>
                                 </select>
                                     <div style="color:red" *ngIf="submitted && f.institution.errors" class="invalid-feedback">
-                                        <div *ngIf="f.institution.errors.required">Institution is required</div>
+                                        <div *ngIf="f.institution.errors.required">This Field is required</div>
                                     </div>
                                 </div>
                             </div>
