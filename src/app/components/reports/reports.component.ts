@@ -1,9 +1,8 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { ReportsService } from 'src/app/services/reports/reports.service';
 declare var $: any;
-import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
