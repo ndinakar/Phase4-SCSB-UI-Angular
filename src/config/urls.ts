@@ -1,6 +1,6 @@
 
 export const urls = {
-    baseUrl: 'http://localhost:9089',
+    baseUrl: 'http://52.203.96.232:9089',
     search: '/search',
     collection: '/collection',
     requests: '/request',
@@ -9,7 +9,7 @@ export const urls = {
     userRoles:'/userRoles',
     roles: '/roles',
     bulkRequest: '/bulkRequest',
-    ui_url:'http://localhost:9088',
+    ui_url:'http://52.203.96.232:9091',
     openMarc:'/openMarcRecord',
-    batchScheduleUrl:'http://localhost:7096'
+    batchScheduleUrl:'http://52.203.96.232:9096'
 }
