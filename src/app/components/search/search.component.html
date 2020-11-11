@@ -326,7 +326,7 @@
                                             </td>
                                             <td id="colData_column_{{i}}" *ngFor="let col of columns;let i=index"><img *ngIf="col.field=='title' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> <img *ngIf="col.field=='title' && rowData.availability =='Not Available'"
                                                     class="status" src="../../../../assets/images/out.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> &nbsp;&nbsp;
-                                                <a target="_blank" (click)="routeTomarc(rowData['bibId'])" *ngIf="col.field=='title'" style="cursor: pointer;">{{rowData[col.field]}}</a><span *ngIf="col.field!='title'">{{rowData[col.field]}}</span>
+                                                <a target="_blank" routerLink="/openMarcRecord" [queryParams]="{bibId: rowData['bibId']}" *ngIf="col.field=='title'" style="cursor: pointer;">{{rowData[col.field]}}</a><span *ngIf="col.field!='title'">{{rowData[col.field]}}</span>
                                             </td>
                                         </tr>
                                     </ng-template>
