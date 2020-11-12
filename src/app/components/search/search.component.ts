@@ -3,11 +3,10 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
-import { NgxSpinnerService } from "ngx-spinner";
-import { urls } from 'src/config/urls';
 declare var $: any;
 
 @Component({
@@ -353,7 +352,7 @@ export class SearchComponent implements OnInit {
   }
   onReset() {
     this.showresultdiv = false;
-    this.checked =true;
+    this.checked = true;
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],

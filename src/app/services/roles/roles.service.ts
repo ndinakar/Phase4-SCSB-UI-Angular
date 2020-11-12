@@ -28,9 +28,9 @@ export class RolesService {
   }
   createRole(postData: RolesForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createRole", postData,
-    {
-      headers: appHeaders.getHeaders()
-    });
+      {
+        headers: appHeaders.getHeaders()
+      });
   }
   saveEditedRole(roleId, roleName, roleDescription, permissionNames): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders();
@@ -49,7 +49,7 @@ export class RolesService {
       });
   }
   delete(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/delete",postData,
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/delete", postData,
       {
         headers: appHeaders.getHeaders()
       });

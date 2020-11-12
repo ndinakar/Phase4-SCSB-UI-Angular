@@ -2,10 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { UserRoleFormData } from 'src/app/model/UserRoleFormData';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
-import { ScheduleJobsForm } from 'src/app/model/ScheduleJobsForm';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +19,6 @@ export class OpenMarcService {
     let parames = new HttpParams()
       .set('bibId', bibId);
     const options = { params: parames, headers: headers };
-    return this.httpClient.get<TreeNode[]>(this.baseUrl+this.prefix, options);
+    return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix, options);
   }
 }

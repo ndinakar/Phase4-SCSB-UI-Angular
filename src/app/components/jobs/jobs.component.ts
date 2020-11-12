@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { urls } from 'src/config/urls';
 import { JobsService } from 'src/app/services/jobs/jobs.service';
+import { urls } from 'src/config/urls';
 
 @Component({
   selector: 'app-jobs',
@@ -26,7 +26,7 @@ export class JobsComponent implements OnInit {
   jobId: number;
   jobInstanceId: number;
   batchScheduleUrl = urls.batchScheduleUrl;
-  url: string =this.batchScheduleUrl+'/jobs/';
+  url: string = this.batchScheduleUrl + '/jobs/';
   constructor(private jobsService: JobsService, private router: ActivatedRoute, private spinner: NgxSpinnerService) { }
   ngOnInit(): void {
     console.log(this.url)
@@ -34,7 +34,7 @@ export class JobsComponent implements OnInit {
     this.jobsService.displayJobs().subscribe(
       (res) => {
         this.jobsResVal = res;
-        console.log("Testing"+"  "+this.jobsResVal['jobEntities']);
+        console.log("Testing" + "  " + this.jobsResVal['jobEntities']);
         this.spinner.hide();
       },
       (error) => {
@@ -105,14 +105,14 @@ export class JobsComponent implements OnInit {
       (res) => {
         this.jobsResVal = res;
         this.spinner.hide();
-        if(this.jobsResVal['message'] != null){
+        if (this.jobsResVal['message'] != null) {
           this.messageIdDiv = true;
           this.status_readOnly = true;
           this.errorMessageIdDiv = false;
           this.schedule_show = false;
           this.reschedule_show = false;
           this.unschedule_show = false;
-        }else if(this.jobsResVal['errorMessage'] != null){
+        } else if (this.jobsResVal['errorMessage'] != null) {
           this.errorMessageIdDiv = true;
           this.messageIdDiv = false;
           this.status_readOnly = false;

@@ -2,10 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { UserRoleFormData } from 'src/app/model/UserRoleFormData';
+import { ScheduleJobsForm } from 'src/app/model/ScheduleJobsForm';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
-import { ScheduleJobsForm } from 'src/app/model/ScheduleJobsForm';
 @Injectable({
   providedIn: 'root'
 })

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { RequestService } from 'src/app/services/request/request.service';
-import { NgxSpinnerService } from "ngx-spinner";
 
 
 declare var $: any;
@@ -88,7 +88,7 @@ export class RequestComponent implements OnInit {
   status: boolean;
   createRequestError: boolean;
   errorMessage: string;
-  constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute,private spinner: NgxSpinnerService) { }
+  constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.spinner.hide();
@@ -168,7 +168,7 @@ export class RequestComponent implements OnInit {
   }
   initialload() {
     this.createRequestError = false;
-    this.requestService.loadCreateRequest().subscribe( 
+    this.requestService.loadCreateRequest().subscribe(
       (res) => {
         this.requestVal = res;
         this.requestTypeId = this.requestVal['requestType'];
@@ -226,7 +226,7 @@ export class RequestComponent implements OnInit {
   }
 
   loadSearchRequest() {
-    this.searchInstitutionList= '';
+    this.searchInstitutionList = '';
     this.requestStatus = '';
     this.searchPatronBarcode = '';
     this.searchItemBarcode = '';

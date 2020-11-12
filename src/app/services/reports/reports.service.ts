@@ -69,16 +69,16 @@ export class ReportsService {
       });
   }
   deaccessionInformation(postData: ReportsForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/deaccessionInformation",postData,
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/deaccessionInformation", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   exportData(postData: ReportsForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/export",postData,
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/export", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
-  
+
 }

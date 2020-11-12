@@ -56,7 +56,7 @@ export class CollectionComponent implements OnInit {
   errorMessage: string;
   radioSwitchEditCGD: boolean;
   radioSwitchDeaccession: boolean;
-  constructor(private formBuilder: FormBuilder, private collectionService: CollectionService,private spinner: NgxSpinnerService) { }
+  constructor(private formBuilder: FormBuilder, private collectionService: CollectionService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.collectionForm = this.formBuilder.group({
@@ -693,7 +693,7 @@ export class CollectionComponent implements OnInit {
       this.collectionUpdateMessage = true;
       this.collectionUpdateWarningMessage = false;
       this.collectionUpdateErrorMessage = false;
-    }else{
+    } else {
       this.collectionUpdateMessage = false;
       this.collectionUpdateWarningMessage = false;
       this.collectionUpdateErrorMessage = false;

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { Title } from '@angular/platform-browser';
 import { OpenMarcService } from 'src/app/services/openMarc/open-marc.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class OpenMarcComponent implements OnInit {
   errorMessageDiv = false;
   successMessageDiv = false;
   public id;
-  constructor(private openMarcService: OpenMarcService, private spinner: NgxSpinnerService,private routeParams: ActivatedRoute,private titleService:Title) { }
+  constructor(private openMarcService: OpenMarcService, private spinner: NgxSpinnerService, private routeParams: ActivatedRoute, private titleService: Title) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -26,16 +26,16 @@ export class OpenMarcComponent implements OnInit {
     this.openMarcService.openMarc(this.id).subscribe(
       (res) => {
         this.bibliographicMarcForm = res;
-        if(this.bibliographicMarcForm['errorMessage'] !=null){
+        if (this.bibliographicMarcForm['errorMessage'] != null) {
           this.errorMessageDiv = true;
           this.successMessageDiv = false;
-        }else{
+        } else {
           this.errorMessageDiv = false;
           this.successMessageDiv = true;
         }
         this.spinner.hide();
       },
-      (error)=>{
+      (error) => {
         this.spinner.hide();
         console.log(error);
       }
