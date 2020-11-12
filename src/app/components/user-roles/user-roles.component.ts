@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { EMPTY } from 'rxjs';
 import { UserRolesService } from 'src/app/services/userRoles/user-roles.service';
 @Component({
   selector: 'app-user-roles',
@@ -9,14 +9,16 @@ import { UserRolesService } from 'src/app/services/userRoles/user-roles.service'
 })
 export class UserRolesComponent implements OnInit {
 
-  constructor(private userRolesService: UserRolesService) { }
+  constructor(private userRolesService: UserRolesService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.hide();
   }
+  networkLoginIdErrMsg: boolean;
   roleId: string;
   searchNetworkId: string;
   userEmailId: string;
-  showUserSearchView = true;
+  UserPanel = true;
   showSearchResultsDiv = false;
   errorMessageforSearchDiv = false;
   deletedSuccessMsgDiv = false;
@@ -36,7 +38,7 @@ export class UserRolesComponent implements OnInit {
   userRolesVal: TreeNode[];
   userRoleListVal: TreeNode[];
   userResponse: TreeNode[];
-
+  editnetworkLoginIdErrMsgDiv: boolean;
   lastbutton = true;
   firstbutton = true;
   previousbutton = true;
@@ -49,7 +51,7 @@ export class UserRolesComponent implements OnInit {
   roleIdErrMsgDiv = false;
   //edit User
   editEmailId: string;
-  edituserDescription: string;
+  edituserDescription = "";
   editnetworkLoginId: string;
   editinstitutionId: string;
   editroleId: number[];
@@ -68,7 +70,7 @@ export class UserRolesComponent implements OnInit {
   numOfRecordsId = 10;
   //create User
   emailId: string;
-  userDescription: string;
+  userDescription = "";
   rolesOption: number[];
   //institutionId : string;
   networkLoginId: string;
@@ -76,6 +78,12 @@ export class UserRolesComponent implements OnInit {
   editUserId: number;
   userId: number;
   searchBarDiv = true;
+
+  userDescriptionErrMsgDiv = false;
+  edituserDescriptionErrMsgDiv = false;
+  editEmailIdErrMsgDiv = false;
+  emailIdErrMsgDiv = false;
+  showUserSearchView = true;
   postData = {
     "userId": null,
     "institutionId": null,
@@ -143,12 +151,15 @@ export class UserRolesComponent implements OnInit {
   }
   enableCreateUser() {
     this.userRoles();
+    //this.UserPanel = false;
+    //this.searchBarDiv =false;
     this.createUserDiv = true;
     this.errorMessageDiv = false;
     this.showUserSearchView = false;
     this.deleteUserDiv = false;
   }
   editUser(userId, networkLoginId, roleName) {
+    this.spinner.show();
     this.editusersDiv = true;
     this.createUserDiv = false;
     this.showSearchResultsDiv = false;
@@ -162,18 +173,17 @@ export class UserRolesComponent implements OnInit {
     this.userRolesService.editUser(userId, networkLoginId).subscribe(
       (res) => {
         this.userResponse = res;
-        this.userRoleListVal = this.userResponse['roles'].map(function(x) { return { id: x[0], name: x[1] }; }); 
+        this.userRoleListVal = this.userResponse['roles'].map(function (x) { return { id: x[0], name: x[1] }; });
         this.editroleId = this.userResponse['editSelectedForCreate'];
         this.editEmailId = this.userResponse['editEmailId'];
         this.edituserDescription = this.userResponse['editUserDescription'];
         this.editnetworkLoginId = this.userResponse['editNetworkLoginId'];
         this.editinstitutionId = this.userResponse['editInstitutionId'];
-        console.log("roleName", this.editroleId);
-        console.log("userResponse", this.userResponse);
-
+        this.spinner.hide();
       });
   }
   deleteUserRole(userId, networkLoginId, roleName) {
+    this.spinner.show();
     this.editusersDiv = false;
     this.createUserDiv = false;
     this.showSearchResultsDiv = false;
@@ -188,15 +198,17 @@ export class UserRolesComponent implements OnInit {
     this.userRolesService.editUser(userId, networkLoginId).subscribe(
       (res) => {
         this.userResponse = res;
-        this.userRoleListVal = this.userResponse['roles'].map(function(x) { return { id: x[0], name: x[1] }; }); 
+        this.userRoleListVal = this.userResponse['roles'].map(function (x) { return { id: x[0], name: x[1] }; });
         this.deleteEmailId = this.userResponse['editEmailId'];
         this.deleteUserDescription = this.userResponse['editUserDescription'];
         this.deleteNetworkLoginId = this.userResponse['editNetworkLoginId'];
         this.deleteInstitutionId = this.userResponse['editInstitutionId'];
         this.deletedRoleId = this.userResponse['editSelectedForCreate'];
+        this.spinner.hide();
       });
   }
   searchUserRoles() {
+    this.spinner.show();
     this.userRolesService.searchRoles(this.setPostData('searchUsers')).subscribe(
       (res) => {
         this.userRoleFormVal = res;
@@ -225,7 +237,7 @@ export class UserRolesComponent implements OnInit {
           this.totalRecordsCountDiv = true;
           this.userRolePaginationDiv = true;
         }
-
+        this.spinner.hide();
       }
     );
   }
@@ -237,61 +249,144 @@ export class UserRolesComponent implements OnInit {
         this.pagination();
       });
   }
+  validateCreateUser() {
+    this.emailIdErrMsgDiv = false;
+    this.userDescriptionErrMsgDiv = false;
+    this.roleIdErrMsgDiv = false;
+    this.institutionIdErrMsgDiv = false;
+    this.networkLoginIdErrMsg = false;
+    var statusCreateRole = true;
+    if (this.emailId == '' || this.emailId == null || this.emailId == undefined) {
+      this.emailIdErrMsgDiv = true;
+      statusCreateRole = false;
+    }
+    if (this.userDescription == null || this.userDescription == '' || this.userDescription == undefined) {
+      this.userDescriptionErrMsgDiv = true
+      statusCreateRole = false;
+    }
+    if (this.institutionId == null || this.institutionId == undefined) {
+      this.institutionIdErrMsgDiv = true
+      statusCreateRole = false;
+    }
+    if (this.networkLoginId == null || this.networkLoginId == '' || this.networkLoginId == undefined) {
+      this.networkLoginIdErrMsg = true
+      statusCreateRole = false;
+    }
+    if (this.rolesOption == null || this.rolesOption == undefined) {
+      this.roleIdErrMsgDiv = true
+      statusCreateRole = false;
+    }
+    if (!(this.validateEmailAddress(this.emailId))) {
+      statusCreateRole = false;
+      this.emailIdErrMsgDiv = true;
+    }
+    return statusCreateRole;
+  }
   createUser(emailId, userDescription, institutionId, networkLoginId) {
-    this.emailId = emailId;
-    this.userDescription = userDescription;
-    this.selectedForCreate = this.rolesOption;
-    this.institutionId = institutionId;
-    this.networkLoginId = networkLoginId;
+    if (this.validateCreateUser()) {
+      this.spinner.show();
+      this.emailId = emailId;
+      this.userDescription = userDescription;
+      this.selectedForCreate = this.rolesOption;
+      this.institutionId = institutionId;
+      this.networkLoginId = networkLoginId;
+      this.userRolesService.createUser(this.setPostData('createUser')).subscribe(
+        (res) => {
+          this.userRoleFormVal = res;
+          this.createUserDiv = true;
+          this.showSearchResultsDiv = false;
+          this.errorMessageDiv = false;
+          this.searchResultsDiv = false;
+          this.deleteUserDiv = false;
+          this.showUserSearchView = false;
+          this.editsuccessMsgDiv = false;
+          this.editerrormsgDiv = false;
+          if (this.userRoleFormVal['message'] != null) {
+            this.createSuccussMessageDiv = true;
+            this.createErrorMessageDiv = false;
+          } else if (this.userRoleFormVal['errorMessage'] != null) {
+            this.createSuccussMessageDiv = false;
+            this.createErrorMessageDiv = true;
+          }
+          this.emailId = '';
+          this.userDescription = '';
+          this.rolesOption = null;
+          this.institutionId = null;
+          this.networkLoginId = '';
+          this.spinner.hide();
+        });
+    }
+  }
+  validateEmailAddress(val) {
+    var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
 
-    this.userRolesService.createUser(this.setPostData('createUser')).subscribe(
-      (res) => {
-        this.userRoleFormVal = res;
-        this.createUserDiv = true;
-        this.showSearchResultsDiv = false;
-        this.errorMessageDiv = false;
-        this.searchResultsDiv = false;
-        this.deleteUserDiv = false;
-        this.showUserSearchView = false;
-        this.editsuccessMsgDiv = false;
-        this.editerrormsgDiv = false;
-        if (this.userRoleFormVal['message'] != null) {
-          this.createSuccussMessageDiv = true;
-          this.createErrorMessageDiv = false;
-        } else if (this.userRoleFormVal['errorMessage'] != null) {
-          this.createSuccussMessageDiv = false;
-          this.createErrorMessageDiv = true;
-        }
-        this.emailId = '';
-        this.userDescription = '';
-        this.rolesOption = null;
-        this.institutionId = null;
-        this.networkLoginId = '';
-      });
+    if (pattern.test(val)) {
+      return true
+    } else {
+      return false;
+    }
+  }
+  validateUpdateUser() {
+    this.edituserDescriptionErrMsgDiv = false;
+    this.editEmailIdErrMsgDiv = false;
+    this.editroleIdErrMsgDiv = false;
+    this.editnetworkLoginIdErrMsgDiv = false;
+    this.editnetworkLoginIdErrMsgDiv = false;
+    var statusCreateRole = true;
+    if (this.editEmailId == '' || this.editEmailId == null || this.editEmailId == undefined) {
+      this.editEmailIdErrMsgDiv = true;
+      statusCreateRole = false;
+    }
+    if (this.edituserDescription == null || this.edituserDescription == '' || this.edituserDescription == undefined) {
+      this.edituserDescriptionErrMsgDiv = true
+      statusCreateRole = false;
+    }
+    if (this.editinstitutionId == null || this.editinstitutionId == undefined) {
+      this.editinstitutionIdErrMsgDiv = true
+      statusCreateRole = false;
+    }
+    if (this.editnetworkLoginId == null || this.editnetworkLoginId == '' || this.editnetworkLoginId == undefined) {
+      this.editnetworkLoginIdErrMsgDiv = true;
+      statusCreateRole = false;
+    }
+    if (this.editroleId == null || this.editroleId == undefined || this.editroleId.length <= 0) {
+      this.editroleIdErrMsgDiv = true;
+      statusCreateRole = false;
+    }
+    if (!(this.validateEmailAddress(this.editEmailId))) {
+      statusCreateRole = false;
+      this.editEmailIdErrMsgDiv = true;
+    }
+    return statusCreateRole;
   }
   saveEditUser(networkLoginId, userDescription, institutionId, userEmailId) {
-    this.userRolesService.saveEditUser(this.userId, this.editroleId, networkLoginId, userDescription, institutionId, userEmailId).subscribe(
-      (res) => {
-        this.userRoleFormVal = res;
-        this.editusersDiv = true;
-        this.createUserDiv = false;
-        this.showSearchResultsDiv = false;
-        this.errorMessageDiv = false;
-        this.searchResultsDiv = false;
-        this.deleteUserDiv = false;
-        this.showUserSearchView = false;
-        this.editsuccessMsgDiv = false;
-        this.editerrormsgDiv = false;
-        if (this.userRoleFormVal['message'] != null) {
-          this.editsuccessMsgDiv = true;
-          this.editerrormsgDiv = false;
-        } else if (this.userRoleFormVal['errorMessage'] != null) {
+    if (this.validateUpdateUser()) {
+      this.spinner.show();
+      this.userRolesService.saveEditUser(this.userId, this.editroleId, networkLoginId, userDescription, institutionId, userEmailId).subscribe(
+        (res) => {
+          this.userRoleFormVal = res;
+          this.editusersDiv = true;
+          this.createUserDiv = false;
+          this.showSearchResultsDiv = false;
+          this.errorMessageDiv = false;
+          this.searchResultsDiv = false;
+          this.deleteUserDiv = false;
+          this.showUserSearchView = false;
           this.editsuccessMsgDiv = false;
-          this.editerrormsgDiv = true;
-        }
-      });
+          this.editerrormsgDiv = false;
+          if (this.userRoleFormVal['message'] != null) {
+            this.editsuccessMsgDiv = true;
+            this.editerrormsgDiv = false;
+          } else if (this.userRoleFormVal['errorMessage'] != null) {
+            this.editsuccessMsgDiv = false;
+            this.editerrormsgDiv = true;
+          }
+          this.spinner.hide();
+        });
+    }
   }
   deleteUser(networkLoginId) {
+    this.spinner.show();
     this.userRolesService.delete(this.userId, networkLoginId, this.userRoleFormVal['pageNumber'], this.userRoleFormVal['totalPageCount'], this.userRoleFormVal['pageSize']).subscribe(
       (res) => {
         this.userRoleFormVal = res;
@@ -311,14 +406,15 @@ export class UserRolesComponent implements OnInit {
           this.deletedSuccessMsgDiv = false;
           this.deleteErrorMsgDiv = true;
         }
+        this.spinner.hide();
       });
   }
   userRoles() {
     this.userRolesService.userRoles().subscribe(
       (res) => {
         this.userRolesVal = res;
-        this.userRoleListVal = this.userRolesVal['roles'].map(function(x) { return { id: x[0], name: x[1] }; }); 
-        console.log(this.userRoleListVal); 
+        this.userRoleListVal = this.userRolesVal['roles'].map(function (x) { return { id: x[0], name: x[1] }; });
+        console.log(this.userRoleListVal);
       });
   }
   lastCall() {
@@ -385,7 +481,7 @@ export class UserRolesComponent implements OnInit {
   }
   setPostData(actionName) {
     if (actionName == 'createUser') {
-       this.resetFields();
+      this.resetFields();
     } else if (actionName == 'searchUsers') {
       this.numOfRecordsId = 10;
       this.pageNumber = 0;
@@ -487,6 +583,16 @@ export class UserRolesComponent implements OnInit {
     } else if (this.searchNetworkId == null) {
       this.searchNetworkId = "";
     }
+  }
+  goBack($event) {
+    $event.stopPropagation();
+    $event.preventDefault();
+    this.UserPanel = true;
+    this.searchBarDiv = true;
+    this.showUserSearchView = true;
+    this.deleteUserDiv = false;
+    this.editusersDiv = false;
+    this.createUserDiv = false;
   }
 }
 

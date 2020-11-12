@@ -1,0 +1,9 @@
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.tb-mrc {
+    padding: 8px !important;
+    line-height: 1.42857143 !important;
+    vertical-align: top !important;
+}

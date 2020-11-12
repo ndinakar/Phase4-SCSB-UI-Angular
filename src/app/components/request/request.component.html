@@ -7,7 +7,7 @@
             <fieldset>
                 <div role="tabpanel" class="tab-pane" id="request">
                     <div class="row margin-btm-10" *ngIf="searchBar">
-                        <div class="col-sm-12 text-right backtext"><a (click)="loadCreateRequestnew()"><span class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
+                        <div class="col-sm-12 text-right backtext"><a name="btn_loadCreateRequest" (click)="loadCreateRequestnew()" style="cursor: pointer;"><span class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
                     </div>
                     <div *ngIf="searchBar" id="searchRequestsSection" class="request-main-section">
                         <div class="search-bar">
@@ -70,7 +70,7 @@
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
                             <div *ngIf="messageNoSearchRecords" class="row margin-btm-10">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span> {{searchreqResultVal['message']}}</span></div>
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span name="noSearchRecords"> {{searchreqResultVal['message']}}</span></div>
                                 </div>
                             </div>
                             <div *ngIf="searchReqresult">
@@ -98,7 +98,7 @@
                                     <div class="col-xs-12">
                                         <table id="request-result-table" class="table table-striped margin-btm-0">
                                             <thead class="tablesorter-headerRow">
-                                                <tr>
+                                                <tr name="results_rowhdrs">
                                                     <th>Patron Barcode</th>
                                                     <th title="'Request Institution'">RI</th>
                                                     <th>Item Barcode</th>
@@ -115,26 +115,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="requestRow" *ngFor="let item of searchreqResultVal['searchResultRows']">
-                                                    <th>{{ item.patronBarcode }}</th>
-                                                    <td>{{ item.requestingInstitution }}</td>
-                                                    <td><a>{{ item.barcode }}</a></td>
-                                                    <td>{{ item.owningInstitution }}</td>
-                                                    <td>{{ item.deliveryLocation }}</td>
-                                                    <td>{{ item.requestType }}</td>
-                                                    <td>{{ item.requestCreatedBy }}</td>
-                                                    <td>{{ item.patronEmailId }}</td>
-                                                    <td>{{ item.createdDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
-                                                    <td>{{ item.lastUpdatedDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
-                                                    <td>{{ item.status }}</td>
-                                                    <td style="text-align: center"><button style="border-radius: revert;" type="button" (click)="reqNotemodal(item.requestNotes)" name="action"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
+                                                <tr id="rowData_results_{{i}}" class="requestRow" *ngFor="let item of searchreqResultVal['searchResultRows']; let i=index">
+                                                    <th id="data_pb_{{i}}">{{ item.patronBarcode }}</th>
+                                                    <td id="data_ri_{{i}}">{{ item.requestingInstitution }}</td>
+                                                    <td><a id="data_br_{{i}}">{{ item.barcode }}</a></td>
+                                                    <td id="data_oi_{{i}}">{{ item.owningInstitution }}</td>
+                                                    <td id="data_dl_{{i}}">{{ item.deliveryLocation }}</td>
+                                                    <td id="data_rt_{{i}}">{{ item.requestType }}</td>
+                                                    <td id="data_rcb_{{i}}">{{ item.requestCreatedBy }}</td>
+                                                    <td id="data_pe_{{i}}">{{ item.patronEmailId }}</td>
+                                                    <td id="data_cd_{{i}}">{{ item.createdDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
+                                                    <td id="data_ld_{{i}}">{{ item.lastUpdatedDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
+                                                    <td id="data_st_{{i}}">{{ item.status }}</td>
+                                                    <td style="text-align: center"><button id="btn_reqNotes_{{i}}" style="border-radius: revert;" type="button" (click)="reqNotemodal(item.requestNotes)" name="action"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
                                                     <td>
-                                                        <button (click)="cancelRequest(item.requestId)" *ngIf="item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='LAS REFILE REQUEST PLACED'" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7"
+                                                        <button id="bt_cancleRq_{{i}}" (click)="cancelRequest(item.requestId)" *ngIf="item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='LAS REFILE REQUEST PLACED'" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7"
                                                             th:title="'Cancel Request'" type="button" class="btn btn-round" name="action">Cancel Note
                                                         </button>
 
-                                                        <button *ngIf="item.status=='EXCEPTION'" [disabled]="item.availability == 'Not Available'" (click)="resubmitReq(item.barcode,item.requestId)" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7"
-                                                            name="action">Resubmit Request
+                                                        <button id="btn_rs_{{i}}" *ngIf="item.status=='EXCEPTION'" [disabled]="item.availability == 'Not Available'" (click)="resubmitReq(item.barcode,item.requestId)" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7">Resubmit Request
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -234,17 +233,17 @@
                                             <div id="requestPaginationId" name="requestPaginationName" xmlns:th="http://www.w3.org/1999/xhtml">
                                                 <ul class="pagination">
                                                     <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                                        <span (click)="firstCall()">First</span>
+                                                        <span id="first" (click)="firstCall()">First</span>
                                                     </li>
                                                     <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                                        <span (click)="previousCall()">Previous</span>
+                                                        <span id="previous" (click)="previousCall()">Previous</span>
                                                     </li>
                                                     <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                                        <span (click)="nextCall()">Next</span>
+                                                        <span id="next" (click)="nextCall()">Next</span>
 
                                                     </li>
                                                     <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                                        <span (click)="lastCall()">Last</span>
+                                                        <span id="last" (click)="lastCall()">Last</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -268,16 +267,15 @@
                             <div class="col-sm-6 margin-top-0">
                                 <h3 class="margin-0">Create Request</h3>
                             </div>
-                            <div class="col-sm-6 text-right search-request"><a (click)="loadSearchRequest()">Search Requests</a></div>
+                            <div class="col-sm-6 text-right search-request"><a name="searchRequest" (click)="loadSearchRequest()" style="cursor: pointer;">Search Requests</a></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 divider-horizontal margin-top-10 margin-btm-10"></div>
                         </div>
                         <div class="buscador-principal">
                             <div *ngIf="createsubmit" id="successTextIdForRequest" class="text-success">
-                                Your request was received and will be processed.To track the request's status, please <a style="cursor: pointer" (click)="goToSearchRequest(this.patronBarcodeId)"><b><u>click here</u></b></a><br /> To create another request
-                                for the same patron, please <a style="cursor: pointer" (click)="loadCreateRequestForSamePatron(this.patronBarcodeId,this.requestingInstitutionId)"><b><u>click here</u></b></a><br /> To create another request for a different
-                                patron, please <a style="cursor: pointer" (click)="differentpatron()"><b><u>click here</u></b></a>
+                                Your request was received and will be processed.To track the request's status, please <a id="trackRquest_click" style="cursor: pointer" (click)="goToSearchRequest(this.patronBarcodeId)"><b><u>click here</u></b></a><br />                                To create another request for the same patron, please <a id="samePattron_click" style="cursor: pointer" (click)="loadCreateRequestForSamePatron(this.patronBarcodeId,this.requestingInstitutionId)"><b><u>click here</u></b></a><br
+                                /> To create another request for a different patron, please <a id="differentPattron_click" style="cursor: pointer" (click)="differentpatron()"><b><u>click here</u></b></a>
                             </div>
                             <div class="row margin-top-25 margin-btm-30">
                                 <div class="col-sm-12">

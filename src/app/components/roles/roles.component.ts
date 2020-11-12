@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { EMPTY } from 'rxjs';
 import { RolesService } from 'src/app/services/roles/roles.service';
-declare var $: any;
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
@@ -10,10 +10,10 @@ declare var $: any;
 })
 export class RolesComponent implements OnInit {
 
-  constructor(private rolesService: RolesService) { }
+  constructor(private rolesService: RolesService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    $('#mydiv').hide();
+    this.spinner.hide();
   }
   rolesVal: TreeNode[];
   permissionNames: TreeNode[];
@@ -61,9 +61,9 @@ export class RolesComponent implements OnInit {
   deleteRoleDescriptionId: string;
   deletePermissionNameId: string[];
 
-  roleNameForDelete: string; 
-  roleDescriptionForDelete: string; 
-  permissionNamesForDelete: string; 
+  roleNameForDelete: string;
+  roleDescriptionForDelete: string;
+  permissionNamesForDelete: string;
 
   roleId: number;
   //New Role
@@ -108,11 +108,10 @@ export class RolesComponent implements OnInit {
     "showIntial": true
   }
   searchRoles() {
-    $('#mydiv').show();
+    this.spinner.show();
     this.rolesService.searchRoles(this.setPostData('searchRole')).subscribe(
       (res) => {
         this.rolesVal = res;
-        $('#mydiv').hide();
         if (this.rolesVal['rolesSearchResults'] != EMPTY) {
           this.rolesSearchResultsDiv = true;
           this.errorMessageDiv = false;
@@ -127,26 +126,50 @@ export class RolesComponent implements OnInit {
           this.successDiv = false;
         }
         this.pagination();
+        this.spinner.hide();
       });
   }
   resetFields() {
     this.roleName = "";
     this.permissionName = "";
   }
+  validateEditRole() {
+    this.editRoleNameErrorMessageDiv = false;
+    this.editRoleDescriptionErrorMessageDiv = false;
+    this.editPermissionNamesErrorMessageDiv = false;
+    var statusCreateRole = true;
+    if (this.editRoleName == '' || this.editRoleName == null || this.editRoleName == undefined) {
+      this.editRoleNameErrorMessageDiv = true;
+      statusCreateRole = false;
+    }
+    if (this.editRoleDescription == null || this.editRoleDescription == '' || this.editRoleDescription == undefined) {
+      this.editRoleDescriptionErrorMessageDiv = true
+      statusCreateRole = false;
+    }
+    if (this.editPermissionNameId == null || this.editPermissionNameId == undefined || this.editPermissionNameId.length <= 0) {
+      this.editPermissionNamesErrorMessageDiv = true
+      statusCreateRole = false;
+    }
+    return statusCreateRole;
+  }
   saveEditedRole(roleId, roleName, roleDescription, permissionNames) {
-    this.rolesService.saveEditedRole(roleId, roleName, roleDescription, permissionNames).subscribe(
-      (res) => {
-        this.rolesVal = res;
-        if (this.rolesVal['message'] != null) {
-          this.successMessageEditRoleDiv = true;
-          this.successMessageDeleteRoleDiv = false;
-          this.successMessageRoleCreateionDiv = false;
-        } else if (this.rolesVal['errorMessage'] != null) {
-          this.errorMessageEditRoleDiv = true;
-          this.errorMessageDeleteRoleDiv = false;
-          this.errorMessageRoleCreateionDiv = false;
-        }
-      });
+    if (this.validateEditRole()) {
+      this.spinner.show();
+      this.rolesService.saveEditedRole(roleId, roleName, roleDescription, permissionNames).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.rolesVal = res;
+          if (this.rolesVal['message'] != null) {
+            this.successMessageEditRoleDiv = true;
+            this.successMessageDeleteRoleDiv = false;
+            this.successMessageRoleCreateionDiv = false;
+          } else if (this.rolesVal['errorMessage'] != null) {
+            this.errorMessageEditRoleDiv = true;
+            this.errorMessageDeleteRoleDiv = false;
+            this.errorMessageRoleCreateionDiv = false;
+          }
+        });
+    }
   }
   editRole(roleId, roleName, roleDescription, permissionNames) {
     this.populatePermissionNames();
@@ -178,22 +201,25 @@ export class RolesComponent implements OnInit {
     this.deleteRoleNameId = roleName;
     this.roleId = roleId;
   }
-  deleteFromDb(){
+  deleteFromDb() {
+    this.spinner.show();
     this.rolesService.delete(this.setPostData('deleteRole')).subscribe(
-      (res)=>{
-        this.deleteResponse =res ;
+      (res) => {
+        this.spinner.hide();
+        this.deleteResponse = res;
         this.rolesVal = this.deleteResponse;
-        if(this.deleteResponse['message'] !=null){
+        if (this.deleteResponse['message'] != null) {
           this.deleteRoleSectionDiv = false;
           this.rolesSearchResultsDiv = true;
           this.errorMessageDiv = false;
           this.successDiv = true;
           this.rolesPanel = true;
           this.showResults = true;
-        } else if(false){}
+        }
       });
   }
   createRole() {
+    this.successMessageRoleCreateionDiv = false;
     this.showResults = false;
     this.rolesPanel = false;
     this.rolesSearchResultsDiv = false;
@@ -202,25 +228,54 @@ export class RolesComponent implements OnInit {
     this.createRoleSectionDiv = true;
     this.populatePermissionNames();
   }
+  validateCreateRole() {
+    this.roleNameErrorMessageDiv = false;
+    this.roleDescriptionErrorMessageDiv = false;
+    this.permissionNamesErrorMessageDiv = false;
+    var statusCreateRole = true;
+    if (this.roleNameId == '' || this.roleNameId == null || this.roleNameId == undefined) {
+      this.roleNameErrorMessageDiv = true;
+      statusCreateRole = false;
+    }
+    if (this.roleDescriptionId == null || this.roleDescriptionId == '' || this.roleDescriptionId == undefined) {
+      this.roleDescriptionErrorMessageDiv = true
+      statusCreateRole = false;
+    }
+    if (this.permissionNameId == null || this.permissionNameId == '' || this.permissionNameId == undefined) {
+      this.permissionNamesErrorMessageDiv = true
+      statusCreateRole = false;
+    }
+    return statusCreateRole;
+  }
   saveCreateRole() {
-    this.rolesService.createRole(this.setPostData('createRole')).subscribe(
-      (res) => {
-        this.rolesVal = res;
-        if (this.rolesVal['message'] != null) {
-          this.successMessageEditRoleDiv = false;
-          this.successMessageDeleteRoleDiv = false;
-          this.successMessageRoleCreateionDiv = true;
-          this.errorMessageRoleCreateionDiv = false;
-        } else if (this.rolesVal['errorMessage'] != null) {
-          this.errorMessageEditRoleDiv = false;
-          this.errorMessageDeleteRoleDiv = false;
-          this.errorMessageRoleCreateionDiv = true;
-          this.successMessageRoleCreateionDiv = false;
-        }
-        this.roleNameId = '';
-        this.roleDescriptionId = '';
-        this.permissionNameId = '';
-      });
+    if (this.validateCreateRole()) {
+      this.spinner.show();
+      this.rolesService.createRole(this.setPostData('createRole')).subscribe(
+        (res) => {
+          this.rolesVal = res;
+          if (this.rolesVal['message'] != null) {
+            this.successMessageEditRoleDiv = false;
+            this.successMessageDeleteRoleDiv = false;
+            this.successMessageRoleCreateionDiv = true;
+            this.errorMessageRoleCreateionDiv = false;
+            this.spinner.hide();
+          } else if (this.rolesVal['errorMessage'] != null) {
+            this.errorMessageEditRoleDiv = false;
+            this.errorMessageDeleteRoleDiv = false;
+            this.errorMessageRoleCreateionDiv = true;
+            this.successMessageRoleCreateionDiv = false;
+            this.spinner.hide();
+          }
+          this.roleNameId = '';
+          this.roleDescriptionId = '';
+          this.permissionNameId = '';
+          this.spinner.hide();
+        },
+        (error) => {
+          console.log(error);
+          this.spinner.hide();
+        });
+    }
   }
   populatePermissionNames() {
     this.rolesService.populatePermissionName().subscribe(
@@ -233,34 +288,42 @@ export class RolesComponent implements OnInit {
 
   }
   firstCall() {
+    this.spinner.show();
     this.rolesService.firstCall(this.setPostData('firstCall')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
       });
   }
   lastCall() {
+    this.spinner.show();
     this.rolesService.lastCall(this.setPostData('lastCall')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
       });
   }
   previousCall() {
+    this.spinner.show();
     this.rolesService.previousCall(this.setPostData('previousCall')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
       });
   }
   nextCall() {
+    this.spinner.show();
     this.rolesService.nextCall(this.setPostData('nextCall')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
-        this.successDiv = false;  
+        this.successDiv = false;
         this.pagination();
       });
   }
@@ -269,7 +332,7 @@ export class RolesComponent implements OnInit {
     this.rolesService.pageSizeChange(this.setPostData('pageSize')).subscribe(
       (res) => {
         this.rolesVal = res;
-        this.successDiv = false;  
+        this.successDiv = false;
         this.pagination();
       });
   }
@@ -329,12 +392,12 @@ export class RolesComponent implements OnInit {
       this.validateInput();
       this.pageNumber = this.rolesVal['pageNumber'];
       this.showentries = this.numOfRecordsId;
-    } else if(actionName == 'deleteRole'){
+    } else if (actionName == 'deleteRole') {
       this.validateInput();
-      this.roleNameForDelete =this.deleteRoleNameId;
+      this.roleNameForDelete = this.deleteRoleNameId;
       this.roleDescriptionForDelete = this.deleteRoleDescriptionId;
-      this.permissionNamesForDelete =  this.deletePermissionNameId.toString();
-    } else if (actionName == 'pageSize'){
+      this.permissionNamesForDelete = this.deletePermissionNameId.toString();
+    } else if (actionName == 'pageSize') {
       this.validateInput();
     }
 
@@ -383,5 +446,15 @@ export class RolesComponent implements OnInit {
     this.newRoleName = null;
     this.newRoleDescription = null;
     this.newRolePermissionNames = null;
+  }
+  goBack($event) {
+    $event.stopPropagation();
+    $event.preventDefault();
+    this.rolesPanel = true;
+    this.showResults = false;
+    this.createRoleSectionDiv = false;
+    this.editRoleSectionDiv = false;
+    this.deleteRoleSectionDiv = false;
+    this.successMessageRoleCreateionDiv = false;
   }
 }

@@ -1,17 +1,15 @@
-import { Injectable, OnInit, Inject } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { from, Observable } from 'rxjs';
-import { urls } from 'src/config/urls';
-import { appHeaders } from 'src/config/headers';
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Inject, Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
+import { Observable } from 'rxjs';
 import { BulkRequestForm } from 'src/app/model/BulkRequestForm';
+import { appHeaders } from 'src/config/headers';
+import { urls } from 'src/config/urls';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BulkRequestService {
-
-
   baseUrl = urls.baseUrl;
   prefix = urls.bulkRequest
 
@@ -22,13 +20,26 @@ export class BulkRequestService {
       {
         headers: appHeaders.getHeaders()
       });
-  } 
-  createBulkRequest(postData: BulkRequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createBulkRequest", postData,
-      {
-        headers: appHeaders.getHeaders_formData()
-      });
-  }  
+  }
+  createBulkRequest(deliveryLocation: string, requestingInstitutionId: string,
+    patronBarcodeId: string, BulkRequestName: string, choosenFile:
+      string, patronEmailId: string, file: File):
+    Observable<TreeNode[]> {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file, file.name);
+    console.log("createRequest", formdata);
+    let headers = appHeaders.getHeaders_formData();
+    let parames = new HttpParams()
+      .set('deliveryLocation', deliveryLocation)
+      .set('requestingInstitutionId', requestingInstitutionId)
+      .set('patronBarcodeId', patronBarcodeId)
+      .set('BulkRequestName', BulkRequestName)
+      .set('choosenFile', choosenFile)
+      .set('patronEmailId', patronEmailId);
+    const options = { params: parames, headers: headers };
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createBulkRequest", formdata,
+      options);
+  }
   populateDeliveryLocations(postData: BulkRequestForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/populateDeliveryLocations", postData,
       {
@@ -73,7 +84,7 @@ export class BulkRequestService {
       });
   }
   downloadReports(requestId: string): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + this.prefix+'/'+requestId,
+    return this.httpClient.get<any>(this.baseUrl + this.prefix + '/' + requestId,
       {
         headers: appHeaders.getHeaders()
       });

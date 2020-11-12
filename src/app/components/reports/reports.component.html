@@ -498,19 +498,19 @@
                                                         <tr class="bgcolored large-font fontcolor-dark border-style-top-white">
                                                             <td class="fontcolor-dark large-font text-right results">
                                                                 Subtotal</td>
-                                                            <td>
-                                                                <a href="#" class="Deaccession-tableshow" (click)="deaccessionPul()">
-                                                                    <button *ngIf="subtotalEDDPULDeaccession !=0">{{subtotalEDDPULDeaccession}}</button></a>
+                                                            <td id="deacessionPulCount">
+                                                                <a naem="deacessionPulCount" href="#" class="Deaccession-tableshow" (click)="deaccessionPul()">
+                                                                    <button id="btn_Pul" *ngIf="subtotalEDDPULDeaccession !=0">{{subtotalEDDPULDeaccession}}</button></a>
                                                                 <span *ngIf="subtotalEDDPULDeaccession == 0">{{subtotalEDDPULDeaccession}}</span>
                                                             </td>
                                                             <td id="deacessionCulCount">
-                                                                <a href="#" id="deacessionCulCountHref" class="Deaccession-tableshow" (click)="deaccessionCul()">
-                                                                    <button *ngIf="subtotalEDDPULDeaccession ==0">{{subtotalEDDCULDeaccession}}</button></a>
-                                                                <span *ngIf="subtotalEDDPULDeaccession != 0 ">{{subtotalEDDCULDeaccession}}</span>
+                                                                <a name="deacessionPulCount" href="#" id="deacessionCulCountHref" class="Deaccession-tableshow" (click)="deaccessionCul()">
+                                                                    <button id="btn_Cul" *ngIf="subtotalEDDPULDeaccession !=0">{{subtotalEDDCULDeaccession}}</button></a>
+                                                                <span *ngIf="subtotalEDDPULDeaccession == 0 ">{{subtotalEDDCULDeaccession}}</span>
                                                             </td>
-                                                            <td>
-                                                                <a href="#" class="Deaccession-tableshow" (click)="deaccessionNypl()">
-                                                                    <button *ngIf="subtotalEDDPULDeaccession !=0">{{subtotalEDDNYPLDeaccession}}</button></a>
+                                                            <td id="deacessionNyplCount">
+                                                                <a name="deacessionPulCount" href="#" class="Deaccession-tableshow" (click)="deaccessionNypl()">
+                                                                    <button id="btn_Nypl" *ngIf="subtotalEDDPULDeaccession !=0">{{subtotalEDDNYPLDeaccession}}</button></a>
                                                                 <span *ngIf="subtotalEDDPULDeaccession == 0 ">{{subtotalEDDNYPLDeaccession}}</span>
                                                             </td>
                                                         </tr>
@@ -623,7 +623,7 @@
                                 <div class="">
                                     <span class="show-title">Show Entries</span>
                                     <select id="numOfRecordsId" name="numOfRecordsName" class="themed-input" [(ngModel)]="showentries" class="themed-input" [ngModelOptions]="{standalone: true}" style="margin-left: 5px;" (change)="deaccessionInformationOnChange(showentries)">
-                                        <option value="10">10</option>
+                                        <option value="10" selected>10</option>
                                         <option value="25">25</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -650,14 +650,14 @@
                                         <th width="15%" style="font-family:sans-serif;">DEACCESSION BY</th>
                                     </tr>
                                 </thead>
-                                <tr *ngFor="let deaccessionRow of deaccessionRes['deaccessionItemResultsRows']">
-                                    <td><span>{{deaccessionRow.deaccessionDate}}</span></td>
-                                    <td><span>{{deaccessionRow.title}}</span></td>
-                                    <td><span id="ownInstDeacc">{{deaccessionRow.deaccessionOwnInst}}</span></td>
-                                    <td><span>{{deaccessionRow.itemBarcode}}</span></td>
-                                    <td><span>{{deaccessionRow.cgd}}</span></td>
-                                    <td><span>{{deaccessionRow.deaccessionNotes}}</span></td>
-                                    <td><span>{{deaccessionRow.deaccessionCreatedBy}}</span></td>
+                                <tr id="rowData_results_de_{{i}}" *ngFor="let deaccessionRow of deaccessionRes['deaccessionItemResultsRows']; let i=index">
+                                    <td id="colData_dd_de_{{i}}"><span>{{deaccessionRow.deaccessionDate}}</span></td>
+                                    <td id="colData_dt_de_{{i}}"><span>{{deaccessionRow.title}}</span></td>
+                                    <td id="colData_di_de_{{i}}"><span id="ownInstDeacc_{{i}}">{{deaccessionRow.deaccessionOwnInst}}</span></td>
+                                    <td id="colData_ib_de_{{i}}"><span>{{deaccessionRow.itemBarcode}}</span></td>
+                                    <td id="colData_cgd_de_{{i}}"><span>{{deaccessionRow.cgd}}</span></td>
+                                    <td id="colData_dn_de_{{i}}"><span>{{deaccessionRow.deaccessionNotes}}</span></td>
+                                    <td id="colData_dcb_de_{{i}}"><span>{{deaccessionRow.deaccessionCreatedBy}}</span></td>
                                 </tr>
                             </table>
                             <input id="reportsPageNumber" name="reportsPageNumber" type="text" th:field="${reportsForm.pageNumber}" hidden="hidden" />
@@ -665,17 +665,17 @@
                             <div id="reportPaginationId" name="reportPaginationName" class="pull-right" style="margin-top: -10px;">
                                 <ul class="pagination" id="reportPaginationUl">
                                     <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                        <span (click)="deaccessionfirstCall()">First</span>
+                                        <span id="btn_first" (click)="deaccessionfirstCall()">First</span>
                                     </li>
-                                    <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                        <span (click)="deaccessionpreviousCall()">Previous</span>
+                                    <li [ngClass]=" (previousbutton==true)? 'disabled': '' ">
+                                        <span id="btn_previous" (click)="deaccessionpreviousCall() ">Previous</span>
                                     </li>
-                                    <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                        <span (click)="deaccessionnextCall()">Next</span>
+                                    <li [ngClass]="(nextbutton==true)? 'disabled': '' ">
+                                        <span id="btn_next" (click)="deaccessionnextCall() ">Next</span>
 
                                     </li>
-                                    <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                        <span (click)="deaccessionlastCall()">Last</span>
+                                    <li [ngClass]="(lastbutton==true)? 'disabled': '' ">
+                                        <span id="btn_last" (click)="deaccessionlastCall() ">Last</span>
                                     </li>
                                 </ul>
                             </div>
@@ -684,45 +684,46 @@
                     </div>
 
                     <!--IncompleteRecordsReport view -->
-                    <div *ngIf="incompletePage" id="ReportIncompleteRecordsview" class="">
-                        <div class="search-bar" style="margin-top: -20px;">
-                            <div class="buscador-principal">
-                                <div class="row">
-                                    <div class="col-md-5 col-sm-5">
-                                        <div class="col-md-4">
-                                            <div class="row" style="padding-left: 20px">
-                                                <div class="form-group">
-                                                    <label for="incompleteShowBy">Show By
-                                                        <span class="error-color">*</span> </label>
-                                                    <div class="select-holder">
-                                                        <select id="incompleteShowBy" name="incompleteShowBy" class="themed-input themed-select" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;" [ngModelOptions]="{standalone: true}" [(ngModel)]="incompleteShowBy">
-                                                            <option *ngFor="let inst of instVal['incompleteShowByInst']"
-                                                                [ngValue]="inst">
+                    <div *ngIf="incompletePage " id="ReportIncompleteRecordsview " class=" ">
+                        <div class="search-bar " style="margin-top: -20px; ">
+                            <div class="buscador-principal ">
+                                <div class="row ">
+                                    <div class="col-md-5 col-sm-5 ">
+                                        <div class="col-md-4 ">
+                                            <div class="row " style="padding-left: 20px ">
+                                                <div class="form-group ">
+                                                    <label for="incompleteShowBy ">Show By
+                                                        <span class="error-color ">*</span> </label>
+                                                    <div class="select-holder ">
+                                                        <select id="incompleteShowBy " name="incompleteShowBy " class="themed-input themed-select " style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;
+                                        " [ngModelOptions]="{standalone: true} " [(ngModel)]="incompleteShowBy ">
+                                                            <option *ngFor="let inst of instVal[ 'incompleteShowByInst'] "
+                                                                [ngValue]="inst ">
                                                                 {{inst}}
                                                             </option>
                                                         </select>
                                                     </div>
-                                                    <p id="incompleteErrorText" *ngIf="incompleteErrorText" style="color: red">This Field is Required
+                                                    <p id="incompleteErrorText " *ngIf="incompleteErrorText " style="color: red ">This Field is Required
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-3">
-                                        <button class="btn themed-button themed-button-search" type="button" id="incompleteSubmitBtn" (click)="incompleteRecords()">Generate Report
+                                    <div class="col-md-3 col-sm-3 ">
+                                        <button class="btn themed-button themed-button-search " type="button " id="incompleteSubmitBtn " (click)="incompleteRecords() ">Generate Report
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-xs-12 margin-top-less-10" style="margin-top: 5px;padding-left: 20px;">Fields marked with asterisk(
-                                        <span class="error-color">*</span>) are mandatory.
+                                <div class="row ">
+                                    <div class="col-xs-12 margin-top-less-10 " style="margin-top: 5px;padding-left: 20px; ">Fields marked with asterisk(
+                                        <span class="error-color ">*</span>) are mandatory.
                                     </div>
                                 </div>
 
-                                <div class="" style="padding-left: 5px;">
+                                <div class=" " style="padding-left: 5px; ">
                                     <strong>Note:</strong>
-                                    <ul class="" style="list-style-type:disc;">
+                                    <ul class=" " style="list-style-type:disc; ">
                                         <li>Incomplete Records are those bibliographic records that were found lacking crucial information such as CGD or Use Restriction or were not available in the ILS at the time of accession.
                                         </li>
                                         <li> The 'Export Records' button generates a CSV file with all incomplete records.
@@ -732,60 +733,61 @@
                             </div>
                         </div>
                         <!--IncompleteRecordsReport Report Table Section-->
-                        <div *ngIf="incompleteResultsPage" class="row" id="IncompleteReporttableview">
-                            <div *ngIf="errorMessageId" id="errorMessageId" class="row margin-btm-10">
-                                <div class="col-sm-12" style="padding-left:45px;padding-right:45px;margin-top:10px;">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpanId">{{reportstVal['errorMessage']}}</span></div>
+                        <div *ngIf="incompleteResultsPage " class="row " id="IncompleteReporttableview ">
+                            <div *ngIf="errorMessageId " id="errorMessageId " class="row margin-btm-10 ">
+                                <div class="col-sm-12 " style="padding-left:45px;padding-right:45px;margin-top:10px; ">
+                                    <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="errorMessageSpanId ">{{reportstVal['errorMessage']}}</span></div>
                                 </div>
                             </div>
-                            <div class="col-xs-12" style="padding-left:30px;padding-right:30px;">
+                            <div class="col-xs-12 " style="padding-left:30px;padding-right:30px; ">
                                 <h4>Report Results</h4>
-                                <h4 class="pull-right" style="margin-top: -20px;">Total Records Found:
+                                <h4 class="pull-right " style="margin-top: -20px; ">Total Records Found:
                                     <span>{{reportstVal['incompleteTotalRecordsCount']}}</span></h4>
-                                <div class="col-sm-offset-2 show-entries-section" style="margin-top: -30px;">
-                                    <div class="">
-                                        <span class="show-title">Show Entries</span>
-                                        <select id="incompleteShowRecords" name="numOfRecordsName" class="themed-input" [(ngModel)]="showentries" class="themed-input" (change)="incompleteReportPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}" style="margin-left: 5px;">
-                                            <option value="10">10</option>
+                                <div class="col-sm-offset-2 show-entries-section " style="margin-top: -30px; ">
+                                    <div class=" ">
+                                        <span class="show-title ">Show Entries</span>
+                                        <select id="incompleteShowRecords " name="numOfRecordsName " class="themed-input " [(ngModel)]="incompletePageSize " class="themed-input " (change)="incompleteReportPageSizeChange(incompletePageSize) " [ngModelOptions]="{standalone:
+                                        true} " style="margin-left: 5px; ">
+                                            <option value="10" selected>10</option>
                                             <option value="25">25</option>
                                             <option value="50">50</option>
                                             <option value="100">100</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
+                                <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
                                 <div>
-                                    <div class="table-wrapper">
-                                        <table class="table table-striped text-center margin-btm-0" id="IncompleteRecordsReportTable">
-                                            <thead class="tablesorter-headerRow">
+                                    <div class="table-wrapper ">
+                                        <table class="table table-striped text-center margin-btm-0 " id="IncompleteRecordsReportTable ">
+                                            <thead class="tablesorter-headerRow ">
                                                 <tr>
-                                                    <th width="30%" style="font-family:sans-serif;font-size: 120%">Title
+                                                    <th width="30% " style="font-family:sans-serif;font-size: 120% ">Title
                                                     </th>
-                                                    <th width="20%" style="font-family:sans-serif;font-size: 120%">
+                                                    <th width="20% " style="font-family:sans-serif;font-size: 120% ">
                                                         Author</th>
-                                                    <th width="10%" style="font-family:sans-serif;font-size: 120%">
+                                                    <th width="10% " style="font-family:sans-serif;font-size: 120% ">
                                                         Customer code</th>
-                                                    <th width="20%" style="font-family:sans-serif;font-size: 120%">
+                                                    <th width="20% " style="font-family:sans-serif;font-size: 120% ">
                                                         Barcode</th>
-                                                    <th width="20%" style="font-family:sans-serif;font-size: 120%">
+                                                    <th width="20% " style="font-family:sans-serif;font-size: 120% ">
                                                         Accession Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let incompleteResult of reportstVal['incompleteReportResultsRows']" class="parentRow">
-                                                    <td>
+                                                <tr id="rowData_results_{{i}}" *ngFor="let incompleteResult of reportstVal[ 'incompleteReportResultsRows']; let i=index" class="parentRow">
+                                                    <td id="colData_title_{{i}}">
                                                         <span>{{incompleteResult.title}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td id="colData_author_{{i}}">
                                                         <span>{{incompleteResult.author}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td id="colData_cd_{{i}}">
                                                         <span>{{incompleteResult.customerCode}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td id="colData_bd_{{i}}">
                                                         <span>{{incompleteResult.barcode}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td id="colData_cd_{{i}}">
                                                         <span>{{incompleteResult.createdDate}}</span>
                                                     </td>
                                                 </tr>
@@ -796,28 +798,27 @@
                             </div>
                             <!--IncompleteRecordsReport Pagination-->
 
-                            <input id="incompletePageNumber" name="incompletePageNumber" type="text" th:field="${reportsForm.incompletePageNumber}" hidden="hidden" />
-                            <input id="incompletetotalPageCount" name="incompletetotalPageCount" type="text" th:field="${reportsForm.incompleteTotalPageCount}" hidden="hidden" />
-                            <div id="incompletePaginationId" name="reportPaginationName" class="pull-left" style="margin-top: -10px;padding-left:35px;" data-th-if="${reportsForm.showIncompletePagination}">
-                                <ul class="pagination" id="incompletePaginationUl">
-                                    <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                        <span (click)="firstCall()">First</span>
+                            <input id="incompletePageNumber " name="incompletePageNumber " type="text " th:field="${reportsForm.incompletePageNumber} " hidden="hidden " />
+                            <input id="incompletetotalPageCount " name="incompletetotalPageCount " type="text " th:field="${reportsForm.incompleteTotalPageCount} " hidden="hidden " />
+                            <div id="incompletePaginationId " name="reportPaginationName " class="pull-left " style="margin-top: -10px;padding-left:35px; " data-th-if="${reportsForm.showIncompletePagination} ">
+                                <ul class="pagination " id="incompletePaginationUl ">
+                                    <li [ngClass]="(firstbutton==true)? 'disabled': '' ">
+                                        <span id="btn_first_in" (click)="firstCall() ">First</span>
                                     </li>
-                                    <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                        <span (click)="previousCall()">Previous</span>
+                                    <li [ngClass]="(previousbutton==true)? 'disabled': '' ">
+                                        <span id="btn_pre_in" (click)="previousCall() ">Previous</span>
                                     </li>
-                                    <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                        <span (click)="nextCall()">Next</span>
-
+                                    <li [ngClass]="(nextbutton==true)? 'disabled': '' ">
+                                        <span id="btn_next_in" (click)="nextCall() ">Next</span>
                                     </li>
-                                    <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                        <span (click)="lastCall()">Last</span>
+                                    <li [ngClass]="(lastbutton==true)? 'disabled': '' ">
+                                        <span id="btn_last_in" (click)="lastCall() ">Last</span>
                                     </li>
                                 </ul>
                             </div>
                             <!--IncompletePagination Ends-->
-                            <div style="padding-right:35px;">
-                                <button id="export" class="btn btn-md btn-danger pull-right" style="margin-top: 10px" (click)="exportRecords()">Export Records
+                            <div style="padding-right:35px; ">
+                                <button id="export " class="btn btn-md btn-danger pull-right " style="margin-top: 10px " (click)="exportRecords() ">Export Records
                                 </button>
                             </div>
                         </div>

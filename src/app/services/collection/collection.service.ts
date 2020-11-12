@@ -1,10 +1,10 @@
-import { Injectable, OnInit, Inject } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { from, Observable } from 'rxjs';
-import { urls } from 'src/config/urls';
-import { appHeaders } from 'src/config/headers';
-import { CollectionForm } from 'src/app/model/CollectionForm';
+import { Inject, Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
+import { Observable } from 'rxjs';
+import { CollectionForm } from 'src/app/model/CollectionForm';
+import { appHeaders } from 'src/config/headers';
+import { urls } from 'src/config/urls';
 
 @Injectable({
   providedIn: 'root'

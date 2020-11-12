@@ -1,10 +1,9 @@
-import { Component, OnInit, ɵEMPTY_ARRAY } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-import { CollectionService } from 'src/app/services/collection/collection.service';
-import { CollectionForm } from 'src/app/model/CollectionForm';
+import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { identifierModuleUrl } from '@angular/compiler';
+import { CollectionService } from 'src/app/services/collection/collection.service';
+
 declare var $: any;
 
 @Component({
@@ -57,7 +56,7 @@ export class CollectionComponent implements OnInit {
   errorMessage: string;
   radioSwitchEditCGD: boolean;
   radioSwitchDeaccession: boolean;
-  constructor(private formBuilder: FormBuilder, private collectionService: CollectionService) { }
+  constructor(private formBuilder: FormBuilder, private collectionService: CollectionService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.collectionForm = this.formBuilder.group({
@@ -118,6 +117,7 @@ export class CollectionComponent implements OnInit {
     this.showresultdiv = false;
   }
   displayRecords() {
+    this.spinner.show();
     this.barerrmsg = '';
     this.showresultdiv = true;
     if (this.barcodeFieldName != null && this.barcodeFieldName != undefined && this.barcodeFieldName != '') {
@@ -171,12 +171,13 @@ export class CollectionComponent implements OnInit {
         "username": null
       }
       this.collectionService.displyRecords(this.postData).subscribe(
-
         (res) => {
+          this.spinner.hide();
           this.collectionVal = res;
           this.validateDisplayRecords();
         },
         (error) => {
+          this.spinner.hide();
           //Called when error
         }
 
@@ -186,11 +187,13 @@ export class CollectionComponent implements OnInit {
       this.norecord = true;
       this.resultdiv = false;
       this.barcodesNotFoundErrorMessageId = false;
+      this.spinner.hide();
     }
 
   }
 
   openMarcView(bibid, barcode, itemId) {
+    this.spinner.show();
     this.radioSwitchDeaccession = false;
     this.CGDselect = '';
     this.DeliveryLocation = '';
@@ -251,7 +254,7 @@ export class CollectionComponent implements OnInit {
         this.deaccessionType = this.openmarcVal['deaccessionType'];
         this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
         this.radioSwitchEditCGD = true;
-
+        this.spinner.hide();
         //cross institute
         this.postData =
         {
@@ -327,6 +330,7 @@ export class CollectionComponent implements OnInit {
   }
 
   editCgdcontrol() {
+    this.spinner.show();
     //cross institute
     this.radioSwitchDeaccession = false;
     this.radioSwitchEditCGD = true;
@@ -382,11 +386,13 @@ export class CollectionComponent implements OnInit {
     }
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
       (res) => {
+        this.spinner.hide();
         this.crossinstitutionVal = res;
         console.log("editCGD");
         this.validateResponse();
       },
       (error) => {
+        this.spinner.hide();
         //Called when error
       }
 
@@ -398,7 +404,7 @@ export class CollectionComponent implements OnInit {
   }
 
   deaccessioncontrol() {
-
+    this.spinner.show();
     //cross institute
     //The item has been successfully deaccessioned.
     this.radioSwitchDeaccession = true;
@@ -459,10 +465,10 @@ export class CollectionComponent implements OnInit {
       (res) => {
         this.crossinstitutionVal = res;
         this.validateResponse();
+        this.spinner.hide();
       },
       (error) => {
-        console.log("err",error)
-        //Called when error
+        this.spinner.hide();
       }
 
     );
@@ -508,6 +514,7 @@ export class CollectionComponent implements OnInit {
       this.newCGDReadOnly = true;
       this.CGDNoteReadOnly = true;
       if (this.CGDselect != cgdold) {
+        this.spinner.show();
         this.postData = {
           "itemBarcodes": "",
           "showResults": false,
@@ -556,43 +563,44 @@ export class CollectionComponent implements OnInit {
         }
 
         this.collectionService.updateCollection(this.postData).subscribe(
-          // (res) => this.crossinstitutionVal=res
           (res) => {
             this.crossinstitutionVal = res;
-            //console.log("updatesave", this.crossinstitutionVal['newCollectionGroupDesignation'])
             this.newCGD = this.crossinstitutionVal['newCollectionGroupDesignation'];
             this.newCGDnote = this.crossinstitutionVal['cgdChangeNotes'];
             this.collectionmsg = this.crossinstitutionVal['message'];
             this.collectionUpdateMessage = true;
             this.Deaccessionsection = false;
             this.validateResponse();
+            this.spinner.hide();
           },
           (error) => {
-            //Called when error
+            this.spinner.hide();
           }
 
         );
       } else {
         this.cgdErrorMessage = true;
+        this.spinner.hide();
       }
 
     } else {
       if (this.CGDselect == '' || this.CGDselect == undefined) {
         this.cgdErrorMessage = true;
+        this.spinner.hide();
       } else if (this.CGDChangeNotes == undefined || this.CGDChangeNotes == '') {
         this.cgdNotesErrorMessage = true;
+        this.spinner.hide();
       }
       //console.log("err")
     }
   }
-  //save cgd end
 
   //save deacc start
   saveDeaccession(bibid, deacctype, itemBarcode) {
+    this.spinner.show();
     if (this.deaccessionType != '' && this.DeliveryLocation != '' && this.DeaccessionNotes != '' && this.deaccessionType != undefined && this.DeliveryLocation != undefined && this.DeaccessionNotes != undefined) {
       this.locationErrorMessage = false;
       this.deaccessionNotesErrorMessage = false;
-      console.log(bibid, deacctype, itemBarcode);
       this.postData = {
         "itemBarcodes": "",
         "showResults": false,
@@ -640,28 +648,23 @@ export class CollectionComponent implements OnInit {
         "username": null
       }
       this.collectionService.updateCollection(this.postData).subscribe(
-        // (res) => this.crossinstitutionVal=res
         (res) => {
           this.crossinstitutionVal = res;
-          console.log("updatesave", this.crossinstitutionVal);
           this.newdeaccessionType = this.crossinstitutionVal['deaccessionType'];
           this.newDeliveryLocation = this.crossinstitutionVal['deliveryLocation'];
           this.newdeaccessionnote = this.crossinstitutionVal['deaccessionNotes'];
-
           this.collectionmsg = this.crossinstitutionVal['message'];
           this.collectionUpdateMessage = true;
           this.editCDGsection = false;
           this.validateResponse();
+          this.spinner.hide();
         },
         (error) => {
-          //Called when error
         }
 
       );
 
     } else {
-      // console.log("111", this.deaccessionType)
-      //console.log("22", this.CGDChangeNotes)
       if (this.deaccessionType == '' || this.deaccessionType == undefined) {
 
       } else if (this.DeliveryLocation == undefined || this.DeliveryLocation == '') {
@@ -670,6 +673,7 @@ export class CollectionComponent implements OnInit {
       else if (this.DeaccessionNotes == undefined || this.DeaccessionNotes == '') {
         this.deaccessionNotesErrorMessage = true;
       }
+      this.spinner.hide();
       //console.log("err")
     }
   }
@@ -689,7 +693,7 @@ export class CollectionComponent implements OnInit {
       this.collectionUpdateMessage = true;
       this.collectionUpdateWarningMessage = false;
       this.collectionUpdateErrorMessage = false;
-    }else{
+    } else {
       this.collectionUpdateMessage = false;
       this.collectionUpdateWarningMessage = false;
       this.collectionUpdateErrorMessage = false;
