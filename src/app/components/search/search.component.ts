@@ -536,11 +536,4 @@ export class SearchComponent implements OnInit {
     }
     return this.postData;
   }
-  // routeTomarc(id){
-  //   const url = this.router.serializeUrl(
-  //     this.router.createUrlTree(['/openMarcRecord'],{queryParams: { bibId: id }})
-  //   );
-  //   window.open(url, '_blank');
-  //   //this.router.navigate(['/openMarcRecord'],{relativeTo: route, skipLocationChange: true,queryParams: { bibId: id }});
-  // }
 }

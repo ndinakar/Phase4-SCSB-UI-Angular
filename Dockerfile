@@ -5,7 +5,8 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install
 COPY . .
-RUN npm run build
+RUN npm run build:prod
+#--aot --vendor-chunk --common-chunk --delete-output-path --buildOptimizer
 
 FROM nginx:alpine as stage
 COPY --from=node  /app/dist/phase4-scsb-ui-angular /usr/share/nginx/html

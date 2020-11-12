@@ -41,19 +41,4 @@ export class OpenMarcComponent implements OnInit {
       }
     );
   }
-// openMarc(id){
-//   this.openMarcService.openMarc(id).subscribe(
-//     (res) => {
-      
-//       this.bibliographicMarcForm = res;
-//       if(this.bibliographicMarcForm['errorMessage'] !=null){
-//         this.errorMessageDiv = true;
-//         this.successMessageDiv = false;
-//       }else{
-//         this.errorMessageDiv = false;
-//         this.successMessageDiv = true;
-//       }
-//     }
-//   );
-// }
 }
