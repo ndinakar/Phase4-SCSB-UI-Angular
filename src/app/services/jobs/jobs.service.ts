@@ -21,7 +21,6 @@ export class JobsService {
       });
   }
   scheduleJobs(postData: ScheduleJobsForm): Observable<TreeNode[]> {
-    console.log(postData.cronExpression);
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/jobs", postData,
       {
         headers: appHeaders.getHeaders()

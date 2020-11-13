@@ -12,11 +12,10 @@ import { urls } from 'src/config/urls';
 })
 export class SearchService {
   constructor(private httpClient: HttpClient, private appConfig: AppConfig) { }
-  //baseUrl = this.appConfig.getProperty();
   baseUrl = urls.baseUrl;
   prefix = urls.search;
   getSearch(postData: SearchRecordRequest): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/search", postData,
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchResults", postData,
       {
         headers: appHeaders.getHeaders()
       });

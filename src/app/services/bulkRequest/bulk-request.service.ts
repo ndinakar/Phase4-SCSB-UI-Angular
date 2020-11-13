@@ -27,7 +27,6 @@ export class BulkRequestService {
     Observable<TreeNode[]> {
     const formdata: FormData = new FormData();
     formdata.append('file', file, file.name);
-    console.log("createRequest", formdata);
     let headers = appHeaders.getHeaders_formData();
     let parames = new HttpParams()
       .set('deliveryLocation', deliveryLocation)

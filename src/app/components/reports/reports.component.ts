@@ -637,10 +637,10 @@ export class ReportsComponent implements OnInit {
     this.isChecked = true;
   }
   enableCGDPage() {
-    this.spinner.hide();
+    this.spinner.show();
     this.resetFields();
     this.requestPage = false;
-    this.accesionPage = false;
+    this.accesionPage = false;  
     this.cgdPage = true;
     this.incompletePage = false;
     this.reportsService.collectionGroupDesignation().subscribe(

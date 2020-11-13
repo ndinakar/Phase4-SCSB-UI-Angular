@@ -29,12 +29,10 @@ export class JobsComponent implements OnInit {
   url: string = this.batchScheduleUrl + '/jobs/';
   constructor(private jobsService: JobsService, private router: ActivatedRoute, private spinner: NgxSpinnerService) { }
   ngOnInit(): void {
-    console.log(this.url)
     this.spinner.show();
     this.jobsService.displayJobs().subscribe(
       (res) => {
         this.jobsResVal = res;
-        console.log("Testing" + "  " + this.jobsResVal['jobEntities']);
         this.spinner.hide();
       },
       (error) => {

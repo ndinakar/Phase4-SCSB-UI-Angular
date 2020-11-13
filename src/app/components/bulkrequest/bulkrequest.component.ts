@@ -1,9 +1,9 @@
-import { Component, OnInit, ElementRef, Input, ViewChild } from '@angular/core';
-declare var $: any;
-import { TreeNode } from 'primeng/api';
-import { DatePipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgxSpinnerService } from "ngx-spinner";
+import { TreeNode } from 'primeng/api';
 import { BulkRequestService } from 'src/app/services/bulkRequest/bulk-request.service';
+declare var $: any;
 
 @Component({
   selector: 'app-bulkrequest',
@@ -11,7 +11,9 @@ import { BulkRequestService } from 'src/app/services/bulkRequest/bulk-request.se
   styleUrls: ['./bulkrequest.component.css']
 })
 export class BulkrequestComponent implements OnInit {
-  uploadedFile : any;
+  uploadFile: File;
+  data: any;
+  uploadedFile: any;
   BulkRequestForm: FormGroup;
   bulkrequestVal: TreeNode[];
   deliveryLocVal: any[];
@@ -22,7 +24,7 @@ export class BulkrequestComponent implements OnInit {
   BulkRequestNameLengthError = false;
   requestingInstitutionId: string;
   requestingInstitutionErrorMessage = false;
-  chosenFile: string;
+  choosenFile: string;
   formData = new FormData();
   invalidBulkRequestFile = false;
   bulkRequestFileRequired = false;
@@ -50,7 +52,7 @@ export class BulkrequestComponent implements OnInit {
   institutionList: string;
   searchRequestVal: TreeNode[];
   bulkrequestNotesData: string;
-  requestId : string;
+  requestId: string;
   nextvalue = 0;
   previousValue = 0;
   lastValue = 0;
@@ -62,11 +64,11 @@ export class BulkrequestComponent implements OnInit {
   results_container = false;
   errorResponse = false;
   results_container_table = false;
-  download_response : TreeNode[];
+  download_response: TreeNode[];
   fileName: string;
   dataDecode: string;
   file: File = null;
-  constructor(private formBuilder: FormBuilder, private bulkrequestService: BulkRequestService) { }
+  constructor(private formBuilder: FormBuilder, private bulkrequestService: BulkRequestService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.initialload();
@@ -121,7 +123,7 @@ export class BulkrequestComponent implements OnInit {
         this.bulkrequestVal = res;
         this.BulkRequestName = '';
         this.requestingInstitutionId = '';
-        this.chosenFile = '';
+        this.choosenFile = '';
         this.deliveryLocation = '';
         this.patronBarcodeId = '';
         this.patronEmailId = '';
@@ -141,7 +143,7 @@ export class BulkrequestComponent implements OnInit {
         this.bulkrequestVal = res;
         this.BulkRequestName = '';
         this.requestingInstitutionId = '';
-        this.chosenFile = '';
+        this.choosenFile = '';
         this.deliveryLocation = '';
         this.patronEmailId = '';
         this.requestNotesId = '';
@@ -205,18 +207,11 @@ export class BulkrequestComponent implements OnInit {
     }
   }
 
-  onChange(event: any) {
-    this.uploadedFile = new FormData();
-    let fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-       this.file = fileList[0];
-      this.chosenFile = this.file.name;
-
-      this.uploadedFile.append('file', new Blob([this.file], { type: 'multipart/form-data' }), this.file.name);
-
-    }
+  onChange(files: FileList) {
+    this.uploadFile = files[0];
+    this.choosenFile = this.uploadFile.name;
+    console.log("MUltipart File", this.uploadFile + "" + this.uploadFile.name);
   }
-
   populateDeliveryLocations(institution) {
     this.postData = {
       "requestId": null,
@@ -278,7 +273,8 @@ export class BulkrequestComponent implements OnInit {
   }
 
   createBulkRequest() {
-    if ((this.BulkRequestName == undefined || this.BulkRequestName == '') && (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') && (this.chosenFile == undefined || this.chosenFile == '') && (this.deliveryLocation == undefined || this.deliveryLocation == '') && (this.patronBarcodeId == undefined || this.patronBarcodeId == '') && (this.patronEmailId == undefined || this.patronEmailId == '')) {
+    this.spinner.show();
+    if ((this.BulkRequestName == undefined || this.BulkRequestName == '') && (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') && (this.choosenFile == undefined || this.choosenFile == '') && (this.deliveryLocation == undefined || this.deliveryLocation == '') && (this.patronBarcodeId == undefined || this.patronBarcodeId == '') && (this.patronEmailId == undefined || this.patronEmailId == '')) {
       this.BulkRequestNameErrorMessage = true;
       this.requestingInstitutionErrorMessage = true;
       this.bulkRequestFileRequired = true;
@@ -291,7 +287,7 @@ export class BulkrequestComponent implements OnInit {
     }
     else if (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') {
       this.requestingInstitutionErrorMessage = true;
-    } else if (this.chosenFile == undefined || this.chosenFile == '') {
+    } else if (this.choosenFile == undefined || this.choosenFile == '') {
       this.bulkRequestFileRequired = true;
     } else if (this.patronEmailId == undefined || this.patronEmailId == '' || this.patronEmailIdErrorMessage == true) {
       this.EmailMandatoryErrorMessage = true;
@@ -306,51 +302,9 @@ export class BulkrequestComponent implements OnInit {
       this.deliveryLocationErrorMessage = false;
       this.patronBarcodeErrorMessage = false;
       this.EmailMandatoryErrorMessage = false;
-      this.postData = {
-        "requestId": null,
-        "patronBarcode": null,
-        "itemBarcode": null,
-        "status": null,
-        "deliveryLocation": this.deliveryLocation,
-        "deliveryLocationInRequest": this.deliveryLocation,
-        "itemTitle": null,
-        "itemOwningInstitution": "PUL",
-        "patronEmailAddress": null,
-        "requestingInstitution": "PUL",
-        "requestType": null,
-        "requestNotes": null,
-        "message": null,
-        "errorMessage": null,
-        "totalRecordsCount": "0",
-        "pageNumber": 0,
-        "pageSize": 10,
-        "totalPageCount": 0,
-        "submitted": false,
-        "showResults": false,
-        "requestingInstitutions": [],
-        "requestTypes": [],
-        "deliveryLocations": [],
-        "bulkSearchResultRows": [],
-        "requestStatuses": [],
-        "institutionList": [],
-        "disableRequestingInstitution": false,
-        "onChange": null,
-        "showRequestErrorMsg": false,
-        "requestingInstituionHidden": null,
-        "disableSearchInstitution": false,
-        "searchInstitutionHdn": null,
-        "file": this.uploadedFile,
-        "requestIdSearch": null,
-        "requestNameSearch": null,
-        "patronBarcodeSearch": null,
-        "institution": this.requestingInstitutionId,
-        "bulkRequestName": this.BulkRequestName,
-        "patronBarcodeInRequest": this.patronBarcodeId,
-        "fileName": this.chosenFile
-      }
-      console.log("File Name",this.chosenFile);
-      console.log("File Name",this.uploadedFile);
-      this.bulkrequestService.createBulkRequest(this.postData).subscribe(
+      console.log("File Name", this.choosenFile);
+      console.log("File content", this.data);
+      this.bulkrequestService.createBulkRequest(this.deliveryLocation, this.requestingInstitutionId, this.patronBarcodeId, this.BulkRequestName, this.choosenFile, this.patronEmailId, this.uploadFile).subscribe(
         (res) => {
           this.createResponse = res;
           if (this.createResponse['errorMessage'] != null) {
@@ -360,10 +314,11 @@ export class BulkrequestComponent implements OnInit {
             this.createsubmit = true;
             this.createRequestError = false;
           }
-
+          this.spinner.hide();
         },
         (error) => {
-
+          this.spinner.hide();
+          console.log("createRequest", error);
         }
 
       );
@@ -418,7 +373,7 @@ export class BulkrequestComponent implements OnInit {
       "requestingInstituionHidden": null,
       "disableSearchInstitution": false,
       "searchInstitutionHdn": null,
-      "file": {},
+      "file": null,
       "requestIdSearch": this.bulkRequestIdSearch,
       "requestNameSearch": this.bulkRequestNameSearch,
       "patronBarcodeSearch": this.bulkPatronBarcodeSearch,
@@ -427,7 +382,7 @@ export class BulkrequestComponent implements OnInit {
       "patronBarcodeInRequest": null,
       "fileName": null
     }
-    console.log("Search Request",this.bulkRequestIdSearch,this.bulkRequestNameSearch);
+    console.log("Search Request" + this.bulkRequestIdSearch + " " + this.bulkRequestNameSearch);
     this.bulkrequestService.searchRequest(this.postData).subscribe(
       (res) => {
         this.searchRequestVal = res;
@@ -442,7 +397,6 @@ export class BulkrequestComponent implements OnInit {
         }
       },
       (error) => {
-
       }
 
     );
@@ -757,23 +711,23 @@ export class BulkrequestComponent implements OnInit {
       this.lastbutton = false;
     }
   }
-  downloadReports(requestId){
-  this.bulkrequestService.downloadReports(requestId).subscribe(
-    (res) => {
-      this.download_response = res;
-      this.fileName = this.download_response['fileName'];
-      var contentType = "application/vnd.ms-excel"; 
-      this.dataDecode = atob(this.download_response['content']);
-      var file = new Blob([this.dataDecode], { type: contentType }); 
-        var link = document.createElement('a'); 
-        link.href = window.URL.createObjectURL(file); 
-        link.setAttribute('download', this.fileName); 
-        document.body.appendChild(link); 
-        link.click(); 
-        document.body.removeChild(link); 
-    },
-    (error) => {
-    });
-  } 
+  downloadReports(requestId) {
+    this.bulkrequestService.downloadReports(requestId).subscribe(
+      (res) => {
+        this.download_response = res;
+        this.fileName = this.download_response['fileName'];
+        var contentType = "application/vnd.ms-excel";
+        this.dataDecode = atob(this.download_response['content']);
+        var file = new Blob([this.dataDecode], { type: contentType });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(file);
+        link.setAttribute('download', this.fileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
+      (error) => {
+      });
+  }
 
 }
