@@ -220,7 +220,6 @@ export class UserRolesComponent implements OnInit {
           this.searchRowResultsDiv = false;
           this.totalRecordsCountDiv = false;
           this.userRolePaginationDiv = false;
-          console.log(this.userRoleFormVal['message']);
         } else if (this.userRoleFormVal['errorMessage'] != null) {
           this.errorMessageforSearchDiv = false;
         } else {
@@ -414,7 +413,6 @@ export class UserRolesComponent implements OnInit {
       (res) => {
         this.userRolesVal = res;
         this.userRoleListVal = this.userRolesVal['roles'].map(function (x) { return { id: x[0], name: x[1] }; });
-        console.log(this.userRoleListVal);
       });
   }
   lastCall() {
@@ -492,7 +490,6 @@ export class UserRolesComponent implements OnInit {
     } else if (actionName == 'lastCall') {
       this.validateInput();
       this.pageNumber = this.userRoleFormVal['totalPageCount'];
-      console.log("pageNumber", this.pageNumber);
     } else if (actionName == 'previousCall') {
       this.validateInput();
       this.pageNumber = this.userRoleFormVal['pageNumber'];

@@ -209,9 +209,7 @@ export class BulkrequestComponent implements OnInit {
 
   onChange(files: FileList) {
     this.uploadFile = files[0];
-    //this.uploadFile = file;
     this.choosenFile = this.uploadFile.name;
-    //this.formData.append('file',file);
     console.log("MUltipart File", this.uploadFile + "" + this.uploadFile.name);
   }
   populateDeliveryLocations(institution) {
@@ -399,7 +397,6 @@ export class BulkrequestComponent implements OnInit {
         }
       },
       (error) => {
-        console.log("Testing", error);
       }
 
     );

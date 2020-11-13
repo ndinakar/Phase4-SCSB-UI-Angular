@@ -178,12 +178,10 @@ export class CollectionComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
-          //Called when error
         }
 
       );
     } else {
-      //console.log("nb")
       this.norecord = true;
       this.resultdiv = false;
       this.barcodesNotFoundErrorMessageId = false;
@@ -247,7 +245,6 @@ export class CollectionComponent implements OnInit {
       "username": null
     }
     this.collectionService.openMarcView(this.postData).subscribe(
-      //res => this.openmarcVal=res
       (res) => {
         this.openmarcVal = res;
         this.CGDselect = this.openmarcVal['collectionGroupDesignation'];
@@ -255,7 +252,6 @@ export class CollectionComponent implements OnInit {
         this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
         this.radioSwitchEditCGD = true;
         this.spinner.hide();
-        //cross institute
         this.postData =
         {
           "itemBarcodes": null,
@@ -310,17 +306,13 @@ export class CollectionComponent implements OnInit {
             this.validateResponse();
           },
           (error) => {
-            //Called when error
+            this.spinner.hide();
           }
 
         );
-        //cross institue tend
-
-
-
       },
       (error) => {
-        //Called when error
+        this.spinner.hide();
       }
 
     );
@@ -331,7 +323,6 @@ export class CollectionComponent implements OnInit {
 
   editCgdcontrol() {
     this.spinner.show();
-    //cross institute
     this.radioSwitchDeaccession = false;
     this.radioSwitchEditCGD = true;
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
@@ -388,12 +379,10 @@ export class CollectionComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.crossinstitutionVal = res;
-        console.log("editCGD");
         this.validateResponse();
       },
       (error) => {
         this.spinner.hide();
-        //Called when error
       }
 
     );
@@ -460,7 +449,6 @@ export class CollectionComponent implements OnInit {
       "allowEdit": false,
       "username": null
     }
-    console.log(this.postData)
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
       (res) => {
         this.crossinstitutionVal = res;
@@ -472,17 +460,13 @@ export class CollectionComponent implements OnInit {
       }
 
     );
-    //cross institue tend
-
     this.editCDGsection = false;
     this.Deaccessionsection = true;
   }
 
   CGDChangeNotesFunc(val) {
-    //console.log("vall", val)
     var CGDChangeNotes = $('#CGDChangeNotes').val();
     var cgdNoteLength = CGDChangeNotes.length;
-    //console.log("ll", cgdNoteLength)
     var len = val.length;
     if (len > 2000) {
       val = val.substring(0, 2000);
@@ -493,10 +477,7 @@ export class CollectionComponent implements OnInit {
   }
 
   DeaccessionNotesFunc(val) {
-    // console.log("vall1", val)
     var DeaccessionNotes = $('#DeaccessionNotes').val();
-    var deaNoteLength = DeaccessionNotes.length;
-    //console.log("ll", deaNoteLength)
     var len = val.length;
     if (len > 2000) {
       val = val.substring(0, 2000);
@@ -591,7 +572,6 @@ export class CollectionComponent implements OnInit {
         this.cgdNotesErrorMessage = true;
         this.spinner.hide();
       }
-      //console.log("err")
     }
   }
 
@@ -674,7 +654,6 @@ export class CollectionComponent implements OnInit {
         this.deaccessionNotesErrorMessage = true;
       }
       this.spinner.hide();
-      //console.log("err")
     }
   }
   validateResponse() {

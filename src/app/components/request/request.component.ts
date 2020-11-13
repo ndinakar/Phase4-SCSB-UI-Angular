@@ -766,10 +766,8 @@ export class RequestComponent implements OnInit {
 
       },
       (error) => {
-
-      }
-
-    );
+        this.spinner.hide();
+      });
   }
 
   searchRequests() {

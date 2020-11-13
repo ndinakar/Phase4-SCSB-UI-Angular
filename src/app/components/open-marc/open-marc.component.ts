@@ -37,7 +37,6 @@ export class OpenMarcComponent implements OnInit {
       },
       (error) => {
         this.spinner.hide();
-        console.log(error);
       }
     );
   }

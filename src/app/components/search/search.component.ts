@@ -287,6 +287,9 @@ export class SearchComponent implements OnInit {
         this.spinner.hide();
         this.searchVal = res;
         this.pagination();
+      },
+      (error) => {
+        this.spinner.hide();
       });
     this.mappingResults();
   }
