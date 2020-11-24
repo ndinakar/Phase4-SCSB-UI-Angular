@@ -18,6 +18,7 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { RequestComponent } from './components/request/request.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 export function appInit(appConfig: AppConfig) {
@@ -36,6 +37,7 @@ export function appInit(appConfig: AppConfig) {
     JobsComponent,
     MonitoringComponent,
     LoggingComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
