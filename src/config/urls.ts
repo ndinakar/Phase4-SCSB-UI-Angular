@@ -9,6 +9,7 @@ export const urls = {
     userRoles:'/userRoles',
     roles: '/roles',
     bulkRequest: '/bulkRequest',
+    admin:'/admin',
     ui_url:'http://52.203.96.232:9091',
     openMarc:'/openMarcRecord',
     batchScheduleUrl:'http://52.203.96.232:9096'

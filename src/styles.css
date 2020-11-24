@@ -749,6 +749,27 @@ footer {
     height: 30px;
 }
 
+.tab-jobs span.icons {
+    background-image: url('images/jobs-1.png');
+    background-position: 0px -37px;
+    width: 38px;
+    height: 30px;
+}
+
+.tab-monitor span.icons {
+    background-image: url('images/monitoring-1.png');
+    background-position: 0px -37px;
+    width: 38px;
+    height: 30px;
+}
+
+.tab-logg span.icons {
+    background-image: url('images/logging-1.png');
+    background-position: 0px -37px;
+    width: 38px;
+    height: 30px;
+}
+
 .tab-collection span.icons {
     background-position: -38px -37px
 }
@@ -770,6 +791,18 @@ footer {
     background-position: -254px -121px
 }
 
+.tab-jobs span.icons {
+    background-position: -249px -169px
+}
+
+.tab-monitor span.icons {
+    background-position: -249px -169px
+}
+
+.tab-logg span.icons {
+    background-position: -249px -170px
+}
+
 li.active .tab-search span.icons,
 li.active .tab-collection span.icons,
 li.active .tab-request span.icons,
@@ -781,6 +814,21 @@ li a.tab-reports:hover span.icons,
 li a.tab-role:hover span.icons,
 li a.tab-users:hover span.icons {
     background-image: url('images/site-icons.png');
+    background-position: 0px -78px;
+}
+
+li a.tab-jobs:hover span.icons {
+    background-image: url('images/jobs-2.png');
+    background-position: 0px -78px;
+}
+
+li a.tab-monitor:hover span.icons {
+    background-image: url('images/monitoring-2.png');
+    background-position: 0px -78px;
+}
+
+li a.tab-logg:hover span.icons {
+    background-image: url('images/logging-2.png');
     background-position: 0px -78px;
 }
 
@@ -807,6 +855,24 @@ li a.tab-role:hover span.icons {
 li.active .tab-users span.icons,
 li a.tab-users:hover span.icons {
     background-position: -254px -163px;
+}
+
+li.active .tab-jobs span.icons,
+li a.tab-jobs:hover span.icons {
+    background-position: -249px -169px;
+    background-image: url('images/jobs-2.png');
+}
+
+li.active .tab-monitor span.icons,
+li a.tab-monitor:hover span.icons {
+    background-position: -249px -169px;
+    background-image: url('images/monitoring-2.png');
+}
+
+li.active .tab-logg span.icons,
+li a.tab-logg:hover span.icons {
+    background-position: -249px -170px;
+    background-image: url('images/logging-2.png');
 }
 
 li a.tab-search:hover span,
@@ -839,11 +905,29 @@ li.active a.tab-users span {
     color: #D38C0D;
 }
 
+li a.tab-jobs:hover span,
+li.active a.tab-jobs span {
+    color: #D38C0D;
+}
+
+li a.tab-monitor:hover span,
+li.active a.tab-monitor span {
+    color: #D38C0D;
+}
+
+li a.tab-logg:hover span,
+li.active a.tab-logg span {
+    color: #D38C0D;
+}
+
 .tab-search span,
 .tab-collection span,
 .tab-request span,
 .tab-reports span,
 .tab-role span,
+.tab-jobs span,
+.tab-monitor span,
+.tab-logg span,
 .tab-users span {
     display: inline-block;
     width: 100%;
@@ -870,6 +954,18 @@ li.active a.tab-users span {
 }
 
 .nav-tabs .active.tab-users-holder {
+    border-color: #D38C0D;
+}
+
+.nav-tabs .active.tab-jobs-holder {
+    border-color: #D38C0D;
+}
+
+.nav-tabs .active.tab-monitor-holder {
+    border-color: #D38C0D;
+}
+
+.nav-tabs .active.tab-logg-holder {
     border-color: #D38C0D;
 }
 

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminComponent } from './components/admin/admin.component';
 import { BulkrequestComponent } from './components/bulkrequest/bulkrequest.component';
 import { CollectionComponent } from './components/collection/collection.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -66,6 +67,10 @@ const routes: Routes = [
       {
         path: 'logging',
         component: LoggingComponent,
+      },
+      {
+        path: 'admin',
+        component: AdminComponent,
       }
     ]
   },
