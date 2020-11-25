@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ELOOP } from 'constants';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { RequestService } from 'src/app/services/request/request.service';
@@ -14,7 +15,7 @@ declare var $: any;
   styleUrls: ['./request.component.css']
 })
 export class RequestComponent implements OnInit {
-
+  status_fields = true;
   requestForm: FormGroup;
   firstbutton = true;
   previousbutton = true;
@@ -432,33 +433,7 @@ export class RequestComponent implements OnInit {
   createRequest() {
     this.spinner.show();
     if (this.eddshow) {
-      if ((this.itemBarcodeId == undefined || this.itemBarcodeId == '') && (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') && (this.patronBarcodeId == undefined || this.patronBarcodeId == '') && (this.patronEmailId == undefined || this.patronEmailId == '') && (this.StartPage == undefined || this.StartPage == '') && (this.StartPage == undefined || this.StartPage == '') && (this.EndPage == undefined || this.EndPage == '') && (this.ChapterTitle == undefined || this.ChapterTitle == '')) {
-        this.itemBarcodeErrorMessage = true;
-        this.requestingInstitutionErrorMessage = true;
-        this.patronBarcodeErrorMessage = true;
-        this.EmailMandatoryErrorMessage = true;
-        this.startPageErrorMessage = true;
-        this.endPageErrorMessage = true;
-        this.articleTitleErrorMessage = true;
-      }
-      else if (this.itemBarcodeId == undefined || this.itemBarcodeId == '' || this.itemBarcodeNotFoundErrorMessage == true) {
-        this.itemBarcodeErrorMessage = true;
-      }
-      else if (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') {
-        this.requestingInstitutionErrorMessage = true;
-      } else if (this.patronBarcodeId == undefined || this.patronBarcodeId == '') {
-        this.patronBarcodeErrorMessage = true;
-      } else if (this.patronEmailId == undefined || this.patronEmailId == '' || this.patronEmailIdErrorMessage == true) {
-        this.EmailMandatoryErrorMessage = true;
-      } else if (this.requestTypeId == undefined || this.requestTypeId == '') {
-        this.requestTypeErrorMessage = true;
-      } else if (this.StartPage == undefined || this.StartPage == '') {
-        this.startPageErrorMessage = true;
-      } else if (this.EndPage == undefined || this.EndPage == '') {
-        this.endPageErrorMessage = true;
-      } else if (this.ChapterTitle == undefined || this.ChapterTitle == '') {
-        this.articleTitleErrorMessage = true;
-      } else {
+      if (this.validateInputs_edd()) {
         this.itemBarcodeErrorMessage = false;
         this.requestingInstitutionErrorMessage = false;
         this.patronBarcodeErrorMessage = false;
@@ -535,24 +510,7 @@ export class RequestComponent implements OnInit {
       //with edd end
     } else {
       //without edd strt
-      if ((this.itemBarcodeId == undefined || this.itemBarcodeId == '') && (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') && (this.patronBarcodeId == undefined || this.patronBarcodeId == '') && (this.deliveryLocationId == undefined || this.deliveryLocationId == '')) {
-        this.itemBarcodeErrorMessage = true;
-        this.requestingInstitutionErrorMessage = true;
-        this.patronBarcodeErrorMessage = true;
-        this.deliveryLocationErrorMessage = true;
-      }
-      else if (this.itemBarcodeId == undefined || this.itemBarcodeId == '' || this.itemBarcodeNotFoundErrorMessage == true) {
-        this.itemBarcodeErrorMessage = true;
-      }
-      else if (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') {
-        this.requestingInstitutionErrorMessage = true;
-      } else if (this.patronBarcodeId == undefined || this.patronBarcodeId == '') {
-        this.patronBarcodeErrorMessage = true;
-      } else if (this.deliveryLocationId == undefined || this.deliveryLocationId == '') {
-        this.deliveryLocationErrorMessage = true;
-      } else if (this.requestTypeId == undefined || this.requestTypeId == '') {
-        this.requestTypeErrorMessage = true;
-      } else {
+      if (this.validateInputs()) {
         this.itemBarcodeErrorMessage = false;
         this.requestingInstitutionErrorMessage = false;
         this.patronBarcodeErrorMessage = false;
@@ -630,13 +588,96 @@ export class RequestComponent implements OnInit {
             //Called when error
           })
       }
-
       //without edd end
-
+      this.spinner.hide();
     }
-
   }
-
+  validateInputs() {
+    this.status_fields = true;
+    if (this.itemBarcodeId == undefined || this.itemBarcodeId == '' || this.itemBarcodeNotFoundErrorMessage == true) {
+      this.itemBarcodeErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.itemBarcodeErrorMessage = false;
+    }
+    if (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') {
+      this.requestingInstitutionErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.requestingInstitutionErrorMessage = false;
+    }
+    if (this.patronBarcodeId == undefined || this.patronBarcodeId == '') {
+      this.patronBarcodeErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.patronBarcodeErrorMessage = false;
+    }
+    if (this.deliveryLocationId == undefined || this.deliveryLocationId == '') {
+      this.deliveryLocationErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.deliveryLocationErrorMessage = false;
+    }
+    if (this.requestTypeId == undefined || this.requestTypeId == '') {
+      this.requestTypeErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.requestTypeErrorMessage = false;
+    }
+    return this.status_fields;
+  }
+  validateInputs_edd() {
+    this.status_fields = true;
+    if (this.itemBarcodeId == undefined || this.itemBarcodeId == '' || this.itemBarcodeNotFoundErrorMessage == true) {
+      this.itemBarcodeErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.itemBarcodeErrorMessage = false;
+    }
+    if (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') {
+      this.requestingInstitutionErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.requestingInstitutionErrorMessage = false;
+    }
+    if (this.patronBarcodeId == undefined || this.patronBarcodeId == '') {
+      this.patronBarcodeErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.patronBarcodeErrorMessage = false;
+    }
+    if (this.patronEmailId == undefined || this.patronEmailId == '' || this.patronEmailIdErrorMessage == true) {
+      this.EmailMandatoryErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.EmailMandatoryErrorMessage = false;
+    }
+    if (this.requestTypeId == undefined || this.requestTypeId == '') {
+      this.requestTypeErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.requestTypeErrorMessage = false;
+    }
+    if (this.StartPage == undefined || this.StartPage == '') {
+      this.startPageErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.startPageErrorMessage = false;
+    }
+    if (this.EndPage == undefined || this.EndPage == '') {
+      this.endPageErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.endPageErrorMessage = false;
+    }
+    if (this.ChapterTitle == undefined || this.ChapterTitle == '') {
+      this.articleTitleErrorMessage = true;
+      this.status_fields = false;
+    } else {
+      this.articleTitleErrorMessage = false;
+    }
+    return this.status_fields;
+  }
   resetDefaults() {
     this.deliveryLocVal = [];
     this.eddshow = false;
@@ -748,7 +789,7 @@ export class RequestComponent implements OnInit {
           "searchInstitutionHdn": null
         }
 
-        this.requestService.searchRequests(this.postData).subscribe(
+        this.requestService.goToSearchRequest(this.postData).subscribe(
           (res) => {
             this.searchReqresultFirst = true;
             this.searchBar = true;

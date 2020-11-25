@@ -29,6 +29,7 @@ declare var $: any;
   ]
 })
 export class SearchComponent implements OnInit {
+  fieldValue: string;
   searchVal: TreeNode[];
   selectedNodes1: any[];
   selectedNodes2: any[];
@@ -123,6 +124,7 @@ export class SearchComponent implements OnInit {
   public data: Object[];
 
   ngOnInit(): void {
+    $("#clearSearchText").hide();
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],
@@ -382,13 +384,16 @@ export class SearchComponent implements OnInit {
   routeToRequest() {
     var barcode1 = [];
     var i;
-    if (this.selectedNodes1 == undefined) {
-      for (i = 0; i < this.selectedNodes2.length; i++) {
-        barcode1.push(this.selectedNodes2[i].barcode);
-      }
-    } else {
+    console.log("Testing",this.selectedNodes1);
+    console.log("Testing2",this.selectedNodes2);
+    if (this.selectedNodes1 != undefined) {
       for (i = 0; i < this.selectedNodes1.length; i++) {
         barcode1.push(this.selectedNodes1[i].barcode);
+      }
+    } 
+    if(this.selectedNodes2 != undefined) {
+      for (i = 0; i < this.selectedNodes2.length; i++) {
+        barcode1.push(this.selectedNodes2[i].barcode);
       }
     }
     var barcode = barcode1.join();
@@ -537,5 +542,19 @@ export class SearchComponent implements OnInit {
       "errorMessage": null
     }
     return this.postData;
+  }
+  clearFieldvalue() {
+      if ($("#fieldValue").val().length > 0) {
+        $("#clearSearchText").show();
+        $("#resetSearch").prop('disabled',false); 
+      } else {
+        $("#clearSearchText").hide();
+        $("#resetSearch").prop('disabled',true); 
+      }
+  }
+  clearSearchText() {
+    this.fieldValue = '';
+    $("#clearSearchText").hide();
+    $("#resetSearch").prop('disabled',true); 
   }
 }

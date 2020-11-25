@@ -12,6 +12,7 @@ declare var $: any;
   styleUrls: ['./collection.component.css']
 })
 export class CollectionComponent implements OnInit {
+  showStar = false;
   collectionForm: FormGroup;
   collectionVal: TreeNode[];
   openmarcVal: TreeNode[];
@@ -252,6 +253,11 @@ export class CollectionComponent implements OnInit {
         this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
         this.radioSwitchEditCGD = true;
         this.spinner.hide();
+        if(this.CGDselect == 'Shared'){
+          this.showStar = true;
+        }else{
+          this.showStar = false;
+        }
         this.postData =
         {
           "itemBarcodes": null,
@@ -304,6 +310,7 @@ export class CollectionComponent implements OnInit {
             this.crossinstitutionVal = res;
             $('#collection-result-inner').modal({ show: true });
             this.validateResponse();
+            this.spinner.hide();
           },
           (error) => {
             this.spinner.hide();
@@ -313,6 +320,7 @@ export class CollectionComponent implements OnInit {
       },
       (error) => {
         this.spinner.hide();
+        console.log("Testing",error);
       }
 
     );
