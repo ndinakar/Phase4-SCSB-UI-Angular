@@ -45,7 +45,12 @@ export class RequestService {
         headers: appHeaders.getHeaders()
       });
   }
-
+  goToSearchRequest(postData: RequestForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/goToSearchRequest",postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
   resubmitRequest(postData: RequestForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/resubmitRequest", postData,
       {

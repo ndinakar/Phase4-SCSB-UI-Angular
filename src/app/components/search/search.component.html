@@ -15,8 +15,11 @@
                                     <input id="totalItemRecordsCount" name="totalItemRecordsCount" type="text" hidden="hidden" />
                                     <button id="pageSizeChangeButtonId" type="submit" name="action" value="pageSizeChange" hidden="hidden"></button>
                                     <div>
-                                        <input id="fieldValue" formControlName="fieldValue" name="fieldValue" type="search" placeholder="Type Text Here....." class="form-control" />
-
+                                        <div class="has-feedback ">
+                                            <input id="fieldValue" [(ngModel)]="fieldValue" (keyup)="clearFieldvalue()" formControlName="fieldValue" name="fieldValue" type="search" placeholder="Type Text Here....." class="form-control" />
+                                            <span id="clearSearchText" class="add-clear-x form-control-feedback glyphicon glyphicon-remove" style="color: rgb(12, 12, 12); cursor: pointer; text-decoration: none; overflow: hidden; position: absolute; pointer-events: auto; right: 0px; top: 4px; z-index: 100; display: block;"
+                                                (click)="clearSearchText()"></span>
+                                        </div>
                                     </div>
                                     <div class="input-group-btn search-panel">
                                         <select id="allfields" formControlName="fieldName" class="form-control btn themed-button themed-button-allfields dropdown-toggle" style="width: 170px; border-left-width: 0px;">
@@ -291,7 +294,7 @@
                                     <div class="col-sm-7 margin-top-10">
                                         <div class="row" style="font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">OI - Owning Institution, CC - Customer Code, CGD - Collection Group Designation, SH - Summary Holdings</div>
                                     </div>
-                                    <div class="col-sm-3 text-right" style="text-align: right;font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 17px !important;">
+                                    <div class="col-sm-3 text-right" style="text-align: right;font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">
                                         <span>Bibliographic Results Found: <span>{{searchVal['totalBibRecordsCount']}}</span></span><br>
                                         <span>Item Results Found: <span>{{searchVal['totalItemRecordsCount']}}</span></span>
 
@@ -301,7 +304,7 @@
                                 <!--tree grid start-->
 
                                 <p-table #dt [columns]="cols" name="p_table" [autoLayout]="true" [value]="searchVal['searchResultRows']" [paginator]="false" [rows]="10" [showCurrentPageReport]="false" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50,100]"
-                                    paginatorPosition="" selectionMode="checkbox" [(selection)]="selectedNodes1" dataKey="title" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                                    paginatorPosition="" selectionMode="checkbox" [(selection)]="selectedNodes1" dataKey="barcode" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
 
                                     <ng-template pTemplate="header" let-columns>
                                         <tr id="headers_main">

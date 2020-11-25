@@ -303,7 +303,7 @@
 
                                                                 <div class="row form-group">
                                                                     <div class="col-sm-4 text-right padding-right-30">
-                                                                        <label for="CGDChangeNotes" class="fontcolor-dark">CGD Change Notes <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
+                                                                        <label for="CGDChangeNotes" class="fontcolor-dark">CGD Change Notes <span class="error-color" *ngIf="showStar">*</span></label>
                                                                     </div>
                                                                     <div class="col-sm-8 padding-left-0">
                                                                         <textarea *ngIf="!collectionUpdateMessage" class="form-control themed-input" name="CGDChangeNotes" id="CGDChangeNotes" [(ngModel)]="CGDChangeNotes" (keyup)="CGDChangeNotesFunc(CGDChangeNotes)" maxlength="2000"></textarea>
