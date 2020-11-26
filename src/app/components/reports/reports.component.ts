@@ -549,11 +549,11 @@ export class ReportsComponent implements OnInit {
         "eddRequestCulCount": null,
         "eddRequestNyplCount": null
       }
-      this.reportsService.submit(this.postData).subscribe(
-        (res) => {
           this.requestResultsPage = false;
           this.accessionPageResponse = true;
           this.incompleteResultsPage = false;
+      this.reportsService.submit(this.postData).subscribe(
+        (res) => {
           this.reportstVal = res;
           this.subtotalEDDPULDeaccession = this.reportstVal['deaccessionPrivatePulCount'] + this.reportstVal['deaccessionSharedPulCount'] + this.reportstVal['deaccessionOpenPulCount'];
           this.subtotalEDDCULDeaccession = this.reportstVal['deaccessionPrivateCulCount'] + this.reportstVal['deaccessionSharedCulCount'] + this.reportstVal['deaccessionOpenCulCount'];
@@ -576,12 +576,12 @@ export class ReportsComponent implements OnInit {
     }
     if (!this.statusRequest) {
       this.spinner.show();
+      this.errorMessageId = false;
+      this.requestResultsPage = false;
+      this.accessionPageResponse = false;
       this.reportsService.incompleteRecords(this.setPostData('incompleteRecords', 'incomplete')).subscribe(
         (res) => {
           this.reportstVal = res;
-          this.errorMessageId = false;
-          this.requestResultsPage = false;
-          this.accessionPageResponse = false;
           this.incompleteResultsPage = true;
           if (this.reportstVal['errorMessage'] != null || this.reportstVal['errorMessage'] != undefined) {
             this.errorMessageId = true;
@@ -626,18 +626,15 @@ export class ReportsComponent implements OnInit {
     this.isChecked = true;
   }
   enableCGDPage() {
-    // this.reportstVal['openPulCgdCount'] = '';
-    // this.reportstVal['openCulCgdCount'] = '';
-    // this.reportstVal['openNyplCgdCount'] = '';
     this.spinner.show();
     this.resetFields();
+        this.requestPage = false;
+        this.accesionPage = false;
+        this.incompletePage = false;
     this.reportsService.collectionGroupDesignation().subscribe(
       (res) => {
         this.reportstVal = res;
-        this.requestPage = false;
-        this.accesionPage = false;
         this.cgdPage = true;
-        this.incompletePage = false;
         this.spinner.hide();
       },
       (error) => {
