@@ -439,7 +439,10 @@ export class ReportsComponent implements OnInit {
     }
 
     if (!this.statusRequest) {
-      this.spinner.show();
+      this.spinner.hide();
+      this.requestResultsPage = false;
+      this.accessionPageResponse = true;
+      this.incompleteResultsPage = false;
       this.postData = {
         "showBy": null,
         "requestType": "Accession/Deaccesion",
@@ -549,9 +552,6 @@ export class ReportsComponent implements OnInit {
         "eddRequestCulCount": null,
         "eddRequestNyplCount": null
       }
-          this.requestResultsPage = false;
-          this.accessionPageResponse = true;
-          this.incompleteResultsPage = false;
       this.reportsService.submit(this.postData).subscribe(
         (res) => {
           this.reportstVal = res;
@@ -579,10 +579,10 @@ export class ReportsComponent implements OnInit {
       this.errorMessageId = false;
       this.requestResultsPage = false;
       this.accessionPageResponse = false;
+      this.incompleteResultsPage = true;
       this.reportsService.incompleteRecords(this.setPostData('incompleteRecords', 'incomplete')).subscribe(
         (res) => {
           this.reportstVal = res;
-          this.incompleteResultsPage = true;
           if (this.reportstVal['errorMessage'] != null || this.reportstVal['errorMessage'] != undefined) {
             this.errorMessageId = true;
           } else {
@@ -598,7 +598,6 @@ export class ReportsComponent implements OnInit {
       );
     }
   }
-
   enableRequestPage() {
     this.spinner.hide();
     this.resetFields();
@@ -626,15 +625,15 @@ export class ReportsComponent implements OnInit {
     this.isChecked = true;
   }
   enableCGDPage() {
-    this.spinner.show();
-    this.resetFields();
+        this.spinner.show();
+        this.resetFields();
         this.requestPage = false;
         this.accesionPage = false;
+        this.cgdPage = true;
         this.incompletePage = false;
-    this.reportsService.collectionGroupDesignation().subscribe(
+        this.reportsService.collectionGroupDesignation().subscribe(
       (res) => {
         this.reportstVal = res;
-        this.cgdPage = true;
         this.spinner.hide();
       },
       (error) => {
@@ -644,8 +643,12 @@ export class ReportsComponent implements OnInit {
     );
   }
   enableincompletePage() {
-    this.getInstitutions();
     this.resetFields(); 
+    this.requestPage = false;
+    this.accesionPage = false;
+    this.cgdPage = false;
+    this.incompletePage = true;
+    this.getInstitutions();
   }
   incompleteReportPageSizeChange(value) {
     this.incompletePageSize = value;
@@ -781,10 +784,6 @@ export class ReportsComponent implements OnInit {
     this.reportsService.getInstitutions().subscribe(
       (res) => {
         this.instVal = res;
-        this.requestPage = false;
-        this.accesionPage = false;
-        this.cgdPage = false;
-        this.incompletePage = true;
         this.incompleteShowBy = this.instVal['incompleteShowByInst'][0];
       },
       (error) => {
