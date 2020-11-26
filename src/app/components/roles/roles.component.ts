@@ -113,7 +113,6 @@ export class RolesComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.rolesVal = res;
-        console.log("Testing", res);
         if (this.rolesVal['errorMessage'] != null) {
           this.errorMessageDiv = true;
           this.rolesSearchResultsDiv = false;

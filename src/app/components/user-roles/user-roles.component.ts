@@ -220,7 +220,6 @@ export class UserRolesComponent implements OnInit {
           this.totalRecordsCountDiv = false;
           this.userRolePaginationDiv = false;
         } else {
-          console.log("Testing3", res);
           this.pagination();
           this.searchResultContainerDiv = true;
           this.searchResultsDiv = true;
