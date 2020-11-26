@@ -665,17 +665,17 @@
                             <div id="reportPaginationId" name="reportPaginationName" class="pull-right" style="margin-top: -10px;">
                                 <ul class="pagination" id="reportPaginationUl">
                                     <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                        <span id="btn_first" (click)="deaccessionfirstCall()">First</span>
+                                        <span id="btn_first" (click)="deaccessionfirstCall()" style="cursor: pointer">First</span>
                                     </li>
                                     <li [ngClass]=" (previousbutton==true)? 'disabled': '' ">
-                                        <span id="btn_previous" (click)="deaccessionpreviousCall() ">Previous</span>
+                                        <span id="btn_previous" (click)="deaccessionpreviousCall() " style="cursor: pointer">Previous</span>
                                     </li>
                                     <li [ngClass]="(nextbutton==true)? 'disabled': '' ">
-                                        <span id="btn_next" (click)="deaccessionnextCall() ">Next</span>
+                                        <span id="btn_next" (click)="deaccessionnextCall() " style="cursor: pointer">Next</span>
 
                                     </li>
                                     <li [ngClass]="(lastbutton==true)? 'disabled': '' ">
-                                        <span id="btn_last" (click)="deaccessionlastCall() ">Last</span>
+                                        <span id="btn_last" (click)="deaccessionlastCall() " style="cursor: pointer">Last</span>
                                     </li>
                                 </ul>
                             </div>
@@ -697,7 +697,7 @@
                                                     <div class="select-holder ">
                                                         <select id="incompleteShowBy " name="incompleteShowBy " class="themed-input themed-select " style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;
                                         " [ngModelOptions]="{standalone: true} " [(ngModel)]="incompleteShowBy ">
-                                                            <option *ngFor="let inst of instVal[ 'incompleteShowByInst'] "
+                                                            <option *ngFor="let inst of instVal['incompleteShowByInst'] "
                                                                 [ngValue]="inst ">
                                                                 {{inst}}
                                                             </option>
@@ -733,7 +733,7 @@
                             </div>
                         </div>
                         <!--IncompleteRecordsReport Report Table Section-->
-                        <div *ngIf="incompleteResultsPage " class="row " id="IncompleteReporttableview ">
+                        <div *ngIf="incompleteResultsPage" class="row " id="IncompleteReporttableview ">
                             <div *ngIf="errorMessageId " id="errorMessageId " class="row margin-btm-10 ">
                                 <div class="col-sm-12 " style="padding-left:45px;padding-right:45px;margin-top:10px; ">
                                     <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="errorMessageSpanId ">{{reportstVal['errorMessage']}}</span></div>
@@ -803,16 +803,16 @@
                             <div id="incompletePaginationId " name="reportPaginationName " class="pull-left " style="margin-top: -10px;padding-left:35px; " data-th-if="${reportsForm.showIncompletePagination} ">
                                 <ul class="pagination " id="incompletePaginationUl ">
                                     <li [ngClass]="(firstbutton==true)? 'disabled': '' ">
-                                        <span id="btn_first_in" (click)="firstCall() ">First</span>
+                                        <span id="btn_first_in" (click)="firstCall()" style="cursor: pointer">First</span>
                                     </li>
                                     <li [ngClass]="(previousbutton==true)? 'disabled': '' ">
-                                        <span id="btn_pre_in" (click)="previousCall() ">Previous</span>
+                                        <span id="btn_pre_in" (click)="previousCall() " style="cursor: pointer">Previous</span>
                                     </li>
                                     <li [ngClass]="(nextbutton==true)? 'disabled': '' ">
-                                        <span id="btn_next_in" (click)="nextCall() ">Next</span>
+                                        <span id="btn_next_in" (click)="nextCall() " style="cursor: pointer">Next</span>
                                     </li>
                                     <li [ngClass]="(lastbutton==true)? 'disabled': '' ">
-                                        <span id="btn_last_in" (click)="lastCall() ">Last</span>
+                                        <span id="btn_last_in" (click)="lastCall() " style="cursor: pointer">Last</span>
                                     </li>
                                 </ul>
                             </div>

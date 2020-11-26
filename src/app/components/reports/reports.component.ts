@@ -225,7 +225,6 @@ export class ReportsComponent implements OnInit {
   }
 
   submitRequest() {
-    this.spinner.show();
     this.requestToDateErrorText = false;
     this.showByErrorText = false;
     this.requestFromDateErrorText = false;
@@ -236,17 +235,13 @@ export class ReportsComponent implements OnInit {
     if (this.RequestDateRangeto == '' || this.RequestDateRangeto == undefined) {
       this.requestToDateErrorText = true;
       this.statusRequest = true;
-      this.spinner.hide();
     }
     if (this.ReportShowBy == '' || this.ReportShowBy == undefined) {
       this.showByErrorText = true;
       this.statusRequest = true;
-      this.spinner.hide();
     }
     if (this.RequestDateRangefrom == '' || this.RequestDateRangefrom == undefined) {
       this.requestFromDateErrorText = true;
-      this.statusRequest = true;
-      this.spinner.hide();
     }
     this.dateFrom = this.toDate(this.RequestDateRangefrom);
     this.dateTo = this.toDate(this.RequestDateRangeto);
@@ -254,10 +249,10 @@ export class ReportsComponent implements OnInit {
     if (this.compareDate(this.dateFrom, this.dateTo)) {
       this.statusRequest = true;
       this.requestFromToError = true;
-      this.spinner.hide();
     }
 
     if (!this.statusRequest) {
+      this.spinner.show();
       this.requestToDateErrorText = false;
       this.requestFromDateErrorText = false;
 
@@ -373,9 +368,9 @@ export class ReportsComponent implements OnInit {
         "eddRequestCulCount": null,
         "eddRequestNyplCount": null
       }
-
       this.reportsService.submit(this.postData).subscribe(
         (res) => {
+          this.spinner.hide();
           this.reportstVal = res;
           if (this.reportstVal['showBy'] == "Partners") {
             this.partnersResults = true;
@@ -396,13 +391,10 @@ export class ReportsComponent implements OnInit {
             this.totalCULRequest = this.reportstVal['retrievalRequestCulCount'] + this.reportstVal['recallRequestCulCount'] + this.reportstVal['eddRequestCulCount'];
             this.totalNYPLRequest = this.reportstVal['retrievalRequestNyplCount'] + this.reportstVal['recallRequestNyplCount'] + this.reportstVal['eddRequestNyplCount'];
           }
-          this.spinner.hide();
         },
         (error) => {
           this.spinner.hide();
-        }
-
-      );
+        });
     }
 
   }
@@ -425,7 +417,6 @@ export class ReportsComponent implements OnInit {
     return (parseFloat(this.start) > parseFloat(this.end));
   }
   submitAccession() {
-    this.spinner.show();
     this.accessionErrorText = false;
     this.deaccessionErrorText = false;
     this.accessionFromToError = false;
@@ -434,12 +425,10 @@ export class ReportsComponent implements OnInit {
     if (this.AccessionDeaccessionDateRangefrom == '' || this.AccessionDeaccessionDateRangefrom == undefined) {
       this.accessionErrorText = true;
       this.statusRequest = true;
-      this.spinner.hide();
     }
     if (this.AccessionDeaccessionDateRangeto == '' || this.AccessionDeaccessionDateRangeto == undefined) {
       this.deaccessionErrorText = true;
       this.statusRequest = true;
-      this.spinner.hide();
     }
     this.dateAccessionFrom = this.toDate(this.AccessionDeaccessionDateRangefrom);
     this.dateAccessionTo = this.toDate(this.AccessionDeaccessionDateRangeto);
@@ -447,13 +436,10 @@ export class ReportsComponent implements OnInit {
     if (this.compareDate(this.dateAccessionFrom, this.dateAccessionTo)) {
       this.accessionFromToError = true;
       this.statusRequest = true;
-      this.spinner.hide();
     }
 
     if (!this.statusRequest) {
-      this.requestResultsPage = false;
-      this.accessionPageResponse = true;
-      this.incompleteResultsPage = false;
+      this.spinner.show();
       this.postData = {
         "showBy": null,
         "requestType": "Accession/Deaccesion",
@@ -565,6 +551,9 @@ export class ReportsComponent implements OnInit {
       }
       this.reportsService.submit(this.postData).subscribe(
         (res) => {
+          this.requestResultsPage = false;
+          this.accessionPageResponse = true;
+          this.incompleteResultsPage = false;
           this.reportstVal = res;
           this.subtotalEDDPULDeaccession = this.reportstVal['deaccessionPrivatePulCount'] + this.reportstVal['deaccessionSharedPulCount'] + this.reportstVal['deaccessionOpenPulCount'];
           this.subtotalEDDCULDeaccession = this.reportstVal['deaccessionPrivateCulCount'] + this.reportstVal['deaccessionSharedCulCount'] + this.reportstVal['deaccessionOpenCulCount'];
@@ -579,22 +568,20 @@ export class ReportsComponent implements OnInit {
     }
   }
   incompleteRecords() {
-    this.spinner.show();
     this.incompleteErrorText = false;
     this.statusRequest = false;
     if (this.incompleteShowBy == '' || this.incompleteShowBy == undefined) {
       this.incompleteErrorText = true;
       this.statusRequest = true;
-      this.spinner.hide();
     }
     if (!this.statusRequest) {
-      this.errorMessageId = false;
-      this.requestResultsPage = false;
-      this.accessionPageResponse = false;
-
+      this.spinner.show();
       this.reportsService.incompleteRecords(this.setPostData('incompleteRecords', 'incomplete')).subscribe(
         (res) => {
           this.reportstVal = res;
+          this.errorMessageId = false;
+          this.requestResultsPage = false;
+          this.accessionPageResponse = false;
           this.incompleteResultsPage = true;
           if (this.reportstVal['errorMessage'] != null || this.reportstVal['errorMessage'] != undefined) {
             this.errorMessageId = true;
@@ -613,6 +600,7 @@ export class ReportsComponent implements OnInit {
   }
 
   enableRequestPage() {
+    this.spinner.hide();
     this.resetFields();
     this.requestPage = true;
     this.accesionPage = false;
@@ -625,6 +613,7 @@ export class ReportsComponent implements OnInit {
     this.requestResultsPage = false;
   }
   enableAccessionPage() {
+    this.spinner.hide();
     this.resetFields();
     this.requestPage = false;
     this.accesionPage = true;
@@ -637,31 +626,29 @@ export class ReportsComponent implements OnInit {
     this.isChecked = true;
   }
   enableCGDPage() {
+    // this.reportstVal['openPulCgdCount'] = '';
+    // this.reportstVal['openCulCgdCount'] = '';
+    // this.reportstVal['openNyplCgdCount'] = '';
     this.spinner.show();
     this.resetFields();
-    this.requestPage = false;
-    this.accesionPage = false;  
-    this.cgdPage = true;
-    this.incompletePage = false;
     this.reportsService.collectionGroupDesignation().subscribe(
       (res) => {
         this.reportstVal = res;
+        this.requestPage = false;
+        this.accesionPage = false;
+        this.cgdPage = true;
+        this.incompletePage = false;
         this.spinner.hide();
       },
       (error) => {
         this.spinner.hide();
-
       }
 
     );
   }
   enableincompletePage() {
-    this.resetFields();
-    this.requestPage = false;
-    this.accesionPage = false;
-    this.cgdPage = false;
-    this.incompletePage = true;
     this.getInstitutions();
+    this.resetFields(); 
   }
   incompleteReportPageSizeChange(value) {
     this.incompletePageSize = value;
@@ -688,7 +675,6 @@ export class ReportsComponent implements OnInit {
     );
   }
   deaccessionInformation() {
-    this.spinner.show();
     this.reportsService.deaccessionInformation(this.setPostData('deaccessionInfo', 'deaccession')).subscribe(
       (res) => {
         this.deaccessionRes = res;
@@ -697,10 +683,8 @@ export class ReportsComponent implements OnInit {
         this.reportType_panel = false;
         this.Deaccessiontableshow = true;
         this.pagination('deaccession');
-        this.spinner.hide();
       },
       (error) => {
-        this.spinner.hide();
       }
 
     );
@@ -800,6 +784,10 @@ export class ReportsComponent implements OnInit {
     this.reportsService.getInstitutions().subscribe(
       (res) => {
         this.instVal = res;
+        this.requestPage = false;
+        this.accesionPage = false;
+        this.cgdPage = false;
+        this.incompletePage = true;
         this.incompleteShowBy = this.instVal['incompleteShowByInst'][0];
       },
       (error) => {
