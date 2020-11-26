@@ -194,7 +194,6 @@ export class UserRolesComponent implements OnInit {
     this.editsuccessMsgDiv = false;
     this.editerrormsgDiv = false;
     this.userId = userId;
-    //this.deletePageNumber = 
     this.userRolesService.editUser(userId, networkLoginId).subscribe(
       (res) => {
         this.userResponse = res;
@@ -212,7 +211,7 @@ export class UserRolesComponent implements OnInit {
     this.userRolesService.searchRoles(this.setPostData('searchUsers')).subscribe(
       (res) => {
         this.userRoleFormVal = res;
-        if (this.userRoleFormVal['message'] != null) {
+        if (this.userRoleFormVal['message'] != null || this.userRoleFormVal['errorMessage'] != null) {
           this.searchResultsDiv = true;
           this.searchResultContainerDiv = true;
           this.errorMessageforSearchDiv = true;
@@ -220,9 +219,8 @@ export class UserRolesComponent implements OnInit {
           this.searchRowResultsDiv = false;
           this.totalRecordsCountDiv = false;
           this.userRolePaginationDiv = false;
-        } else if (this.userRoleFormVal['errorMessage'] != null) {
-          this.errorMessageforSearchDiv = false;
         } else {
+          console.log("Testing3", res);
           this.pagination();
           this.searchResultContainerDiv = true;
           this.searchResultsDiv = true;
