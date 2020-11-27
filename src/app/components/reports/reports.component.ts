@@ -636,6 +636,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.collectionGroupDesignation().subscribe(
       (res) => {
         this.reportstVal = res;
+        console.log("Testing",res);
       },
       (error) => {
       });

@@ -304,7 +304,7 @@
                                 <!--tree grid start-->
 
                                 <p-table #dt [columns]="cols" name="p_table" [autoLayout]="true" [value]="searchVal['searchResultRows']" [paginator]="false" [rows]="10" [showCurrentPageReport]="false" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50,100]"
-                                    paginatorPosition="" selectionMode="checkbox" [(selection)]="selectedNodes1" dataKey="barcode" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                                    paginatorPosition="" selectionMode="checkbox" [(selection)]="selectedNodes1" (onHeaderCheckboxToggle)="onTableHeaderCheckboxToggle1($event)" dataKey="barcode" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
 
                                     <ng-template pTemplate="header" let-columns>
                                         <tr id="headers_main">
@@ -340,7 +340,7 @@
                                                     <div class="p-col-12 p-md-9">
                                                         <div class="p-grid" *ngIf="rowData.searchItemResultRows==''"></div>
                                                         <div class="p-grid" *ngIf="rowData.searchItemResultRows!=''">
-                                                            <p-table name="p_tablesub" [columns]="cols1" selectionMode="checkbox" [(selection)]="selectedNodes2" [value]="rowData.searchItemResultRows" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                                                            <p-table name="p_tablesub" [columns]="cols1" selectionMode="checkbox" (onHeaderCheckboxToggle)="onTableHeaderCheckboxToggle1($event)" [(selection)]="selectedNodes2" [value]="rowData.searchItemResultRows" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                                                                 <ng-template pTemplate="header" let-columns>
                                                                     <tr id="subRow_header">
                                                                         <th id="sub_header_checkbox" style="width: 3em">

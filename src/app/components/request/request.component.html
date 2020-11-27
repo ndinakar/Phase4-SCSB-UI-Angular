@@ -116,6 +116,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr id="rowData_results_{{i}}" class="requestRow" *ngFor="let item of searchreqResultVal['searchResultRows']; let i=index">
+                                                    <input id="requestRowRequestId-{{i}}" name="requestRowRequestId-index-{{i}}" type="hidden" value="{{item.requestId}}" />
                                                     <th id="data_pb_{{i}}">{{ item.patronBarcode }}</th>
                                                     <td id="data_ri_{{i}}">{{ item.requestingInstitution }}</td>
                                                     <td><a target="_blank" routerLink="/openMarcRecord" [queryParams]="{bibId: item['bibId']}" id="data_br_{{i}}">{{ item.barcode }}</a></td>
