@@ -132,182 +132,108 @@
                                                             <tr class="results">
                                                                 <th width="20%"></th>
                                                                 <th width="20%"></th>
-                                                                <th width="20%" style="font-family:sans-serif;font-size: 120%">
-                                                                    Princeton</th>
-                                                                <th width="20%" style="font-family:sans-serif;font-size: 120%">
-                                                                    Columbia</th>
-                                                                <th width="20%" style="font-family:sans-serif;font-size: 120%">New York Public Library</th>
+                                                                <th width="15%" style="font-family:sans-serif;font-size: 120%" *ngFor="let inst of reportstVal['reportsInstitutionFormList']">
+                                                                    {{inst.institution}}</th>
                                                             </tr>
                                                         </thead>
-                                                        <tr class="results">
-                                                            <td rowspan="4" class="v-middle-data gray-light fontcolor-white large-font" style="font-family:sans-serif;">
+                                                        <tr class=" results ">
+                                                            <td rowspan="4 " class="v-middle-data gray-light fontcolor-white large-font " style="font-family:sans-serif; ">
                                                                 Physical
                                                             </td>
-                                                            <td class="results">Private</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['physicalPrivatePulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['physicalPrivateCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['physicalPrivateNyplCount']}}</span>
+                                                            <td class="results ">Private</td>
+                                                            <td class="results" *ngFor="let PrivateCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{PrivateCount.physicalPrivateCount}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="results">
-                                                            <td class="results">Shared and Open to Self</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['physicalSharedPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['physicalSharedCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['physicalSharedNyplCount']}}</span>
+                                                        <tr class="results ">
+                                                            <td class="results ">Shared and Open to Self</td>
+                                                            <td class="results" *ngFor="let SharedSelfCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{SharedSelfCount.physicalSharedCount}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="results">
-                                                            <td class="results">Shared and Open to Partner</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['physicalPartnerSharedPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['physicalPartnerSharedCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['physicalPartnerSharedNyplCount']}}</span>
+                                                        <tr class="results ">
+                                                            <td class="results ">Shared and Open to Partner</td>
+                                                            <td class="results " *ngFor="let SharedPartnerCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{SharedPartnerCount.physicalPartnerSharedCount}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="border-style-bottom results">
-                                                            <td class="fontcolor-dark large-font text-right results">
+                                                        <tr class="border-style-bottom results ">
+                                                            <td class="fontcolor-dark large-font text-right results ">
                                                                 Subtotal</td>
-                                                            <td class="results"><span>{{subtotalPhysicalPUL}}</span>
-                                                            </td>
-                                                            <td class="results"><span>{{subtotalPhysicalCUL}}</span>
-                                                            </td>
-                                                            <td class="results"><span>{{subtotalPhysicalNYPL}}</span>
+                                                            <td class="results" *ngFor="let SubTotalCount of reportstVal['reportsInstitutionFormList']"><span>{{SubTotalCount.physicalPrivateCount+SubTotalCount.physicalSharedCount+SubTotalCount.physicalPartnerSharedCount | number}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="results">
-                                                            <td rowspan="4" class="v-middle-data gray-dark fontcolor-white large-font" style="font-family:sans-serif;">
+                                                        <tr class="results ">
+                                                            <td rowspan="4 " class="v-middle-data gray-dark fontcolor-white large-font " style="font-family:sans-serif; ">
                                                                 EDD
                                                             </td>
-                                                            <td class="results">Private</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddPrivatePulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddPrivateCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddPrivateNyplCount']}}</span>
+                                                            <td class="results ">Private</td>
+                                                            <td class="results" *ngFor="let PrivateEddCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{PrivateEddCount.eddPrivateCount}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="results">
-                                                            <td class="results">Shared and Open to Self</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddSharedOpenPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddSharedOpenCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddSharedOpenNyplCount']}}</span>
+                                                        <tr class="results ">
+                                                            <td class="results ">Shared and Open to Self</td>
+                                                            <td class="results" *ngFor="let SharedSelfEddCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{SharedSelfEddCount.eddSharedOpenCount}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="results">
-                                                            <td class="results">Shared and Open to Partner</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddPartnerSharedOpenPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddPartnerSharedOpenCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddPartnerSharedOpenNyplCount']}}</span>
+                                                        <tr class="results ">
+                                                            <td class="results ">Shared and Open to Partner</td>
+                                                            <td class="results " *ngFor="let SharedPartnerEddCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{SharedPartnerEddCount.eddPartnerSharedOpenCount}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="results">
-                                                            <td class="fontcolor-dark large-font text-right results">
+                                                        <tr class="results ">
+                                                            <td class="fontcolor-dark large-font text-right results ">
                                                                 Subtotal</td>
-                                                            <td class="results"><span>{{subtotalEDDPUL}}</span>
-                                                            </td>
-                                                            <td class="results"><span>{{subtotalEDDCUL}}</span>
-                                                            </td>
-                                                            <td class="results"><span>{{subtotalEDDNYPL}}</span>
+                                                            <td class="results" *ngFor="let SubTotalEddCount of reportstVal['reportsInstitutionFormList']"><span>{{SubTotalEddCount.eddPrivateCount+SubTotalEddCount.eddSharedOpenCount+SubTotalEddCount.eddPartnerSharedOpenCount | number}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="fontcolor-dark large-font bgcolored results">
+                                                        <tr class="fontcolor-dark large-font bgcolored results ">
                                                             <td></td>
-                                                            <td class="results">TOTAL</td>
-                                                            <td class="results"><span>{{totalPUL}}</span>
-                                                            </td>
-                                                            <td class="results"><span>{{totalCUL}}</span>
-                                                            </td>
-                                                            <td class="results"><span>{{totalNYPL}}</span>
+                                                            <td class="results ">TOTAL</td>
+                                                            <td class="results " *ngFor="let TotalCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{TotalCount.physicalPrivateCount+TotalCount.physicalSharedCount+TotalCount.physicalPartnerSharedCount+TotalCount.eddPrivateCount+TotalCount.eddSharedOpenCount+TotalCount.eddPartnerSharedOpenCount | number}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div *ngIf="requestTypeResults" id="requesttype-tableview" data-th-if="${reportsForm.showRequestTypeTable}">
-                                                <div class="table-wrapper">
-                                                    <table class="table table-striped text-center margin-btm-0">
-                                                        <thead class="tablesorter-headerRow">
+                                            <div *ngIf="requestTypeResults " id="requesttype-tableview " data-th-if="${reportsForm.showRequestTypeTable} ">
+                                                <div class="table-wrapper ">
+                                                    <table class="table table-striped text-center margin-btm-0 ">
+                                                        <thead class="tablesorter-headerRow ">
                                                             <tr>
-                                                                <th width="25%"></th>
-                                                                <th width="25%" style="font-family:sans-serif;font-size: 120%">
-                                                                    Princeton</th>
-                                                                <th width="25%" style="font-family:sans-serif;font-size: 120%">
-                                                                    Columbia</th>
-                                                                <th width="25%" style="font-family:sans-serif;font-size: 120%">New York Public Library</th>
+                                                                <th width="25% "></th>
+                                                                <th width="15% " style="font-family:sans-serif;font-size: 120% " *ngFor="let inst of reportstVal['reportsInstitutionFormList']">
+                                                                    {{inst.institution}}</th>
                                                             </tr>
                                                         </thead>
-                                                        <tr class="border-style-top-white">
-                                                            <td class="gray-dark fontcolor-white large-font results" style="font-family:sans-serif;">Retrieval
+                                                        <tr class="border-style-top-white ">
+                                                            <td class="gray-dark fontcolor-white large-font results " style="font-family:sans-serif; ">Retrieval
                                                             </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['retrievalRequestPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['retrievalRequestCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['retrievalRequestNyplCount']}}</span>
+                                                            <td class="results " *ngFor="let retrievalCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{retrievalCount.retrievalRequestCount}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="border-style-top-white">
-                                                            <td class="gray-dark fontcolor-white large-font results" style="font-family:sans-serif;">Recall</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['recallRequestPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['recallRequestCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['recallRequestNyplCount']}}</span>
+                                                        <tr class="border-style-top-white ">
+                                                            <td class="gray-dark fontcolor-white large-font results " style="font-family:sans-serif; ">Recall</td>
+                                                            <td class="results " *ngFor="let recallCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{recallCount.recallRequestCount}}</span>
                                                             </td>
 
                                                         </tr>
-                                                        <tr class="border-style-top-white">
-                                                            <td class="gray-dark fontcolor-white large-font results" style="font-family:sans-serif;">EDD</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddRequestPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddRequestCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['eddRequestNyplCount']}}</span>
+                                                        <tr class="border-style-top-white ">
+                                                            <td class="gray-dark fontcolor-white large-font results " style="font-family:sans-serif; ">EDD</td>
+                                                            <td class="results " *ngFor="let eddCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{eddCount.eddRequestCount}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="fontcolor-dark large-font bgcolored results" data-th-if="${reportsForm.showRecallTable}">
-                                                            <td class="results">TOTAL</td>
-                                                            <td class="results"><span>{{totalPULRequest}}</span>
-                                                            </td>
-                                                            <td class="results"><span>{{totalCULRequest}}</span>
-                                                            </td>
-                                                            <td class="results"><span>{{totalNYPLRequest}}</span>
+                                                        <tr class="fontcolor-dark large-font bgcolored results " data-th-if="${reportsForm.showRecallTable} ">
+                                                            <td class="results ">TOTAL</td>
+                                                            <td class="results " *ngFor="let totalCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{totalCount.retrievalRequestCount+totalCount.recallRequestCount+totalCount.eddRequestCount | number}}</span>
                                                             </td>
 
                                                         </tr>
@@ -317,60 +243,58 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="accesionPage" id="ReportAccessionDeaccessionclickview" class="">
-                                    <div class="search-bar" style="margin-top: -20px;">
-                                        <div class="buscador-principal">
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-8">
-                                                    <div class="col-md-5 col-sm-5 padding-right-50">
-                                                        <div class="form-group">
-                                                            <label for="AccessionDeaccessionDateRangefrom">Date Range
-                                                                <span class="error-color">*</span> </label>
+                                <div *ngIf="accesionPage " id="ReportAccessionDeaccessionclickview " class=" ">
+                                    <div class="search-bar " style="margin-top: -20px; ">
+                                        <div class="buscador-principal ">
+                                            <div class="row ">
+                                                <div class="col-md-6 col-sm-8 ">
+                                                    <div class="col-md-5 col-sm-5 padding-right-50 ">
+                                                        <div class="form-group ">
+                                                            <label for="AccessionDeaccessionDateRangefrom ">Date Range
+                                                                <span class="error-color ">*</span> </label>
                                                             <br /><label>From</label>
-                                                            <div class='input-group date' id="reportaccessiondeaccessionsectiondatepickerfrom">
-                                                                <input type='date' class="form-control themed-input" placeholder="MM/DD/YYYY" id="AccessionDeaccessionDateRangefrom" [ngModelOptions]="{standalone: true}" [(ngModel)]="AccessionDeaccessionDateRangefrom" name="AccessionDeaccessionDateRangefrom" />
-                                                                <span class="input-group-addon">
-                                                                    <!-- <span class="glyphicon glyphicon-calendar">
-                                                                                </span> -->
+                                                            <div class='input-group date' id="reportaccessiondeaccessionsectiondatepickerfrom ">
+                                                                <input type='date' class="form-control themed-input " placeholder="MM/DD/YYYY " id="AccessionDeaccessionDateRangefrom " [ngModelOptions]="{standalone: true} " [(ngModel)]="AccessionDeaccessionDateRangefrom
+                                                                    " name="AccessionDeaccessionDateRangefrom " />
+                                                                <span class="input-group-addon ">
                                                                 </span>
 
                                                             </div>
-                                                            <p id="accessionErrorText" *ngIf="accessionErrorText" style="color: red">This Field is Required
+                                                            <p id="accessionErrorText " *ngIf="accessionErrorText " style="color: red ">This Field is Required
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-5 col-sm-5 padding-right-50" style="margin-top: 5px;">
-                                                        <div class="form-group">
+                                                    <div class="col-md-5 col-sm-5 padding-right-50 " style="margin-top: 5px; ">
+                                                        <div class="form-group ">
                                                             <br /><label>To</label>
-                                                            <div class='input-group date' id="reportaccessiondeaccessionsectiondatepickerto">
-                                                                <input type='date' class="form-control themed-input" placeholder="MM/DD/YYYY" id="AccessionDeaccessionDateRangeto" [ngModelOptions]="{standalone: true}" [(ngModel)]="AccessionDeaccessionDateRangeto" name="AccessionDeaccessionDateRangeto" />
-                                                                <span class="input-group-addon">
-                                                                    <!-- <span class="glyphicon glyphicon-calendar">
-                                                                                </span> -->
+                                                            <div class='input-group date' id="reportaccessiondeaccessionsectiondatepickerto ">
+                                                                <input type='date' class="form-control themed-input " placeholder="MM/DD/YYYY " id="AccessionDeaccessionDateRangeto " [ngModelOptions]="{standalone: true} " [(ngModel)]="AccessionDeaccessionDateRangeto
+                                                                    " name="AccessionDeaccessionDateRangeto " />
+                                                                <span class="input-group-addon ">
                                                                 </span>
                                                             </div>
-                                                            <p id="deaccessionErrorText" *ngIf="deaccessionErrorText" style="color: red;">This Field is Required
+                                                            <p id="deaccessionErrorText " *ngIf="deaccessionErrorText " style="color: red; ">This Field is Required
                                                             </p>
-                                                            <p id="accessionFromToError" *ngIf="accessionFromToError" style="color: red">To Date must be greater than or
+                                                            <p id="accessionFromToError " *ngIf="accessionFromToError " style="color: red ">To Date must be greater than or
                                                                 <br /> equal to the From Date</p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2 col-sm-2" style="margin-top: 20px;">
-                                                        <button class="btn themed-button themed-button-search" (click)="submitAccession()" id="accessionSearchButton">Generate Report
+                                                    <div class="col-md-2 col-sm-2 " style="margin-top: 20px; ">
+                                                        <button class="btn themed-button themed-button-search " (click)="submitAccession() " id="accessionSearchButton ">Generate Report
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col-xs-12 margin-top-less-10" style="margin-top: 5px;padding-left: 20px;">Fields marked with asterisk(
-                                                    <span class="error-color">*</span>) are mandatory.
+                                            <div class="row ">
+                                                <div class="col-xs-12 margin-top-less-10 " style="margin-top: 5px;padding-left: 20px; ">Fields marked with asterisk(
+                                                    <span class="error-color ">*</span>) are mandatory.
                                                 </div>
                                             </div>
 
-                                            <div class="" style="padding-left: 5px;">
+                                            <div class=" " style="padding-left: 5px; ">
                                                 <strong>Note:</strong>
-                                                <ul class="" style="list-style-type:disc;">
+                                                <ul class=" " style="list-style-type:disc; ">
                                                     <li>The accession/deaccession count report shows the count of items accessioned and deaccessioned by partner institutions.
                                                     </li>
                                                     <li>The accession and deaccessioned data differentiates between the private, shared and open items.
@@ -382,137 +306,91 @@
                                         </div>
                                     </div>
                                     <!--Report Table Section-->
-                                    <div *ngIf="accessionPageResponse" class="row margin-top-20" id="showAccessionDeaccessionTable" data-th-if="${reportsForm.showAccessionDeaccessionTable}">
-                                        <div class="col-xs-12">
+                                    <div *ngIf="accessionPageResponse" class="row margin-top-20 " id="showAccessionDeaccessionTable " data-th-if="${reportsForm.showAccessionDeaccessionTable} ">
+                                        <div class="col-xs-12 ">
                                             <h4>Report Results</h4>
-                                            <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                                            <div id="Accession_Deaccession-tableview">
-                                                <div class="table-wrapper">
-                                                    <table class="table table-striped text-center margin-btm-0" id="acessionDeaccessionTable">
-                                                        <thead class="tablesorter-headerRow">
+                                            <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
+                                            <div id="Accession_Deaccession-tableview ">
+                                                <div class="table-wrapper ">
+                                                    <table class="table table-striped text-center margin-btm-0 " id="acessionDeaccessionTable ">
+                                                        <thead class="tablesorter-headerRow ">
                                                             <tr>
-                                                                <th width="20%"></th>
-                                                                <th width="20%"></th>
-                                                                <th width="20%" style="font-family:sans-serif;font-size: 122%">
-                                                                    Princeton</th>
-                                                                <th width="20%" style="font-family:sans-serif;font-size: 122%">
-                                                                    Columbia</th>
-                                                                <th width="20%" style="font-family:sans-serif;font-size: 122%">New York Public Library</th>
+                                                                <th width="20% "></th>
+                                                                <th width="20% "></th>
+                                                                <th width="20% " style="font-family:sans-serif;font-size: 122% " *ngFor="let inst of reportstVal['reportsInstitutionFormList']">
+                                                                    {{inst.institution}}</th>
                                                             </tr>
                                                         </thead>
-                                                        <tr class="results">
-                                                            <td rowspan="4" class="v-middle-data gray-light fontcolor-white large-font" style="font-family:sans-serif;">
+                                                        <tr class="results ">
+                                                            <td rowspan="4 " class="v-middle-data gray-light fontcolor-white large-font " style="font-family:sans-serif; ">
                                                                 Accessioned
                                                             </td>
-                                                            <td class="results">Private</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionPrivatePulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionPrivateCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionPrivateNyplCount']}}</span>
+                                                            <td class="results ">Private</td>
+                                                            <td class="results " *ngFor="let privateAccCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{privateAccCount.accessionPrivateCount}}</span>
                                                             </td>
 
                                                         </tr>
-                                                        <tr class="results">
-                                                            <td class="results">Shared</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionSharedPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionSharedCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionSharedNyplCount']}}</span>
+                                                        <tr class="results ">
+                                                            <td class="results ">Shared</td>
+                                                            <td class="results " *ngFor="let sharedAccCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{sharedAccCount.accessionSharedCount}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="results">
-                                                            <td class="results">Open</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionOpenPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionOpenCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionOpenNyplCount']}}</span>
+                                                        <tr class="results ">
+                                                            <td class="results ">Open</td>
+                                                            <td class="results " *ngFor="let openAccCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{openAccCount.accessionOpenCount}}</span>
                                                             </td>
 
                                                         </tr>
-                                                        <tr class="border-style-bottom bgcolored large-font fontcolor-dark border-style-top-white results">
-                                                            <td class="fontcolor-dark large-font text-right results">
+                                                        <tr class="border-style-bottom bgcolored large-font fontcolor-dark border-style-top-white results ">
+                                                            <td class="fontcolor-dark large-font text-right results ">
                                                                 Subtotal</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionPrivatePulCount']+reportstVal['accessionSharedPulCount']+reportstVal['accessionOpenPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionPrivateCulCount']+reportstVal['accessionSharedCulCount']+reportstVal['accessionOpenCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['accessionPrivateNyplCount']+reportstVal['accessionSharedNyplCount']+reportstVal['accessionOpenNyplCount']}}</span>
+                                                            <td class="results " *ngFor="let subTotalAccCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{subTotalAccCount['accessionPrivateCount']+subTotalAccCount['accessionSharedCount']+subTotalAccCount['accessionOpenCount']}}</span>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td rowspan="4" class="v-middle-data gray-dark fontcolor-white large-font" style="font-family:sans-serif;">
+                                                            <td rowspan="4 " class="v-middle-data gray-dark fontcolor-white large-font " style="font-family:sans-serif; ">
                                                                 Deaccessioned
                                                             </td>
-                                                            <td class="results">Private</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['deaccessionPrivatePulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['deaccessionPrivateCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['deaccessionPrivateNyplCount']}}</span>
+                                                            <td class="results ">Private</td>
+                                                            <td class="results " *ngFor="let privateDeaccCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{privateDeaccCount.deaccessionPrivateCount}}</span>
                                                             </td>
 
                                                         </tr>
-                                                        <tr class="results">
-                                                            <td class="results">Shared</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['deaccessionSharedPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['deaccessionSharedCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['deaccessionSharedNyplCount']}}</span>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr class="results">
-                                                            <td class="results">Open</td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['deaccessionOpenPulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['deaccessionOpenCulCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['deaccessionOpenNyplCount']}}</span>
+                                                        <tr class="results ">
+                                                            <td class="results ">Shared</td>
+                                                            <td class="results " *ngFor="let sharedDeaccCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{sharedDeaccCount.deaccessionSharedCount}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="bgcolored large-font fontcolor-dark border-style-top-white">
-                                                            <td class="fontcolor-dark large-font text-right results">
+                                                        <tr class="results ">
+                                                            <td class="results ">Open</td>
+                                                            <td class="results " *ngFor="let openDeaccCount of reportstVal['reportsInstitutionFormList']">
+                                                                <span>{{openDeaccCount.deaccessionOpenCount}}</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="bgcolored large-font fontcolor-dark border-style-top-white ">
+                                                            <td class="fontcolor-dark large-font text-right results ">
                                                                 Subtotal</td>
-                                                            <td id="deacessionPulCount">
-                                                                <a naem="deacessionPulCount" href="#" class="Deaccession-tableshow" (click)="deaccessionPul()">
-                                                                    <button id="btn_Pul" *ngIf="subtotalEDDPULDeaccession !=0">{{subtotalEDDPULDeaccession}}</button></a>
-                                                                <span *ngIf="subtotalEDDPULDeaccession == 0">{{subtotalEDDPULDeaccession}}</span>
+                                                            <td id="deacessionCount " *ngFor="let subToatlDeaccCount of subtotalEDDDeaccession">
+                                                                <a naem="deacessionPulCount " href="# " class="Deaccession-tableshow " (click)="deaccessionPul() ">
+                                                                    <button id="btn_{{subToatlDeaccCount.institution}}" *ngIf="subToatlDeaccCount !=0 ">{{subToatlDeaccCount}}</button></a>
+                                                                <span *ngIf="subToatlDeaccCount==0 ">{{subToatlDeaccCount}}</span>
                                                             </td>
-                                                            <td id="deacessionCulCount">
-                                                                <a name="deacessionPulCount" href="#" id="deacessionCulCountHref" class="Deaccession-tableshow" (click)="deaccessionCul()">
-                                                                    <button id="btn_Cul" *ngIf="subtotalEDDPULDeaccession !=0">{{subtotalEDDCULDeaccession}}</button></a>
-                                                                <span *ngIf="subtotalEDDPULDeaccession == 0 ">{{subtotalEDDCULDeaccession}}</span>
+                                                            <!-- <td id="deacessionCulCount ">
+                                                                <a name="deacessionPulCount " href="# " id="deacessionCulCountHref " class="Deaccession-tableshow " (click)="deaccessionCul() ">
+                                                                    <button id="btn_Cul " *ngIf="subtotalEDDPULDeaccession !=0 ">{{subtotalEDDCULDeaccession}}</button></a>
+                                                                <span *ngIf="subtotalEDDPULDeaccession==0 ">{{subtotalEDDCULDeaccession}}</span>
                                                             </td>
-                                                            <td id="deacessionNyplCount">
-                                                                <a name="deacessionPulCount" href="#" class="Deaccession-tableshow" (click)="deaccessionNypl()">
-                                                                    <button id="btn_Nypl" *ngIf="subtotalEDDPULDeaccession !=0">{{subtotalEDDNYPLDeaccession}}</button></a>
-                                                                <span *ngIf="subtotalEDDPULDeaccession == 0 ">{{subtotalEDDNYPLDeaccession}}</span>
-                                                            </td>
+                                                            <td id="deacessionNyplCount ">
+                                                                <a name="deacessionPulCount " href="# " class="Deaccession-tableshow " (click)="deaccessionNypl() ">
+                                                                    <button id="btn_Nypl " *ngIf="subtotalEDDPULDeaccession !=0 ">{{subtotalEDDNYPLDeaccession}}</button></a>
+                                                                <span *ngIf="subtotalEDDPULDeaccession==0 ">{{subtotalEDDNYPLDeaccession}}</span>
+                                                            </td> -->
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -522,77 +400,56 @@
                                 </div>
                                 <!-- Accession/Deaccession Option View End-->
                                 <!-- Collection Group Designation Option View-->
-                                <div *ngIf="cgdPage" id="ReportCollectionGroupDesignationclickview" class="">
-                                    <div class="search-bar" style="margin-top: -20px;">
-                                        <div class="buscador-principal">
+                                <div *ngIf="cgdPage " id="ReportCollectionGroupDesignationclickview " class=" ">
+                                    <div class="search-bar " style="margin-top: -20px; ">
+                                        <div class="buscador-principal ">
                                             <div>
                                                 <strong>Note:</strong> Count of items by Collection Group Designation per institution as of today.
                                             </div>
                                         </div>
                                     </div>
                                     <!--CollectionGroupDesignation Report Table Section-->
-                                    <div class="row margin-top-20">
-                                        <div class="col-xs-12">
+                                    <div class="row margin-top-20 ">
+                                        <div class="col-xs-12 ">
                                             <h4>Report Results</h4>
-                                            <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                                            <div id="CollectionGroupDesignation-tableview">
-                                                <div class="table-wrapper">
-                                                    <table class="table table-striped text-center margin-btm-0" id="cgdTable">
-                                                        <thead class="tablesorter-headerRow">
+                                            <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
+                                            <div id="CollectionGroupDesignation-tableview ">
+                                                <div class="table-wrapper ">
+                                                    <table class="table table-striped text-center margin-btm-0 " id="cgdTable ">
+                                                        <thead class="tablesorter-headerRow ">
                                                             <tr>
-                                                                <th width="20%"></th>
-                                                                <th width="20%" style="font-family:sans-serif;font-size: 120%">
-                                                                    Princeton</th>
-                                                                <th width="20%" style="font-family:sans-serif;font-size: 120%">
-                                                                    Columbia</th>
-                                                                <th width="20%" style="font-family:sans-serif;font-size: 120%">New York Public Library</th>
+                                                                <th width="20% "></th>
+                                                                <th width="20% " style="font-family:sans-serif;font-size: 120% " *ngFor=" let key of reportstVal[ 'reportsInstitutionFormList'] ">
+                                                                    {{key.institution}}</th>
                                                             </tr>
                                                         </thead>
-                                                        <tr class="border-style-top-white results">
-                                                            <td class="v-middle-data gray-dark fontcolor-white large-font results" style="font-family:sans-serif;">
+                                                        <tr class="border-style-top-white results ">
+                                                            <td class="v-middle-data gray-dark fontcolor-white large-font results " style="font-family:sans-serif; ">
                                                                 Open
                                                             </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['openPulCgdCount']}}</span></td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['openCulCgdCount']}}</span></td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['openNyplCgdCount']}}</span></td>
+                                                            <td class="results " *ngFor=" let OpenRes of reportstVal[ 'reportsInstitutionFormList'] ">
+                                                                <span>{{OpenRes.openCgdCount | number}}</span></td>
                                                         </tr>
-                                                        <tr class="border-style-top-white results">
-                                                            <td class="v-middle-data gray-dark fontcolor-white large-font results" style="font-family:sans-serif;">
+                                                        <tr class="border-style-top-white results ">
+                                                            <td class="v-middle-data gray-dark fontcolor-white large-font results " style="font-family:sans-serif; ">
                                                                 Shared
                                                             </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['sharedPulCgdCount']}}</span></td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['sharedCulCgdCount']}}</span></td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['sharedNyplCgdCount']}}</span></td>
+                                                            <td class="results " *ngFor=" let SharedRes of reportstVal[ 'reportsInstitutionFormList'] ">
+                                                                <span>{{SharedRes.sharedCgdCount | number}}</span></td>
 
                                                         </tr>
-                                                        <tr class="border-style-top-white results">
-                                                            <td class="v-middle-data gray-dark fontcolor-white large-font results" style="font-family:sans-serif;">
+                                                        <tr class="border-style-top-white results ">
+                                                            <td class="v-middle-data gray-dark fontcolor-white large-font results " style="font-family:sans-serif; ">
                                                                 Private
                                                             </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['privatePulCgdCount']}}</span></td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['privateCulCgdCount']}}</span></td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['privateNyplCgdCount']}}</span></td>
+                                                            <td class="results " *ngFor=" let PrivateRes of reportstVal[ 'reportsInstitutionFormList'] ">
+                                                                <span>{{PrivateRes.privateCgdCount | number}}</span></td>
                                                         </tr>
-                                                        <tr class="bgcolored large-font fontcolor-dark border-style-top-white results">
-                                                            <td class="v-middle-data gray-dark fontcolor-white results" style="font-family:sans-serif;">TOTAL
+                                                        <tr class="bgcolored large-font fontcolor-dark border-style-top-white results ">
+                                                            <td class="v-middle-data gray-dark fontcolor-white results " style="font-family:sans-serif; ">TOTAL
                                                             </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['openPulCgdCount']+reportstVal['sharedPulCgdCount']+reportstVal['privatePulCgdCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['openCulCgdCount']+reportstVal['sharedCulCgdCount']+reportstVal['privateCulCgdCount']}}</span>
-                                                            </td>
-                                                            <td class="results">
-                                                                <span>{{reportstVal['openNyplCgdCount']+reportstVal['sharedNyplCgdCount']+reportstVal['privateNyplCgdCount']}}</span>
+                                                            <td class="results " *ngFor=" let totalRes of reportstVal[ 'reportsInstitutionFormList'] ">
+                                                                <span>{{totalRes.openCgdCount+totalRes.sharedCgdCount+totalRes.privateCgdCount | number}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -607,22 +464,22 @@
                     </div>
                     <!-- Reports Form Section Ends-->
                     <!-- Deaccession tableview -->
-                    <div *ngIf="Deaccessiontableshow" class="reports-detail-table" id="Deaccession-tableview">
-                        <input type="hidden" id="ownInst" />
-                        <button id="pageSizeChangeButtonId" type="submit" name="action" value="pageSizeChange" hidden="hidden"></button>
-                        <div class="row">
-                            <h4 class="col-sm-9 margin-top-05 margin-btm-0">Report Results</h4>
-                            <div class="col-sm-3 text-right Deaccessionbacklink">
-                                <a href="javascript: history.go(0)" class="" (click)="goBack($event)"><span
-                                        class="glyphicon glyphicon-menu-left"></span> Go Back</a>
+                    <div *ngIf="Deaccessiontableshow " class="reports-detail-table " id="Deaccession-tableview ">
+                        <!-- <input type="hidden" id="ownInst " /> -->
+                        <button id="pageSizeChangeButtonId " type="submit " name="action " value="pageSizeChange " hidden="hidden "></button>
+                        <div class="row ">
+                            <h4 class="col-sm-9 margin-top-05 margin-btm-0 ">Report Results</h4>
+                            <div class="col-sm-3 text-right Deaccessionbacklink ">
+                                <a href="javascript: history.go(0)" class=" " (click)="goBack($event)"><span
+                                        class="glyphicon glyphicon-menu-left "></span> Go Back</a>
                             </div>
                         </div>
-                        <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                        <div id="showEntriesAndNumFoundDiv" name="showEntriesAndNumFoundDiv" class="row">
-                            <div class="col-sm-2 margin-top-05 show-entries-section">
-                                <div class="">
-                                    <span class="show-title">Show Entries</span>
-                                    <select id="numOfRecordsId" name="numOfRecordsName" class="themed-input" [(ngModel)]="showentries" class="themed-input" [ngModelOptions]="{standalone: true}" style="margin-left: 5px;" (change)="deaccessionInformationOnChange(showentries)">
+                        <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
+                        <div id="showEntriesAndNumFoundDiv " name="showEntriesAndNumFoundDiv " class="row ">
+                            <div class="col-sm-2 margin-top-05 show-entries-section ">
+                                <div class=" ">
+                                    <span class="show-title ">Show Entries</span>
+                                    <select id="numOfRecordsId " name="numOfRecordsName " class="themed-input " [(ngModel)]="showentries" class="themed-input " [ngModelOptions]="{standalone: true} " style="margin-left: 5px; " (change)="deaccessionInformationOnChange(showentries) ">
                                         <option value="10" selected>10</option>
                                         <option value="25">25</option>
                                         <option value="50">50</option>
@@ -630,52 +487,52 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-7 margin-top-10">
-                                <div class="row">OI - Owning Institution, CGD - Collection Group Designation</div>
+                            <div class="col-sm-7 margin-top-10 ">
+                                <div class="row ">OI - Owning Institution, CGD - Collection Group Designation</div>
                             </div>
                         </div>
 
-                        <div id="deaccessionInformation">
-                            <label class="pull-right h4" style="margin-top: -10px;">Deaccessioned Item Results
+                        <div id="deaccessionInformation ">
+                            <label class="pull-right h4 " style="margin-top: -10px; ">Deaccessioned Item Results
                                 Found:<span>{{deaccessionRes['totalRecordsCount']}}</span></label>
-                            <table class="table table-striped text-center margin-btm-0">
-                                <thead class="tablesorter-headerRow">
+                            <table class="table table-striped text-center margin-btm-0 ">
+                                <thead class="tablesorter-headerRow ">
                                     <tr>
-                                        <th width="15%" style="font-family:sans-serif;">DATE</th>
-                                        <th width="20%" style="font-family:sans-serif;">TITLE</th>
-                                        <th width="10%" style="font-family:sans-serif;">OI</th>
-                                        <th width="10%" style="font-family:sans-serif;">ITEM BARCODE</th>
-                                        <th width="10%" style="font-family:sans-serif;">CGD</th>
-                                        <th width="25%" style="font-family:sans-serif;">DEACCESSION NOTES</th>
-                                        <th width="15%" style="font-family:sans-serif;">DEACCESSION BY</th>
+                                        <th width="15% " style="font-family:sans-serif; ">DATE</th>
+                                        <th width="20% " style="font-family:sans-serif; ">TITLE</th>
+                                        <th width="10% " style="font-family:sans-serif; ">OI</th>
+                                        <th width="10% " style="font-family:sans-serif; ">ITEM BARCODE</th>
+                                        <th width="10% " style="font-family:sans-serif; ">CGD</th>
+                                        <th width="25% " style="font-family:sans-serif; ">DEACCESSION NOTES</th>
+                                        <th width="15% " style="font-family:sans-serif; ">DEACCESSION BY</th>
                                     </tr>
                                 </thead>
-                                <tr id="rowData_results_de_{{i}}" *ngFor="let deaccessionRow of deaccessionRes['deaccessionItemResultsRows']; let i=index">
-                                    <td id="colData_dd_de_{{i}}"><span>{{deaccessionRow.deaccessionDate}}</span></td>
-                                    <td id="colData_dt_de_{{i}}"><span>{{deaccessionRow.title}}</span></td>
-                                    <td id="colData_di_de_{{i}}"><span id="ownInstDeacc_{{i}}">{{deaccessionRow.deaccessionOwnInst}}</span></td>
-                                    <td id="colData_ib_de_{{i}}"><span>{{deaccessionRow.itemBarcode}}</span></td>
-                                    <td id="colData_cgd_de_{{i}}"><span>{{deaccessionRow.cgd}}</span></td>
-                                    <td id="colData_dn_de_{{i}}"><span>{{deaccessionRow.deaccessionNotes}}</span></td>
-                                    <td id="colData_dcb_de_{{i}}"><span>{{deaccessionRow.deaccessionCreatedBy}}</span></td>
+                                <tr id="rowData_results_de_{{i}} " *ngFor="let deaccessionRow of deaccessionRes[ 'deaccessionItemResultsRows']; let i=index ">
+                                    <td id="colData_dd_de_{{i}} "><span>{{deaccessionRow.deaccessionDate}}</span></td>
+                                    <td id="colData_dt_de_{{i}} "><span>{{deaccessionRow.title}}</span></td>
+                                    <td id="colData_di_de_{{i}} "><span id="ownInstDeacc_{{i}} ">{{deaccessionRow.deaccessionOwnInst}}</span></td>
+                                    <td id="colData_ib_de_{{i}} "><span>{{deaccessionRow.itemBarcode}}</span></td>
+                                    <td id="colData_cgd_de_{{i}} "><span>{{deaccessionRow.cgd}}</span></td>
+                                    <td id="colData_dn_de_{{i}} "><span>{{deaccessionRow.deaccessionNotes}}</span></td>
+                                    <td id="colData_dcb_de_{{i}} "><span>{{deaccessionRow.deaccessionCreatedBy}}</span></td>
                                 </tr>
                             </table>
-                            <input id="reportsPageNumber" name="reportsPageNumber" type="text" th:field="${reportsForm.pageNumber}" hidden="hidden" />
-                            <input id="reportstotalPageCount" name="reportstotalPageCount" type="text" th:field="${reportsForm.totalPageCount}" hidden="hidden" />
-                            <div id="reportPaginationId" name="reportPaginationName" class="pull-right" style="margin-top: -10px;">
-                                <ul class="pagination" id="reportPaginationUl">
-                                    <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                        <span id="btn_first" (click)="deaccessionfirstCall()" style="cursor: pointer">First</span>
+                            <input id="reportsPageNumber " name="reportsPageNumber " type="text " th:field="${reportsForm.pageNumber} " hidden="hidden " />
+                            <input id="reportstotalPageCount " name="reportstotalPageCount " type="text " th:field="${reportsForm.totalPageCount} " hidden="hidden " />
+                            <div id="reportPaginationId " name="reportPaginationName " class="pull-right " style="margin-top: -10px; ">
+                                <ul class="pagination " id="reportPaginationUl ">
+                                    <li [ngClass]="(firstbutton==true)? 'disabled': '' ">
+                                        <span id="btn_first " (click)="deaccessionfirstCall() " style="cursor: pointer ">First</span>
                                     </li>
                                     <li [ngClass]=" (previousbutton==true)? 'disabled': '' ">
-                                        <span id="btn_previous" (click)="deaccessionpreviousCall() " style="cursor: pointer">Previous</span>
+                                        <span id="btn_previous " (click)="deaccessionpreviousCall() " style="cursor: pointer ">Previous</span>
                                     </li>
                                     <li [ngClass]="(nextbutton==true)? 'disabled': '' ">
-                                        <span id="btn_next" (click)="deaccessionnextCall() " style="cursor: pointer">Next</span>
+                                        <span id="btn_next " (click)="deaccessionnextCall() " style="cursor: pointer ">Next</span>
 
                                     </li>
                                     <li [ngClass]="(lastbutton==true)? 'disabled': '' ">
-                                        <span id="btn_last" (click)="deaccessionlastCall() " style="cursor: pointer">Last</span>
+                                        <span id="btn_last " (click)="deaccessionlastCall() " style="cursor: pointer ">Last</span>
                                     </li>
                                 </ul>
                             </div>
@@ -696,8 +553,8 @@
                                                         <span class="error-color ">*</span> </label>
                                                     <div class="select-holder ">
                                                         <select id="incompleteShowBy " name="incompleteShowBy " class="themed-input themed-select " style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;
-                                        " [ngModelOptions]="{standalone: true} " [(ngModel)]="incompleteShowBy ">
-                                                            <option *ngFor="let inst of instVal['incompleteShowByInst'] "
+                                                                    " [ngModelOptions]="{standalone: true} " [(ngModel)]="incompleteShowBy ">
+                                                            <option *ngFor="let inst of instVal[ 'incompleteShowByInst'] "
                                                                 [ngValue]="inst ">
                                                                 {{inst}}
                                                             </option>
@@ -746,8 +603,8 @@
                                 <div class="col-sm-offset-2 show-entries-section " style="margin-top: -30px; ">
                                     <div class=" ">
                                         <span class="show-title ">Show Entries</span>
-                                        <select id="incompleteShowRecords " name="numOfRecordsName " class="themed-input " [(ngModel)]="incompletePageSize " class="themed-input " (change)="incompleteReportPageSizeChange(incompletePageSize) " [ngModelOptions]="{standalone:
-                                        true} " style="margin-left: 5px; ">
+                                        <select id="incompleteShowRecords " name="numOfRecordsName " class="themed-input " [(ngModel)]="incompletePageSize " class="themed-input " (change)="incompleteReportPageSizeChange(incompletePageSize)
+                                                                    " [ngModelOptions]="{standalone: true} " style="margin-left: 5px; ">
                                             <option value="10" selected>10</option>
                                             <option value="25">25</option>
                                             <option value="50">50</option>
@@ -774,20 +631,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr id="rowData_results_{{i}}" *ngFor="let incompleteResult of reportstVal[ 'incompleteReportResultsRows']; let i=index" class="parentRow">
-                                                    <td id="colData_title_{{i}}">
+                                                <tr id="rowData_results_{{i}} " *ngFor="let incompleteResult of reportstVal[ 'incompleteReportResultsRows']; let i=index " class="parentRow ">
+                                                    <td id="colData_title_{{i}} ">
                                                         <span>{{incompleteResult.title}}</span>
                                                     </td>
-                                                    <td id="colData_author_{{i}}">
+                                                    <td id="colData_author_{{i}} ">
                                                         <span>{{incompleteResult.author}}</span>
                                                     </td>
-                                                    <td id="colData_cd_{{i}}">
+                                                    <td id="colData_cd_{{i}} ">
                                                         <span>{{incompleteResult.customerCode}}</span>
                                                     </td>
-                                                    <td id="colData_bd_{{i}}">
+                                                    <td id="colData_bd_{{i}} ">
                                                         <span>{{incompleteResult.barcode}}</span>
                                                     </td>
-                                                    <td id="colData_cd_{{i}}">
+                                                    <td id="colData_cd_{{i}} ">
                                                         <span>{{incompleteResult.createdDate}}</span>
                                                     </td>
                                                 </tr>
@@ -803,16 +660,16 @@
                             <div id="incompletePaginationId " name="reportPaginationName " class="pull-left " style="margin-top: -10px;padding-left:35px; " data-th-if="${reportsForm.showIncompletePagination} ">
                                 <ul class="pagination " id="incompletePaginationUl ">
                                     <li [ngClass]="(firstbutton==true)? 'disabled': '' ">
-                                        <span id="btn_first_in" (click)="firstCall()" style="cursor: pointer">First</span>
+                                        <span id="btn_first_in " (click)="firstCall() " style="cursor: pointer ">First</span>
                                     </li>
                                     <li [ngClass]="(previousbutton==true)? 'disabled': '' ">
-                                        <span id="btn_pre_in" (click)="previousCall() " style="cursor: pointer">Previous</span>
+                                        <span id="btn_pre_in " (click)="previousCall() " style="cursor: pointer ">Previous</span>
                                     </li>
                                     <li [ngClass]="(nextbutton==true)? 'disabled': '' ">
-                                        <span id="btn_next_in" (click)="nextCall() " style="cursor: pointer">Next</span>
+                                        <span id="btn_next_in " (click)="nextCall() " style="cursor: pointer ">Next</span>
                                     </li>
                                     <li [ngClass]="(lastbutton==true)? 'disabled': '' ">
-                                        <span id="btn_last_in" (click)="lastCall() " style="cursor: pointer">Last</span>
+                                        <span id="btn_last_in " (click)="lastCall() " style="cursor: pointer ">Last</span>
                                     </li>
                                 </ul>
                             </div>

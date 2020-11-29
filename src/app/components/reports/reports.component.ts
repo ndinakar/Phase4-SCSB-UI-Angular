@@ -16,6 +16,7 @@ export class ReportsComponent implements OnInit {
     this.spinner.hide();
     this.ReportShowBy = 'Partners';
   }
+  cgdSum: any = [];
   subtotalPhysicalCUL: number;
   subtotalPhysicalPUL: number;
   subtotalPhysicalNYPL: number;
@@ -32,9 +33,7 @@ export class ReportsComponent implements OnInit {
   totalPULRequest: number;
   totalNYPLRequest: number;
 
-  subtotalEDDCULDeaccession: number;
-  subtotalEDDPULDeaccession: number;
-  subtotalEDDNYPLDeaccession: number;
+  subtotalEDDDeaccession: any = [];
 
   firstbutton = true;
   previousbutton = true;
@@ -253,10 +252,6 @@ export class ReportsComponent implements OnInit {
       this.spinner.show();
       this.requestToDateErrorText = false;
       this.requestFromDateErrorText = false;
-
-      this.requestResultsPage = true;
-      this.accessionPageResponse = false;
-      this.incompleteResultsPage = false;
       this.postData = {
         "showBy": this.ReportShowBy,
         "requestType": "request",
@@ -370,24 +365,15 @@ export class ReportsComponent implements OnInit {
       this.reportsService.submit(this.postData).subscribe(
         (res) => {
           this.reportstVal = res;
+          this.requestResultsPage = true;
+          this.accessionPageResponse = false;
+          this.incompleteResultsPage = false;
           if (this.reportstVal['showBy'] == "Partners") {
             this.partnersResults = true;
             this.requestTypeResults = false;
-            this.subtotalPhysicalPUL = this.reportstVal['physicalPrivatePulCount'] + this.reportstVal['physicalSharedPulCount'] + this.reportstVal['physicalPartnerSharedPulCount'];
-            this.subtotalPhysicalCUL = this.reportstVal['physicalPrivateCulCount'] + this.reportstVal['physicalSharedCulCount'] + this.reportstVal['physicalPartnerSharedCulCount'];
-            this.subtotalPhysicalNYPL = this.reportstVal['physicalPrivateNyplCount'] + this.reportstVal['physicalSharedNyplCount'] + this.reportstVal['physicalPartnerSharedNyplCount'];
-            this.subtotalEDDPUL = this.reportstVal['eddPrivatePulCount'] + this.reportstVal['eddSharedOpenPulCount'] + this.reportstVal['eddPartnerSharedOpenPulCount'];
-            this.subtotalEDDCUL = this.reportstVal['eddPrivateCulCount'] + this.reportstVal['eddSharedOpenCulCount'] + this.reportstVal['eddPartnerSharedOpenCulCount'];
-            this.subtotalEDDNYPL = this.reportstVal['eddPrivateNyplCount'] + this.reportstVal['eddSharedOpenNyplCount'] + this.reportstVal['eddPartnerSharedOpenNyplCount'];
-            this.totalPUL = this.subtotalEDDPUL + this.subtotalPhysicalPUL;
-            this.totalCUL = this.subtotalEDDCUL + this.subtotalPhysicalCUL;
-            this.totalNYPL = this.subtotalEDDNYPL + this.subtotalPhysicalNYPL;
           } else {
             this.requestTypeResults = true;
             this.partnersResults = false;
-            this.totalPULRequest = this.reportstVal['retrievalRequestPulCount'] + this.reportstVal['recallRequestPulCount'] + this.reportstVal['eddRequestPulCount'];
-            this.totalCULRequest = this.reportstVal['retrievalRequestCulCount'] + this.reportstVal['recallRequestCulCount'] + this.reportstVal['eddRequestCulCount'];
-            this.totalNYPLRequest = this.reportstVal['retrievalRequestNyplCount'] + this.reportstVal['recallRequestNyplCount'] + this.reportstVal['eddRequestNyplCount'];
           }
           this.spinner.hide();
         },
@@ -440,10 +426,8 @@ export class ReportsComponent implements OnInit {
     }
 
     if (!this.statusRequest) {
+      this.subtotalEDDDeaccession = [];
       this.spinner.show();
-      this.requestResultsPage = false;
-      this.accessionPageResponse = true;
-      this.incompleteResultsPage = false;
       this.postData = {
         "showBy": null,
         "requestType": "Accession/Deaccesion",
@@ -556,9 +540,20 @@ export class ReportsComponent implements OnInit {
       this.reportsService.submit(this.postData).subscribe(
         (res) => {
           this.reportstVal = res;
-          this.subtotalEDDPULDeaccession = this.reportstVal['deaccessionPrivatePulCount'] + this.reportstVal['deaccessionSharedPulCount'] + this.reportstVal['deaccessionOpenPulCount'];
-          this.subtotalEDDCULDeaccession = this.reportstVal['deaccessionPrivateCulCount'] + this.reportstVal['deaccessionSharedCulCount'] + this.reportstVal['deaccessionOpenCulCount'];
-          this.subtotalEDDNYPLDeaccession = this.reportstVal['deaccessionPrivateNyplCount'] + this.reportstVal['deaccessionSharedNyplCount'] + this.reportstVal['deaccessionOpenNyplCount'];
+          this.requestResultsPage = false;
+          this.accessionPageResponse = true;
+          this.incompleteResultsPage = false;
+          //this.accessionPageResponse = true;
+          this.accesionPage = true;
+          this.reportType_panel = true;
+          this.Deaccessiontableshow = false;
+          this.isChecked = true;
+          var totalCountDeacc = 0;
+          console.log("Testing",this.reportstVal);
+          for(var i=0;i<this.reportstVal['reportsInstitutionFormList'].length;i++){
+            totalCountDeacc = this.reportstVal['reportsInstitutionFormList'][i].deaccessionPrivateCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionSharedCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionOpenCount;
+          this.subtotalEDDDeaccession.push(totalCountDeacc); 
+        }
           this.spinner.hide();
         },
         (error) => {
@@ -569,6 +564,7 @@ export class ReportsComponent implements OnInit {
     }
   }
   incompleteRecords() {
+    this.incompleteResultsPage = false;
     this.incompleteErrorText = false;
     this.statusRequest = false;
     if (this.incompleteShowBy == '' || this.incompleteShowBy == undefined) {
@@ -577,14 +573,14 @@ export class ReportsComponent implements OnInit {
     }
     if (!this.statusRequest) {
       this.spinner.show();
-      this.errorMessageId = false;
-      this.requestResultsPage = false;
-      this.accessionPageResponse = false;
-
       this.reportsService.incompleteRecords(this.setPostData('incompleteRecords', 'incomplete')).subscribe(
         (res) => {
           this.reportstVal = res;
           this.incompleteResultsPage = true;
+          this.errorMessageId = false;
+          this.requestResultsPage = false;
+          this.accessionPageResponse = false;
+          this.incompletePageSize = this.reportstVal['incompletePageSize'];
           if (this.reportstVal['errorMessage'] != null || this.reportstVal['errorMessage'] != undefined) {
             this.errorMessageId = true;
           } else {
@@ -628,26 +624,25 @@ export class ReportsComponent implements OnInit {
     this.isChecked = true;
   }
   enableCGDPage() {
+    this.spinner.show();
     this.resetFields();
-    this.requestPage = false;
-    this.accesionPage = false;  
-    this.cgdPage = true;
-    this.incompletePage = false;
     this.reportsService.collectionGroupDesignation().subscribe(
       (res) => {
+        this.requestPage = false;
+        this.accesionPage = false;
+        this.cgdPage = true;
+        this.incompletePage = false;
         this.reportstVal = res;
-        console.log("Testing",res);
+        this.spinner.hide();
       },
       (error) => {
+        console.log(error);
+        this.spinner.hide();
       });
   }
   enableincompletePage() {
     this.spinner.hide();
     this.resetFields();
-    this.requestPage = false;
-    this.accesionPage = false;
-    this.cgdPage = false;
-    this.incompletePage = true;
     this.getInstitutions();
   }
   incompleteReportPageSizeChange(value) {
@@ -678,13 +673,15 @@ export class ReportsComponent implements OnInit {
     this.spinner.show();
     this.reportsService.deaccessionInformation(this.setPostData('deaccessionInfo', 'deaccession')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.deaccessionRes = res;
+        this.showentries = this.deaccessionRes['incompletePageSize'];
         this.accessionPageResponse = false;
         this.accesionPage = false;
         this.reportType_panel = false;
         this.Deaccessiontableshow = true;
         this.pagination('deaccession');
-        this.spinner.hide();
+        
       },
       (error) => {
         this.spinner.hide();
@@ -739,9 +736,13 @@ export class ReportsComponent implements OnInit {
   }
 
   firstCall() {
+    this.spinner.show();
+    this.incompleteResultsPage = false;
     this.reportsService.firstCall(this.setPostData('firstCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
+        this.incompleteResultsPage = true;
+        this.spinner.hide();
         this.pagination('incomplete');
       },
       (error) => {
@@ -751,9 +752,13 @@ export class ReportsComponent implements OnInit {
     );
   }
   nextCall() {
+    this.spinner.show();
+    this.incompleteResultsPage = false;
     this.reportsService.nextCall(this.setPostData('nextCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
+        this.incompleteResultsPage = true;
+        this.spinner.hide();
         this.pagination('incomplete');
       },
       (error) => {
@@ -762,9 +767,13 @@ export class ReportsComponent implements OnInit {
     );
   }
   previousCall() {
+    this.spinner.show();
+    this.incompleteResultsPage = false;
     this.reportsService.previousCall(this.setPostData('previousCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
+        this.incompleteResultsPage = true;
+        this.spinner.hide();
         this.pagination('incomplete');
       },
       (error) => {
@@ -773,9 +782,13 @@ export class ReportsComponent implements OnInit {
     );
   }
   lastCall() {
+    this.spinner.show();
+    this.incompleteResultsPage = false;
     this.reportsService.lastCall(this.setPostData('lastCall', 'incomplete')).subscribe(
       (res) => {
         this.reportstVal = res;
+        this.incompleteResultsPage = true;
+        this.spinner.hide();
         this.pagination('incomplete');
       },
       (error) => {
@@ -787,6 +800,10 @@ export class ReportsComponent implements OnInit {
     this.reportsService.getInstitutions().subscribe(
       (res) => {
         this.instVal = res;
+        this.requestPage = false;
+        this.accesionPage = false;
+        this.cgdPage = false;
+        this.incompletePage = true;
         this.incompleteShowBy = this.instVal['incompleteShowByInst'][0];
       },
       (error) => {
@@ -871,6 +888,7 @@ export class ReportsComponent implements OnInit {
     this.AccessionDeaccessionDateRangeto = '';
     this.RequestDateRangefrom = '';
     this.RequestDateRangeto = '';
+    this.ReportShowBy = 'Partners';
   }
   reportShowBy() {
     this.requestResultsPage = false;
@@ -878,11 +896,7 @@ export class ReportsComponent implements OnInit {
   goBack($event) {
     $event.stopPropagation();
     $event.preventDefault();
-    this.accessionPageResponse = true;
-    this.accesionPage = true;
-    this.reportType_panel = true;
-    this.Deaccessiontableshow = false;
-    this.isChecked = true;
+    this.submitAccession();
   }
   exportRecords() {
     this.reportsService.exportData(this.setPostData('export', 'incomplete')).subscribe(

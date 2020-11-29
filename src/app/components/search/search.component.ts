@@ -311,7 +311,6 @@ export class SearchComponent implements OnInit {
     this.messageService.add({ severity: 'info', summary: 'Car Selected', detail: 'title: ' + event.data.title });
     }
   }
-
   checkUncheckAll() {
     var searchallvalue = this.searchForm.value;
     if (this.checked === true) {

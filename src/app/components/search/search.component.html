@@ -244,19 +244,19 @@
                                             <div id="paginationId" name="paginationName">
                                                 <ul class="pagination">
                                                     <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                                        <span id="btm_first" (click)="firstapi()">First</span>
+                                                        <span id="btm_first" (click)="firstapi()" style="cursor: pointer;">First</span>
 
                                                     </li>
                                                     <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                                        <span id="btm_previous" (click)="previousapi()">Previous</span>
+                                                        <span id="btm_previous" (click)="previousapi()" style="cursor: pointer;">Previous</span>
 
                                                     </li>
                                                     <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                                        <span id="btm_next" (click)="nextapi()">Next</span>
+                                                        <span id="btm_next" (click)="nextapi()" style="cursor: pointer;">Next</span>
 
                                                     </li>
                                                     <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                                        <span id="btm_last" (click)="lastapi()">Last</span>
+                                                        <span id="btm_last" (click)="lastapi()" style="cursor: pointer;">Last</span>
 
                                                     </li>
                                                 </ul>
@@ -340,7 +340,8 @@
                                                     <div class="p-col-12 p-md-9">
                                                         <div class="p-grid" *ngIf="rowData.searchItemResultRows==''"></div>
                                                         <div class="p-grid" *ngIf="rowData.searchItemResultRows!=''">
-                                                            <p-table name="p_tablesub" [columns]="cols1" selectionMode="checkbox" (onHeaderCheckboxToggle)="onTableHeaderCheckboxToggle1($event)" [(selection)]="selectedNodes2" [value]="rowData.searchItemResultRows" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                                                            <p-table #dt name="p_tablesub" [columns]="cols1" [paginator]="false" selectionMode="checkbox" (onHeaderCheckboxToggle)="onTableHeaderCheckboxToggle1($event)" [(selection)]="selectedNodes2" [value]="rowData.searchItemResultRows" (onRowSelect)="onRowSelect($event)"
+                                                                (onRowUnselect)="onRowUnselect($event)">
                                                                 <ng-template pTemplate="header" let-columns>
                                                                     <tr id="subRow_header">
                                                                         <th id="sub_header_checkbox" style="width: 3em">
@@ -382,19 +383,19 @@
                                     <div id="paginationId" name="paginationName">
                                         <ul class="pagination">
                                             <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                                <span id="first" (click)="firstapi()">First</span>
+                                                <span id="first" (click)="firstapi()" style="cursor: pointer;">First</span>
 
                                             </li>
                                             <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                                <span id="previous" (click)="previousapi()">Previous</span>
+                                                <span id="previous" (click)="previousapi()" style="cursor: pointer;">Previous</span>
 
                                             </li>
                                             <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                                <span id="next" (click)="nextapi()">Next</span>
+                                                <span id="next" (click)="nextapi()" style="cursor: pointer;">Next</span>
 
                                             </li>
                                             <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                                <span id="last" (click)="lastapi()">Last</span>
+                                                <span id="last" (click)="lastapi()" style="cursor: pointer;">Last</span>
 
                                             </li>
                                         </ul>

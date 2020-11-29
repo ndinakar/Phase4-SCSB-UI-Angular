@@ -12,6 +12,7 @@ declare var $: any;
   styleUrls: ['./collection.component.css']
 })
 export class CollectionComponent implements OnInit {
+  deliveryLocationDisable = false;
   showStatus = false;
   showStar = false;
   collectionForm: FormGroup;
@@ -315,9 +316,7 @@ export class CollectionComponent implements OnInit {
           },
           (error) => {
             this.spinner.hide();
-          }
-
-        );
+          });
       },
       (error) => {
         this.spinner.hide();
@@ -331,7 +330,8 @@ export class CollectionComponent implements OnInit {
   }
 
   editCgdcontrol() {
-    this.spinner.show();
+    this.deaccessionType = '';
+    this.DeliveryLocation = '';
     this.radioSwitchDeaccession = false;
     this.radioSwitchEditCGD = true;
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
@@ -384,17 +384,18 @@ export class CollectionComponent implements OnInit {
       "allowEdit": false,
       "username": null
     }
+    this.spinner.show();
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
       (res) => {
         this.spinner.hide();
         this.crossinstitutionVal = res;
+        console.log("Testing", this.crossinstitutionVal['deliveryLocations']);
         this.validateResponse();
       },
       (error) => {
+        console.log("Testing", error);
         this.spinner.hide();
-      }
-
-    );
+      });
     //cross institue tend
 
     this.editCDGsection = true;
@@ -402,75 +403,77 @@ export class CollectionComponent implements OnInit {
   }
 
   deaccessioncontrol() {
-    this.spinner.show();
-    //cross institute
-    //The item has been successfully deaccessioned.
     this.radioSwitchDeaccession = true;
     this.radioSwitchEditCGD = false;
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
     this.bibId = this.openmarcVal['bibId'];
     this.customerCode = this.openmarcVal['customerCode'];
     this.itemId = this.openmarcVal['itemId']
-    this.postData =
-    {
-      "itemBarcodes": null,
-      "showResults": false,
-      "selectAll": false,
-      "errorMessage": null,
-      "barcodesNotFoundErrorMessage": null,
-      "ignoredBarcodesErrorMessage": null,
-      "searchResultRows": [],
-      "showModal": false,
-      "bibId": this.bibId,
-      "title": null,
-      "author": null,
-      "publisher": null,
-      "publishedDate": null,
-      "owningInstitution": null,
-      "callNumber": null,
-      "leaderMaterialType": null,
-      "tag000": null,
-      "controlNumber001": null,
-      "controlNumber005": null,
-      "controlNumber008": null,
-      "content": null,
-      "bibDataFields": [],
-      "BibliographicMarcForm.errorMessage": null,
-      "warningMessage": null,
-      "itemId": this.itemId,
-      "availability": null,
-      "barcode": this.itemBarcodenew,
-      "locationCode": null,
-      "useRestriction": null,
-      "monographCollectionGroupDesignation": null,
-      "collectionGroupDesignation": null,
-      "newCollectionGroupDesignation": null,
-      "cgdChangeNotes": null,
-      "customerCode": this.customerCode,
-      "deaccessionType": null,
-      "deaccessionNotes": null,
-      "deliveryLocations": [],
-      "deliveryLocation": null,
-      "shared": false,
-      "submitted": false,
-      "message": null,
-      "collectionAction": 'Deaccession',
-      "allowEdit": false,
-      "username": null
-    }
-    this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
-      (res) => {
-        this.crossinstitutionVal = res;
-        this.validateResponse();
-        this.spinner.hide();
-      },
-      (error) => {
-        this.spinner.hide();
+      this.spinner.show();
+      this.postData =
+      {
+        "itemBarcodes": null,
+        "showResults": false,
+        "selectAll": false,
+        "errorMessage": null,
+        "barcodesNotFoundErrorMessage": null,
+        "ignoredBarcodesErrorMessage": null,
+        "searchResultRows": [],
+        "showModal": false,
+        "bibId": this.bibId,
+        "title": null,
+        "author": null,
+        "publisher": null,
+        "publishedDate": null,
+        "owningInstitution": null,
+        "callNumber": null,
+        "leaderMaterialType": null,
+        "tag000": null,
+        "controlNumber001": null,
+        "controlNumber005": null,
+        "controlNumber008": null,
+        "content": null,
+        "bibDataFields": [],
+        "BibliographicMarcForm.errorMessage": null,
+        "warningMessage": null,
+        "itemId": this.itemId,
+        "availability": null,
+        "barcode": this.itemBarcodenew,
+        "locationCode": null,
+        "useRestriction": null,
+        "monographCollectionGroupDesignation": null,
+        "collectionGroupDesignation": null,
+        "newCollectionGroupDesignation": null,
+        "cgdChangeNotes": null,
+        "customerCode": this.customerCode,
+        "deaccessionType": null,
+        "deaccessionNotes": null,
+        "deliveryLocations": [],
+        "deliveryLocation": null,
+        "shared": false,
+        "submitted": false,
+        "message": null,
+        "collectionAction": 'Deaccession',
+        "allowEdit": false,
+        "username": null
       }
-
-    );
-    this.editCDGsection = false;
-    this.Deaccessionsection = true;
+      this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
+        (res) => {
+          this.crossinstitutionVal = res;
+          this.editCDGsection = false;
+          this.Deaccessionsection = true;
+          if(this.crossinstitutionVal['submitted'] == false){
+            this.deaccessionType = '';
+            this.DeliveryLocation = '';
+            this.deliveryLocationDisable = true;
+          }
+          this.validateResponse();
+          this.spinner.hide();
+        },
+        (error) => {
+          console.log("Testing", error);
+          this.spinner.hide();
+        });
   }
 
   CGDChangeNotesFunc(val) {
@@ -482,9 +485,7 @@ export class CollectionComponent implements OnInit {
     } else {
       $('#cgdNotesRemainingCharacters').text(2000 - len);
     }
-
   }
-
   DeaccessionNotesFunc(val) {
     var DeaccessionNotes = $('#DeaccessionNotes').val();
     var len = val.length;
@@ -493,9 +494,7 @@ export class CollectionComponent implements OnInit {
     } else {
       $('#deaccessionNotesRemainingCharacters').text(2000 - len);
     }
-
   }
-
   //save cgd start
   saveCGD(bibid, cgdold) {
     if (!this.validateInputs(cgdold)) {
@@ -587,8 +586,8 @@ export class CollectionComponent implements OnInit {
       }
     }
     if (this.CGDselect == cgdold) {
-        this.showStatus = true;
-        this.cgdErrorMessage = true;
+      this.showStatus = true;
+      this.cgdErrorMessage = true;
     }
     return this.showStatus;
   }
@@ -658,9 +657,7 @@ export class CollectionComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
-        }
-
-      );
+        });
 
     } else {
       if (this.deaccessionType == '' || this.deaccessionType == undefined) {
