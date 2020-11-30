@@ -165,6 +165,7 @@ export class RequestComponent implements OnInit {
     "searchInstitutionHdn": null
   }
   initialload() {
+    this.institutions = [];
     this.createRequestError = false;
     this.create_request = true;
     this.requestService.loadCreateRequest().subscribe(
@@ -339,8 +340,6 @@ export class RequestComponent implements OnInit {
       "disableSearchInstitution": false,
       "searchInstitutionHdn": null
     }
-
-
     this.requestService.populateItemtDetails(this.postData).subscribe(
       (res) => {
         this.itembarcodeVal = res;
@@ -464,10 +463,10 @@ export class RequestComponent implements OnInit {
         this.articleTitleErrorMessage = false;
         this.postData = {
           "requestId": null,
-          "patronBarcode": null,
-          "itemBarcode": null,
+          "patronBarcode": this.patronBarcodeId,
+          "itemBarcode": this.itemBarcodeId,
           "status": null,
-          "deliveryLocation": null,
+          "deliveryLocation": this.deliveryLocationId,
           "patronBarcodeInRequest": this.patronBarcodeId,
           "itemBarcodeInRequest": this.itemBarcodeId,
           "deliveryLocationInRequest": this.deliveryLocationId,
@@ -538,10 +537,10 @@ export class RequestComponent implements OnInit {
         this.deliveryLocationErrorMessage = false;
         this.postData = {
           "requestId": null,
-          "patronBarcode": null,
-          "itemBarcode": null,
+          "patronBarcode": this.patronBarcodeId,
+          "itemBarcode": this.itemBarcodeId,
           "status": null,
-          "deliveryLocation": null,
+          "deliveryLocation": this.deliveryLocationId,
           "patronBarcodeInRequest": this.patronBarcodeId,
           "itemBarcodeInRequest": this.itemBarcodeId,
           "deliveryLocationInRequest": this.deliveryLocationId,

@@ -320,7 +320,6 @@ export class CollectionComponent implements OnInit {
       },
       (error) => {
         this.spinner.hide();
-        console.log("Testing", error);
       }
 
     );
@@ -389,11 +388,9 @@ export class CollectionComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.crossinstitutionVal = res;
-        console.log("Testing", this.crossinstitutionVal['deliveryLocations']);
         this.validateResponse();
       },
       (error) => {
-        console.log("Testing", error);
         this.spinner.hide();
       });
     //cross institue tend
@@ -462,7 +459,7 @@ export class CollectionComponent implements OnInit {
           this.crossinstitutionVal = res;
           this.editCDGsection = false;
           this.Deaccessionsection = true;
-          if(this.crossinstitutionVal['submitted'] == false){
+          if(this.crossinstitutionVal['submitted'] != false){
             this.deaccessionType = '';
             this.DeliveryLocation = '';
             this.deliveryLocationDisable = true;
@@ -471,7 +468,6 @@ export class CollectionComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
-          console.log("Testing", error);
           this.spinner.hide();
         });
   }

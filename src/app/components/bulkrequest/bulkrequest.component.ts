@@ -218,7 +218,6 @@ export class BulkrequestComponent implements OnInit {
   onChange(files: FileList) {
     this.uploadFile =  files.item(0);
     this.choosenFile = this.uploadFile.name;
-    console.log("MUltipart File", this.uploadFile + "" + this.uploadFile.name);
   }
   populateDeliveryLocations(institution) {
     this.postData = {
@@ -303,7 +302,6 @@ export class BulkrequestComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
-          console.log("createRequest", error);
         }
 
       );
@@ -341,7 +339,6 @@ export class BulkrequestComponent implements OnInit {
       this.patronBarcodeErrorMessage = true;
       this.statusInputs = false;
     } else{this.patronBarcodeErrorMessage = false;}
-    console.log(this.statusInputs);
     return this.statusInputs;
   }
 
@@ -401,7 +398,6 @@ export class BulkrequestComponent implements OnInit {
       "patronBarcodeInRequest": null,
       "fileName": null
     }
-    console.log("Search Request" + this.bulkRequestIdSearch + " " + this.bulkRequestNameSearch);
     this.bulkrequestService.searchRequest(this.postData).subscribe(
       (res) => {
         this.searchRequestVal = res;

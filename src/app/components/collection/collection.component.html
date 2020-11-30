@@ -337,9 +337,9 @@
                                                                         <label for="DeliveryLocation" class="fontcolor-dark">Delivery Location <span class="error-color" *ngIf="!collectionUpdateMessage">*</span></label>
                                                                     </div>
                                                                     <div class="col-sm-8 padding-left-0">
-                                                                        <div class="select-holder" [ngClass]="(deliveryLocationDisable==true)? 'disabled': ''" *ngIf="!collectionUpdateMessage">
+                                                                        <div class="select-holder" *ngIf="!collectionUpdateMessage">
                                                                             <input type="hidden" />
-                                                                            <select [(ngModel)]="DeliveryLocation" class="form-control themed-input themed-select" name="DeliveryLocation" [ngModelOptions]="{standalone: true}" id="DeliveryLocation">
+                                                                            <select [(ngModel)]="DeliveryLocation" [disabled]="deliveryLocationDisable" class="form-control themed-input themed-select" name="DeliveryLocation" [ngModelOptions]="{standalone: true}" id="DeliveryLocation">
                                                                         <option value=""></option>
                                                                         <option *ngFor="let del of crossinstitutionVal['deliveryLocations']" [ngValue]="del.customerCode">
                                                                             {{del.description}}-{{del.customerCode}}

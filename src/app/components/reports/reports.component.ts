@@ -549,10 +549,9 @@ export class ReportsComponent implements OnInit {
           this.Deaccessiontableshow = false;
           this.isChecked = true;
           var totalCountDeacc = 0;
-          console.log("Testing",this.reportstVal);
           for(var i=0;i<this.reportstVal['reportsInstitutionFormList'].length;i++){
             totalCountDeacc = this.reportstVal['reportsInstitutionFormList'][i].deaccessionPrivateCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionSharedCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionOpenCount;
-          this.subtotalEDDDeaccession.push(totalCountDeacc); 
+            this.subtotalEDDDeaccession.push(totalCountDeacc); 
         }
           this.spinner.hide();
         },
@@ -636,7 +635,6 @@ export class ReportsComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        console.log(error);
         this.spinner.hide();
       });
   }
