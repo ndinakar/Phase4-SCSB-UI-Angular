@@ -35,9 +35,7 @@ export class AdminComponent implements OnInit {
           this.successMessageDiv = true;
           this.errorMessageDiv = true;
           this.choosenFile='';
-          console.log(res);
         }, error => {
-          console.log(error);
         });
     }
   }

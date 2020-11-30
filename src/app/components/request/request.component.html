@@ -116,6 +116,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr id="rowData_results_{{i}}" class="requestRow" *ngFor="let item of searchreqResultVal['searchResultRows']; let i=index">
+                                                    <input id="requestRowRequestId-{{i}}" name="requestRowRequestId-index-{{i}}" type="hidden" value="{{item.requestId}}" />
                                                     <th id="data_pb_{{i}}">{{ item.patronBarcode }}</th>
                                                     <td id="data_ri_{{i}}">{{ item.requestingInstitution }}</td>
                                                     <td><a target="_blank" routerLink="/openMarcRecord" [queryParams]="{bibId: item['bibId']}" id="data_br_{{i}}">{{ item.barcode }}</a></td>
@@ -136,72 +137,7 @@
                                                         <button id="btn_rs_{{i}}" *ngIf="item.status=='EXCEPTION'" [disabled]="item.availability == 'Not Available'" (click)="resubmitReq(item.barcode,item.requestId)" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7">Resubmit Request
                                                         </button>
                                                     </td>
-                                                </tr>
-                                                <tr class="requestRow">
-                                                    <!-- <input data-th-id="'requestRowBibId-'+ ${searchResultStat.index}" name="requestRowBibId" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].bibId}"/>
-                                                    <input data-th-id="'requestRowItemId-'+ ${searchResultStat.index}" name="requestRowItemId" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].itemId}"/>
-                                                    <input data-th-id="'requestRowRequestId-'+ ${searchResultStat.index}" name="requestRowRequestId" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].requestId}"/> -->
-                                                    <td>
-                                                        <input type="hidden" />
-                                                        <span></span>
-                                                    </td>
-                                                    <td>
-                                                        <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].requestingInstitution}"/> -->
-                                                        <span></span>
-                                                    </td>
-                                                    <td>
-                                                        <!-- <input data-th-id="'requestRowItemBarcode-'+ ${searchResultStat.index}" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].barcode}"/> -->
-                                                        <a target="_blank"></a>
-                                                    </td>
-                                                    <td>
-                                                        <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].owningInstitution}"/> -->
-                                                        <span></span>
-                                                    </td>
-                                                    <td>
-                                                        <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].deliveryLocation}"/> -->
-                                                        <span></span>
-                                                    </td>
-                                                    <td>
-                                                        <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].requestType}"/> -->
-                                                        <span></span>
-                                                    </td>
-                                                    <td>
-                                                        <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].requestCreatedBy}"/> -->
-                                                        <span></span>
-                                                    </td>
-                                                    <td>
-                                                        <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].patronEmailId}"/> -->
-                                                        <span></span>
-                                                    </td>
-                                                    <td width="">
-                                                        <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].createdDate}"/> -->
-                                                        <span></span>
-                                                    </td>
-                                                    <td width="">
-                                                        <!-- <input type="hidden"  th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].lastUpdatedDate}"/> -->
-                                                        <span></span>
-                                                    </td>
-                                                    <td width="">
-                                                        <!-- <input type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].status}"/>
-                                                        <img data-th-id="'refreshIcon-'+ ${searchResultStat.index}" src="images/refresh.gif" alt="Refreshing Status" style="width:20px;height:25px;" th:if="${searchResult.status == 'PROCESSING ...' || searchResult.status == 'PENDING'}"/>
-                                                        <input th:if="${searchResult.status == 'PROCESSING ...'  || searchResult.status == 'PENDING'}" type="hidden" data-th-id="'removeName-'+ ${searchResultStat.index}" name="statusChange" th:value="${searchResult.requestId + '-' + searchResultStat.index}"/>
-                                                        <span data-th-id="'status-' + ${searchResultStat.index}" th:text="${searchResult.status}"></span> -->
-                                                    </td>
-                                                    <td width="" style="text-align: center">
-                                                        <!-- <input data-th-id="'notes-' + ${searchResultStat.index}" type="hidden" th:field="${requestForm.searchResultRows[__${searchResultStat.index}__].requestNotes}"/>
-                                                        <button th:if="${searchResult.requestNotes ne null &amp;&amp; searchResult.requestNotes ne ''}" th:title="${searchResult.requestNotes}" data-th-id="'notesButton-' + ${searchResultStat.index}" type="button" name="action" th:onclick="'javascript:showNotesPopup('+${searchResultStat.index}+')'"><i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                                        </button> -->
-                                                    </td>
-                                                    <td width="">
-                                                        <!-- <button th:if="${(searchResult.status == 'RETRIEVAL ORDER PLACED' || searchResult.status == 'RECALL ORDER PLACED' || searchResult.status == 'EDD ORDER PLACED' || searchResult.status == 'LAS REFILE REQUEST PLACED') and searchResult.showItems == true}" th:title="'Cancel Request'" data-th-id="'cancelButton-' + ${searchResultStat.index}" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" name="action" th:onclick="'javascript:cancelRequest('+${searchResultStat.index}+')'">Cancel Note
-                                                        </button>
-                                                        <div data-th-id="'showCancelButton-' + ${searchResultStat.index}" style="display:none;">
-                                                        <button style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" th:title="'Cancel Request'" data-th-id="'cancelButton:' + ${searchResultStat.index}" type="button" class="btn btn-round" name="action" th:onclick="'javascript:cancelRequest('+${searchResultStat.index}+')'">Cancel Note
-                                                        </button>
-                                                        </div>
-                                                        <button th:if="${searchResult.status == 'EXCEPTION' &amp;&amp; (session.isReSubmitRequestAllowed || session.isSuperAdmin)}" th:disabled="${searchResult.status == 'EXCEPTION' &amp;&amp; searchResult.availability == 'Not Available' &amp;&amp; (session.isReSubmitRequestAllowed || session.isSuperAdmin)}" th:title="'Resubmit Request'" data-th-id="'resubmitButton-' + ${searchResultStat.index}" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" name="action" th:onclick="'javascript:resubmitRequest('+${searchResultStat.index}+')'">Resubmit Request
-                                                        </button> -->
-                                                    </td>
+                                                    <!-- </tr> -->
                                                     <!-- PopUP for Cancel Request-->
                                                     <div id="cancelConfirmationModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
                                                         <div class="modal-dialog">
@@ -233,17 +169,17 @@
                                             <div id="requestPaginationId" name="requestPaginationName" xmlns:th="http://www.w3.org/1999/xhtml">
                                                 <ul class="pagination">
                                                     <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                                        <span id="first" (click)="firstCall()">First</span>
+                                                        <span id="first" (click)="firstCall()" style="cursor: pointer;">First</span>
                                                     </li>
                                                     <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                                        <span id="previous" (click)="previousCall()">Previous</span>
+                                                        <span id="previous" (click)="previousCall()" style="cursor: pointer;">Previous</span>
                                                     </li>
                                                     <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                                        <span id="next" (click)="nextCall()">Next</span>
+                                                        <span id="next" (click)="nextCall()" style="cursor: pointer;">Next</span>
 
                                                     </li>
                                                     <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                                        <span id="last" (click)="lastCall()">Last</span>
+                                                        <span id="last" (click)="lastCall()" style="cursor: pointer;">Last</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -297,7 +233,7 @@
                                                     <div class="select-holder">
                                                         <select id="requestingInstitutionId" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestingInstitutionId" name="requestingInstitutionName" class="form-control themed-input themed-select" [disabled]="createsubmit" (change)="populateDeliveryLocations(requestingInstitutionId)">
                                                             <option value=""></option>
-                                                            <option *ngFor="let del2 of requestVal['requestingInstitutions']" [ngValue]="del2">
+                                                            <option  *ngFor="let del2 of institutions" [ngValue]="del2">
                                                                 {{del2}}
                                                               </option>
                                                         </select>
@@ -366,7 +302,7 @@
                                                         <div class="col-md-6 col-sm-8">
                                                             <div class="select-holder">
                                                                 <select id="requestTypeId" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestTypeId" [disabled]="createsubmit" name="requestTypeName" class="form-control themed-input themed-select" (change)="reqTpeEDD(requestTypeId)">
-                                                                        <option *ngFor="let del1 of requestVal['requestTypes']" [ngValue]="del1">
+                                                                        <option *ngFor="let del1 of requestTypes" [ngValue]="del1">
                                                                             {{del1}}
                                                                           </option>
                                                                 </select>

@@ -12,7 +12,7 @@ import { urls } from 'src/config/urls';
 })
 export class JobsComponent implements OnInit {
   jobsResVal: TreeNode[];
-  scheduleJobDetailsSectionDiv = true;
+  scheduleJobDetailsSectionDiv = false;
   scheduleJobSectionDiv = false;
   schedule_show = false;
   reschedule_show = false;
@@ -33,6 +33,7 @@ export class JobsComponent implements OnInit {
     this.jobsService.displayJobs().subscribe(
       (res) => {
         this.jobsResVal = res;
+        this.scheduleJobDetailsSectionDiv = true;
         this.spinner.hide();
       },
       (error) => {

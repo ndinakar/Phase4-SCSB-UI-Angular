@@ -232,9 +232,6 @@
                                                             <tr>
                                                                 <input type="hidden" />
                                                                 <td width="60%">Availability</td>
-                                                                <!-- <td th:if=""><span th:text="'In Recap'"></span></td>
-                                                            <td th:if=""><span th:text="'Out'"></span></td>
-                                                            <td th:if=""><span th:text=""></span></td> -->
                                                                 <td><span>{{openmarcVal['availability']}}</span></td>
                                                             </tr>
                                                             <tr>
@@ -342,7 +339,7 @@
                                                                     <div class="col-sm-8 padding-left-0">
                                                                         <div class="select-holder" *ngIf="!collectionUpdateMessage">
                                                                             <input type="hidden" />
-                                                                            <select [(ngModel)]="DeliveryLocation" class="form-control themed-input themed-select" name="DeliveryLocation" [ngModelOptions]="{standalone: true}">
+                                                                            <select [(ngModel)]="DeliveryLocation" [disabled]="deliveryLocationDisable" class="form-control themed-input themed-select" name="DeliveryLocation" [ngModelOptions]="{standalone: true}" id="DeliveryLocation">
                                                                         <option value=""></option>
                                                                         <option *ngFor="let del of crossinstitutionVal['deliveryLocations']" [ngValue]="del.customerCode">
                                                                             {{del.description}}-{{del.customerCode}}

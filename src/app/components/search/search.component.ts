@@ -124,6 +124,8 @@ export class SearchComponent implements OnInit {
   public data: Object[];
 
   ngOnInit(): void {
+    this.selectedNodes1 = [];
+    this.selectedNodes2 = [];
     $("#clearSearchText").hide();
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
@@ -304,10 +306,11 @@ export class SearchComponent implements OnInit {
   }
 
   onRowUnselect(event) {
+    if(this.selectedNodes1.length == 0 && this.selectedNodes2.length == 0){
     this.clicked = true;
     this.messageService.add({ severity: 'info', summary: 'Car Selected', detail: 'title: ' + event.data.title });
+    }
   }
-
   checkUncheckAll() {
     var searchallvalue = this.searchForm.value;
     if (this.checked === true) {
@@ -384,14 +387,12 @@ export class SearchComponent implements OnInit {
   routeToRequest() {
     var barcode1 = [];
     var i;
-    console.log("Testing",this.selectedNodes1);
-    console.log("Testing2",this.selectedNodes2);
     if (this.selectedNodes1 != undefined) {
       for (i = 0; i < this.selectedNodes1.length; i++) {
         barcode1.push(this.selectedNodes1[i].barcode);
       }
-    } 
-    if(this.selectedNodes2 != undefined) {
+    }
+    if (this.selectedNodes2 != undefined) {
       for (i = 0; i < this.selectedNodes2.length; i++) {
         barcode1.push(this.selectedNodes2[i].barcode);
       }
@@ -544,17 +545,22 @@ export class SearchComponent implements OnInit {
     return this.postData;
   }
   clearFieldvalue() {
-      if ($("#fieldValue").val().length > 0) {
-        $("#clearSearchText").show();
-        $("#resetSearch").prop('disabled',false); 
-      } else {
-        $("#clearSearchText").hide();
-        $("#resetSearch").prop('disabled',true); 
-      }
+    if ($("#fieldValue").val().length > 0) {
+      $("#clearSearchText").show();
+      $("#resetSearch").prop('disabled', false);
+    } else {
+      $("#clearSearchText").hide();
+      $("#resetSearch").prop('disabled', true);
+    }
   }
   clearSearchText() {
     this.fieldValue = '';
     $("#clearSearchText").hide();
-    $("#resetSearch").prop('disabled',true); 
+    $("#resetSearch").prop('disabled', true);
+  }
+  onTableHeaderCheckboxToggle1(event: any) {
+    if (event.checked === true) {
+      this.clicked = false;
+    } else { this.clicked = true; }
   }
 }

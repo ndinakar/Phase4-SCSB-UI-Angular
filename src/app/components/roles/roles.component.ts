@@ -111,23 +111,26 @@ export class RolesComponent implements OnInit {
     this.spinner.show();
     this.rolesService.searchRoles(this.setPostData('searchRole')).subscribe(
       (res) => {
+        this.spinner.hide();
         this.rolesVal = res;
-        if (this.rolesVal['rolesSearchResults'] != EMPTY) {
+        if (this.rolesVal['errorMessage'] != null) {
+          this.errorMessageDiv = true;
+          this.rolesSearchResultsDiv = false;
+          this.showResults = true;
+          this.successDiv = false;
+        } else {
           this.rolesSearchResultsDiv = true;
           this.errorMessageDiv = false;
           this.showResults = true;
           this.successDiv = false;
           this.numOfRecordsId = this.rolesVal['pageSize'];
         }
-        if (this.rolesVal['errorMessage'] != null) {
-          this.errorMessageDiv = true;
-          this.rolesSearchResultsDiv = false;
-          this.showResults = false;
-          this.successDiv = false;
-        }
         this.pagination();
+      },
+      (error) => {
         this.spinner.hide();
-      });
+      }
+    );
   }
   resetFields() {
     this.roleName = "";

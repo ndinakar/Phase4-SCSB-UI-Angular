@@ -25,7 +25,7 @@ export class CollectionService {
   openMarcView(postData: CollectionForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/openMarcView", postData,
       {
-        headers: appHeaders.getHeaders()
+       
       });
   }
   updateCollection(postData: CollectionForm): Observable<TreeNode[]> {

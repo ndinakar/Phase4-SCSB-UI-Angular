@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -11,12 +12,14 @@ declare var $: any;
   styleUrls: ['./bulkrequest.component.css']
 })
 export class BulkrequestComponent implements OnInit {
-  uploadFile: File;
+  statusInputs : boolean;
+  institutions:any = [];
+  uploadFile: File = null;
   data: any;
   uploadedFile: any;
   BulkRequestForm: FormGroup;
   bulkrequestVal: TreeNode[];
-  deliveryLocVal: any[];
+  deliveryLocVal: any = [];
   createReqsection = true;
   searchReqsection = false;
   BulkRequestName: string;
@@ -118,9 +121,14 @@ export class BulkrequestComponent implements OnInit {
   }
 
   initialload() {
+    this.institutions = [];
     this.bulkrequestService.loadCreateRequest().subscribe(
       (res) => {
         this.bulkrequestVal = res;
+        for(var i =0;i<this.bulkrequestVal['requestingInstitutions'].length;i++){
+          this.institutions.push(this.bulkrequestVal['requestingInstitutions'][i]);
+        }
+        this.searchReqsection = false;
         this.BulkRequestName = '';
         this.requestingInstitutionId = '';
         this.choosenFile = '';
@@ -128,7 +136,6 @@ export class BulkrequestComponent implements OnInit {
         this.patronBarcodeId = '';
         this.patronEmailId = '';
         this.requestNotesId = '';
-
       },
       (error) => {
 
@@ -162,6 +169,7 @@ export class BulkrequestComponent implements OnInit {
 
   }
   loadCreateRequest() {
+    this.institutions = [];
     this.results_container = false;
     this.createReqsection = true;
     this.searchReqsection = false;
@@ -208,9 +216,8 @@ export class BulkrequestComponent implements OnInit {
   }
 
   onChange(files: FileList) {
-    this.uploadFile = files[0];
+    this.uploadFile =  files.item(0);
     this.choosenFile = this.uploadFile.name;
-    console.log("MUltipart File", this.uploadFile + "" + this.uploadFile.name);
   }
   populateDeliveryLocations(institution) {
     this.postData = {
@@ -273,37 +280,14 @@ export class BulkrequestComponent implements OnInit {
   }
 
   createBulkRequest() {
-    this.spinner.show();
-    if ((this.BulkRequestName == undefined || this.BulkRequestName == '') && (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') && (this.choosenFile == undefined || this.choosenFile == '') && (this.deliveryLocation == undefined || this.deliveryLocation == '') && (this.patronBarcodeId == undefined || this.patronBarcodeId == '') && (this.patronEmailId == undefined || this.patronEmailId == '')) {
-      this.BulkRequestNameErrorMessage = true;
-      this.requestingInstitutionErrorMessage = true;
-      this.bulkRequestFileRequired = true;
-      this.deliveryLocationErrorMessage = true;
-      this.patronBarcodeErrorMessage = true;
-      this.EmailMandatoryErrorMessage = true;
-    }
-    else if (this.BulkRequestName == undefined || this.BulkRequestName == '') {
-      this.BulkRequestNameErrorMessage = true;
-    }
-    else if (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') {
-      this.requestingInstitutionErrorMessage = true;
-    } else if (this.choosenFile == undefined || this.choosenFile == '') {
-      this.bulkRequestFileRequired = true;
-    } else if (this.patronEmailId == undefined || this.patronEmailId == '' || this.patronEmailIdErrorMessage == true) {
-      this.EmailMandatoryErrorMessage = true;
-    } else if (this.deliveryLocation == undefined || this.deliveryLocation == '') {
-      this.deliveryLocationErrorMessage = true;
-    } else if (this.patronBarcodeId == undefined || this.patronBarcodeId == '') {
-      this.patronBarcodeErrorMessage = true;
-    } else {
+    if(this.validateInputs()){
       this.BulkRequestNameErrorMessage = false;
       this.requestingInstitutionErrorMessage = false;
       this.bulkRequestFileRequired = false;
       this.deliveryLocationErrorMessage = false;
       this.patronBarcodeErrorMessage = false;
       this.EmailMandatoryErrorMessage = false;
-      console.log("File Name", this.choosenFile);
-      console.log("File content", this.data);
+      this.spinner.show();
       this.bulkrequestService.createBulkRequest(this.deliveryLocation, this.requestingInstitutionId, this.patronBarcodeId, this.BulkRequestName, this.choosenFile, this.patronEmailId, this.uploadFile).subscribe(
         (res) => {
           this.createResponse = res;
@@ -318,13 +302,45 @@ export class BulkrequestComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
-          console.log("createRequest", error);
         }
 
       );
     }
   }
-
+  validateInputs(){
+    this.statusInputs = true;
+    if ((this.BulkRequestName == undefined || this.BulkRequestName == '')) {
+      this.BulkRequestNameErrorMessage = true;
+      this.statusInputs = false;
+    } else {
+      this.BulkRequestNameErrorMessage = false;
+    }
+    if (this.BulkRequestName == undefined || this.BulkRequestName == '') {
+      this.BulkRequestNameErrorMessage = true;
+      this.statusInputs = false;
+    } else { this.BulkRequestNameErrorMessage = false;}
+     if (this.requestingInstitutionId == undefined || this.requestingInstitutionId == '') {
+      this.requestingInstitutionErrorMessage = true;
+      this.statusInputs = false;
+    } else {this.requestingInstitutionErrorMessage = false;}
+    if (this.choosenFile == undefined || this.choosenFile == '') {
+      this.bulkRequestFileRequired = true;
+      this.statusInputs = false;
+    } else{this.bulkRequestFileRequired = false;}
+     if (this.patronEmailId == undefined || this.patronEmailId == '' || this.patronEmailIdErrorMessage == true) {
+      this.EmailMandatoryErrorMessage = true;
+      this.statusInputs = false;
+    } else {this.EmailMandatoryErrorMessage = false;}
+     if (this.deliveryLocation == undefined || this.deliveryLocation == '') {
+      this.deliveryLocationErrorMessage = true;
+      this.statusInputs = false;
+    } else {this.deliveryLocationErrorMessage = false;}
+    if (this.patronBarcodeId == undefined || this.patronBarcodeId == '') {
+      this.patronBarcodeErrorMessage = true;
+      this.statusInputs = false;
+    } else{this.patronBarcodeErrorMessage = false;}
+    return this.statusInputs;
+  }
 
   resetDefaults() {
     this.deliveryLocVal = [];
@@ -382,7 +398,6 @@ export class BulkrequestComponent implements OnInit {
       "patronBarcodeInRequest": null,
       "fileName": null
     }
-    console.log("Search Request" + this.bulkRequestIdSearch + " " + this.bulkRequestNameSearch);
     this.bulkrequestService.searchRequest(this.postData).subscribe(
       (res) => {
         this.searchRequestVal = res;
