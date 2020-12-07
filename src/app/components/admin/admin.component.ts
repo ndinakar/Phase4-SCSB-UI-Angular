@@ -8,18 +8,25 @@ import { AdminService } from 'src/app/services/admin/admin.service';
 })
 export class AdminComponent implements OnInit {
   AdminPanelDiv = true;
-  error: TreeNode;
-  message: string;
+  IMSLocationDiv = true;
+  enableOnBoardDiv: boolean = false;
+  enableIMSLocationDiv : boolean = false;
+  uploadRes: TreeNode [];
+  resIMS: TreeNode [];
   errorMessageDiv = false;
   choosenFile: string = '';
   onBoardFile: boolean;
   successMessageDiv = false;
+  onBoardStatusDiv = false;
+  onBoardIMSStatusDiv = false;
   fileToUpload: File = null;
   constructor(private adminService: AdminService) { }
   ngOnInit(): void {
 
   }
   handleFileInput(files: FileList) {
+    this.fileToUpload = null;
+    this.choosenFile = '';
     this.fileToUpload = files.item(0);
     this.choosenFile = this.fileToUpload.name;
     this.validateUploadFile();
@@ -31,9 +38,26 @@ export class AdminComponent implements OnInit {
       this.onBoardFile = false;
       this.adminService.upload(this.fileToUpload).subscribe(
         res => {
-          this.message = res;
-          this.successMessageDiv = true;
-          this.errorMessageDiv = true;
+          this.uploadRes = res;
+          this.onBoardStatusDiv = true;
+          //this.successMessageDiv = true;
+          //this.errorMessageDiv = true;
+          this.choosenFile='';
+        }, error => {
+        });
+    }
+  }
+  uploadIMSFIle(){
+    if ((this.choosenFile == undefined || this.choosenFile == '')) {
+      this.onBoardFile = true;
+    } else {
+      this.onBoardFile = false;
+      this.adminService.uploadIMSLocations(this.fileToUpload).subscribe(
+        res => {
+          this.resIMS = res;
+          this.onBoardIMSStatusDiv = true;
+          //this.successMessageDiv = true;
+          //this.errorMessageDiv = true;
           this.choosenFile='';
         }, error => {
         });
@@ -45,5 +69,11 @@ export class AdminComponent implements OnInit {
     } else {
       this.onBoardFile = false;
     }
+  }
+  enableOnBoardDivs(){
+    this.onBoardStatusDiv = false;
+  }
+  enableOnBoardIMSDivs(){
+    this.onBoardIMSStatusDiv = false;
   }
 }

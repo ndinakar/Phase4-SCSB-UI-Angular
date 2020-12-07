@@ -37,7 +37,8 @@
                                 <div class="col-md-9">
                                     <select name="institution" formControlName="institution" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.institution.errors }">
                                     <option value="">Select One</option>
-                                    <option *ngFor="let ins of Institution" [value]="ins.id">{{ins.name}}</option>
+                                    <option *ngFor="let ins of Institution" [value]="ins">{{ins}}</option>
+                                    <option value="HTC">HTC</option>
                                 </select>
                                     <div style="color:red" *ngIf="submitted && f.institution.errors" class="invalid-feedback">
                                         <div *ngIf="f.institution.errors.required">This Field is required</div>

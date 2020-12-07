@@ -19,6 +19,7 @@ import { RequestComponent } from './components/request/request.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 export function appInit(appConfig: AppConfig) {
@@ -38,6 +39,7 @@ export function appInit(appConfig: AppConfig) {
     MonitoringComponent,
     LoggingComponent,
     AdminComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
