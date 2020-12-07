@@ -14,22 +14,29 @@
                     <div *ngIf="AdminPanelDiv" id="role-searchview" class="roles-main-section" data-th-if="*{showIntial}">
                         <div class="row margin-top-0">
                             <div class="col-sm-6 margin-top-0">
-                                <h3 class="margin-0">SCSB On-boarding Institution</h3>
+                                <ul>
+                                    <li style="display: inline-block;">
+                                        <h3 class="margin-0">SCSB On-boarding Institution</h3>
+                                    </li>
+                                    <li style="display: inline-block;"><span><a style="cursor: pointer;" (click)="enableOnBoardDiv=!enableOnBoardDiv;enableOnBoardDivs()"><img *ngIf="!enableOnBoardDiv" src="../../../../assets/images/show-icon.png" style="padding-left: 10px;
+                                        padding-bottom: 10px;"><img *ngIf="enableOnBoardDiv" src="../../../../assets/images/hide-icon.png" style="padding-left: 10px;
+                                        padding-bottom: 10px;"></a></span></li>
+                                </ul>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 divider-horizontal margin-top-10 margin-btm-10"></div>
                         </div>
-                        <div class="search-bar" style="margin-top: 20px;">
+                        <div *ngIf="enableOnBoardDiv" class="search-bar" style="margin-top: 20px;">
                             <div *ngIf="errorMessageDiv" id="errorMessageId" class="row margin-btm-10">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{error}}</span></div>
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span></span></div>
                                 </div>
                             </div>
                             <div *ngIf="successMessageDiv" id="successMessageId" class="row margin-btm-10">
                                 <div class="col-sm-12">
                                     <div class="bg-success text-success padding-10">
-                                        <span class="margin-right-05 glyphicon glyphicon-saved"></span><span>{{message}}</span>
+                                        <span class="margin-right-05 glyphicon glyphicon-saved"></span><span></span>
                                     </div>
                                 </div>
                             </div>
@@ -55,6 +62,113 @@
                                                 <button type="button" class="btn btn-default themed-button btn-primary" id="createrequestsubmit" name="createrequestsubmit" (click)="uploadFileToActivity()" style="background: #AF96C7;">Submit</button>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- *ngIf="onBoardStatusDiv && enableOnBoardDiv" -->
+                    <div class="row margin-top-20" *ngIf="onBoardStatusDiv && enableOnBoardDiv">
+                        <div class="col-xs-12 ">
+                            <h4>On-Board Status Results</h4>
+                            <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
+                            <div>
+                                <div class="table-wrapper ">
+                                    <table class="table table-striped text-center margin-btm-0 " id="cgdTable ">
+                                        <thead class="tablesorter-headerRow ">
+                                            <tr>
+                                                <th width="50% " style="font-family:sans-serif;font-size: 120%;text-align: center;">Action</th>
+                                                <th width="50% " style="font-family:sans-serif;font-size: 120%;text-align: center;">
+                                                    Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tr class="border-style-top-white results" *ngFor="let status of uploadRes | keyvalue">
+                                            <td class="results">
+                                                <span>{{status.key}}</span></td>
+                                            <td class="results">
+                                                <span>{{status.value}}</span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="IMSLocationDiv" id="role-searchview" class="roles-main-section">
+                        <div class="row margin-top-0">
+                            <div class="col-sm-6 margin-top-0">
+                                <ul>
+                                    <li style="display: inline-block;">
+                                        <h3 class="margin-0">SCSB On-bording Repository</h3>
+                                    </li>
+                                    <li style="display: inline-block;"><span><a style="cursor: pointer;" (click)="enableIMSLocationDiv=!enableIMSLocationDiv;enableOnBoardIMSDivs()"><img *ngIf="!enableIMSLocationDiv" src="../../../../assets/images/show-icon.png" style="padding-left: 10px;
+                                        padding-bottom: 10px;"><img *ngIf="enableIMSLocationDiv" src="../../../../assets/images/hide-icon.png" style="padding-left: 10px;
+                                        padding-bottom: 10px;"></a></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 divider-horizontal margin-top-10 margin-btm-10"></div>
+                        </div>
+                        <div *ngIf="enableIMSLocationDiv" class="search-bar" style="margin-top: 20px;">
+                            <div *ngIf="errorMessageDiv" id="errorMessageId" class="row margin-btm-10">
+                                <div class="col-sm-12">
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span></span></div>
+                                </div>
+                            </div>
+                            <div *ngIf="successMessageDiv" id="successMessageId" class="row margin-btm-10">
+                                <div class="col-sm-12">
+                                    <div class="bg-success text-success padding-10">
+                                        <span class="margin-right-05 glyphicon glyphicon-saved"></span><span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 col-sm-6">
+                                    <div class="form-group">
+                                        <div class="col-md-3 col-sm-4 text-right margin-top-15"><label class="fontcolor-dark">Upload File (XML file only)<span class="error-color">*</span></label></div>
+                                        <div class="col-md-9 col-sm-8">
+                                            <input type="file" (change)="handleFileInput($event.target.files)" accept=".xml" data-size="nr" class="filestyle" data-buttonname="btn-primary" id="file" name="file" tabindex="-1" style="position: absolute; clip: rect(0px, 0px, 0px, 0px);">
+                                            <div class="bootstrap-filestyle input-group">
+                                                <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="choosenFile" class="form-control " placeholder="" disabled="" style="height: 50px;"> <span class="group-span-filestyle input-group-btn"
+                                                    tabindex="0"><label for="file" class="btn btn-primary "><span style="margin-right: 3px;" class="icon-span-filestyle glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span></label>
+                                                </span>
+                                            </div>
+                                            <span *ngIf="onBoardFile" id="onBoardFile" style="color: red;">Xml file is required</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row">
+                                                <button type="button" class="btn btn-default themed-button btn-primary" id="createrequestsubmit" name="createrequestsubmit" (click)="uploadIMSFIle()" style="background: #AF96C7;">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row margin-top-20" *ngIf="onBoardIMSStatusDiv && enableIMSLocationDiv">
+                            <div class="col-xs-12 ">
+                                <h4>IMS Locations Status Results</h4>
+                                <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
+                                <div>
+                                    <div class="table-wrapper ">
+                                        <table class="table table-striped text-center margin-btm-0 " id="cgdTable ">
+                                            <thead class="tablesorter-headerRow ">
+                                                <tr>
+                                                    <th width="50% " style="font-family:sans-serif;font-size: 120%;text-align: center;">Action</th>
+                                                    <th width="50% " style="font-family:sans-serif;font-size: 120%;text-align: center;">
+                                                        Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tr class="border-style-top-white results" *ngFor="let status of resIMS | keyvalue">
+                                                <td class="results">
+                                                    <span>{{status.key}}</span></td>
+                                                <td class="results">
+                                                    <span>{{status.value}}</span></td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
