@@ -2,11 +2,12 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
+import { UserService } from '../../services/userName/user-name.service';
 declare var $: any;
 
 @Component({
@@ -118,9 +119,13 @@ export class SearchComponent implements OnInit {
   ];
 
   @ViewChild('dt') dt: Table;
-  constructor(private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder, private router: Router, private spinner: NgxSpinnerService) {
-
+  constructor(private activatedRoute: ActivatedRoute,private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder, private router: Router, private spinner: NgxSpinnerService,private userService: UserService) {
+    this.activatedRoute.queryParams.subscribe(params => {
+      let userName = params['username'];
+      this.userService.saveName(userName);
+  });
   }
+
   public data: Object[];
 
   ngOnInit(): void {
