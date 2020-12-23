@@ -15,6 +15,7 @@ import { RequestComponent } from './components/request/request.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
+import { AuthGuard } from './auth/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardComponent, // this is the component with the <router-outlet> in the template
+    canActivate: [ AuthGuard ],
     children: [
       {
         path: 'search',
@@ -31,46 +33,57 @@ const routes: Routes = [
       {
         path: 'collection',
         component: CollectionComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'request/:barcode',
         component: RequestComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'request',
         component: RequestComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'bulkrequest',
         component: BulkrequestComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'reports',
         component: ReportsComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'roles',
         component: RolesComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'userRoles',
         component: UserRolesComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'jobs',
         component: JobsComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'monitoring',
         component: MonitoringComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'logging',
         component: LoggingComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'admin',
         component: AdminComponent,
+        canActivate: [ AuthGuard ],
       }
     ]
   },
@@ -79,6 +92,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [ AuthGuard ]
 })
 export class AppRoutingModule { }

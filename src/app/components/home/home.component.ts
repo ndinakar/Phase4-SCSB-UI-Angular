@@ -1,9 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TreeNode } from 'primeng/api';
-import { Observable } from 'rxjs';
 import { LoginService } from 'src/app/services/login/login.service';
+import { urls } from 'src/config/urls';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,7 +12,7 @@ import { LoginService } from 'src/app/services/login/login.service';
 
 
 export class HomeComponent implements OnInit {
-
+  baseUrl = urls.baseUrl;
   registerForm: FormGroup;
   serviceUrl: string;
   submitted = false;
@@ -23,9 +23,18 @@ export class HomeComponent implements OnInit {
   //   { id: 'NYPL', name: "New York Public Library" },
   //   { id: 'HTC', name: "HTC" }
   // ];
-
-  constructor(private formBuilder: FormBuilder, private router: Router,private loginService:LoginService) { }
-
+  postData = {
+    "userId": null,
+    "username": null,
+    "password": null,
+    "rememberMe": null,
+    "wrongCredentials": null,
+    "passwordMatcher": null,
+    "institution": null,
+    "errorMessage": null,
+    "permissions": null
+  }
+  constructor(private formBuilder: FormBuilder, private router: Router, private loginService: LoginService, private http:HttpClient) { }
   ngAfterViewInit() {
     // @ts-ignore
     twttr.widgets.load();
@@ -35,34 +44,23 @@ export class HomeComponent implements OnInit {
     this.loginService.getInstitutions().subscribe(
       (res) => {
         this.Institution = res;
-       });
-       this.registerForm = this.formBuilder.group({
-        institution: ['', Validators.required]
       });
+    this.registerForm = this.formBuilder.group({
+      institution: ['', Validators.required]
+    });
   }
   get f() { return this.registerForm.controls; }
   handleError(error: Response) {
-      return error.text;
-    }
+    return error.text;
+  }
 
   onSubmit() {
     this.submitted = true;
-    if (this.registerForm.invalid) {
-      return;
-    }
+    // if (this.registerForm.invalid) {
+    //   return;
+    // }
     var formVal = this.registerForm.value;
-    // this.loginService.getserviceUrl(formVal.institution).subscribe(
-    //   (res) => {
-    //     this.serviceUrl = res;
-    //     if(!this.serviceUrl.includes('not found'))
-    //     window.location.href = this.serviceUrl;
-    //    },
-    //    (error) => {
-    //      console.log(error);
-    //    });
-    if (formVal.institution === 'HTC') {
-      this.router.navigate(['/search']);
-    }
+    window.location.href = this.baseUrl+"/login-scsb?institution="+formVal.institution;
   }
 
   getinTouch: any[] = [{
