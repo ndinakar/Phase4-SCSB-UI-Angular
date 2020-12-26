@@ -20,15 +20,17 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'logout', component: HomeComponent },
-  { path: 'openMarcRecord', component: OpenMarcComponent },
+  { path: 'openMarcRecord', component: OpenMarcComponent,
+  canActivate: [ AuthGuard ], },
   {
     path: '',
     component: DashboardComponent, // this is the component with the <router-outlet> in the template
-    canActivate: [ AuthGuard ],
+    
     children: [
       {
         path: 'search',
         component: SearchComponent,
+        canActivate: [ AuthGuard ],
       },
       {
         path: 'collection',

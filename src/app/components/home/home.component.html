@@ -21,27 +21,29 @@
                 <div class="col-sm-6 col-md-7 col-lg-6">
                     <!-- Login Section-->
                     <div class="login-wrapper">
-                        <div hidden="true">
+                        <!-- <div hidden="true">
                             <form id="logoutForm" name="logoutForm" action="#" th:action="" method="post" th:object="">
                                 <input type="hidden" th:name="" th:value="" />
                                 <button id="logoutButton" name="logoutButton" type="submit" value="Logout" class="btn btn-default themed-button btn-primary">Ok</button>
                             </form>
-                        </div>
-                        <form class="form-horizontal" (ngSubmit)="onSubmit()" [formGroup]="registerForm" id="home_login" style="padding-bottom: 30px;">
+                        </div> -->
+                        <form class="form-horizontal" id="home_login" style="padding-bottom: 30px;">
                             <h2 class="heading">Login</h2>
-
                             <div class="form-group">
                                 <div class="col-md-3 text-right">
                                     <label for="institution" class="margin-top-10">Institution</label>
                                 </div>
                                 <div class="col-md-9">
-                                    <select name="institution" formControlName="institution" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.institution.errors }">
-                                    <option value="">Select One</option>
-                                    <option *ngFor="let ins of Institution" [value]="ins">{{ins}}</option>
-                                    <option value="HTC">HTC</option>
-                                </select>
-                                    <div style="color:red" *ngIf="submitted && f.institution.errors" class="invalid-feedback">
-                                        <div *ngIf="f.institution.errors.required">This Field is required</div>
+                                    <div class="select-holder">
+                                        <select id="institution" [ngModelOptions]="{standalone: true}" [(ngModel)]="institution" name="institution" class="form-control themed-input themed-select">
+                                        <option [ngValue]="undefined" selected="selected">Select One</option> 
+                                        <option *ngFor="let inst of Institutions" [ngValue]="inst[0]">
+                                            {{inst[1]}}
+                                          </option>
+                                        </select>
+                                    </div>
+                                    <div style="color:red" class="invalid-feedback">
+                                        <span *ngIf="institutionErrorMessageDiv" id="institutionErrorMessage" style="color: red;">This Field is required</span>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +51,7 @@
                                 <div class="col-md-3 text-right"></div>
                                 <div class="col-md-9">
                                     <div class="login-form-button-wrapper  margin-btm-10">
-                                        <button id="submitBtn" class="btn btn-default themed-button">
+                                        <button id="submitBtn" (click)="onSubmit()" class="btn btn-default themed-button">
                                             Submit
                                         </button>
                                         <div id="emailBtn" data-toggle="modal" data-target="#emailModal" style="padding-left: 200px;margin-top: -35px;">

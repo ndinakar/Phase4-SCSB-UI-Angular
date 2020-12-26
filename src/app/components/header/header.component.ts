@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
-import { UserService } from '../../services/userName/user-name.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-header',
@@ -12,21 +12,27 @@ import { UserService } from '../../services/userName/user-name.service';
 })
 export class HeaderComponent implements OnInit {
   userName: string;
-  constructor(private router: Router, private http: HttpClient,private userService: UserService) { }
+  username : string;
+  constructor(private router: Router, private http: HttpClient,private cookieService:CookieService) {
+    this.username = this.userName;
+   }
  
   baseUrl = urls.baseUrl;
 
   ngOnInit(): void {
-    this.userName=this.userService.getName();
+    this.userName = this.cookieService.get('username');
   }
+  
   logout() {
     const httpOptions = {
       headers: appHeaders.getHeaders(),
       withCredentials: true,
       observe: 'response' as 'response'
     };
-    this.http.get(this.baseUrl+'/home/logout',httpOptions).subscribe((res)=>{
+    this.http.get(this.baseUrl+'/api/logout',httpOptions).subscribe((res)=>{
       if(res){
+        this.cookieService.deleteAll();
+        window.location.reload(true);
         this.router.navigate(['/home']);
       }
     });

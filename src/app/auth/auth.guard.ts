@@ -24,10 +24,9 @@ export class AuthGuard implements CanActivate {
       withCredentials: true,
       observe: 'response' as 'response'
     };
-    return this.http.get(this.baseUrl + '/home/loginCheck', httpOptions).pipe(
+    return this.http.get(this.baseUrl + '/api/loginCheck', httpOptions).pipe(
       map(res => {
-        if (!res) {
-          alert("User Not valid to Move");
+        if (!res.body) {
           this.router.navigate(['/home']);
           return false;
         } else {
