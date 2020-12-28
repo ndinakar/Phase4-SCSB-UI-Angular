@@ -35,7 +35,10 @@ export class BulkRequestService {
       .set('BulkRequestName', BulkRequestName)
       .set('choosenFile', choosenFile)
       .set('patronEmailId', patronEmailId);
-    const options = { params: parames, headers: headers };
+    const options = {
+      params: parames, headers: headers,
+      withCredentials: true
+    };
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createBulkRequest", formdata,
       options);
   }

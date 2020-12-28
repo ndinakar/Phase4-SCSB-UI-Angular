@@ -304,7 +304,7 @@
                                 <!--tree grid start-->
 
                                 <p-table #dt [columns]="cols" name="p_table" [autoLayout]="true" [value]="searchVal['searchResultRows']" [paginator]="false" [rows]="10" [showCurrentPageReport]="false" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50,100]"
-                                    paginatorPosition="" selectionMode="checkbox" [(selection)]="selectedNodes1" (onHeaderCheckboxToggle)="onTableHeaderCheckboxToggle1($event)" dataKey="barcode" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                                    paginatorPosition="" selectionMode="checkbox" [(selection)]="selectedNodes1" (onHeaderCheckboxToggle)="onTableHeaderCheckboxToggle1($event)" dataKey="title" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
 
                                     <ng-template pTemplate="header" let-columns>
                                         <tr id="headers_main">
