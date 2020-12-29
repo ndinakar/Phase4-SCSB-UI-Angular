@@ -595,8 +595,21 @@ export class CollectionComponent implements OnInit {
 
   //save deacc start
   saveDeaccession(bibid, deacctype, itemBarcode) {
+    var statusLocation = false;
+    if (this.openmarcVal['availability'] == 'Not Available' || this.openmarcVal['availability'] == 'Out') {
+      this.locationErrorMessage = false;
+      statusLocation = true;
+    } else if (this.DeliveryLocation != '' && this.DeliveryLocation != undefined) {
+      this.locationErrorMessage = false;
+      statusLocation = true;
+    } else {
+      this.locationErrorMessage = true;
+      statusLocation = false;
+    }
+
     this.spinner.show();
-    if (this.deaccessionType != '' && this.DeliveryLocation != '' && this.DeaccessionNotes != '' && this.deaccessionType != undefined && this.DeliveryLocation != undefined && this.DeaccessionNotes != undefined) {
+    if (this.deaccessionType != '' && this.DeaccessionNotes != '' && this.deaccessionType != undefined && this.DeaccessionNotes != undefined && statusLocation) {
+
       this.locationErrorMessage = false;
       this.deaccessionNotesErrorMessage = false;
       this.postData = {

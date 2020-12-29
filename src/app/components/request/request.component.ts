@@ -433,14 +433,34 @@ export class RequestComponent implements OnInit {
   }
 
   reqTpeEDD(val) {
+    this.deliveryLocationErrorMessage = false;
     if (val == 'EDD') {
       this.eddshow = true;
+      this.removeErrorMessagesofnEDD();
     } else {
       this.eddshow = false;
+      this.removeErrorMessagesofEDD();
     }
 
   }
 
+  removeErrorMessagesofEDD() {
+    this.itemBarcodeErrorMessage = false;
+    this.requestingInstitutionErrorMessage = false;
+    this.patronBarcodeErrorMessage = false;
+    this.EmailMandatoryErrorMessage = false;
+    this.requestTypeErrorMessage = false;
+    this.startPageErrorMessage = false;
+    this.endPageErrorMessage = false;
+    this.articleTitleErrorMessage = false;
+  }
+  removeErrorMessagesofnEDD() {
+    this.itemBarcodeErrorMessage = false;
+    this.requestingInstitutionErrorMessage = false;
+    this.patronBarcodeErrorMessage = false;
+    this.deliveryLocationErrorMessage = false;
+    this.requestTypeErrorMessage = false;
+  }
   validateEmailAddress(val) {
     var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
 
@@ -451,7 +471,6 @@ export class RequestComponent implements OnInit {
     }
   }
   createRequest() {
-    this.spinner.show();
     if (this.eddshow) {
       if (this.validateInputs_edd()) {
         this.itemBarcodeErrorMessage = false;
@@ -530,6 +549,7 @@ export class RequestComponent implements OnInit {
       //with edd end
     } else {
       //without edd strt
+      this.spinner.hide();
       if (this.validateInputs()) {
         this.itemBarcodeErrorMessage = false;
         this.requestingInstitutionErrorMessage = false;
@@ -590,7 +610,7 @@ export class RequestComponent implements OnInit {
           "disableSearchInstitution": false,
           "searchInstitutionHdn": null
         }
-
+        this.spinner.show();
         this.requestService.createRequest(this.postData).subscribe(
           (res) => {
             this.createResponse = res;

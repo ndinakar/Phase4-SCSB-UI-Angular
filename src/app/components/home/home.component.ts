@@ -34,7 +34,12 @@ export class HomeComponent implements OnInit {
         this.Institutions = Object.keys(res).map(function (data) {
           return [data, res[data]];
         });
-        this.cookieService.deleteAll();
+        this.cookieService.delete('userName');
+        this.cookieService.delete('loggedInInstitution');
+        this.cookieService.delete('isAuthenticated');
+        this.cookieService.delete('CSRF-TOKEN');
+        this.cookieService.delete('JSESSIONID');
+        
       });
   }
   onSubmit() {
