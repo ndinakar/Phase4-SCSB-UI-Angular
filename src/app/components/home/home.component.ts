@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login/login.service';
 import { urls } from 'src/config/urls';
+import { CookieService } from 'ngx-cookie-service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -16,25 +18,11 @@ export class HomeComponent implements OnInit {
   registerForm: FormGroup;
   serviceUrl: string;
   submitted = false;
-  Institution: string[];
-  // Institution = [
-  //   { id: 'PUL', name: "Princeton" },
-  //   { id: 'CUL', name: "Columbia" },
-  //   { id: 'NYPL', name: "New York Public Library" },
-  //   { id: 'HTC', name: "HTC" }
-  // ];
-  postData = {
-    "userId": null,
-    "username": null,
-    "password": null,
-    "rememberMe": null,
-    "wrongCredentials": null,
-    "passwordMatcher": null,
-    "institution": null,
-    "errorMessage": null,
-    "permissions": null
-  }
-  constructor(private formBuilder: FormBuilder, private router: Router, private loginService: LoginService, private http:HttpClient) { }
+  Institutions: any = [];
+  institutionErrorMessageDiv = false;
+  institution: string = undefined;
+
+  constructor(private formBuilder: FormBuilder, private router: Router,private cookieService:CookieService, private loginService: LoginService, private http: HttpClient) { }
   ngAfterViewInit() {
     // @ts-ignore
     twttr.widgets.load();
@@ -43,24 +31,19 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.loginService.getInstitutions().subscribe(
       (res) => {
-        this.Institution = res;
+        this.Institutions = Object.keys(res).map(function (data) {
+          return [data, res[data]];
+        });
+        this.cookieService.deleteAll();
       });
-    this.registerForm = this.formBuilder.group({
-      institution: ['', Validators.required]
-    });
   }
-  get f() { return this.registerForm.controls; }
-  handleError(error: Response) {
-    return error.text;
-  }
-
   onSubmit() {
-    this.submitted = true;
-    // if (this.registerForm.invalid) {
-    //   return;
-    // }
-    var formVal = this.registerForm.value;
-    window.location.href = this.baseUrl+"/login-scsb?institution="+formVal.institution;
+    if (this.institution == '' || this.institution == null || this.institution == undefined) {
+      this.institutionErrorMessageDiv = true;
+    } else {
+      this.institutionErrorMessageDiv = false;
+      window.location.href = this.baseUrl + "/login-scsb?institution=" + this.institution;
+    }
   }
 
   getinTouch: any[] = [{

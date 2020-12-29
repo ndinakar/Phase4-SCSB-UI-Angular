@@ -6,10 +6,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  isAdmin = true;
+  isLogging = true;
+  isMonitoring = true;
+  isJobs = true;
+  isUserRoles = true;
+  isRoles = true;
+  isReports = true;
+  isBulkRequest = true;
+  isRequest = true;
+  isCollection = true;
+  isSearch = true;
+  constructor() {
 
-  constructor() { }
+  }
 
   ngOnInit(): void {
+
   }
 
 }

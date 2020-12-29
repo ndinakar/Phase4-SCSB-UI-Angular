@@ -400,76 +400,81 @@ export class CollectionComponent implements OnInit {
   }
 
   deaccessioncontrol() {
+    if (this.openmarcVal['availability'] == 'Not Available' || this.openmarcVal['availability'] == 'Out') {
+      this.deliveryLocationDisable = true;
+    } else {
+      this.deliveryLocationDisable = false;
+    }
     this.radioSwitchDeaccession = true;
     this.radioSwitchEditCGD = false;
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
     this.bibId = this.openmarcVal['bibId'];
     this.customerCode = this.openmarcVal['customerCode'];
     this.itemId = this.openmarcVal['itemId']
-      this.spinner.show();
-      this.postData =
-      {
-        "itemBarcodes": null,
-        "showResults": false,
-        "selectAll": false,
-        "errorMessage": null,
-        "barcodesNotFoundErrorMessage": null,
-        "ignoredBarcodesErrorMessage": null,
-        "searchResultRows": [],
-        "showModal": false,
-        "bibId": this.bibId,
-        "title": null,
-        "author": null,
-        "publisher": null,
-        "publishedDate": null,
-        "owningInstitution": null,
-        "callNumber": null,
-        "leaderMaterialType": null,
-        "tag000": null,
-        "controlNumber001": null,
-        "controlNumber005": null,
-        "controlNumber008": null,
-        "content": null,
-        "bibDataFields": [],
-        "BibliographicMarcForm.errorMessage": null,
-        "warningMessage": null,
-        "itemId": this.itemId,
-        "availability": null,
-        "barcode": this.itemBarcodenew,
-        "locationCode": null,
-        "useRestriction": null,
-        "monographCollectionGroupDesignation": null,
-        "collectionGroupDesignation": null,
-        "newCollectionGroupDesignation": null,
-        "cgdChangeNotes": null,
-        "customerCode": this.customerCode,
-        "deaccessionType": null,
-        "deaccessionNotes": null,
-        "deliveryLocations": [],
-        "deliveryLocation": null,
-        "shared": false,
-        "submitted": false,
-        "message": null,
-        "collectionAction": 'Deaccession',
-        "allowEdit": false,
-        "username": null
-      }
-      this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
-        (res) => {
-          this.crossinstitutionVal = res;
-          this.editCDGsection = false;
-          this.Deaccessionsection = true;
-          if(this.crossinstitutionVal['submitted'] != false){
-            this.deaccessionType = '';
-            this.DeliveryLocation = '';
-            this.deliveryLocationDisable = true;
-          }
-          this.validateResponse();
-          this.spinner.hide();
-        },
-        (error) => {
-          this.spinner.hide();
-        });
+    this.spinner.show();
+    this.postData =
+    {
+      "itemBarcodes": null,
+      "showResults": false,
+      "selectAll": false,
+      "errorMessage": null,
+      "barcodesNotFoundErrorMessage": null,
+      "ignoredBarcodesErrorMessage": null,
+      "searchResultRows": [],
+      "showModal": false,
+      "bibId": this.bibId,
+      "title": null,
+      "author": null,
+      "publisher": null,
+      "publishedDate": null,
+      "owningInstitution": null,
+      "callNumber": null,
+      "leaderMaterialType": null,
+      "tag000": null,
+      "controlNumber001": null,
+      "controlNumber005": null,
+      "controlNumber008": null,
+      "content": null,
+      "bibDataFields": [],
+      "BibliographicMarcForm.errorMessage": null,
+      "warningMessage": null,
+      "itemId": this.itemId,
+      "availability": null,
+      "barcode": this.itemBarcodenew,
+      "locationCode": null,
+      "useRestriction": null,
+      "monographCollectionGroupDesignation": null,
+      "collectionGroupDesignation": null,
+      "newCollectionGroupDesignation": null,
+      "cgdChangeNotes": null,
+      "customerCode": this.customerCode,
+      "deaccessionType": null,
+      "deaccessionNotes": null,
+      "deliveryLocations": [],
+      "deliveryLocation": null,
+      "shared": false,
+      "submitted": false,
+      "message": null,
+      "collectionAction": 'Deaccession',
+      "allowEdit": false,
+      "username": null
+    }
+    this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
+      (res) => {
+        this.crossinstitutionVal = res;
+        this.editCDGsection = false;
+        this.Deaccessionsection = true;
+        if (this.crossinstitutionVal['submitted'] != false) {
+          this.deaccessionType = '';
+          this.DeliveryLocation = '';
+          this.deliveryLocationDisable = true;
+        }
+        this.validateResponse();
+        this.spinner.hide();
+      },
+      (error) => {
+        this.spinner.hide();
+      });
   }
 
   CGDChangeNotesFunc(val) {

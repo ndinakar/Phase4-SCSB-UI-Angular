@@ -159,7 +159,6 @@ export class UserRolesComponent implements OnInit {
     this.deleteUserDiv = false;
   }
   editUser(userId, networkLoginId, roleName) {
-    this.spinner.show();
     this.editusersDiv = true;
     this.createUserDiv = false;
     this.showSearchResultsDiv = false;
@@ -179,8 +178,10 @@ export class UserRolesComponent implements OnInit {
         this.edituserDescription = this.userResponse['editUserDescription'];
         this.editnetworkLoginId = this.userResponse['editNetworkLoginId'];
         this.editinstitutionId = this.userResponse['editInstitutionId'];
-        this.spinner.hide();
-      });
+      },
+      (erro)=>{
+      }
+      );
   }
   deleteUserRole(userId, networkLoginId, roleName) {
     this.spinner.show();
@@ -252,10 +253,10 @@ export class UserRolesComponent implements OnInit {
     this.institutionIdErrMsgDiv = false;
     this.networkLoginIdErrMsg = false;
     var statusCreateRole = true;
-    if (this.emailId == '' || this.emailId == null || this.emailId == undefined) {
-      this.emailIdErrMsgDiv = true;
-      statusCreateRole = false;
-    }
+    // if (this.emailId == '' || this.emailId == null || this.emailId == undefined) {
+    //   this.emailIdErrMsgDiv = true;
+    //   statusCreateRole = false;
+    // }
     if (this.userDescription == null || this.userDescription == '' || this.userDescription == undefined) {
       this.userDescriptionErrMsgDiv = true
       statusCreateRole = false;
@@ -272,10 +273,10 @@ export class UserRolesComponent implements OnInit {
       this.roleIdErrMsgDiv = true
       statusCreateRole = false;
     }
-    if (!(this.validateEmailAddress(this.emailId))) {
-      statusCreateRole = false;
-      this.emailIdErrMsgDiv = true;
-    }
+    // if (!(this.validateEmailAddress(this.emailId))) {
+    //   statusCreateRole = false;
+    //   this.emailIdErrMsgDiv = true;
+    // }
     return statusCreateRole;
   }
   createUser(emailId, userDescription, institutionId, networkLoginId) {
@@ -329,10 +330,10 @@ export class UserRolesComponent implements OnInit {
     this.editnetworkLoginIdErrMsgDiv = false;
     this.editnetworkLoginIdErrMsgDiv = false;
     var statusCreateRole = true;
-    if (this.editEmailId == '' || this.editEmailId == null || this.editEmailId == undefined) {
-      this.editEmailIdErrMsgDiv = true;
-      statusCreateRole = false;
-    }
+    // if (this.editEmailId == '' || this.editEmailId == null || this.editEmailId == undefined) {
+    //   this.editEmailIdErrMsgDiv = true;
+    //   statusCreateRole = false;
+    // }
     if (this.edituserDescription == null || this.edituserDescription == '' || this.edituserDescription == undefined) {
       this.edituserDescriptionErrMsgDiv = true
       statusCreateRole = false;
@@ -349,10 +350,10 @@ export class UserRolesComponent implements OnInit {
       this.editroleIdErrMsgDiv = true;
       statusCreateRole = false;
     }
-    if (!(this.validateEmailAddress(this.editEmailId))) {
-      statusCreateRole = false;
-      this.editEmailIdErrMsgDiv = true;
-    }
+    // if (!(this.validateEmailAddress(this.editEmailId))) {
+    //   statusCreateRole = false;
+    //   this.editEmailIdErrMsgDiv = true;
+    // }
     return statusCreateRole;
   }
   saveEditUser(networkLoginId, userDescription, institutionId, userEmailId) {

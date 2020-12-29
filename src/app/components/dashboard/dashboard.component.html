@@ -6,45 +6,43 @@
         <div class="row">
             <div class="dashboard-content col-sm-12">
                 <ul id="search-content-tab" class="nav nav-tabs" role="tablist">
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isSearch">
                         <a routerLink="/search" aria-controls="search" class="tab-search"><span class="icons"></span><span>Search</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isCollection">
                         <a routerLink="/collection" aria-controls="collection" class="tab-collection"><span class="icons"></span><span>Collection</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isRequest">
                         <a routerLink="/request" aria-controls="request" class="tab-request"><span class="icons"></span><span>Request</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isBulkRequest">
                         <a routerLink="/bulkrequest" aria-controls="request" class="tab-request"><span class="icons"></span><span>Bulk Request</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isReports">
                         <a routerLink="/reports" aria-controls="reports" class="tab-reports"><span class="icons"></span><span>Reports</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isRoles">
                         <a routerLink="/roles" aria-controls="roles" class="tab-role"><span class="icons"></span><span>Roles</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isUserRoles">
                         <a routerLink="/userRoles" aria-controls="users" class="tab-users"><span class="icons"></span><span>Users</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isJobs">
                         <a routerLink="/jobs" aria-controls="jobs" class="tab-jobs"><span class="icons"></span><span>Jobs</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isMonitoring">
                         <a routerLink="/monitoring" aria-controls="monitoring" class="tab-monitor"><span class="icons"></span><span>Monitoring</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isLogging">
                         <a routerLink="/logging" aria-controls="logging" class="tab-logg"><span class="icons"></span><span>Logging</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="isAdmin">
                         <a routerLink="/admin" aria-controls="logging" class="tab-users"><span class="icons"></span><span>Admin</span></a>
                     </li>
                 </ul>
                 <div class="tab-content">
                     <div>
-                        <!-- <app-search></app-search> -->
                         <router-outlet></router-outlet>
-                        <!-- <app-checking></app-checking> -->
                     </div>
                 </div>
             </div>

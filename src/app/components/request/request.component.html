@@ -30,9 +30,10 @@
                                                 <div class="select-holder">
                                                     <select id="requestStatus" name="requestStatus" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestStatus" class="themed-input themed-select" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;" (change)="onChangeRequestStatus(requestStatus)">
                                                         <option value="">ALL</option>
+                                                        <option value="active">ACTIVE</option>
                                                         <option *ngFor="let del4 of searchReqVal['requestStatuses']" [ngValue]="del4">
                                                             {{del4}}
-                                                          </option>
+                                                          </option>  
                                                     </select>
                                                 </div>
                                             </div>

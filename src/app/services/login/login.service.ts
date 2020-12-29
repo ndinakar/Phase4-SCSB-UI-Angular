@@ -16,8 +16,8 @@ export class LoginService {
   baseUrl = urls.baseUrl;
   prefix = urls.login;
 
-  getInstitutions(): Observable<string[]> {
-    return this.httpClient.get<string[]>(this.baseUrl + "/home/institutions",
+  getInstitutions(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "/api/institutions",
       {
         headers: appHeaders.getHeaders()
       });

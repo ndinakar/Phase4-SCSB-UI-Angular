@@ -7,7 +7,6 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
-import { UserService } from '../../services/userName/user-name.service';
 declare var $: any;
 
 @Component({
@@ -119,12 +118,9 @@ export class SearchComponent implements OnInit {
   ];
 
   @ViewChild('dt') dt: Table;
-  constructor(private activatedRoute: ActivatedRoute,private searchService: SearchService, private messageService: MessageService, private formBuilder: FormBuilder, private router: Router, private spinner: NgxSpinnerService,private userService: UserService) {
-    this.activatedRoute.queryParams.subscribe(params => {
-      let userName = params['username'];
-      this.userService.saveName(userName);
-  });
-  }
+  constructor(private activatedRoute: ActivatedRoute, private searchService: SearchService,
+    private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
+    private spinner: NgxSpinnerService) { }
 
   public data: Object[];
 
@@ -311,9 +307,9 @@ export class SearchComponent implements OnInit {
   }
 
   onRowUnselect(event) {
-    if(this.selectedNodes1.length == 0 && this.selectedNodes2.length == 0){
-    this.clicked = true;
-    this.messageService.add({ severity: 'info', summary: 'Car Selected', detail: 'title: ' + event.data.title });
+    if (this.selectedNodes1.length == 0 && this.selectedNodes2.length == 0) {
+      this.clicked = true;
+      this.messageService.add({ severity: 'info', summary: 'Car Selected', detail: 'title: ' + event.data.title });
     }
   }
   checkUncheckAll() {
