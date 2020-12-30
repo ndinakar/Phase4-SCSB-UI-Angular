@@ -15,6 +15,7 @@ export class CollectionComponent implements OnInit {
   deliveryLocationDisable = false;
   showStatus = false;
   showStar = false;
+  statusLocation = false;
   collectionForm: FormGroup;
   collectionVal: TreeNode[];
   openmarcVal: TreeNode[];
@@ -595,8 +596,21 @@ export class CollectionComponent implements OnInit {
 
   //save deacc start
   saveDeaccession(bibid, deacctype, itemBarcode) {
+    this.statusLocation = false;
+    if (this.openmarcVal['availability'] == 'Not Available' || this.openmarcVal['availability'] == 'Out') {
+      this.locationErrorMessage = false;
+      this.statusLocation = true;
+    } else if (this.DeliveryLocation != '' && this.DeliveryLocation != undefined) {
+      this.locationErrorMessage = false;
+      this.statusLocation = true;
+    } else {
+      this.locationErrorMessage = true;
+      this.statusLocation = false;
+    }
+
     this.spinner.show();
-    if (this.deaccessionType != '' && this.DeliveryLocation != '' && this.DeaccessionNotes != '' && this.deaccessionType != undefined && this.DeliveryLocation != undefined && this.DeaccessionNotes != undefined) {
+    if (this.deaccessionType != '' && this.DeaccessionNotes != '' && this.deaccessionType != undefined && this.DeaccessionNotes != undefined && this.statusLocation) {
+
       this.locationErrorMessage = false;
       this.deaccessionNotesErrorMessage = false;
       this.postData = {
@@ -658,19 +672,13 @@ export class CollectionComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
+          this.spinner.hide();
         });
 
-    } else {
-      if (this.deaccessionType == '' || this.deaccessionType == undefined) {
-
-      } else if (this.DeliveryLocation == undefined || this.DeliveryLocation == '') {
-        this.locationErrorMessage = true;
-      }
-      else if (this.DeaccessionNotes == undefined || this.DeaccessionNotes == '') {
+    } else if (this.DeaccessionNotes == undefined || this.DeaccessionNotes == '') {
         this.deaccessionNotesErrorMessage = true;
       }
       this.spinner.hide();
-    }
   }
   validateResponse() {
     this.message = this.crossinstitutionVal['message'];
