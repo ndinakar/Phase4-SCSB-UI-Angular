@@ -1,6 +1,6 @@
 
 export const urls = {
-    baseUrl: 'http://phase4-scsb-ui-service:9089',
+    baseUrl: 'http://52.203.96.232:9089',
     search: '/search',
     collection: '/collection',
     requests: '/request',
