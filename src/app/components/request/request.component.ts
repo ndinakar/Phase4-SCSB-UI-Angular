@@ -759,7 +759,6 @@ export class RequestComponent implements OnInit {
 
     );
   }
-
   goToSearchRequest(patronBarcode) {
     this.spinner.show();
     this.searchPatronBarcode = patronBarcode;

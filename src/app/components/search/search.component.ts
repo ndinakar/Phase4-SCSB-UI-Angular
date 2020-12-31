@@ -510,12 +510,12 @@ export class SearchComponent implements OnInit {
     } else if (actionName == 'firstCall') {
       this.pageNumber = 0;
     } else if (actionName == 'lastCall') {
-      this.pageNumber = this.searchVal['totalPageCount'];
+      this.pageNumber = this.searchVal['totalPageCount']-1;
       this.totalPageCount = this.searchVal['totalPageCount'];
     } else if (actionName == 'previousCall') {
-      this.pageNumber = this.searchVal['pageNumber'];
+      this.pageNumber = this.searchVal['pageNumber']-1;
     } else if (actionName == 'nextCall') {
-      this.pageNumber = this.searchVal['pageNumber'];
+      this.pageNumber = this.searchVal['pageNumber']+1;
     } else if (actionName == 'pageSize') {
       this.pageNumber = this.searchVal['pageNumber'];
     }

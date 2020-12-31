@@ -235,6 +235,9 @@ export class UserRolesComponent implements OnInit {
           this.userRolePaginationDiv = true;
         }
         this.spinner.hide();
+      },
+      (error)=>{
+        this.spinner.hide();
       }
     );
   }
@@ -311,6 +314,9 @@ export class UserRolesComponent implements OnInit {
           this.institutionId = null;
           this.networkLoginId = '';
           this.spinner.hide();
+        },
+        (error)=>{
+          this.spinner.hide();
         });
     }
   }
@@ -361,6 +367,7 @@ export class UserRolesComponent implements OnInit {
       this.spinner.show();
       this.userRolesService.saveEditUser(this.userId, this.editroleId, networkLoginId, userDescription, institutionId, userEmailId).subscribe(
         (res) => {
+          this.spinner.hide();
           this.userRoleFormVal = res;
           this.editusersDiv = true;
           this.createUserDiv = false;
@@ -378,6 +385,8 @@ export class UserRolesComponent implements OnInit {
             this.editsuccessMsgDiv = false;
             this.editerrormsgDiv = true;
           }
+        },
+        (error)=>{
           this.spinner.hide();
         });
     }
@@ -404,13 +413,20 @@ export class UserRolesComponent implements OnInit {
           this.deleteErrorMsgDiv = true;
         }
         this.spinner.hide();
-      });
+      },
+      (error)=>{
+        this.spinner.hide();
+      }
+      );
   }
   userRoles() {
     this.userRolesService.userRoles().subscribe(
       (res) => {
         this.userRolesVal = res;
         this.userRoleListVal = this.userRolesVal['roles'].map(function (x) { return { id: x[0], name: x[1] }; });
+      },
+      (error)=>{
+        this.spinner.hide();
       });
   }
   lastCall() {
