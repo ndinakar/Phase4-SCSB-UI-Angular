@@ -18,8 +18,6 @@ export class appHeaders {
     }
     public static getHeaders_formData() {
         return new HttpHeaders({
-            'Accept': 'application/json',
-            'api_key':'recap'
         });
     }
     public static httpOptions(){
