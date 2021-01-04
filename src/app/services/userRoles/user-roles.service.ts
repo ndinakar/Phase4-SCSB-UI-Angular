@@ -13,12 +13,15 @@ export class UserRolesService {
   constructor(private httpClient: HttpClient) { }
   baseUrl = urls.baseUrl;
   prefix = urls.userRoles;
-
+  httpOptions(){
+    const httpOptions = {
+      headers: appHeaders.getHeaders(),
+      withCredentials: true
+    };
+    return httpOptions;
+  }
   searchRoles(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchUsers", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchUsers", postData, this.httpOptions());
   }
   previousCall(postData: UserRoleFormData): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData,
@@ -52,16 +55,14 @@ export class UserRolesService {
   }
   userRoles(): Observable<TreeNode[]> {
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/userRoles",
-      {
-        headers: appHeaders.getHeaders()
-      });
+     this.httpOptions());
   }
   editUser(userId, networkLoginId): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders();
     let parames = new HttpParams()
       .set('userId', userId)
       .set('networkLoginId', networkLoginId);
-    const options = { params: parames, headers: headers };
+    const options = { params: parames, headers: headers,withCredentials: true };
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/editUser", options);
   }
   saveEditUser(userId, roleIds, networkLoginId, userDescription, institutionId, userEmailId): Observable<TreeNode[]> {
@@ -73,15 +74,13 @@ export class UserRolesService {
       .set('institutionId', institutionId)
       .set('userEmailId', userEmailId)
       .set('roleIds', roleIds);
-    const options = { params: parames, headers: headers };
+    const options = { params: parames, headers: headers,withCredentials: true };
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/saveEditUserDetails", options);
   }
 
   createUser(postData: UserRoleFormData): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createUser", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    this.httpOptions());
   }
   delete(userId, networkLoginId, pageNumber, totalPageCount, pageSize): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders();
@@ -91,7 +90,7 @@ export class UserRolesService {
       .set('pageNumber', pageNumber)
       .set('totalPageCount', totalPageCount)
       .set('pageSize', pageSize);
-    const options = { params: parames, headers: headers };
+    const options = { params: parames, headers: headers,withCredentials: true };
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/delete", options);
   }
 }

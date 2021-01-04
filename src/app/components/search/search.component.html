@@ -308,7 +308,8 @@
 
                                     <ng-template pTemplate="header" let-columns>
                                         <tr id="headers_main">
-                                            <th id="header_checkBox" style="width: 3em">
+                                            <th id="header_checkBox" style="width: 6em">
+                                                <label>Select All</label>
                                                 <p-tableHeaderCheckbox id="hdr_checkbox"></p-tableHeaderCheckbox>
                                             </th>
                                             <th *ngFor="let col of columns" [pSortableColumn]="col.field">

@@ -12,20 +12,20 @@ export class RequestService {
 
   baseUrl = urls.baseUrl;
   prefix = urls.requests;
-
+  httpOptions(){
+    const httpOptions = {
+      headers: appHeaders.getHeaders(),
+      withCredentials: true
+    };
+    return httpOptions;
+  }
   constructor(@Inject(HttpClient) private httpClient: HttpClient) { }
 
   createRequest(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createRequest", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createRequest", postData,this.httpOptions());
   }
   populateItemtDetails(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/populateItem", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/populateItem", postData,this.httpOptions());
   }
   loadCreateRequest(): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/loadCreateRequest",
@@ -40,16 +40,10 @@ export class RequestService {
       });
   }
   loadSearchRequest(): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/loadSearchRequest",
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/loadSearchRequest",this.httpOptions());
   }
   goToSearchRequest(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/goToSearchRequest",postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/goToSearchRequest",postData,this.httpOptions());
   }
   resubmitRequest(postData: RequestForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/resubmitRequest", postData,

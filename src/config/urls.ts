@@ -1,6 +1,8 @@
 
+    var coreUrl = window.location.protocol+'//'+window.location.hostname;
 export const urls = {
-    baseUrl: 'http://52.203.96.232:9089',
+    baseUrl: coreUrl+':9089',
+    //baseUrl:'/backend',
     search: '/search',
     collection: '/collection',
     requests: '/request',

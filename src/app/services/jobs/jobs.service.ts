@@ -13,17 +13,17 @@ export class JobsService {
   constructor(private httpClient: HttpClient) { }
   baseUrl = urls.baseUrl;
   prefix = urls.jobs;
-
+  httpOptions(){
+    const httpOptions = {
+      headers: appHeaders.getHeaders(),
+      withCredentials: true
+    };
+    return httpOptions;
+  }
   displayJobs(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/jobs",
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/jobs",this.httpOptions());
   }
   scheduleJobs(postData: ScheduleJobsForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/jobs", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/jobs", postData,this.httpOptions());
   }
 }

@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from 'src/app/services/login/login.service';
 import { urls } from 'src/config/urls';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-home',
@@ -22,13 +22,14 @@ export class HomeComponent implements OnInit {
   institutionErrorMessageDiv = false;
   institution: string = undefined;
 
-  constructor(private formBuilder: FormBuilder, private router: Router,private cookieService:CookieService, private loginService: LoginService, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private cookieService: CookieService, private loginService: LoginService, private http: HttpClient) { }
   ngAfterViewInit() {
     // @ts-ignore
     twttr.widgets.load();
   }
 
   ngOnInit(): void {
+    this.institution = undefined;
     this.loginService.getInstitutions().subscribe(
       (res) => {
         this.Institutions = Object.keys(res).map(function (data) {
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
         this.cookieService.delete('isAuthenticated');
         this.cookieService.delete('CSRF-TOKEN');
         this.cookieService.delete('JSESSIONID');
-        
+
       });
   }
   onSubmit() {

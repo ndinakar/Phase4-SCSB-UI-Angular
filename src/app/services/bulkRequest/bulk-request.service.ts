@@ -24,7 +24,7 @@ export class BulkRequestService {
   createBulkRequest(deliveryLocation: string, requestingInstitutionId: string,
     patronBarcodeId: string, BulkRequestName: string, choosenFile:
       string, patronEmailId: string, file: File):
-    Observable<TreeNode[]> {
+    Observable<any> {
     const formdata: FormData = new FormData();
     formdata.append('file', file, file.name);
     let headers = appHeaders.getHeaders_formData();
@@ -39,7 +39,7 @@ export class BulkRequestService {
       params: parames, headers: headers,
       withCredentials: true
     };
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createBulkRequest", formdata,
+    return this.httpClient.post<any>(this.baseUrl + this.prefix + "/createBulkRequest", formdata,
       options);
   }
   populateDeliveryLocations(postData: BulkRequestForm): Observable<TreeNode[]> {

@@ -9,6 +9,5 @@ export class AppComponent {
 
   title = 'project';
   ngOnInit(): void {
-    $('#mydiv').hide();
   }
 }

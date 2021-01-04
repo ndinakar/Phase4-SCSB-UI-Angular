@@ -16,7 +16,7 @@
                                         <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12" style="background: #F0F1F1">
                                             <div class="col-md-32 col-sm-3 col-lg-2 padding-right-20 padding-left-0">
                                                 <label class="fontcolor-dark margin-btm-10">Bulk Request Id</label>
-                                                <input id="bulkRequestIdSearch" [(ngModel)]="bulkRequestIdSearch" name="bulkRequestIdSearch" type="text" class="form-control themed-input" />
+                                                <input id="bulkRequestIdSearch" [(ngModel)]="bulkRequestIdSearch" name="bulkRequestIdSearch" type="text" class="form-control themed-input" (keyup)="toggleBulkRequestIdSearch()" />
                                                 <p *ngIf="bulkRequestIdSearchError" id="bulkRequestIdSearchError" style="color: red;">Bulk Request Id should contain only numbers.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
@@ -26,7 +26,7 @@
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Patron Barcode</label>
-                                                <input id="bulkPatronBarcodeSearch" [(ngModel)]="bulkPatronBarcodeSearch" name="bulkRequestNameSearch" type="text" class="form-control themed-input" />
+                                                <input id="bulkPatronBarcodeSearch" [(ngModel)]="bulkPatronBarcodeSearch" name="bulkPatronBarcodeSearch" type="text" class="form-control themed-input" />
                                                 <p *ngIf="bulkPatronBarcodeSearchError" id="bulkPatronBarcodeSearchError" style="color: red;">Patron Barcode is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
@@ -166,8 +166,8 @@
                         </div>
                         <div class="buscador-principal">
                             <div id="successTextIdForRequest" class="text-success" *ngIf="createsubmit">
-                                Your bulk request was received successfully and will be processed.To track the bulk request's status, please <a onclick="goToSearchRequest(this.getAttribute('data1'))">click here</a><br /> To create another bulk request
-                                for the same patron, please <a (click)="loadCreateRequestForSamePatron()">click here</a><br /> To create another bulk request for a different patron, please <a (click)="loadCreateRequest()">click here</a>
+                                Your bulk request was received successfully and will be processed.To track the bulk request's status, please <a (click)="goToSearchRequest()" style="cursor: pointer;">click here</a><br /> To create another bulk request
+                                for the same patron, please <a (click)="loadCreateRequestForSamePatron()" style="cursor: pointer;">click here</a><br /> To create another bulk request for a different patron, please <a (click)="loadCreateRequest()" style="cursor: pointer;">click here</a>
                             </div>
                             <div class="row margin-top-25 margin-btm-30">
                                 <div class="col-sm-12">
@@ -250,7 +250,7 @@
                                                 </div>
                                                 <div class="col-md-4 col-sm-6">
                                                     <div class="form-group">
-                                                        <div class="col-md-4 col-sm-6 text-right margin-top-05"><label for="patronEmailId" class="fontcolor-dark">Patron <span id="emailMandatory" class="error-color" *ngIf="!createsubmit">*</span><br/>Email Address</label></div>
+                                                        <div class="col-md-4 col-sm-6 text-right margin-top-05"><label for="patronEmailId" class="fontcolor-dark">Patron<span id="emailMandatory" class="error-color" *ngIf="!createsubmit"></span><br/>Email Address</label></div>
                                                         <div class="col-md-8 col-sm-6">
                                                             <input type="email" [(ngModel)]="patronEmailId" id="patronEmailId" name="patronEmailName" class="form-control themed-input" [disabled]="createsubmit" (blur)="validateEmailAddress(patronEmailId)">
                                                             <span *ngIf="patronEmailIdErrorMessage" id="patronEmailIdErrorMessage" style="color: red;">Email address is invalid.</span>
