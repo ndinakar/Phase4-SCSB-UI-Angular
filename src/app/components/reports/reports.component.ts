@@ -20,50 +20,37 @@ export class ReportsComponent implements OnInit {
   subtotalPhysicalCUL: number;
   subtotalPhysicalPUL: number;
   subtotalPhysicalNYPL: number;
-
   subtotalEDDCUL: number;
   subtotalEDDPUL: number;
   subtotalEDDNYPL: number;
-
   totalCUL: number;
   totalPUL: number;
   totalNYPL: number;
-
   totalCULRequest: number;
   totalPULRequest: number;
   totalNYPLRequest: number;
-
   subtotalEDDDeaccession: any = [];
-
   firstbutton = true;
   previousbutton = true;
   nextbutton = false;
   lastbutton = false;
-
   statusRequest = false;
-
   partnersResults = false;
   requestTypeResults = false;
-
   incompleteShowBy: string;
   ReportShowBy: string;
   RequestDateRangefrom: string;
   RequestDateRangeto: string;
-
   AccessionDeaccessionDateRangefrom: string;
   AccessionDeaccessionDateRangeto: string;
-
   requestFromDateErrorText = false;
   requestToDateErrorText = false;
   showByErrorText = false;
   requestFromToError = false;
-
   accessionErrorText = false;
   deaccessionErrorText = false;
   accessionFromToError = false;
-
   incompleteErrorText = false;
-
   requestPage = false;
   accesionPage = false;
   cgdPage = false;
@@ -73,29 +60,23 @@ export class ReportsComponent implements OnInit {
   incompleteResultsPage = false;
   Deaccessiontableshow = false;
   reportType_panel = true;
-
   reportstVal: TreeNode[];
   instVal: TreeNode[];
   deaccessionRes: TreeNode[];
   download_response: TreeNode[];
-
   errorMessageId = false;
-
+  incompleteResultsDiv = false;
+  incompletetotalPaginationDiv = false;
   showentries = 10;
-
   deaccessionOwnInst: string;
-
   dateAccessionFrom: string;
   dateAccessionTo: string;
-
   dateFrom: string;
   dateTo: string;
-
   dFromDate: string;
   dToDate: string;
   start: any;
   end: any;
-
   isChecked = false;
   fileName: string;
   dataDecode: string;
@@ -431,10 +412,10 @@ export class ReportsComponent implements OnInit {
       this.postData = {
         "showBy": null,
         "requestType": "Accession/Deaccesion",
-        "requestFromDate": this.dateAccessionFrom,
-        "requestToDate": this.dateAccessionTo,
-        "accessionDeaccessionFromDate": null,
-        "accessionDeaccessionToDate": null,
+        "requestFromDate": null,
+        "requestToDate": null,
+        "accessionDeaccessionFromDate": this.dateAccessionFrom,
+        "accessionDeaccessionToDate": this.dateAccessionTo,
 
         "retrievalRequestPulCount": null,
         "retrievalRequestCulCount": null,
@@ -543,16 +524,15 @@ export class ReportsComponent implements OnInit {
           this.requestResultsPage = false;
           this.accessionPageResponse = true;
           this.incompleteResultsPage = false;
-          //this.accessionPageResponse = true;
           this.accesionPage = true;
           this.reportType_panel = true;
           this.Deaccessiontableshow = false;
           this.isChecked = true;
           var totalCountDeacc = 0;
-          for(var i=0;i<this.reportstVal['reportsInstitutionFormList'].length;i++){
+          for (var i = 0; i < this.reportstVal['reportsInstitutionFormList'].length; i++) {
             totalCountDeacc = this.reportstVal['reportsInstitutionFormList'][i].deaccessionPrivateCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionSharedCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionOpenCount;
-            this.subtotalEDDDeaccession.push(totalCountDeacc); 
-        }
+            this.subtotalEDDDeaccession.push(totalCountDeacc);
+          }
           this.spinner.hide();
         },
         (error) => {
@@ -576,14 +556,20 @@ export class ReportsComponent implements OnInit {
         (res) => {
           this.reportstVal = res;
           this.incompleteResultsPage = true;
+          this.incompleteResultsDiv = false;
           this.errorMessageId = false;
+          this.incompletetotalPaginationDiv = false;
           this.requestResultsPage = false;
           this.accessionPageResponse = false;
           this.incompletePageSize = this.reportstVal['incompletePageSize'];
           if (this.reportstVal['errorMessage'] != null || this.reportstVal['errorMessage'] != undefined) {
             this.errorMessageId = true;
+            this.incompleteResultsDiv = false;
+            this.incompletetotalPaginationDiv = false;
           } else {
             this.errorMessageId = false;
+            this.incompleteResultsDiv = true;
+            this.incompletetotalPaginationDiv = true;
           }
           this.pagination('incomplete');
           this.spinner.hide();
@@ -679,7 +665,7 @@ export class ReportsComponent implements OnInit {
         this.reportType_panel = false;
         this.Deaccessiontableshow = true;
         this.pagination('deaccession');
-        
+
       },
       (error) => {
         this.spinner.hide();

@@ -315,9 +315,9 @@
                                                     <table class="table table-striped text-center margin-btm-0 " id="acessionDeaccessionTable ">
                                                         <thead class="tablesorter-headerRow ">
                                                             <tr>
-                                                                <th width="20% "></th>
-                                                                <th width="20% "></th>
-                                                                <th width="20% " style="font-family:sans-serif;font-size: 122% " *ngFor="let inst of reportstVal['reportsInstitutionFormList']">
+                                                                <th width="15% "></th>
+                                                                <th width="15% "></th>
+                                                                <th style="font-family:sans-serif;font-size: 122% " *ngFor="let inst of reportstVal['reportsInstitutionFormList']">
                                                                     {{inst.institution}}</th>
                                                             </tr>
                                                         </thead>
@@ -586,7 +586,7 @@
                                     <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="errorMessageSpanId ">{{reportstVal['errorMessage']}}</span></div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 " style="padding-left:30px;padding-right:30px; ">
+                            <div *ngIf="incompleteResultsDiv" class="col-xs-12 " style="padding-left:30px;padding-right:30px; ">
                                 <h4>Report Results</h4>
                                 <h4 class="pull-right " style="margin-top: -20px; ">Total Records Found:
                                     <span>{{reportstVal['incompleteTotalRecordsCount']}}</span></h4>
@@ -647,7 +647,7 @@
 
                             <input id="incompletePageNumber " name="incompletePageNumber " type="text " th:field="${reportsForm.incompletePageNumber} " hidden="hidden " />
                             <input id="incompletetotalPageCount " name="incompletetotalPageCount " type="text " th:field="${reportsForm.incompleteTotalPageCount} " hidden="hidden " />
-                            <div id="incompletePaginationId " name="reportPaginationName " class="pull-left " style="margin-top: -10px;padding-left:35px; " data-th-if="${reportsForm.showIncompletePagination} ">
+                            <div *ngIf="incompletetotalPaginationDiv" id="incompletePaginationId " name="reportPaginationName " class="pull-left " style="margin-top: -10px;padding-left:35px; " data-th-if="${reportsForm.showIncompletePagination} ">
                                 <ul class="pagination " id="incompletePaginationUl ">
                                     <li [ngClass]="(firstbutton==true)? 'disabled': '' ">
                                         <span id="btn_first_in " (click)="firstCall() " style="cursor: pointer ">First</span>
