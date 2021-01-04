@@ -1,5 +1,4 @@
-import { HttpResponse } from '@angular/common/http';
-import { ThrowStmt } from '@angular/compiler';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -13,6 +12,7 @@ declare var $: any;
   styleUrls: ['./bulkrequest.component.css']
 })
 export class BulkrequestComponent implements OnInit {
+  statusRes : string;
   statusInputs: boolean;
   institutions: any = [];
   uploadFile: File = null;
@@ -42,7 +42,7 @@ export class BulkrequestComponent implements OnInit {
   requestNotesId: string;
   notesLengthErrMsg = false;
 
-  createResponse: string;
+  createResponse: TreeNode[];
   createRequestError: boolean;
   errorMessage: string;
   createsubmit = false;
@@ -280,6 +280,7 @@ export class BulkrequestComponent implements OnInit {
   }
 
   createBulkRequest() {
+    
     if (this.validateInputs()) {
       this.BulkRequestNameErrorMessage = false;
       this.requestingInstitutionErrorMessage = false;
@@ -289,32 +290,20 @@ export class BulkrequestComponent implements OnInit {
       this.EmailMandatoryErrorMessage = false;
       this.spinner.show();
       this.bulkrequestService.createBulkRequest(this.deliveryLocation, this.requestingInstitutionId, this.patronBarcodeId, this.BulkRequestName, this.choosenFile, this.patronEmailId, this.uploadFile).subscribe(
-        (res:HttpResponse<string>) => {
+        (res) => {
           this.spinner.hide();
-          console.log(res);
-          this.createResponse = res.body;
-          if (this.createResponse != 'OK') {
-            this.errorMessage =this.createResponse;
+          this.createResponse = res;
+          this.statusRes= this.createResponse['status'];
+          if (this.statusRes != "CREATED") {
+            this.errorMessage = this.statusRes;
             this.createRequestError = true;
           } else {
             this.createsubmit = true;
             this.createRequestError = false;
           }
         },
-        (error:HttpResponse<string>) => {
+        (error) => {
           this.spinner.hide();
-          if(error.status==200){
-          if (error.statusText != 'OK') {
-            this.errorMessage =error.statusText;
-            this.createRequestError = true;
-          } else {
-            this.createsubmit = true;
-            this.createRequestError = false;
-          }
-        }else{
-          this.errorMessage ="Exception Occured";
-            this.createRequestError = true;
-        }
         });
     }
   }
@@ -762,8 +751,8 @@ export class BulkrequestComponent implements OnInit {
       (error) => {
       });
   }
-  toggleBulkRequestIdSearch(){
-    if(isNaN(this.bulkRequestIdSearch)){
+  toggleBulkRequestIdSearch() {
+    if (isNaN(this.bulkRequestIdSearch)) {
       this.bulkRequestIdSearchError = true;
     } else {
       this.bulkRequestIdSearchError = false;

@@ -1,6 +1,4 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { STRING_TYPE } from "@angular/compiler";
-import { stringify } from "@angular/compiler/src/util";
 import { Inject, Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
@@ -41,7 +39,7 @@ export class BulkRequestService {
       params: parames, headers: headers,
       withCredentials: true
     };
-    return this.httpClient.post<String>(this.baseUrl + this.prefix + "/createBulkRequest", formdata,
+    return this.httpClient.post<any>(this.baseUrl + this.prefix + "/createBulkRequest", formdata,
       options);
   }
   populateDeliveryLocations(postData: BulkRequestForm): Observable<TreeNode[]> {
