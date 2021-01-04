@@ -1,4 +1,3 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -12,7 +11,7 @@ declare var $: any;
   styleUrls: ['./bulkrequest.component.css']
 })
 export class BulkrequestComponent implements OnInit {
-  statusRes : string;
+  statusRes: string;
   statusInputs: boolean;
   institutions: any = [];
   uploadFile: File = null;
@@ -183,6 +182,7 @@ export class BulkrequestComponent implements OnInit {
     this.bulkPatronBarcodeSearch = '';
     this.institutionList = '';
     this.errorResponse = false;
+    this.createRequestError = false;
   }
 
   loadCreateRequestForSamePatron() {
@@ -280,7 +280,7 @@ export class BulkrequestComponent implements OnInit {
   }
 
   createBulkRequest() {
-    
+
     if (this.validateInputs()) {
       this.BulkRequestNameErrorMessage = false;
       this.requestingInstitutionErrorMessage = false;
@@ -293,7 +293,7 @@ export class BulkrequestComponent implements OnInit {
         (res) => {
           this.spinner.hide();
           this.createResponse = res;
-          this.statusRes= this.createResponse['status'];
+          this.statusRes = this.createResponse['status'];
           if (this.statusRes != "CREATED") {
             this.errorMessage = this.statusRes;
             this.createRequestError = true;
