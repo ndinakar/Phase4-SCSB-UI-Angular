@@ -679,7 +679,7 @@ export class ReportsComponent implements OnInit {
     this.pageSize = value;
     this.reportsService.incompleteReportPageSizeChange(this.setPostData('pageSize', 'deaccession')).subscribe(
       (res) => {
-        this.reportstVal = res;
+        this.deaccessionRes = res;
         this.pagination('deaccession');
       },
       (error) => {
