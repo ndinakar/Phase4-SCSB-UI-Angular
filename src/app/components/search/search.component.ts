@@ -112,9 +112,10 @@ export class SearchComponent implements OnInit {
     { id: 'ISSN', name: "ISSN" },
     { id: 'OCLCNumber', name: "OCLC Number" },
     { id: 'Notes', name: "Notes" },
-    { id: 'CustomerCode', name: "Customer_Code" },
+    { id: 'CustomerCode', name: "Customer Code" },
     { id: 'CallNumber_search', name: "Call Number" },
-    { id: 'Barcode', name: "Barcode" }
+    { id: 'Barcode', name: "Barcode" },
+    { id: 'ImsLocation', name: "IMS Location Code" }
   ];
 
   @ViewChild('dt') dt: Table;
@@ -510,12 +511,12 @@ export class SearchComponent implements OnInit {
     } else if (actionName == 'firstCall') {
       this.pageNumber = 0;
     } else if (actionName == 'lastCall') {
-      this.pageNumber = this.searchVal['totalPageCount']-1;
+      this.pageNumber = this.searchVal['totalPageCount'] - 1;
       this.totalPageCount = this.searchVal['totalPageCount'];
     } else if (actionName == 'previousCall') {
-      this.pageNumber = this.searchVal['pageNumber']-1;
+      this.pageNumber = this.searchVal['pageNumber'] - 1;
     } else if (actionName == 'nextCall') {
-      this.pageNumber = this.searchVal['pageNumber']+1;
+      this.pageNumber = this.searchVal['pageNumber'] + 1;
     } else if (actionName == 'pageSize') {
       this.pageNumber = this.searchVal['pageNumber'];
     }

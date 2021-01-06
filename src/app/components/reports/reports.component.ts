@@ -1,3 +1,4 @@
+import { CompileShallowModuleMetadata } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
@@ -223,7 +224,6 @@ export class ReportsComponent implements OnInit {
     }
     this.dateFrom = this.toDate(this.RequestDateRangefrom);
     this.dateTo = this.toDate(this.RequestDateRangeto);
-
     if (this.compareDate(this.dateFrom, this.dateTo)) {
       this.statusRequest = true;
       this.requestFromToError = true;
@@ -368,7 +368,7 @@ export class ReportsComponent implements OnInit {
   }
   toDate(param: string) {
     var date = new Date(param);
-    var month = date.getMonth();
+    var month = date.getMonth()+1;
     var day = date.getDate();
     var year = date.getFullYear();
     var newDate = month + "/" + day + "/" + year;
@@ -376,7 +376,7 @@ export class ReportsComponent implements OnInit {
   }
   convertDate(date) {
     var a = new Date(date);
-    var msDateA = Date.UTC(a.getFullYear(), a.getMonth() + 1, a.getDate());
+    var msDateA = Date.UTC(a.getFullYear(), a.getMonth()+1, a.getDate());
     return msDateA;
   }
   compareDate(fromD, toD) {

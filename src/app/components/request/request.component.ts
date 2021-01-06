@@ -165,6 +165,7 @@ export class RequestComponent implements OnInit {
     "searchInstitutionHdn": null
   }
   initialload() {
+    this.requestTypes = [];
     this.institutions = [];
     this.createRequestError = false;
     this.create_request = true;
