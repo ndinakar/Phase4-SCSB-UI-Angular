@@ -307,7 +307,13 @@
                                     </div>
                                     <!--Report Table Section-->
                                     <div *ngIf="accessionPageResponse" class="row margin-top-20 " id="showAccessionDeaccessionTable " data-th-if="${reportsForm.showAccessionDeaccessionTable} ">
-                                        <div class="col-xs-12 ">
+
+                                        <div *ngIf="accessionErrorMessageDiv" id="accessionErrorMessageId" class="row margin-btm-10 ">
+                                            <div class="col-sm-12 " style="padding-left:45px;padding-right:45px;margin-top:10px; ">
+                                                <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="accessionErrorMessageSpanId">Internal Server error</span></div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="accessionPageResponseResultsDiv" class="col-xs-12 ">
                                             <h4>Report Results</h4>
                                             <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
                                             <div id="Accession_Deaccession-tableview ">
