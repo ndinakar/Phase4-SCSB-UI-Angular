@@ -77,7 +77,7 @@ export class ReportsForm {
 
     reportRequestType: string[];
     owningInstitutions: string[];
-    collectionGroupDesignations: string[];
+    //collectionGroupDesignations: string[];
     deaccessionItemResultsRows: DeaccessionItemResultsRow[];
 
     showDeaccessionInformationTable: boolean;

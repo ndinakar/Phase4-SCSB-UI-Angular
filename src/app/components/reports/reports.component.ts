@@ -169,7 +169,7 @@ export class ReportsComponent implements OnInit {
 
     "reportRequestType": [],
     "owningInstitutions": [],
-    "collectionGroupDesignations": [],
+    //"collectionGroupDesignations": [],
     "deaccessionItemResultsRows": [],
 
     "showDeaccessionInformationTable": false,
@@ -310,7 +310,7 @@ export class ReportsComponent implements OnInit {
 
         "reportRequestType": [],
         "owningInstitutions": [],
-        "collectionGroupDesignations": [],
+        //"collectionGroupDesignations": [],
         "deaccessionItemResultsRows": [],
 
         "showDeaccessionInformationTable": false,
@@ -486,7 +486,7 @@ export class ReportsComponent implements OnInit {
 
         "reportRequestType": [],
         "owningInstitutions": [],
-        "collectionGroupDesignations": [],
+        //"collectionGroupDesignations": [],
         "deaccessionItemResultsRows": [],
 
         "showDeaccessionInformationTable": false,
@@ -992,7 +992,7 @@ export class ReportsComponent implements OnInit {
 
       "reportRequestType": [],
       "owningInstitutions": [],
-      "collectionGroupDesignations": [],
+      //"collectionGroupDesignations": [],
       "deaccessionItemResultsRows": [],
 
       "showDeaccessionInformationTable": false,
