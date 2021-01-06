@@ -17,9 +17,12 @@ export class ReportsComponent implements OnInit {
     this.spinner.hide();
     this.ReportShowBy = 'Partners';
   }
+  cgdErrorMessageId : string;
   accessionErrorMessageId : string;
   accessionErrorMessageDiv = false;
   accessionPageResponseResultsDiv = false;
+  cgdErrorMessageDiv = false;
+  cgdPageResultsDiv = false;
   cgdSum: any = [];
   subtotalPhysicalCUL: number;
   subtotalPhysicalPUL: number;
@@ -632,12 +635,24 @@ export class ReportsComponent implements OnInit {
     this.resetFields();
     this.reportsService.collectionGroupDesignation().subscribe(
       (res) => {
+        this.spinner.hide();
+        this.reportstVal = res;
+        if(this.reportstVal){
+          this.requestPage = false;
+          this.accesionPage = false;
+          this.cgdPage = true;
+          this.cgdErrorMessageDiv = true;
+          this.cgdPageResultsDiv = false;
+          this.incompletePage = false;
+        }else{
         this.requestPage = false;
         this.accesionPage = false;
         this.cgdPage = true;
+        this.cgdPageResultsDiv = true;
+        this.cgdErrorMessageDiv = false;
         this.incompletePage = false;
-        this.reportstVal = res;
-        this.spinner.hide();
+         
+        }
       },
       (error) => {
         this.spinner.hide();
