@@ -384,8 +384,8 @@
                                                                 Subtotal</td>
                                                             <td id="deacessionCount " *ngFor="let subToatlDeaccCount of subtotalEDDDeaccession">
                                                                 <a name="deacessionCount" href="# " class="Deaccession-tableshow " (click)="deaccession(subToatlDeaccCount.institution)">
-                                                                    <button id="btn_{{subToatlDeaccCount.institution}}" *ngIf="subToatlDeaccCount.count ==0 ">{{subToatlDeaccCount.count}}</button></a>
-                                                                <span *ngIf="subToatlDeaccCount.count!=0 ">{{subToatlDeaccCount.count}}</span>
+                                                                    <button id="btn_{{subToatlDeaccCount.institution}}" *ngIf="subToatlDeaccCount.count !=0 ">{{subToatlDeaccCount.count}}</button></a>
+                                                                <span *ngIf="subToatlDeaccCount.count==0 ">{{subToatlDeaccCount.count}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
