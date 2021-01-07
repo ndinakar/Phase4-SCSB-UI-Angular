@@ -383,9 +383,9 @@
                                                             <td class="fontcolor-dark large-font text-right results ">
                                                                 Subtotal</td>
                                                             <td id="deacessionCount " *ngFor="let subToatlDeaccCount of subtotalEDDDeaccession">
-                                                                <a naem="deacessionPulCount " href="# " class="Deaccession-tableshow " (click)="deaccessionPul() ">
-                                                                    <button id="btn_{{subToatlDeaccCount.institution}}" *ngIf="subToatlDeaccCount !=0 ">{{subToatlDeaccCount}}</button></a>
-                                                                <span *ngIf="subToatlDeaccCount==0 ">{{subToatlDeaccCount}}</span>
+                                                                <a name="deacessionCount" href="# " class="Deaccession-tableshow " (click)="deaccession(subToatlDeaccCount.institution)">
+                                                                    <button id="btn_{{subToatlDeaccCount.institution}}" *ngIf="subToatlDeaccCount.count ==0 ">{{subToatlDeaccCount.count}}</button></a>
+                                                                <span *ngIf="subToatlDeaccCount.count!=0 ">{{subToatlDeaccCount.count}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -497,7 +497,7 @@
                         <div id="deaccessionInformation ">
                             <label class="pull-right h4 " style="margin-top: -10px; ">Deaccessioned Item Results
                                 Found:<span>{{deaccessionRes['totalRecordsCount']}}</span></label>
-                            <div class="table-wrapper ">
+                            <div>
                                 <table class="table table-striped text-center margin-btm-0" id="deaccessionResultsTable">
                                     <thead class="tablesorter-headerRow ">
                                         <tr>

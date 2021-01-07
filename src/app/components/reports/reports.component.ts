@@ -1,4 +1,3 @@
-import { CompileShallowModuleMetadata } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
@@ -17,8 +16,8 @@ export class ReportsComponent implements OnInit {
     this.spinner.hide();
     this.ReportShowBy = 'Partners';
   }
-  cgdErrorMessageId : string;
-  accessionErrorMessageId : string;
+  cgdErrorMessageId: string;
+  accessionErrorMessageId: string;
   accessionErrorMessageDiv = false;
   accessionPageResponseResultsDiv = false;
   cgdErrorMessageDiv = false;
@@ -529,7 +528,7 @@ export class ReportsComponent implements OnInit {
         (res) => {
           this.spinner.hide();
           this.reportstVal = res;
-          if (this.reportstVal['errorMessage']!= null) {
+          if (this.reportstVal['errorMessage'] != null) {
             this.requestResultsPage = false;
             this.accessionPageResponse = true;
             this.incompleteResultsPage = false;
@@ -551,9 +550,13 @@ export class ReportsComponent implements OnInit {
             this.Deaccessiontableshow = false;
             this.isChecked = true;
             var totalCountDeacc = 0;
+
             for (var i = 0; i < this.reportstVal['reportsInstitutionFormList'].length; i++) {
+              var institutionAccession = this.reportstVal['reportsInstitutionFormList'][i].institution;
               totalCountDeacc = this.reportstVal['reportsInstitutionFormList'][i].deaccessionPrivateCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionSharedCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionOpenCount;
-              this.subtotalEDDDeaccession.push(totalCountDeacc);
+              var myMap = { institution: institutionAccession, count: totalCountDeacc };
+              this.subtotalEDDDeaccession.push(myMap);
+              console.log(this.subtotalEDDDeaccession);
             }
           }
         },
@@ -639,21 +642,21 @@ export class ReportsComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.reportstVal = res;
-        if(this.reportstVal['errorMessage']!=null){
+        if (this.reportstVal['errorMessage'] != null) {
           this.requestPage = false;
           this.accesionPage = false;
           this.cgdPage = true;
           this.cgdErrorMessageDiv = true;
           this.cgdPageResultsDiv = false;
           this.incompletePage = false;
-        }else{
-        this.requestPage = false;
-        this.accesionPage = false;
-        this.cgdPage = true;
-        this.cgdPageResultsDiv = true;
-        this.cgdErrorMessageDiv = false;
-        this.incompletePage = false;
-         
+        } else {
+          this.requestPage = false;
+          this.accesionPage = false;
+          this.cgdPage = true;
+          this.cgdPageResultsDiv = true;
+          this.cgdErrorMessageDiv = false;
+          this.incompletePage = false;
+
         }
       },
       (error) => {
@@ -891,16 +894,8 @@ export class ReportsComponent implements OnInit {
       }
     }
   }
-  deaccessionPul() {
-    this.deaccessionOwnInst = 'PUL';
-    this.deaccessionInformation();
-  }
-  deaccessionCul() {
-    this.deaccessionOwnInst = 'CUL';
-    this.deaccessionInformation();
-  }
-  deaccessionNypl() {
-    this.deaccessionOwnInst = 'NYPL';
+  deaccession(inst) {
+    this.deaccessionOwnInst = inst;
     this.deaccessionInformation();
   }
   resetFields() {
