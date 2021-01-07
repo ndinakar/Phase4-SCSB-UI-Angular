@@ -310,7 +310,7 @@
 
                                         <div *ngIf="accessionErrorMessageDiv" id="accessionErrorMessageId" class="row margin-btm-10 ">
                                             <div class="col-sm-12 " style="padding-left:45px;padding-right:45px;margin-top:10px; ">
-                                                <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="accessionErrorMessageSpanId">Internal Server error</span></div>
+                                                <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="accessionErrorMessageSpanId">{{reportstVal['errorMessage']}}</span></div>
                                             </div>
                                         </div>
                                         <div *ngIf="accessionPageResponseResultsDiv" class="col-xs-12 ">
@@ -397,16 +397,17 @@
                                 <!-- Accession/Deaccession Option View End-->
                                 <!-- Collection Group Designation Option View-->
                                 <div *ngIf="cgdPage " id="ReportCollectionGroupDesignationclickview " class=" ">
-                                    <div *ngIf="cgdErrorMessageDiv" id="cgdErrorMessageId" class="row margin-btm-10 ">
-                                        <div class="col-sm-12 " style="padding-left:45px;padding-right:45px;margin-top:10px; ">
-                                            <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="cgdErrorMessageSpanId">Internal Server error</span></div>
-                                        </div>
-                                    </div>
+
                                     <div class="search-bar " style="margin-top: -20px; ">
                                         <div class="buscador-principal ">
                                             <div>
                                                 <strong>Note:</strong> Count of items by Collection Group Designation per institution as of today.
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="cgdErrorMessageDiv" id="cgdErrorMessageId" class="row margin-btm-10" style="margin-top: 15px;">
+                                        <div class="col-sm-12 " style="padding-left:45px;padding-right:45px;margin-top:10px; ">
+                                            <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="cgdErrorMessageSpanId">{{reportstVal['errorMessage']}}</span></div>
                                         </div>
                                     </div>
                                     <!--CollectionGroupDesignation Report Table Section-->
@@ -679,7 +680,7 @@
                                 </ul>
                             </div>
                             <!--IncompletePagination Ends-->
-                            <div style="padding-right:35px; ">
+                            <div *ngIf="exportRecorsButtonDiv" style="padding-right:35px; ">
                                 <button id="export " class="btn btn-md btn-danger pull-right " style="margin-top: 10px " (click)="exportRecords() ">Export Records
                                 </button>
                             </div>

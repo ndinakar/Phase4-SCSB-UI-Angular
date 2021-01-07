@@ -23,6 +23,7 @@ export class ReportsComponent implements OnInit {
   accessionPageResponseResultsDiv = false;
   cgdErrorMessageDiv = false;
   cgdPageResultsDiv = false;
+  exportRecorsButtonDiv = false;
   cgdSum: any = [];
   subtotalPhysicalCUL: number;
   subtotalPhysicalPUL: number;
@@ -528,8 +529,7 @@ export class ReportsComponent implements OnInit {
         (res) => {
           this.spinner.hide();
           this.reportstVal = res;
-          console.log(this.reportstVal['reportsInstitutionFormList'].length);
-          if (this.reportstVal['reportsInstitutionFormList'].length == 0) {
+          if (this.reportstVal['errorMessage']!= null) {
             this.requestResultsPage = false;
             this.accessionPageResponse = true;
             this.incompleteResultsPage = false;
@@ -588,10 +588,12 @@ export class ReportsComponent implements OnInit {
             this.errorMessageId = true;
             this.incompleteResultsDiv = false;
             this.incompletetotalPaginationDiv = false;
+            this.exportRecorsButtonDiv = false;
           } else {
             this.errorMessageId = false;
             this.incompleteResultsDiv = true;
             this.incompletetotalPaginationDiv = true;
+            this.exportRecorsButtonDiv = true;
           }
           this.pagination('incomplete');
           this.spinner.hide();
@@ -637,7 +639,7 @@ export class ReportsComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.reportstVal = res;
-        if(this.reportstVal){
+        if(this.reportstVal['errorMessage']!=null){
           this.requestPage = false;
           this.accesionPage = false;
           this.cgdPage = true;
