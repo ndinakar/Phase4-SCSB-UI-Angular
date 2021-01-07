@@ -151,6 +151,10 @@ export class UserRolesComponent implements OnInit {
   }
   enableCreateUser() {
     this.userRoles();
+    this.institutionId = null;
+    this.editinstitutionId = null;
+    this.editsuccessMsgDiv = false;
+    this.createSuccussMessageDiv = false;
     //this.UserPanel = false;
     //this.searchBarDiv =false;
     this.createUserDiv = true;
