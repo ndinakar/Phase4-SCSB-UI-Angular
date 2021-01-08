@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div *ngIf="searchResultContainerDiv" class="search-results-container" style="margin-top: 0px;">
-                            <div *ngIf="errorMessageDiv" class="row margin-btm-10">
+                            <div *ngIf="errorMessageDiv" id="errorMessageResults" class="row margin-btm-10">
                                 <div class="col-sm-12">
                                     <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:text="*{message}"></span></div>
                                 </div>
@@ -282,12 +282,12 @@
                                         class="glyphicon glyphicon-menu-left"></span> Go Back</a>
                             </div>
                         </div>
-                        <div *ngIf="editsuccessMsgDiv" class="row margin-btm-10" id="editsuccessMsg">
+                        <div *ngIf="editsuccessMsgDiv" id="editSuccessMsgId" class="row margin-btm-10" id="editsuccessMsg">
                             <div class="col-sm-12 text-left">
                                 <div class="alert alert-success" role="alert"><span class="margin-right-05 glyphicon glyphicon-ok-sign"></span><span>{{userRoleFormVal['message']}}</span></div>
                             </div>
                         </div>
-                        <div *ngIf="editerrormsgDiv" class="row margin-btm-10" id="editerrormsg" data-th-if="${userRoleForm.showEditError}">
+                        <div *ngIf="editerrormsgDiv" id="editerrormsgeId" class="row margin-btm-10" id="editerrormsg" data-th-if="${userRoleForm.showEditError}">
                             <div class="col-sm-12 text-left">
                                 <div class="alert alert-danger" role="alert"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['errorMessage']}}</span></div>
                             </div>

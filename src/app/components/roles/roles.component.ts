@@ -176,6 +176,12 @@ export class RolesComponent implements OnInit {
   }
   editRole(roleId, roleName, roleDescription, permissionNames) {
     this.populatePermissionNames();
+    this.errorMessageRoleCreateionDiv = false;
+    this.successMessageDeleteRoleDiv = false;
+    this.successMessageRoleCreateionDiv = false;
+    this.errorMessageDeleteRoleDiv = false;
+    this.successMessageEditRoleDiv = false;
+    this.errorMessageEditRoleDiv = false;
     this.showResults = false;
     this.rolesPanel = false;
     this.rolesSearchResultsDiv = false;

@@ -16,6 +16,13 @@ export class ReportsComponent implements OnInit {
     this.spinner.hide();
     this.ReportShowBy = 'Partners';
   }
+  cgdErrorMessageId: string;
+  accessionErrorMessageId: string;
+  accessionErrorMessageDiv = false;
+  accessionPageResponseResultsDiv = false;
+  cgdErrorMessageDiv = false;
+  cgdPageResultsDiv = false;
+  exportRecorsButtonDiv = false;
   cgdSum: any = [];
   subtotalPhysicalCUL: number;
   subtotalPhysicalPUL: number;
@@ -168,7 +175,7 @@ export class ReportsComponent implements OnInit {
 
     "reportRequestType": [],
     "owningInstitutions": [],
-    "collectionGroupDesignations": [],
+    //"collectionGroupDesignations": [],
     "deaccessionItemResultsRows": [],
 
     "showDeaccessionInformationTable": false,
@@ -223,7 +230,6 @@ export class ReportsComponent implements OnInit {
     }
     this.dateFrom = this.toDate(this.RequestDateRangefrom);
     this.dateTo = this.toDate(this.RequestDateRangeto);
-
     if (this.compareDate(this.dateFrom, this.dateTo)) {
       this.statusRequest = true;
       this.requestFromToError = true;
@@ -310,7 +316,7 @@ export class ReportsComponent implements OnInit {
 
         "reportRequestType": [],
         "owningInstitutions": [],
-        "collectionGroupDesignations": [],
+        //"collectionGroupDesignations": [],
         "deaccessionItemResultsRows": [],
 
         "showDeaccessionInformationTable": false,
@@ -368,7 +374,7 @@ export class ReportsComponent implements OnInit {
   }
   toDate(param: string) {
     var date = new Date(param);
-    var month = date.getMonth();
+    var month = date.getMonth() + 1;
     var day = date.getDate();
     var year = date.getFullYear();
     var newDate = month + "/" + day + "/" + year;
@@ -486,7 +492,7 @@ export class ReportsComponent implements OnInit {
 
         "reportRequestType": [],
         "owningInstitutions": [],
-        "collectionGroupDesignations": [],
+        //"collectionGroupDesignations": [],
         "deaccessionItemResultsRows": [],
 
         "showDeaccessionInformationTable": false,
@@ -520,20 +526,39 @@ export class ReportsComponent implements OnInit {
       }
       this.reportsService.submit(this.postData).subscribe(
         (res) => {
-          this.reportstVal = res;
-          this.requestResultsPage = false;
-          this.accessionPageResponse = true;
-          this.incompleteResultsPage = false;
-          this.accesionPage = true;
-          this.reportType_panel = true;
-          this.Deaccessiontableshow = false;
-          this.isChecked = true;
-          var totalCountDeacc = 0;
-          for (var i = 0; i < this.reportstVal['reportsInstitutionFormList'].length; i++) {
-            totalCountDeacc = this.reportstVal['reportsInstitutionFormList'][i].deaccessionPrivateCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionSharedCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionOpenCount;
-            this.subtotalEDDDeaccession.push(totalCountDeacc);
-          }
           this.spinner.hide();
+          this.reportstVal = res;
+          if (this.reportstVal['errorMessage'] != null) {
+            this.requestResultsPage = false;
+            this.accessionPageResponse = true;
+            this.incompleteResultsPage = false;
+            this.accessionErrorMessageDiv = true;
+            this.accessionPageResponseResultsDiv = false;
+            this.accesionPage = true;
+            this.reportType_panel = true;
+            this.Deaccessiontableshow = false;
+            this.isChecked = true;
+            var totalCountDeacc = 0;
+          } else {
+            this.requestResultsPage = false;
+            this.accessionPageResponse = true;
+            this.accessionErrorMessageDiv = false;
+            this.accessionPageResponseResultsDiv = true;
+            this.incompleteResultsPage = false;
+            this.accesionPage = true;
+            this.reportType_panel = true;
+            this.Deaccessiontableshow = false;
+            this.isChecked = true;
+            var totalCountDeacc = 0;
+
+            for (var i = 0; i < this.reportstVal['reportsInstitutionFormList'].length; i++) {
+              var institutionAccession = this.reportstVal['reportsInstitutionFormList'][i].institution;
+              totalCountDeacc = this.reportstVal['reportsInstitutionFormList'][i].deaccessionPrivateCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionSharedCount + this.reportstVal['reportsInstitutionFormList'][i].deaccessionOpenCount;
+              var myMap = { institution: institutionAccession, count: totalCountDeacc };
+              this.subtotalEDDDeaccession.push(myMap);
+              console.log(this.subtotalEDDDeaccession);
+            }
+          }
         },
         (error) => {
           this.spinner.hide();
@@ -566,10 +591,12 @@ export class ReportsComponent implements OnInit {
             this.errorMessageId = true;
             this.incompleteResultsDiv = false;
             this.incompletetotalPaginationDiv = false;
+            this.exportRecorsButtonDiv = false;
           } else {
             this.errorMessageId = false;
             this.incompleteResultsDiv = true;
             this.incompletetotalPaginationDiv = true;
+            this.exportRecorsButtonDiv = true;
           }
           this.pagination('incomplete');
           this.spinner.hide();
@@ -613,12 +640,24 @@ export class ReportsComponent implements OnInit {
     this.resetFields();
     this.reportsService.collectionGroupDesignation().subscribe(
       (res) => {
-        this.requestPage = false;
-        this.accesionPage = false;
-        this.cgdPage = true;
-        this.incompletePage = false;
-        this.reportstVal = res;
         this.spinner.hide();
+        this.reportstVal = res;
+        if (this.reportstVal['errorMessage'] != null) {
+          this.requestPage = false;
+          this.accesionPage = false;
+          this.cgdPage = true;
+          this.cgdErrorMessageDiv = true;
+          this.cgdPageResultsDiv = false;
+          this.incompletePage = false;
+        } else {
+          this.requestPage = false;
+          this.accesionPage = false;
+          this.cgdPage = true;
+          this.cgdPageResultsDiv = true;
+          this.cgdErrorMessageDiv = false;
+          this.incompletePage = false;
+
+        }
       },
       (error) => {
         this.spinner.hide();
@@ -645,7 +684,7 @@ export class ReportsComponent implements OnInit {
     this.pageSize = value;
     this.reportsService.incompleteReportPageSizeChange(this.setPostData('pageSize', 'deaccession')).subscribe(
       (res) => {
-        this.reportstVal = res;
+        this.deaccessionRes = res;
         this.pagination('deaccession');
       },
       (error) => {
@@ -826,28 +865,28 @@ export class ReportsComponent implements OnInit {
         this.lastbutton = true;
       }
     } else {
-      if (this.reportstVal['pageNumber'] == 0 && (this.reportstVal['totalPageCount'] - 1 > 0)) {
+      if (this.deaccessionRes['pageNumber'] == 0 && (this.deaccessionRes['totalPageCount'] - 1 > 0)) {
         this.firstbutton = true;
         this.previousbutton = true;
         this.nextbutton = false;
         this.lastbutton = false;
-      } else if (this.reportstVal['pageNumber'] == 0 && (this.reportstVal['pageNumber'] == this.reportstVal['totalPageCount'] - 1)) {
+      } else if (this.deaccessionRes['pageNumber'] == 0 && (this.deaccessionRes['pageNumber'] == this.deaccessionRes['totalPageCount'] - 1)) {
         this.firstbutton = true;
         this.previousbutton = true;
         this.nextbutton = true;
         this.lastbutton = true;
       }
-      else if ((this.reportstVal['pageNumber'] == this.reportstVal['totalPageCount'] - 1) && this.reportstVal['totalPageCount'] - 1 > 0) {
+      else if ((this.deaccessionRes['pageNumber'] == this.deaccessionRes['totalPageCount'] - 1) && this.deaccessionRes['totalPageCount'] - 1 > 0) {
         this.firstbutton = false;
         this.previousbutton = false;
         this.nextbutton = true;
         this.lastbutton = true;
-      } else if ((this.reportstVal['pageNumber'] < this.reportstVal['totalPageCount'] - 1) && (this.reportstVal['pageNumber'] != 0)) {
+      } else if ((this.deaccessionRes['pageNumber'] < this.deaccessionRes['totalPageCount'] - 1) && (this.deaccessionRes['pageNumber'] != 0)) {
         this.firstbutton = false;
         this.previousbutton = false;
         this.nextbutton = false;
         this.lastbutton = false;
-      } else if (this.reportstVal['pageNumber'] == 0 && this.reportstVal['totalPageCount'] == 0) {
+      } else if (this.deaccessionRes['pageNumber'] == 0 && this.deaccessionRes['totalPageCount'] == 0) {
         this.firstbutton = true;
         this.previousbutton = true;
         this.nextbutton = true;
@@ -855,16 +894,8 @@ export class ReportsComponent implements OnInit {
       }
     }
   }
-  deaccessionPul() {
-    this.deaccessionOwnInst = 'PUL';
-    this.deaccessionInformation();
-  }
-  deaccessionCul() {
-    this.deaccessionOwnInst = 'CUL';
-    this.deaccessionInformation();
-  }
-  deaccessionNypl() {
-    this.deaccessionOwnInst = 'NYPL';
+  deaccession(inst) {
+    this.deaccessionOwnInst = inst;
     this.deaccessionInformation();
   }
   resetFields() {
@@ -992,7 +1023,7 @@ export class ReportsComponent implements OnInit {
 
       "reportRequestType": [],
       "owningInstitutions": [],
-      "collectionGroupDesignations": [],
+      //"collectionGroupDesignations": [],
       "deaccessionItemResultsRows": [],
 
       "showDeaccessionInformationTable": false,
@@ -1001,7 +1032,7 @@ export class ReportsComponent implements OnInit {
       "pageNumber": this.pageNumber,
       "pageSize": this.pageSize,
       "totalPageCount": this.totalPageCount,
-      "deaccessionOwnInst": null,
+      "deaccessionOwnInst": this.deaccessionOwnInst,
       "incompleteRequestingInstitution": this.incompleteShowBy,
       "incompletePageNumber": this.incompletePageNumber,
       "incompletePageSize": this.incompletePageSize,

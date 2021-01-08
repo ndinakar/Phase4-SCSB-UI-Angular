@@ -172,12 +172,12 @@
                                 <div class="col-sm-6 text-right backtext"><a id="createGoBackLink" (click)="goBack($event)" style="cursor: pointer !important;"><span
                             class="glyphicon glyphicon-menu-left" ></span> Go Back</a></div>
                             </div>
-                            <div *ngIf="successMessageRoleCreateionDiv" class="row margin-btm-10">
+                            <div *ngIf="successMessageRoleCreateionDiv" id="successMessageRoleCreateion" class="row margin-btm-10">
                                 <div class="col-sm-12 text-left">
                                     <div class="alert alert-success" role="alert" id="success-alert"><span class="margin-right-05 glyphicon glyphicon-ok-sign"></span><span>{{rolesVal['message']}}</span></div>
                                 </div>
                             </div>
-                            <div *ngIf="errorMessageRoleCreateionDiv" class="row margin-btm-10">
+                            <div *ngIf="errorMessageRoleCreateionDiv" id="errorMessageRoleCreateion" class="row margin-btm-10">
                                 <div class="col-sm-12">
                                     <div class="alert alert-danger"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{rolesVal['errorMessage']}}</span></div>
                                 </div>
@@ -248,12 +248,12 @@
                                 <div class="col-sm-6 text-right backtext"><a (click)="goBack($event)" id="editGoBackLink" style="cursor: pointer !important;"><span
                         class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
                             </div>
-                            <div *ngIf="successMessageEditRoleDiv" class="row margin-btm-10">
+                            <div *ngIf="successMessageEditRoleDiv" id="successMessageEditRole" class="row margin-btm-10">
                                 <div class="col-sm-12 text-left">
                                     <div class="alert alert-success" role="alert"><span class="margin-right-05 glyphicon glyphicon-ok-sign"></span><span>{{rolesVal['message']}}</span></div>
                                 </div>
                             </div>
-                            <div *ngIf="errorMessageEditRoleDiv" class="row margin-btm-10">
+                            <div *ngIf="errorMessageEditRoleDiv" id="errorMessageEditRole" class="row margin-btm-10">
                                 <div class="col-sm-12">
                                     <div class="alert alert-danger"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{rolesVal['errorMessage']}}</span></div>
                                 </div>
@@ -338,12 +338,12 @@
                             <input id="afterDelPageNumber" name="afterDelPageNumber" type="text" th:field="${rolesForm.afterDelPageNumber}" hidden="hidden" />
                             <input id="afterDelTotalPageCount" name="afterDelTotalPageCount" type="text" th:field="${rolesForm.afterDelTotalPageCount}" hidden="hidden" />
                             <input id="afterDelPageSize" name="afterDelPageSize" type="text" th:field="${rolesForm.afterDelPageSize}" hidden="hidden" />
-                            <div *ngIf="successMessageDeleteRoleDiv" class="row margin-btm-10">
+                            <div *ngIf="successMessageDeleteRoleDiv" id="successMessageDeleteRole" class="row margin-btm-10">
                                 <div class="col-sm-12 text-left">
                                     <div class="alert alert-success" role="alert"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{rolesVal['message']}}</span></div>
                                 </div>
                             </div>
-                            <div *ngIg="errorMessageDeleteRoleDiv" class="row margin-btm-10">
+                            <div *ngIg="errorMessageDeleteRoleDiv" id="errorMessageDeleteRole" class="row margin-btm-10">
                                 <div class="col-sm-12">
                                     <div class="alert alert-danger"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{rolesVal['errorMessage']}}</span></div>
                                 </div>
