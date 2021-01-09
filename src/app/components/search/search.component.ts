@@ -162,6 +162,9 @@ export class SearchComponent implements OnInit {
     this.validateInputs(searchfullrec);
     this.searchService.onPageSizeChange(this.setPostData(searchfullrec, 'pageSize')).subscribe((res) => {
       this.searchVal = res;
+      this.searchVal['searchResultRows'].forEach((items, i) => {
+        items.id = i + 1;
+      });
       this.spinner.hide();
       this.showresultdiv = true;
       this.mappingResults();
@@ -188,7 +191,7 @@ export class SearchComponent implements OnInit {
     this.searchService.getSearch(this.setPostData(searchfullrec, 'search')).subscribe(
       (res) => {
         this.spinner.hide();
-        this.searchVal = res
+        this.searchVal = res;
         if (this.searchVal['errorMessage'] != null) {
           this.showresultdiv = true;
           this.errorMessage_Div = true;
@@ -196,6 +199,9 @@ export class SearchComponent implements OnInit {
           this.paginationBtmDiv = false;
           this.searchVal['pageNumber'] = 0;
         } else {
+           this.searchVal['searchResultRows'].forEach((items, i) => {
+            items.id = i + 1;
+          });
           this.showresultdiv = true;
           this.errorMessage_Div = false;
           this.searchResultsDiv = true;
@@ -228,6 +234,9 @@ export class SearchComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.searchVal = res;
+        this.searchVal['searchResultRows'].forEach((items, i) => {
+          items.id = i + 1;
+        });
         this.pagination();
       });
     this.mappingResults();
@@ -250,6 +259,9 @@ export class SearchComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.searchVal = res
+        this.searchVal['searchResultRows'].forEach((items, i) => {
+          items.id = i + 1;
+        });
         this.pagination();
       });
     this.mappingResults();
@@ -271,6 +283,9 @@ export class SearchComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.searchVal = res;
+        this.searchVal['searchResultRows'].forEach((items, i) => {
+          items.id = i + 1;
+        });
         this.searchVal['pageNumber'] = 0;
         this.pagination();
       });
@@ -292,6 +307,9 @@ export class SearchComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.searchVal = res;
+        this.searchVal['searchResultRows'].forEach((items, i) => {
+          items.id = i + 1;
+        });
         this.pagination();
       },
       (error) => {
