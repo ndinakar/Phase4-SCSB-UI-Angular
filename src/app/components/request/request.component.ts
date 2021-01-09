@@ -536,10 +536,17 @@ export class RequestComponent implements OnInit {
           "disableSearchInstitution": false,
           "searchInstitutionHdn": null
         }
-
+        this.spinner.show();
         this.requestService.createRequest(this.postData).subscribe(
-          (res) => {
-            this.createsubmit = true;
+          (res) => {           
+            this.createResponse = res;
+            if (this.createResponse['errorMessage'] != null) {
+              this.errorMessage = this.createResponse['errorMessage'];
+              this.createRequestError = true;
+            } else {
+              this.createsubmit = true;
+              this.createRequestError = false;
+            }
             this.spinner.hide();
           },
           (error) => {
@@ -548,6 +555,7 @@ export class RequestComponent implements OnInit {
           })
       }
       //with edd end
+      this.spinner.hide();
     } else {
       //without edd strt
       this.spinner.hide();
