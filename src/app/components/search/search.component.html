@@ -67,7 +67,17 @@
                                             <div name="ownigInst" class="col-xs-6">
                                                 <h4>Owning Institution</h4>
                                                 <div class="row padding-left-15">
-                                                    <div>
+                                                    <div *ngFor="let inst of instVal">
+                                                        <label>
+                                                            <input type="checkbox" 
+                                                            (change)="onChange($event.target.checked, inst)"
+                                                            [checked]="checkedItem(inst)" 
+                                                                    class="facetCheckBox">
+                                                            <span class="cr"></span>
+                                                            &nbsp;{{inst}}
+                                                        </label>
+                                                    </div>
+                                                    <!-- <div>
                                                         <label>
                                                             <input type="checkbox" formControlName="owningInstitutionNYPL" [checked]="checked" id="owningInstitutionNYPL"
                                                                    name="owningInstitutionNYPL"  value="NYPL"
@@ -96,7 +106,7 @@
                                                             
                                                             &nbsp;Princeton
                                                         </label>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
