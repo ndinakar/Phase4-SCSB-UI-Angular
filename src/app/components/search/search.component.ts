@@ -7,6 +7,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
+import { ReportsService } from 'src/app/services/reports/reports.service';
 declare var $: any;
 
 @Component({
@@ -29,6 +30,10 @@ declare var $: any;
   ]
 })
 export class SearchComponent implements OnInit {
+  toggleCheck = true;
+  instList: any[];
+  owningInstitutionInst: any[];
+  instVal: string[];
   fieldValue: string;
   searchVal: TreeNode[];
   selectedNodes1: any[];
@@ -119,7 +124,7 @@ export class SearchComponent implements OnInit {
   ];
 
   @ViewChild('dt') dt: Table;
-  constructor(private activatedRoute: ActivatedRoute, private searchService: SearchService,
+  constructor(private reportsService: ReportsService, private activatedRoute: ActivatedRoute, private searchService: SearchService,
     private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
     private spinner: NgxSpinnerService) { }
 
@@ -148,7 +153,21 @@ export class SearchComponent implements OnInit {
       SupervisedUse: [true]
     });
   }
-
+  checkedItem(item) {
+    ``
+    if (this.owningInstitutionInst) {
+      if (this.owningInstitutionInst.indexOf(item) != -1) {
+        return true;
+      }
+    }
+  }
+  onChange(test, item) {
+    if (test) {
+      this.owningInstitutionInst.push(item);
+    } else {
+      this.owningInstitutionInst.splice(this.owningInstitutionInst.indexOf(item), 1);
+    }
+  }
   //show entries api start
   onPageSizeChange(value) {
     this.spinner.show();
@@ -199,7 +218,7 @@ export class SearchComponent implements OnInit {
           this.paginationBtmDiv = false;
           this.searchVal['pageNumber'] = 0;
         } else {
-           this.searchVal['searchResultRows'].forEach((items, i) => {
+          this.searchVal['searchResultRows'].forEach((items, i) => {
             items.id = i + 1;
           });
           this.showresultdiv = true;
@@ -334,13 +353,14 @@ export class SearchComponent implements OnInit {
   checkUncheckAll() {
     var searchallvalue = this.searchForm.value;
     if (this.checked === true) {
+      this.owningInstitutionInst = [];
       this.checked = false;
       this.searchForm = this.formBuilder.group({
         fieldValue: [searchallvalue.fieldValue],
         fieldName: [searchallvalue.fieldName],
-        owningInstitutionNYPL: [false],
-        owningInstitutionCUL: [false],
-        owningInstitutionPUL: [false],
+        // owningInstitutionNYPL: [false],
+        // owningInstitutionCUL: [false],
+        // owningInstitutionPUL: [false],
         Monograph: [false],
         Serial: [false],
         others: [false],
@@ -356,12 +376,16 @@ export class SearchComponent implements OnInit {
       });
     } else {
       this.checked = true;
+      this.reportsService.getInstitutions().subscribe(
+        (res) => {
+          this.owningInstitutionInst = res['incompleteShowByInst'];
+        });
       this.searchForm = this.formBuilder.group({
         fieldValue: [searchallvalue.fieldValue],
         fieldName: [searchallvalue.fieldName],
-        owningInstitutionNYPL: [true],
-        owningInstitutionCUL: [true],
-        owningInstitutionPUL: [true],
+        // owningInstitutionNYPL: [true],
+        // owningInstitutionCUL: [true],
+        // owningInstitutionPUL: [true],
         Monograph: [true],
         Serial: [true],
         others: [true],
@@ -423,19 +447,31 @@ export class SearchComponent implements OnInit {
 
   facetsshowhide() {
     $("#search-filter").slideToggle();
+    if (this.toggleCheck) {
+      this.toggleCheck = !this.toggleCheck;
+      this.reportsService.getInstitutions().subscribe(
+        (res) => {
+          this.instVal = res['incompleteShowByInst'];
+          this.reportsService.getInstitutions().subscribe(
+            (res) => {
+              this.owningInstitutionInst = res['incompleteShowByInst'];
+            });
+        }
+      );
+    }
   }
 
   validateInputs(searchfullrec) {
-    if (searchfullrec.owningInstitutionNYPL == true) {
-      this.owningInstitutions.push('NYPL')
-    }
-    if (searchfullrec.owningInstitutionCUL == true) {
-      this.owningInstitutions.push('CUL')
-    }
-    if (searchfullrec.owningInstitutionPUL == true) {
-      this.owningInstitutions.push('PUL')
-    }
-
+    this.owningInstitutions = this.owningInstitutionInst;
+    // if (searchfullrec.owningInstitutionNYPL == true) {
+    //   this.owningInstitutions.push('NYPL')
+    // }
+    // if (searchfullrec.owningInstitutionCUL == true) {
+    //   this.owningInstitutions.push('CUL')
+    // }
+    // if (searchfullrec.owningInstitutionPUL == true) {
+    //   this.owningInstitutions.push('PUL')
+    // }
     if (searchfullrec.shared == true) {
       this.collectionGroupDesignations.push('Shared')
     }
