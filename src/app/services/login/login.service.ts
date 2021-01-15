@@ -22,4 +22,12 @@ export class LoginService {
         headers: appHeaders.getHeaders()
       });
   }
+  loginCheck(): Observable<any> {
+    const httpOptions = {
+      headers: appHeaders.getHeaders(),
+      withCredentials: true,
+      observe: 'response' as 'response'
+    };
+    return this.httpClient.get<any>(this.baseUrl + "/api/loginCheck",httpOptions);
+  }
 }
