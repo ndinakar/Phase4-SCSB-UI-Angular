@@ -13,7 +13,13 @@ import { urls } from 'src/config/urls';
 export class CollectionService {
   baseUrl = urls.baseUrl;
   prefix = urls.collection;
-
+  httpOptions(){
+    const httpOptions = {
+      headers: appHeaders.getHeaders(),
+      withCredentials: true
+    };
+    return httpOptions;
+  }
   constructor(@Inject(HttpClient) private httpClient: HttpClient) { }
 
   displyRecords(postData: CollectionForm): Observable<TreeNode[]> {
@@ -23,10 +29,7 @@ export class CollectionService {
       });
   }
   openMarcView(postData: CollectionForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/openMarcView", postData,
-      {
-
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/openMarcView", postData,this.httpOptions());
   }
   updateCollection(postData: CollectionForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/collectionUpdate", postData,
