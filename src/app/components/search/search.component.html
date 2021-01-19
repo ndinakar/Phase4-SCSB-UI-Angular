@@ -11,50 +11,66 @@
                                 <div class="input-group buscador-principal">
                                     <input id="pageNumber" name="pageNumber" type="text" hidden="hidden" />
                                     <input id="totalPageCount" name="totalPageCount" type="text" hidden="hidden" />
-                                    <input id="totalBibRecordsCount" name="totalBibRecordsCount" type="text" hidden="hidden" />
-                                    <input id="totalItemRecordsCount" name="totalItemRecordsCount" type="text" hidden="hidden" />
-                                    <button id="pageSizeChangeButtonId" type="submit" name="action" value="pageSizeChange" hidden="hidden"></button>
+                                    <input id="totalBibRecordsCount" name="totalBibRecordsCount" type="text"
+                                        hidden="hidden" />
+                                    <input id="totalItemRecordsCount" name="totalItemRecordsCount" type="text"
+                                        hidden="hidden" />
+                                    <button id="pageSizeChangeButtonId" type="submit" name="action"
+                                        value="pageSizeChange" hidden="hidden"></button>
                                     <div>
                                         <div class="has-feedback ">
-                                            <input id="fieldValue" [(ngModel)]="fieldValue" (keyup)="clearFieldvalue()" formControlName="fieldValue" name="fieldValue" type="search" placeholder="Type Text Here....." class="form-control" />
-                                            <span id="clearSearchText" class="add-clear-x form-control-feedback glyphicon glyphicon-remove" style="color: rgb(12, 12, 12); cursor: pointer; text-decoration: none; overflow: hidden; position: absolute; pointer-events: auto; right: 0px; top: 4px; z-index: 100; display: block;"
+                                            <input id="fieldValue" [(ngModel)]="fieldValue" (keyup)="clearFieldvalue()"
+                                                formControlName="fieldValue" name="fieldValue" type="search"
+                                                placeholder="Type Text Here....." class="form-control" />
+                                            <span id="clearSearchText"
+                                                class="add-clear-x form-control-feedback glyphicon glyphicon-remove"
+                                                style="color: rgb(12, 12, 12); cursor: pointer; text-decoration: none; overflow: hidden; position: absolute; pointer-events: auto; right: 0px; top: 4px; z-index: 100; display: block;"
                                                 (click)="clearSearchText()"></span>
                                         </div>
                                     </div>
                                     <div class="input-group-btn search-panel">
-                                        <select id="allfields" formControlName="fieldName" class="form-control btn themed-button themed-button-allfields dropdown-toggle" style="width: 170px; border-left-width: 0px;">
+                                        <select id="allfields" formControlName="fieldName"
+                                            class="form-control btn themed-button themed-button-allfields dropdown-toggle"
+                                            style="width: 170px; border-left-width: 0px;">
                                             <option value="">ALL Fields</option>
-                                            <option *ngFor="let fld of searchfieldval" [value]="fld.id">{{fld.name}}</option>
+                                            <option *ngFor="let fld of searchfieldval" [value]="fld.id">{{fld.name}}
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="input-group-btn padding-right-10">
-                                        <button id="search" (click)="searchRecord()" type="button" name="action" value="search" class="btn themed-button">
+                                        <button id="search" (click)="searchRecord()" type="button" name="action"
+                                            value="search" class="btn themed-button">
                                             Search
                                         </button>
                                     </div>
                                     <div class="input-group-btn padding-right-10">
-                                        <button id="resetSearch" [disabled]="!searchForm.dirty" (click)="onReset()" type="button" name="action" value="newSearch" class="btn themed-button themed-button-cancel">
+                                        <button id="resetSearch" [disabled]="!searchForm.dirty" (click)="onReset()"
+                                            type="button" name="action" value="newSearch"
+                                            class="btn themed-button themed-button-cancel">
                                             Reset Search
                                         </button>
                                     </div>
 
                                     <div class="input-group-btn">
-                                        <button (click)="facetsshowhide()" type="button" class="btn themed-button themed-button-facet dropdown-toggle">
-                                            <span id="showFacets" class="pull-left">Show Facets</span> <span class="glyphicon glyphicon-menu-down small pull-right"></span>
+                                        <button (click)="facetsshowhide()" type="button"
+                                            class="btn themed-button themed-button-facet dropdown-toggle">
+                                            <span id="showFacets" class="pull-left">Show Facets</span> <span
+                                                class="glyphicon glyphicon-menu-down small pull-right"></span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div id="search-filter" class="row collapse" style="padding-top: 10px; padding-bottom: 15px;">
+                            <div id="search-filter" class="row collapse"
+                                style="padding-top: 10px; padding-bottom: 15px;">
                                 <div class="col-xs-2" style="margin-top: 50px;">
                                     <div class="allfacet">
                                         <label>
-                                            <input type="checkbox" id="selectAllFacets"
-                                            [checked]="checked" 
-                                                   name="selectAllFacets" value="" 
-                                                    (click)="checkUncheckAll()" class="facetCheckBox">
+                                            <input type="checkbox" id="selectAllFacets" [checked]="checked"
+                                                name="selectAllFacets" value="" (click)="checkUncheckAll()"
+                                                class="facetCheckBox">
                                             <span class="cr margin-top-15"></span>
-                                            <span name="selectAndUnselect"class="facet-text">&nbsp;Select / Unselect All Facets   </span>
+                                            <span name="selectAndUnselect" class="facet-text">&nbsp;Select / Unselect
+                                                All Facets </span>
                                         </label>
                                     </div>
                                 </div>
@@ -69,10 +85,9 @@
                                                 <div class="row padding-left-15">
                                                     <div *ngFor="let inst of instVal">
                                                         <label>
-                                                            <input type="checkbox" 
-                                                            (change)="onChange($event.target.checked, inst)"
-                                                            [checked]="checkedItem(inst)" 
-                                                                    class="facetCheckBox">
+                                                            <input type="checkbox" value="{{inst}}"
+                                                                (change)="onChange($event.target.checked, inst)"
+                                                                [checked]="checkedItem(inst)" class="facetCheckBox">
                                                             <span class="cr"></span>
                                                             &nbsp;{{inst}}
                                                         </label>
@@ -113,28 +128,31 @@
                                                 <h4>Material Type</h4>
                                                 <div>
                                                     <label>
-                                                        <input type="checkbox" formControlName="Monograph" [checked]="checked" id="monograph" name="monograph"
-                                                               value="Monograph"  class="facetCheckBox">
+                                                        <input type="checkbox" formControlName="Monograph"
+                                                            [checked]="checked" id="monograph" name="monograph"
+                                                            value="Monograph" class="facetCheckBox">
                                                         <span class="cr"></span>
-                                                        
+
                                                         &nbsp;Monograph
                                                     </label>
                                                 </div>
                                                 <div>
                                                     <label>
-                                                        <input type="checkbox"  formControlName="Serial" [checked]="checked" id="serials" name="serials"
-                                                                   value="Serial"  class="facetCheckBox">
+                                                        <input type="checkbox" formControlName="Serial"
+                                                            [checked]="checked" id="serials" name="serials"
+                                                            value="Serial" class="facetCheckBox">
                                                         <span class="cr"></span>
-                                                        
+
                                                         &nbsp;Serials
                                                     </label>
                                                 </div>
                                                 <div>
                                                     <label>
-                                                        <input type="checkbox" formControlName="others" [checked]="checked" id="others" name="others" value="Other"
-                                                                    class="facetCheckBox">
+                                                        <input type="checkbox" formControlName="others"
+                                                            [checked]="checked" id="others" name="others" value="Other"
+                                                            class="facetCheckBox">
                                                         <span class="cr"></span>
-                                                        
+
                                                         &nbsp;Others
                                                     </label>
                                                 </div>
@@ -142,7 +160,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-6  padding-left-30 padding-btm-30 border-style-left-white" style="padding-bottom: 0px;">
+                                <div class="col-xs-6  padding-left-30 padding-btm-30 border-style-left-white"
+                                    style="padding-bottom: 0px;">
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <h2 style="margin-top: 0px; margin-bottom: 0px;">Item Facets</h2>
@@ -154,28 +173,31 @@
                                             <div class="row padding-left-15">
                                                 <div>
                                                     <label>
-                                                        <input type="checkbox" formControlName="shared" [checked]="checked" id="shared" name="shared" value="Shared"
-                                                                class="facetCheckBox">
+                                                        <input type="checkbox" formControlName="shared"
+                                                            [checked]="checked" id="shared" name="shared" value="Shared"
+                                                            class="facetCheckBox">
                                                         <span class="cr"></span>
-                                                        
+
                                                         &nbsp;Shared
                                                     </label>
                                                 </div>
                                                 <div>
                                                     <label>
-                                                        <input type="checkbox" formControlName="private" [checked]="checked" id="private" name="private" value="Private"
-                                                                class="facetCheckBox">
+                                                        <input type="checkbox" formControlName="private"
+                                                            [checked]="checked" id="private" name="private"
+                                                            value="Private" class="facetCheckBox">
                                                         <span class="cr"></span>
-                                                        
+
                                                         &nbsp;Private
                                                     </label>
                                                 </div>
                                                 <div>
                                                     <label>
-                                                        <input type="checkbox" formControlName="open" [checked]="checked" id="open" name="open" value="Open"
-                                                                class="facetCheckBox">
+                                                        <input type="checkbox" formControlName="open"
+                                                            [checked]="checked" id="open" name="open" value="Open"
+                                                            class="facetCheckBox">
                                                         <span class="cr"></span>
-                                                        
+
                                                         &nbsp;Open
                                                     </label>
                                                 </div>
@@ -185,19 +207,21 @@
                                             <h4>Availability</h4>
                                             <div>
                                                 <label>
-                                                    <input type="checkbox" formControlName="Available" [checked]="checked" id="available" name="available"
-                                                           value="Available" class="facetCheckBox">
+                                                    <input type="checkbox" formControlName="Available"
+                                                        [checked]="checked" id="available" name="available"
+                                                        value="Available" class="facetCheckBox">
                                                     <span class="cr"></span>
-                                                    
+
                                                     &nbsp;In ReCAP
                                                 </label>
                                             </div>
                                             <div>
                                                 <label>
-                                                    <input type="checkbox" formControlName="notAvailable" [checked]="checked" id="notAvailable" name="notAvailable"
-                                                           value="NotAvailable" class="facetCheckBox">
+                                                    <input type="checkbox" formControlName="notAvailable"
+                                                        [checked]="checked" id="notAvailable" name="notAvailable"
+                                                        value="NotAvailable" class="facetCheckBox">
                                                     <span class="cr"></span>
-                                                    
+
                                                     &nbsp;Out
                                                 </label>
                                             </div>
@@ -206,28 +230,31 @@
                                             <h4>Use Restriction</h4>
                                             <div>
                                                 <label>
-                                                    <input type="checkbox" formControlName="NoRestrictions" [checked]="checked" id="noRestriction" name="noRestriction"
-                                                           value="NoRestrictions"  class="facetCheckBox">
+                                                    <input type="checkbox" formControlName="NoRestrictions"
+                                                        [checked]="checked" id="noRestriction" name="noRestriction"
+                                                        value="NoRestrictions" class="facetCheckBox">
                                                     <span class="cr"></span>
-                                                    
+
                                                     &nbsp;No Restriction
                                                 </label>
                                             </div>
                                             <div>
                                                 <label>
-                                                    <input type="checkbox" formControlName="InLibraryUse" [checked]="checked" id="inLibraryUse" name="inLibraryUse"
-                                                           value="InLibraryUse"  class="facetCheckBox">
+                                                    <input type="checkbox" formControlName="InLibraryUse"
+                                                        [checked]="checked" id="inLibraryUse" name="inLibraryUse"
+                                                        value="InLibraryUse" class="facetCheckBox">
                                                     <span class="cr"></span>
-                                                    
+
                                                     &nbsp;In Library Use
                                                 </label>
                                             </div>
                                             <div>
                                                 <label>
-                                                    <input type="checkbox" formControlName="SupervisedUse" [checked]="checked" id="supervisedUse" name="supervisedUse"
-                                                           value="SupervisedUse"  class="facetCheckBox">
+                                                    <input type="checkbox" formControlName="SupervisedUse"
+                                                        [checked]="checked" id="supervisedUse" name="supervisedUse"
+                                                        value="SupervisedUse" class="facetCheckBox">
                                                     <span class="cr"></span>
-                                                    
+
                                                     &nbsp;Supervised Use
                                                 </label>
                                             </div>
@@ -244,29 +271,36 @@
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
                             <div class="row margin-btm-10" *ngIf="errorMessage_Div">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{searchVal['errorMessage']}}</span></div>
+                                    <div class="bg-danger text-danger padding-10"><span
+                                            class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{searchVal['errorMessage']}}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div *ngIf="searchResultsDiv" id="searchResultsDiv" name="searchResultsDiv">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <div class="pull-left margin-btm-0 margin-right-35" style="margin-top: -20px; margin-bottom: -10px;">
+                                        <div class="pull-left margin-btm-0 margin-right-35"
+                                            style="margin-top: -20px; margin-bottom: -10px;">
                                             <div id="paginationId" name="paginationName">
                                                 <ul class="pagination">
                                                     <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                                        <span id="btm_first" (click)="firstapi()" style="cursor: pointer;">First</span>
+                                                        <span id="btm_first" (click)="firstapi()"
+                                                            style="cursor: pointer;">First</span>
 
                                                     </li>
                                                     <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                                        <span id="btm_previous" (click)="previousapi()" style="cursor: pointer;">Previous</span>
+                                                        <span id="btm_previous" (click)="previousapi()"
+                                                            style="cursor: pointer;">Previous</span>
 
                                                     </li>
                                                     <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                                        <span id="btm_next" (click)="nextapi()" style="cursor: pointer;">Next</span>
+                                                        <span id="btm_next" (click)="nextapi()"
+                                                            style="cursor: pointer;">Next</span>
 
                                                     </li>
                                                     <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                                        <span id="btm_last" (click)="lastapi()" style="cursor: pointer;">Last</span>
+                                                        <span id="btm_last" (click)="lastapi()"
+                                                            style="cursor: pointer;">Last</span>
 
                                                     </li>
                                                 </ul>
@@ -275,13 +309,20 @@
                                         <div class="pull-left margin-top-05 parent">
                                             <div class="recap-status">
                                                 <div class="inline-box margin-right-10">
-                                                    <img class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;" /><span class="align-middle padding-5">In ReCAP</span>
+                                                    <img class="status" src="../../../../assets/images/inRecap.png"
+                                                        alt="In ReCAP" style="width:20px;height:25px;" /><span
+                                                        class="align-middle padding-5">In ReCAP</span>
                                                 </div>
                                                 <div class="inline-box margin-right-10">
-                                                    <img class="status" src="../../../../assets/images/out.png" alt="Out" style="width:20px;height:25px;" /><span class="align-middle padding-5">OUT</span>
+                                                    <img class="status" src="../../../../assets/images/out.png"
+                                                        alt="Out" style="width:20px;height:25px;" /><span
+                                                        class="align-middle padding-5">OUT</span>
                                                 </div>
                                                 <div class="inline-box margin-right-10">
-                                                    <img class="status" src="../../../../assets/images/mixed.png" alt="Partial Availability" style="width:20px;height:20px" /><span class="align-middle padding-5">Partial Availability</span>
+                                                    <img class="status" src="../../../../assets/images/mixed.png"
+                                                        alt="Partial Availability"
+                                                        style="width:20px;height:20px" /><span
+                                                        class="align-middle padding-5">Partial Availability</span>
                                                 </div>
 
                                             </div>
@@ -293,7 +334,9 @@
                                     <div class="col-sm-2 margin-top-05 show-entries-section">
                                         <div class="">
                                             <span class="show-title">Show Entries</span>
-                                            <select id="numOfRecordsId" name="pageSize" [(ngModel)]="showentries" class="themed-input" (change)="onPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}" style="margin-left: 5px;">
+                                            <select id="numOfRecordsId" name="pageSize" [(ngModel)]="showentries"
+                                                class="themed-input" (change)="onPageSizeChange(showentries)"
+                                                [ngModelOptions]="{standalone: true}" style="margin-left: 5px;">
                                                 <option value="10" selected="selected">10</option>
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
@@ -302,22 +345,35 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-7 margin-top-10">
-                                        <div class="row" style="font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">OI - Owning Institution, CC - Customer Code, CGD - Collection Group Designation, SH - Summary Holdings</div>
+                                        <div class="row"
+                                            style="font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">
+                                            OI - Owning Institution, CC - Customer Code, CGD - Collection Group
+                                            Designation, SH - Summary Holdings</div>
                                     </div>
-                                    <div *ngIf="!searchVal['showTotalCount']" class="col-sm-3 text-right" style="text-align: right;font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">
-                                        <span>Bibliographic Results Found: <span>{{searchVal['totalBibRecordsCount']}}</span></span><br>
-                                        <span>Item Results Found: <span>{{searchVal['totalItemRecordsCount']}}</span></span>
+                                    <div *ngIf="!searchVal['showTotalCount']" class="col-sm-3 text-right"
+                                        style="text-align: right;font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">
+                                        <span>Bibliographic Results Found:
+                                            <span>{{searchVal['totalBibRecordsCount']}}</span></span><br>
+                                        <span>Item Results Found:
+                                            <span>{{searchVal['totalItemRecordsCount']}}</span></span>
                                     </div>
-                                    <div *ngIf="searchVal['showTotalCount']" class="col-sm-3 text-right" style="text-align: right;font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">
-                                        <span>Total Results Found: <span>{{searchVal['totalRecordsCount']}}</span></span>
+                                    <div *ngIf="searchVal['showTotalCount']" class="col-sm-3 text-right"
+                                        style="text-align: right;font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">
+                                        <span>Total Results Found:
+                                            <span>{{searchVal['totalRecordsCount']}}</span></span>
                                     </div>
                                 </div>
                                 <!--show entries end-->
                                 <!--tree grid start-->
 
-                                <p-table #dt [columns]="cols" name="p_table" rowExpandMode="single" [autoLayout]="true" [value]="searchVal['searchResultRows']" [paginator]="false" [rows]="10" [showCurrentPageReport]="false" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                                    [rowsPerPageOptions]="[10,25,50,100]" paginatorPosition="" selectionMode="checkbox" [(selection)]="selectedNodes1" (onHeaderCheckboxToggle)="onTableHeaderCheckboxToggle1($event)" dataKey="id" (onRowSelect)="onRowSelect($event)"
-                                    (onRowUnselect)="onRowUnselect($event)">
+                                <p-table #dt [columns]="cols" name="p_table" rowExpandMode="single" [autoLayout]="true"
+                                    [value]="searchVal['searchResultRows']" [paginator]="false" [rows]="10"
+                                    [showCurrentPageReport]="false"
+                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                    [rowsPerPageOptions]="[10,25,50,100]" paginatorPosition="" selectionMode="checkbox"
+                                    [(selection)]="selectedNodes1"
+                                    (onHeaderCheckboxToggle)="onTableHeaderCheckboxToggle1($event)" dataKey="id"
+                                    (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
 
                                     <ng-template pTemplate="header" let-columns>
                                         <tr id="headers_main">
@@ -327,109 +383,143 @@
                                             </th>
                                             <th *ngFor="let col of columns" [pSortableColumn]="col.field">
                                                 {{col.header}}
-                                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                                                    ariaLabelDesc="Activate to sort in descending order"
+                                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                             </th>
                                         </tr>
                                     </ng-template>
-                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-rowIndex="rowIndex">
+                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded"
+                                        let-columns="columns" let-rowIndex="rowIndex">
                                         <tr id="rowData_results_{{rowIndex}}">
                                             <td id="colData_main_{{rowIndex}}" *ngIf="rowData.searchItemResultRows==''">
-                                                <p-tableCheckbox [value]="rowData" id="colData_checkBox_main_{{rowIndex}}"></p-tableCheckbox>
+                                                <p-tableCheckbox [value]="rowData"
+                                                    id="colData_checkBox_main_{{rowIndex}}"></p-tableCheckbox>
                                             </td>
-                                            <td id="colData_expand_results_{{rowIndex}}" *ngIf="rowData.searchItemResultRows!=''">
+                                            <td id="colData_expand_results_{{rowIndex}}"
+                                                *ngIf="rowData.searchItemResultRows!=''">
                                                 <a id="colData_toggler_{{rowIndex}}" href="#" [pRowToggler]="rowData">
-                                                    <i id="rowExpand_main_{{rowIndex}}" [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                                                    <i id="rowExpand_main_{{rowIndex}}"
+                                                        [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                                                 </a>
                                             </td>
-                                            <td id="colData_column_{{i}}" *ngFor="let col of columns;let i=index"><img *ngIf="col.field=='title' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" /> <img *ngIf="col.field=='title' && rowData.availability =='Not Available'"
-                                                    class="status" src="../../../../assets/images/out.png" alt="Out" style="width:20px;height:25px;margin-bottom: 3px;" /> &nbsp;&nbsp;
-                                                <a target="_blank" routerLink="/openMarcRecord" [queryParams]="{bibId: rowData['bibId']}" *ngIf="col.field=='title'" style="cursor: pointer;">{{rowData[col.field]}}</a><span *ngIf="col.field!='title'">{{rowData[col.field]}}</span>
+                                            <td id="colData_column_{{i}}" *ngFor="let col of columns;let i=index"><img
+                                                    *ngIf="col.field=='title' && rowData.availability =='Available'"
+                                                    class="status" src="../../../../assets/images/inRecap.png"
+                                                    alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" />
+                                                <img *ngIf="col.field=='title' && rowData.availability =='Not Available'"
+                                                    class="status" src="../../../../assets/images/out.png" alt="Out"
+                                                    style="width:20px;height:25px;margin-bottom: 3px;" /> &nbsp;&nbsp;
+                                                <a target="_blank" routerLink="/openMarcRecord"
+                                                    [queryParams]="{bibId: rowData['bibId']}" *ngIf="col.field=='title'"
+                                                    style="cursor: pointer;">{{rowData[col.field]}}</a><span
+                                                    *ngIf="col.field!='title'">{{rowData[col.field]}}</span>
                                             </td>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
                                         <tr>
                                             <td name="column_len" [attr.colspan]="columns.length + 1">
-                                                <div class="p-grid ui-fluid" style="font-size:16px;padding:20px" [@rowExpansionTrigger]="'active'">
+                                                <div class="p-grid ui-fluid" style="font-size:16px;padding:20px"
+                                                    [@rowExpansionTrigger]="'active'">
                                                     <div class="p-col-12 p-md-9">
-                                                        <div class="p-grid" *ngIf="rowData.searchItemResultRows==''"></div>
+                                                        <div class="p-grid" *ngIf="rowData.searchItemResultRows==''">
+                                                        </div>
                                                         <div class="p-grid" *ngIf="rowData.searchItemResultRows!=''">
-                                                            <p-table #dt name="p_tablesub" [columns]="cols1" [paginator]="false" selectionMode="checkbox" (onHeaderCheckboxToggle)="onTableHeaderCheckboxToggle1($event)" [(selection)]="selectedNodes2" [value]="rowData.searchItemResultRows" (onRowSelect)="onRowSelect($event)"
+                                                            <p-table #dt name="p_tablesub" [columns]="cols1"
+                                                                [paginator]="false" selectionMode="checkbox"
+                                                                (onHeaderCheckboxToggle)="onTableHeaderCheckboxToggle1($event)"
+                                                                [(selection)]="selectedNodes2"
+                                                                [value]="rowData.searchItemResultRows"
+                                                                (onRowSelect)="onRowSelect($event)"
                                                                 (onRowUnselect)="onRowUnselect($event)">
                                                                 <ng-template pTemplate="header" let-columns>
-                                                                    <tr id="subRow_header">
-                                                                        <th id="sub_header_checkbox" style="width: 3em">
-                                                                            <p-tableHeaderCheckbox id="sub_hdr_checkbox"></p-tableHeaderCheckbox>
-                                                                        </th>
-                                                                        <th *ngFor="let col of columns">
-                                                                            {{col.header}}
-                                                                        </th>
-                                                                    </tr>
-                                                                </ng-template>
-                                                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
-                                                                    <tr id="rowData_subResults_{{rowIndex}}">
-                                                                        <td id="col_sub_{{rowIndex}}">
-                                                                            <p-tableCheckbox [value]="rowData" id="colSub_checkBox_{{rowIndex}}"></p-tableCheckbox>
-                                                                        </td>
-                                                                        <td id="dataResult_sub_col_{{i}}" *ngFor="let col of columns;let i=index"><img *ngIf="col.field=='callNumber' && rowData.availability =='Available'" class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;"
-                                                                            /> <img *ngIf="col.field=='callNumber' && rowData.availability =='Not Available'" class="status" src="../../../../assets/images/out.png" alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;"
-                                                                            /> &nbsp;&nbsp; {{rowData[col.field]}}
-                                                                        </td>
-                                                                    </tr>
-                                                                </ng-template>
-                                                            </p-table>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <tr id="subRow_header">
+                                            <th id="sub_header_checkbox" style="width: 3em">
+                                                <p-tableHeaderCheckbox id="sub_hdr_checkbox"></p-tableHeaderCheckbox>
+                                            </th>
+                                            <th *ngFor="let col of columns">
+                                                {{col.header}}
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr id="rowData_subResults_{{rowIndex}}">
+                                            <td id="col_sub_{{rowIndex}}">
+                                                <p-tableCheckbox [value]="rowData" id="colSub_checkBox_{{rowIndex}}">
+                                                </p-tableCheckbox>
+                                            </td>
+                                            <td id="dataResult_sub_col_{{i}}" *ngFor="let col of columns;let i=index">
+                                                <img *ngIf="col.field=='callNumber' && rowData.availability =='Available'"
+                                                    class="status" src="../../../../assets/images/inRecap.png"
+                                                    alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" />
+                                                <img *ngIf="col.field=='callNumber' && rowData.availability =='Not Available'"
+                                                    class="status" src="../../../../assets/images/out.png"
+                                                    alt="In ReCAP" style="width:20px;height:25px;margin-bottom: 3px;" />
+                                                &nbsp;&nbsp; {{rowData[col.field]}}
                                             </td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
-                                <!--tree grid end-->
 
                             </div>
-                            <!--show result div end-->
-                            <div style="clear:both">&nbsp;</div>
-                            <!--show entries export start-->
-                            <div *ngIf="paginationBtmDiv" id="paginationAndButtons" name="paginationAndButtons" class="margin-top-15 export-buttons">
-                                <div class="pull-left" style="margin-top: -20px;">
-                                    <div id="paginationId" name="paginationName">
-                                        <ul class="pagination">
-                                            <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                                <span id="first" (click)="firstapi()" style="cursor: pointer;">First</span>
-
-                                            </li>
-                                            <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                                <span id="previous" (click)="previousapi()" style="cursor: pointer;">Previous</span>
-
-                                            </li>
-                                            <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                                <span id="next" (click)="nextapi()" style="cursor: pointer;">Next</span>
-
-                                            </li>
-                                            <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                                <span id="last" (click)="lastapi()" style="cursor: pointer;">Last</span>
-
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div style="margin-top: -20px;">
-                                    <button id="export" [disabled]="clicked" (click)="setFileName();dt.exportCSV({selectionOnly:true})" name="action" value="export" type="button" class="btn btn-primary pull-right" style="margin-right: 10px;">Export Selected Records
-                            </button>
-                                    <button id="requestButton" (click)="routeToRequest()" [disabled]="clicked" type="button" name="action" value="request" class="btn btn-primary pull-right" style="margin-right: 10px;">Request Selected
-                            Items(s)
-                            </button>
-                                </div>
-                            </div>
-                            <!--show entries export end-->
                         </div>
                     </div>
+                    </td>
+                    </tr>
+                    </ng-template>
+                    </p-table>
+                    <!--tree grid end-->
+
                 </div>
-            </fieldset>
-        </form>
+                <!--show result div end-->
+                <div style="clear:both">&nbsp;</div>
+                <!--show entries export start-->
+                <div *ngIf="paginationBtmDiv" id="paginationAndButtons" name="paginationAndButtons"
+                    class="margin-top-15 export-buttons">
+                    <div class="pull-left" style="margin-top: -20px;">
+                        <div id="paginationId" name="paginationName">
+                            <ul class="pagination">
+                                <li [ngClass]="(firstbutton==true)?'disabled':''">
+                                    <span id="first" (click)="firstapi()" style="cursor: pointer;">First</span>
+
+                                </li>
+                                <li [ngClass]="(previousbutton==true)?'disabled':''">
+                                    <span id="previous" (click)="previousapi()" style="cursor: pointer;">Previous</span>
+
+                                </li>
+                                <li [ngClass]="(nextbutton==true)?'disabled':''">
+                                    <span id="next" (click)="nextapi()" style="cursor: pointer;">Next</span>
+
+                                </li>
+                                <li [ngClass]="(lastbutton==true)?'disabled':''">
+                                    <span id="last" (click)="lastapi()" style="cursor: pointer;">Last</span>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="margin-top: -20px;">
+                        <button id="export" [disabled]="clicked"
+                            (click)="setFileName();dt.exportCSV({selectionOnly:true})" name="action" value="export"
+                            type="button" class="btn btn-primary pull-right" style="margin-right: 10px;">Export Selected
+                            Records
+                        </button>
+                        <button id="requestButton" (click)="routeToRequest()" [disabled]="clicked" type="button"
+                            name="action" value="request" class="btn btn-primary pull-right"
+                            style="margin-right: 10px;">Request Selected
+                            Items(s)
+                        </button>
+                    </div>
+                </div>
+                <!--show entries export end-->
     </div>
+</div>
+</div>
+</fieldset>
+</form>
+</div>
 </div>
 
 
