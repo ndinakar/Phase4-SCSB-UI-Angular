@@ -7,37 +7,52 @@
             <div class="dashboard-content col-sm-12">
                 <ul id="search-content-tab" class="nav nav-tabs" role="tablist">
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSearchAllowed']" (click)="checkPermission('search')">
-                        <a routerLink="/search" aria-controls="search" class="tab-search"><span class="icons"></span><span>Search</span></a>
+                        <a routerLink="/search" aria-controls="search" class="tab-search"><span
+                                class="icons"></span><span>Search</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isCollectionAllowed'] || res['isDeaccessionAllowed']" (click)="checkPermission('collection')">
-                        <a routerLink="/collection" aria-controls="collection" class="tab-collection"><span class="icons"></span><span>Collection</span></a>
+                        <a routerLink="/collection" aria-controls="collection" class="tab-collection"><span
+                                class="icons"></span><span>Collection</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isRequestAllowed'] || res['isRequestAllAllowed'] || res['isRequestItemAllowed']" (click)="checkPermission('request')">
-                        <a routerLink="/request" aria-controls="request" class="tab-request"><span class="icons"></span><span>Request</span></a>
+                        <a routerLink="/request" aria-controls="request" class="tab-request"><span
+                                class="icons"></span><span>Request</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isBulkRequestAllowed']" (click)="checkPermission('bulkRequest')">
-                        <a routerLink="/bulkrequest" aria-controls="request" class="tab-request"><span class="icons"></span><span>Bulk Request</span></a>
+                        <a routerLink="/bulkrequest" aria-controls="request" class="tab-request"><span
+                                class="icons"></span><span>Bulk Request</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isReportAllowed']" (click)="checkPermission('reports')">
-                        <a routerLink="/reports" aria-controls="reports" class="tab-reports"><span class="icons"></span><span>Reports</span></a>
+                        <a routerLink="/reports" aria-controls="reports" class="tab-reports"><span
+                                class="icons"></span><span>Reports</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isRoleAllowed']" (click)="checkPermission('roles')">
-                        <a routerLink="/roles" aria-controls="roles" class="tab-role"><span class="icons"></span><span>Roles</span></a>
+                        <a routerLink="/roles" aria-controls="roles" class="tab-role"><span
+                                class="icons"></span><span>Roles</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isUserRoleAllowed']" (click)="checkPermission('userRoles')">
-                        <a routerLink="/userRoles" aria-controls="users" class="tab-users"><span class="icons"></span><span>Users</span></a>
+                        <a routerLink="/userRoles" aria-controls="users" class="tab-users"><span
+                                class="icons"></span><span>Users</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']">
-                        <a routerLink="/jobs" aria-controls="jobs" class="tab-jobs"><span class="icons"></span><span>Jobs</span></a>
+                        <a routerLink="/jobs" aria-controls="jobs" class="tab-jobs"><span
+                                class="icons"></span><span>Jobs</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isMonitoring']">
-                        <a routerLink="/monitoring" aria-controls="monitoring" class="tab-monitor"><span class="icons"></span><span>Monitoring</span></a>
+                        <a routerLink="/monitoring" aria-controls="monitoring" class="tab-monitor"><span
+                                class="icons"></span><span>Monitoring</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isLogging']">
-                        <a routerLink="/logging" aria-controls="logging" class="tab-logg"><span class="icons"></span><span>Logging</span></a>
+                        <a routerLink="/logging" aria-controls="logging" class="tab-logg"><span
+                                class="icons"></span><span>Logging</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']">
-                        <a routerLink="/admin" aria-controls="logging" class="tab-users"><span class="icons"></span><span>Admin</span></a>
+                        <a routerLink="/admin" aria-controls="logging" class="tab-users "><span
+                                class="icons"></span><span>Admin</span></a>
+                    </li>
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isDataExport']">
+                        <a routerLink="/dataExport" aria-controls="logging" class="tab-users"><span
+                                class="icons"></span><span>Data Export</span></a>
                     </li>
                 </ul>
                 <div class="tab-content">

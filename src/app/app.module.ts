@@ -21,6 +21,7 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { RequestComponent } from './components/request/request.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
+import { DataExportComponent } from './components/data-export/data-export.component';
 
 export function appInit(appConfig: AppConfig) {
   return () => appConfig.load();
@@ -40,6 +41,7 @@ export function appInit(appConfig: AppConfig) {
     LoggingComponent,
     AdminComponent,
     LoginComponent,
+    DataExportComponent,
   ],
   imports: [
     BrowserModule,

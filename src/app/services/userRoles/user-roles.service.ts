@@ -13,7 +13,7 @@ export class UserRolesService {
   constructor(private httpClient: HttpClient) { }
   baseUrl = urls.baseUrl;
   prefix = urls.userRoles;
-  httpOptions(){
+  httpOptions() {
     const httpOptions = {
       headers: appHeaders.getHeaders(),
       withCredentials: true
@@ -24,28 +24,16 @@ export class UserRolesService {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchUsers", postData, this.httpOptions());
   }
   previousCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData, this.httpOptions());
   }
   nextCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/next", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/next", postData, this.httpOptions());
   }
   firstCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/first", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/first", postData, this.httpOptions());
   }
   lastCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData, this.httpOptions());
   }
   pageSize(postData: UserRoleFormData): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchUsers", postData,
@@ -55,14 +43,14 @@ export class UserRolesService {
   }
   userRoles(): Observable<TreeNode[]> {
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/userRoles",
-     this.httpOptions());
+      this.httpOptions());
   }
   editUser(userId, networkLoginId): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders();
     let parames = new HttpParams()
       .set('userId', userId)
       .set('networkLoginId', networkLoginId);
-    const options = { params: parames, headers: headers,withCredentials: true };
+    const options = { params: parames, headers: headers, withCredentials: true };
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/editUser", options);
   }
   saveEditUser(userId, roleIds, networkLoginId, userDescription, institutionId, userEmailId): Observable<TreeNode[]> {
@@ -74,13 +62,13 @@ export class UserRolesService {
       .set('institutionId', institutionId)
       .set('userEmailId', userEmailId)
       .set('roleIds', roleIds);
-    const options = { params: parames, headers: headers,withCredentials: true };
+    const options = { params: parames, headers: headers, withCredentials: true };
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/saveEditUserDetails", options);
   }
 
   createUser(postData: UserRoleFormData): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createUser", postData,
-    this.httpOptions());
+      this.httpOptions());
   }
   delete(userId, networkLoginId, pageNumber, totalPageCount, pageSize): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders();
@@ -90,7 +78,7 @@ export class UserRolesService {
       .set('pageNumber', pageNumber)
       .set('totalPageCount', totalPageCount)
       .set('pageSize', pageSize);
-    const options = { params: parames, headers: headers,withCredentials: true };
+    const options = { params: parames, headers: headers, withCredentials: true };
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/delete", options);
   }
 }

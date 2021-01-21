@@ -463,15 +463,6 @@ export class SearchComponent implements OnInit {
 
   validateInputs(searchfullrec) {
     this.owningInstitutions = this.owningInstitutionInst;
-    // if (searchfullrec.owningInstitutionNYPL == true) {
-    //   this.owningInstitutions.push('NYPL')
-    // }
-    // if (searchfullrec.owningInstitutionCUL == true) {
-    //   this.owningInstitutions.push('CUL')
-    // }
-    // if (searchfullrec.owningInstitutionPUL == true) {
-    //   this.owningInstitutions.push('PUL')
-    // }
     if (searchfullrec.shared == true) {
       this.collectionGroupDesignations.push('Shared')
     }

@@ -111,7 +111,7 @@
                     "options": {
                         "browserTarget": "project:build",
                         "proxyConfig": "proxy.conf.json",
-                        "port": 9088
+                        "port": 9091
                     },
                     "configurations": {
                         "production": {

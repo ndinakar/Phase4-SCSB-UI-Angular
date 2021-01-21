@@ -40,10 +40,9 @@ export class HomeComponent implements OnInit {
         this.cookieService.delete('isAuthenticated');
         this.cookieService.delete('CSRF-TOKEN');
         this.cookieService.delete('JSESSIONID');
-
       });
   }
-  onSubmit() {
+  navigate(): void {
     if (this.institution == '' || this.institution == null || this.institution == undefined) {
       this.institutionErrorMessageDiv = true;
     } else {
