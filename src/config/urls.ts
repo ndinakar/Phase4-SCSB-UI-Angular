@@ -13,7 +13,8 @@ export const urls = {
     bulkRequest: '/bulkRequest',
     admin: '/admin',
     login: '/login',
-    ui_url: 'http://52.203.96.232:9091',
+    dataExport: '/dataExport',
     openMarc: '/openMarcRecord',
-    batchScheduleUrl: 'http://52.203.96.232:9096'
+    batchScheduleUrl: coreUrl + ':9096',
+    homeUrl: coreUrl + ':9091' + '/home'
 }
