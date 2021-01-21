@@ -1,40 +1,33 @@
 <div>
     <div class="tab-content">
-        <div *ngIf="dataExport_panel" class="search-bar">
+        <div class="search-bar" *ngIf="dataExport_panel">
             <div class="buscador-principal">
-                <h4 class="margin-top-0 margin-btm-10 inline-box">Data Dump Details</h4> <span
-                    class="error-color">*</span>
+                <h4 class="margin-top-0 margin-btm-10 inline-box">Data Dump Details</h4> <span class="error-color">*</span>
                 <div class="form-group" style="padding-left: 40px;">
-                    <label for="exportDataDump" accesskey="R" class="radio-inline report-hide-shadow"
-                        style="padding-right: 30px;" tabindex="0">
-                        <input type="radio" name="dataTypeoption" id="exportDataDump" value="exportDataDump"
-                            (click)="enabledDataExport()" />
+                    <label class="radio-inline report-hide-shadow" for="exportDataDump" accesskey="R" style="padding-right: 30px;" tabindex="0">
+                        <input id="exportDataDump" name="dataTypeoption" type="radio" value="exportDataDump" (click)="enabledDataExport()">
                         Export Data Dump
                     </label>
-                    <label for="dataDumpDetails" accesskey="A" class="radio-inline report-hide-shadow"
-                        style="padding-right: 30px;" tabindex="0">
-                        <input type="radio" name="dataTypeoption" id="dataDumpDetails" value="dataDumpDetails"
-                            (click)="enableDataExportReport()" [checked]="isChecked" />
+                    <label class="radio-inline report-hide-shadow" for="dataDumpDetails" accesskey="A" style="padding-right: 30px;" tabindex="0">
+                        <input id="dataDumpDetails" name="dataTypeoption" type="radio" value="dataDumpDetails" (click)="enableDataDumpDetails()" [checked]="isChecked">
                         Data Dump Details
                     </label>
                 </div>
             </div>
         </div>
     </div>
-    <div *ngIf="dataExportDiv" class="swagger-ui">
+    <div class="swagger-ui" *ngIf="dataExportDiv">
         <div style="margin-top: 25px;">
             <div class="wrapper">
-                <div *ngIf="successMessageDiv" id="successMessageDiv" class="row margin-btm-10">
+                <div class="row margin-btm-10" id="successMessageDiv" *ngIf="successMessageDiv">
                     <div class="col-sm-12 text-left">
-                        <div class="alert alert-success" role="alert"><span
-                                class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{resValExport['message']}}</span>
+                        <div class="alert alert-success" role="alert"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{resValExport['message']}}</span>
                         </div>
                     </div>
                 </div>
-                <div *ngIf="errorMessageDiv" id="errorMessageDiv" class="row margin-btm-10">
+                <div class="row margin-btm-10" id="errorMessageDiv" *ngIf="errorMessageDiv">
                     <div class="col-sm-12">
-                        <div class="alert alert-danger"><span
-                                class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{resValExport['errorMessage']}}</span>
+                        <div class="alert alert-danger"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{resValExport['errorMessage']}}</span>
                         </div>
                     </div>
                 </div>
@@ -43,8 +36,7 @@
                             <div class="opblock-tag-section is-open">
                                 <div style="height: auto; border: none; margin: 0px; padding: 0px;">
                                     <span>
-                                        <div class="opblock opblock-get is-open"
-                                            id="operations-data-dump-rest-controller-exportDataDump">
+                                        <div class="opblock opblock-get is-open" id="operations-data-dump-rest-controller-exportDataDump">
                                             <div style="height: auto; border: none; margin: 0px; padding: 0px;">
                                                 <div class="opblock-body">
                                                     <div class="opblock-section">
@@ -52,23 +44,21 @@
                                                             <table class="parameters">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th class="col col_header parameters-col_name">
+                                                                        <th class="col col_header parameters-col_name" id="name">
                                                                             Name</th>
-                                                                        <th
-                                                                            class="col col_header parameters-col_description">
+                                                                        <th class="col col_header parameters-col_description" id="description">
                                                                             Description</th>
-                                                                    </tr>
+                                                                    </tr>   
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr class="parameters">
+                                                                    <tr><td colspan="2"><hr></td></tr>
+                                                                    <tr class="parameters row-bg">
                                                                         <td class="col parameters-col_name">
-                                                                            <div class="parameter__name">
-                                                                                collectionGroupIds</div>
-                                                                            <div class="parameter__type">string</div>
-                                                                            <div class="parameter__deprecated"></div>
-                                                                            <div class="parameter__in">(query)</div>
+                                                                            <div class="parameter__name" id="collectionGroupIds_param">
+                                                                                Collection Group Ids</div>
                                                                         </td>
                                                                         <td class="col parameters-col_description">
+                                                                            <input class id="collectionGroupIds" type="text" title *ngIf="!try_out_toggle" [ngModelOptions]="{standalone: true}" [(ngModel)]="collectionGroupIds">
                                                                             <div class="markdown">
                                                                                 <p>Data can be requested by Collection
                                                                                     Group ID, either Shared (use 1) or
@@ -76,191 +66,119 @@
                                                                                     Default is Shared and Open, can use
                                                                                     1,2,3 as well.</p>
                                                                             </div>
-                                                                            <input *ngIf="!try_out_toggle" type="text"
-                                                                                id="collectionGroupIds"
-                                                                                [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="collectionGroupIds"
-                                                                                class="" title=""
-                                                                                placeholder="collectionGroupIds - Data can be requested by Collection Group ID, either Shared (use 1) or Open (use 2) or Private (use 3). Default is Shared and Open, can use 1,2,3 as well."
-                                                                                value="">
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="parameters">
+                                                                    <tr class="parameters row-bg">
                                                                         <td class="col parameters-col_name">
-                                                                            <div class="parameter__name">date</div>
-                                                                            <div class="parameter__type">string</div>
-                                                                            <div class="parameter__deprecated"></div>
-                                                                            <div class="parameter__in">(query)</div>
+                                                                            <div class="parameter__name" id="date_param">Date</div>
                                                                         </td>
                                                                         <td class="col parameters-col_description">
+                                                                            <input class id="date" type="text" title *ngIf="!try_out_toggle" [ngModelOptions]="{standalone: true}" [(ngModel)]="date">
                                                                             <div class="markdown">
                                                                                 <p>Get updates to middleware collection
                                                                                     since the date provided. Date format
                                                                                     will be a string (yyyy-MM-dd HH:mm)
                                                                                     and is Eastern Time.</p>
                                                                             </div>
-                                                                            <input *ngIf="!try_out_toggle" type="text"
-                                                                                id="date"
-                                                                                [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="date" class="" title=""
-                                                                                placeholder="date - Get updates to middleware collection since the date provided. Date format will be a string (yyyy-MM-dd HH:mm) and is Eastern Time."
-                                                                                value="">
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="parameters">
+                                                                    <tr class="parameters row-bg">
                                                                         <td class="col parameters-col_name">
-                                                                            <div class="parameter__name">emailToAddress
+                                                                            <div class="parameter__name" id="emailToAddress_param">Email To Address
                                                                             </div>
-                                                                            <div class="parameter__type">string</div>
-                                                                            <div class="parameter__deprecated"></div>
-                                                                            <div class="parameter__in">(query)</div>
                                                                         </td>
                                                                         <td class="col parameters-col_description">
+                                                                            <input class id="emailToAddress" type="text" title *ngIf="!try_out_toggle" [ngModelOptions]="{standalone: true}" [(ngModel)]="emailToAddress">
                                                                             <div class="markdown">
                                                                                 <p>Email address to whom email will be
                                                                                     sent upon completion</p>
                                                                             </div>
-                                                                            <input *ngIf="!try_out_toggle" type="text"
-                                                                                id="emailToAddress"
-                                                                                [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="emailToAddress" class=""
-                                                                                title=""
-                                                                                placeholder="emailToAddress - Email address to whom email will be sent upon completion"
-                                                                                value="">
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="parameters">
+                                                                    <tr class="parameters row-bg">
                                                                         <td class="col parameters-col_name">
-                                                                            <div class="parameter__name required">
-                                                                                fetchType<span
-                                                                                    style="color: red;">&nbsp;*</span>
+                                                                            <div class="parameter__name required" id="fetchType_param">
+                                                                                Fetch Type<span style="color: red;">&nbsp;*</span>
                                                                             </div>
-                                                                            <div class="parameter__type">string</div>
-                                                                            <div class="parameter__deprecated"></div>
-                                                                            <div class="parameter__in">(query)</div>
+                                                                            
                                                                         </td>
                                                                         <td class="col parameters-col_description">
+                                                                            <input class id="fetchType" type="text" title *ngIf="!try_out_toggle" [ngModelOptions]="{standalone: true}" [(ngModel)]="fetchType">
+                                                                            <div class="error-color error-man" id="textField" *ngIf="fetchTypeErrorMessageDiv">
+                                                                                This field is mandatory.
+                                                                            </div> 
                                                                             <div class="markdown">
                                                                                 <p>Type of export - Incremental (use 1)
                                                                                     or Deleted (use 2) or Full Dump (use
                                                                                     10)
                                                                                 </p>
                                                                             </div>
-                                                                            <input *ngIf="!try_out_toggle" type="text"
-                                                                                id="fetchType"
-                                                                                [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="fetchType" class=""
-                                                                                title=""
-                                                                                placeholder="fetchType - Type of export - Incremental (use 1) or Deleted (use 2) or Full Dump (use 10)"
-                                                                                value="">
-                                                                            <div *ngIf="fetchTypeErrorMessageDiv"
-                                                                                id="textField"
-                                                                                class="col-md-9 col-sm-10 error-color">
-                                                                                This field is mandatory.
-                                                                            </div>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="parameters">
+                                                                    <tr class="parameters row-bg">
                                                                         <td class="col parameters-col_name">
-                                                                            <div class="parameter__name">
-                                                                                imsDepositoryCodes
+                                                                            <div class="parameter__name" id="imsDepositoryCodes_param">
+                                                                                IMS Depository Codes
                                                                             </div>
-                                                                            <div class="parameter__type">string</div>
-                                                                            <div class="parameter__deprecated"></div>
-                                                                            <div class="parameter__in">(query)</div>
                                                                         </td>
                                                                         <td class="col parameters-col_description">
+                                                                            <input class id="imsDepositoryCodes" type="text" title *ngIf="!try_out_toggle" [ngModelOptions]="{standalone: true}" [(ngModel)]="imsDepositoryCodes">
                                                                             <div class="markdown">
                                                                                 <p>Ims depository - RECAP (use RECAP) or
                                                                                     Harvard depository (use HD).Default
                                                                                     is RECAP can use RECAP,HD as well
                                                                                 </p>
                                                                             </div>
-                                                                            <input *ngIf="!try_out_toggle" type="text"
-                                                                                id="imsDepositoryCodes"
-                                                                                [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="imsDepositoryCodes"
-                                                                                class="" title=""
-                                                                                placeholder="imsDepositoryCodes - Ims depository - RECAP (use RECAP) or Harvard depository (use HD).Default is RECAP can use RECAP,HD as well"
-                                                                                value="">
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="parameters">
+                                                                    <tr class="parameters row-bg">
                                                                         <td class="col parameters-col_name">
-                                                                            <div class="parameter__name required">
-                                                                                institutionCodes<span
-                                                                                    style="color: red;">&nbsp;*</span>
+                                                                            <div class="parameter__name required" id="institutionCodes_param">
+                                                                                Institution Codes<span style="color: red;">&nbsp;*</span>
                                                                             </div>
-                                                                            <div class="parameter__type">string</div>
-                                                                            <div class="parameter__deprecated"></div>
-                                                                            <div class="parameter__in">(query)</div>
                                                                         </td>
                                                                         <td class="col parameters-col_description">
+                                                                            <input class id="institutionCodes" type="text" title *ngIf="!try_out_toggle" [ngModelOptions]="{standalone: true}" [(ngModel)]="institutionCodes">
+                                                                            <div class="error-man error-color" id="textField" *ngIf="institutionCodesErrorMessageDiv">
+                                                                                This field is mandatory.
+                                                                            </div>
                                                                             <div class="markdown">
                                                                                 <p>Institution code(s) for requesting
                                                                                     shared/open updates from partners:
                                                                                     PUL = Princeton, CUL = Columbia,
                                                                                     NYPL = New York Public Library</p>
                                                                             </div>
-                                                                            <input *ngIf="!try_out_toggle" type="text"
-                                                                                id="institutionCodes"
-                                                                                [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="institutionCodes" class=""
-                                                                                title=""
-                                                                                placeholder="institutionCodes - Institution code(s) for requesting shared/open updates from partners: PUL = Princeton, CUL = Columbia, NYPL = New York Public Library"
-                                                                                value="">
-                                                                            <div *ngIf="institutionCodesErrorMessageDiv"
-                                                                                id="textField"
-                                                                                class="col-md-9 col-sm-10 error-color">
-                                                                                This field is mandatory.
-                                                                            </div>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="parameters">
+                                                                    <tr class="parameters row-bg">
                                                                         <td class="col parameters-col_name">
-                                                                            <div class="parameter__name required">
-                                                                                outputFormat<span
-                                                                                    style="color: red;">&nbsp;*</span>
-                                                                            </div>
-                                                                            <div class="parameter__type">string
-                                                                            </div>
-                                                                            <div class="parameter__deprecated"></div>
-                                                                            <div class="parameter__in">(query)
+                                                                            <div class="parameter__name required" id="outputFormat_param">
+                                                                                Output Format<span style="color: red;">&nbsp;*</span>
                                                                             </div>
                                                                         </td>
                                                                         <td class="col parameters-col_description">
+                                                                            <input class id="outputFormat" type="text" title *ngIf="!try_out_toggle" [ngModelOptions]="{standalone: true}" [(ngModel)]="outputFormat">
+                                                                            <div class="error-man error-color" id="textField" *ngIf="outputFormatErrorMessageDiv">
+                                                                                This field is mandatory.
+                                                                            </div>
                                                                             <div class="markdown">
                                                                                 <p>Type of format - Marc xml (use 0) or
                                                                                     SCSB xml (use 1), for deleted
                                                                                     records only json format (use 2)</p>
                                                                             </div>
-                                                                            <input *ngIf="!try_out_toggle" type="text"
-                                                                                id="outputFormat"
-                                                                                [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="outputFormat" class=""
-                                                                                title=""
-                                                                                placeholder="outputFormat - Type of format - Marc xml (use 0) or SCSB xml (use 1), for deleted records only json format (use 2)"
-                                                                                value="">
-                                                                            <div *ngIf="outputFormatErrorMessageDiv"
-                                                                                id="textField"
-                                                                                class="col-md-9 col-sm-10 error-color">
-                                                                                This field is mandatory.
-                                                                            </div>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="parameters">
+                                                                    <tr class="parameters row-bg">
                                                                         <td class="col parameters-col_name">
-                                                                            <div class="parameter__name required">
-                                                                                requestingInstitutionCode<span
-                                                                                    style="color: red;">&nbsp;*</span>
-                                                                            </div>
-                                                                            <div class="parameter__type">string
-                                                                            </div>
-                                                                            <div class="parameter__deprecated"></div>
-                                                                            <div class="parameter__in">(query)
+                                                                            <div class="parameter__name required" id="requestingInstitutionCode_param">
+                                                                                Requesting Institution Code<span style="color: red;">&nbsp;*</span>
                                                                             </div>
                                                                         </td>
                                                                         <td class="col parameters-col_description">
+                                                                            <input class id="requestingInstitutionCode" type="text" title *ngIf="!try_out_toggle" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestingInstitutionCode">
+                                                                            <div class="error-man error-color" id="textField" *ngIf="requestingInstitutionCodeErrorMessageDiv">
+                                                                                This field is mandatory.
+                                                                            </div>
                                                                             <div class="markdown">
                                                                                 <p>Institution codes of the requesting
                                                                                     institution. PUL = Princeton, CUL =
@@ -268,54 +186,29 @@
                                                                                     Library
                                                                                 </p>
                                                                             </div>
-                                                                            <input *ngIf="!try_out_toggle" type="text"
-                                                                                id="requestingInstitutionCode"
-                                                                                [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="requestingInstitutionCode"
-                                                                                class="" title=""
-                                                                                placeholder="requestingInstitutionCode - Institution codes of the requesting institution. PUL = Princeton, CUL = Columbia, NYPL = New York Public Library"
-                                                                                value="">
-                                                                            <div *ngIf="requestingInstitutionCodeErrorMessageDiv"
-                                                                                id="textField"
-                                                                                class="col-md-9 col-sm-10 error-color">
-                                                                                This field is mandatory.
-                                                                            </div>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="parameters">
+                                                                    <tr class="parameters row-bg">
                                                                         <td class="col parameters-col_name">
-                                                                            <div class="parameter__name">
-                                                                                transmissionType
-                                                                            </div>
-                                                                            <div class="parameter__type">string
-                                                                            </div>
-                                                                            <div class="parameter__deprecated"></div>
-                                                                            <div class="parameter__in">(query)
+                                                                            <div class="parameter__name" id="transmissionType_param">
+                                                                                Transmission Type
                                                                             </div>
                                                                         </td>
                                                                         <td class="col parameters-col_description">
+                                                                            <input class id="transmissionType" type="text" title *ngIf="!try_out_toggle" [ngModelOptions]="{standalone: true}" [(ngModel)]="transmissionType">
                                                                             <div class="markdown">
                                                                                 <p>Type of transmission - for FTP use 0,
                                                                                     for HTTP response use 1. Default is
                                                                                     FTP.
                                                                                 </p>
                                                                             </div>
-                                                                            <input *ngIf="!try_out_toggle" type="text"
-                                                                                id="transmissionType"
-                                                                                [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="transmissionType" class=""
-                                                                                title=""
-                                                                                placeholder="transmissionType - Type of transmission - for FTP use 0, for HTTP response use 1. Default is FTP."
-                                                                                value="">
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <div class="execute-wrapper"><button id="dataBumpBtn"
-                                                            name="dataBumpBtn" class="btn execute opblock-control__btn"
-                                                            (click)="startDataDump(collectionGroupIds,date,emailToAddress,fetchType,imsDepositoryCodes,institutionCodes,outputFormat,requestingInstitutionCode,transmissionType)">
+                                                    <div class="execute-wrapper"><button class="btn execute opblock-control__btn" id="dataBumpBtn" name="dataBumpBtn" (click)="startDataDump(collectionGroupIds,date,emailToAddress,fetchType,imsDepositoryCodes,institutionCodes,outputFormat,requestingInstitutionCode,transmissionType)">
                                                             Start Export Data
                                                             Dump</button>
                                                     </div>
@@ -331,37 +224,33 @@
             </div>
         </div>
     </div>
-    <div *ngIf="dataDumpDiv" class="row margin-top-20 " id="dataDumpId">
-        <div *ngIf="dataDumpErrorMessageDiv" id="dataDumpErrorMessageId" class="row margin-btm-10 ">
+    <div class="row margin-top-20 swagger-dump" id="dataDumpId" *ngIf="dataDumpDiv">
+        <div class="row margin-btm-10 " id="dataDumpErrorMessageId" *ngIf="dataDumpErrorMessageDiv">
             <div class="col-sm-12 " style="padding-left:45px;padding-right:45px;margin-top:10px; ">
-                <div class="bg-danger text-danger padding-10 "><span
-                        class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span
-                        id="dataDumpErrorMessageSpanId">{{errorMessage}}</span></div>
+                <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="dataDumpErrorMessageSpanId">{{errorMessage}}</span></div>
             </div>
         </div>
-        <div *ngIf="dataDumpResultsDiv" class="col-xs-12 ">
+        <div class="col-xs-12 " *ngIf="dataDumpResultsDiv">
             <h4>Data Dump Results</h4>
             <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
             <div id="Accession_Deaccession-tableview ">
                 <div class="table-wrapper ">
-                    <table class="table text-center margin-btm-0" id="acessionDeaccessionTable "
-                        style="border-collapse:collapse;">
+                    <table class="table text-center margin-btm-0" id="acessionDeaccessionTable " style="border-collapse:collapse;">
                         <thead class="tablesorter-headerRow">
                             <tr>
-                                <th width="10%" class="text-center">Institution</th>
-                                <th width="10%" class="text-center">Format</th>
-                                <th width="20%" class="text-center">FilePath</th>
-                                <th width="10%" class="text-center">CGDs</th>
-                                <th width="10%" class="text-center">No. Of Bibs</th>
-                                <th width="10%" class="text-center">No. of Items</th>
-                                <th width="10%" class="text-center">Last Modified Date</th>
-                                <th width="15%" class="text-center">Size (Bytes) </th>
+                                <th class="text-center" width="10%">Institution</th>
+                                <th class="text-center" width="10%">Format</th>
+                                <th class="text-center" width="20%">File</th>
+                                <th class="text-center" width="10%">CGDs</th>
+                                <th class="text-center" width="10%">No. Of Bibs</th>
+                                <th class="text-center" width="10%">No. of Items</th>
+                                <th class="text-center" width="10%">Exported Date</th>
+                                <th class="text-center" width="15%">Size (Bytes) </th>
                             </tr>
                         </thead>
                         <ng-container *ngFor="let data of result">
                             <tr>
-                                <td [attr.rowspan]="data.length" style="font-family:sans-serif;"
-                                    class="v-middle-data gray-light fontcolor-white large-font inst-border">
+                                <td class="v-middle-data gray-light fontcolor-white large-font inst-border" [attr.rowspan]="data.length" style="font-family:sans-serif;">
                                     {{data.name}}</td>
                                 <td class="results ">{{data.values[0].bibDataFormat}}</td>
                                 <td class="results ">{{data.values[0].keyName}}</td>

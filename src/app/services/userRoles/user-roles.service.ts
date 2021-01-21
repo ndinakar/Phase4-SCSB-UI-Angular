@@ -13,27 +13,20 @@ export class UserRolesService {
   constructor(private httpClient: HttpClient) { }
   baseUrl = urls.baseUrl;
   prefix = urls.userRoles;
-  httpOptions() {
-    const httpOptions = {
-      headers: appHeaders.getHeaders(),
-      withCredentials: true
-    };
-    return httpOptions;
-  }
   searchRoles(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchUsers", postData, this.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchUsers", postData, appHeaders.httpOptions());
   }
   previousCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData, this.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData, appHeaders.httpOptions());
   }
   nextCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/next", postData, this.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/next", postData, appHeaders.httpOptions());
   }
   firstCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/first", postData, this.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/first", postData, appHeaders.httpOptions());
   }
   lastCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData, this.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData, appHeaders.httpOptions());
   }
   pageSize(postData: UserRoleFormData): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchUsers", postData,
@@ -43,7 +36,7 @@ export class UserRolesService {
   }
   userRoles(): Observable<TreeNode[]> {
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/userRoles",
-      this.httpOptions());
+      appHeaders.httpOptions());
   }
   editUser(userId, networkLoginId): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders();
@@ -68,7 +61,7 @@ export class UserRolesService {
 
   createUser(postData: UserRoleFormData): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createUser", postData,
-      this.httpOptions());
+      appHeaders.httpOptions());
   }
   delete(userId, networkLoginId, pageNumber, totalPageCount, pageSize): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders();

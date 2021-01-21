@@ -46,18 +46,22 @@ export class DataExportComponent implements OnInit {
   tryOutToggle() {
     this.try_out_toggle = !this.try_out_toggle;
   }
-  enableDataExportReport() {
+  enableDataDumpDetails() {
+    this.dataExportDiv = false;
+    this.dataDumpErrorMessageDiv = false;
+    this.dataDumpResultsDiv = false;
     this.dataExportDiv = false;
     this.spinner.show();
     this.dataExportService.getRecentDataExportsInfo().subscribe(
       (res) => {
         this.spinner.hide();
         this.resVal = res;
-        if (this.resVal == null) { 
+        if (this.resVal == null) {
           this.errorMessage = 'SCSB Etl Service is Unavailable.';
           this.dataDumpDiv = true;
           this.dataDumpErrorMessageDiv = true;
           this.dataDumpResultsDiv = false;
+          this.dataExportDiv = false;
         } else {
           this.mappingRes(this.resVal['recentDataExportInfoList']);
           this.dataExportDiv = false;
@@ -65,7 +69,7 @@ export class DataExportComponent implements OnInit {
           this.dataDumpResultsDiv = true;
           this.dataDumpErrorMessageDiv = false;
         }
-        
+
       },
       (error) => {
         this.spinner.hide();
@@ -78,6 +82,9 @@ export class DataExportComponent implements OnInit {
     this.dataDumpDiv = false;
     this.dataDumpResultsDiv = false;
     this.dataDumpErrorMessageDiv = false;
+    this.errorMessageDiv = false;
+    this.successMessageDiv = false;
+    this.hideErrorDivs();
   }
   mappingRes(data) {
     var groups = new Set(data.map(item => item.institution));
@@ -92,11 +99,9 @@ export class DataExportComponent implements OnInit {
     });
   }
   startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType) {
-    this.errorMessageDiv = false;
-    this.successMessageDiv = false;
     if (this.validateMandatoryInputs(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType)) {
       this.dataExportService.startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType).subscribe(
-        (res) => { 
+        (res) => {
           this.resValExport = res;
           if (this.resValExport['message'] != null) {
             this.successMessageDiv = true;
@@ -106,7 +111,7 @@ export class DataExportComponent implements OnInit {
             this.successMessageDiv = false;
             this.errorMessageDiv = true;
             this.resetFields();
-           }
+          }
         },
         (error) => {
 
@@ -141,7 +146,7 @@ export class DataExportComponent implements OnInit {
     }
     return this.status;
   }
-  resetFields() { 
+  resetFields() {
     this.collectionGroupIds = '';
     this.date = '';
     this.emailToAddress = '';
@@ -151,5 +156,13 @@ export class DataExportComponent implements OnInit {
     this.outputFormat = '';
     this.requestingInstitutionCode = '';
     this.transmissionType = '';
+  }
+  hideErrorDivs() {
+    this.dataDumpErrorMessageDiv = false;
+    this.dataDumpResultsDiv = false;
+    this.requestingInstitutionCodeErrorMessageDiv = false;
+    this.outputFormatErrorMessageDiv = false;
+    this.institutionCodesErrorMessageDiv = false;
+    this.fetchTypeErrorMessageDiv = false;
   }
 }

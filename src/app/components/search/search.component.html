@@ -15,8 +15,8 @@
                                     <input id="totalItemRecordsCount" name="totalItemRecordsCount" type="text" hidden="hidden">
                                     <button id="pageSizeChangeButtonId" name="action" type="submit" value="pageSizeChange" hidden="hidden"></button>
                                     <div>
-                                        <div class="has-feedback ">
-                                            <input class="form-control" id="fieldValue" name="fieldValue" type="search" [(ngModel)]="fieldValue" (keyup)="clearFieldvalue()" formControlName="fieldValue" placeholder="Type Text Here.....">
+                                        <div class="has-feedback">
+                                            <input class="form-control" id="fieldValue" name="fieldValue" type="search" (keyup)="clearFieldvalue()" formControlName="fieldValue" placeholder="Type Text Here.....">
                                             <span class="add-clear-x form-control-feedback glyphicon glyphicon-remove" id="clearSearchText" style="color: rgb(12, 12, 12); cursor: pointer; text-decoration: none; overflow: hidden; position: absolute; pointer-events: auto; right: 0px; top: 4px; z-index: 100; display: block;" (click)="clearSearchText()"></span>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
                                                 <div class="row padding-left-15">
                                                     <div *ngFor="let inst of instVal">
                                                         <label>
-                                                            <input class="facetCheckBox" type="checkbox" value="{{inst}}" (change)="onChange($event.target.checked, inst)" [checked]="checkedItem(inst)">
+                                                            <input class="facetCheckBox" type="checkbox" value="{{inst}}" (change)="onChange($event.target.checked, inst);enableResetSearch($event.target.checked)" [checked]="checkedItem(inst)">
                                                             <span class="cr"></span>
                                                             &nbsp;{{inst}}
                                                         </label>
