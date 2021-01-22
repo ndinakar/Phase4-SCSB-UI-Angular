@@ -29,10 +29,7 @@ export class UserRolesService {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData, appHeaders.httpOptions());
   }
   pageSize(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchUsers", postData,
-      {
-        headers: appHeaders.getHeaders()
-      });
+    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchUsers", postData, appHeaders.httpOptions());
   }
   userRoles(): Observable<TreeNode[]> {
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/userRoles",

@@ -444,12 +444,6 @@
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div class="">
-                                            <!-- <select class="form-control themed-input themed-select" id="deletedRoleId" disabled="disabled" name="deletedRoleId" multiple="multiple" [ngModelOptions]="{standalone: true}" [(ngModel)]="deletedRoleId">
-                                                <option th:each="roleValues : ${userRoleForm.roles}"
-                                                    th:value="${roleValues[0]}" th:text="${roleValues[1]}"
-                                                    th:selected="${userRoleForm.showSelectedForCreate.contains(roleValues)}">
-                                                </option>
-                                            </select> -->
                                             <ng-select id="deletedRoleId" [items]="userRoleListVal" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="deletedRoleId" placeholder="Select One or More" disabled>
                                                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                                     <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected"> {{item.name}}
