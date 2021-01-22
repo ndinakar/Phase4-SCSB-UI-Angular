@@ -13,13 +13,6 @@ export class RolesService {
   constructor(private httpClient: HttpClient) { }
   baseUrl = urls.baseUrl;
   prefix = urls.roles;
-  httpOptions(){
-    const httpOptions = {
-      headers: appHeaders.getHeaders(),
-      withCredentials: true
-    };
-    return httpOptions;
-  }
   searchRoles(postData: RolesForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchRoles", postData,
       {
@@ -34,7 +27,7 @@ export class RolesService {
   }
   createRole(postData: RolesForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createRole", postData,
-     this.httpOptions());
+      appHeaders.httpOptions());
   }
   saveEditedRole(roleId, roleName, roleDescription, permissionNames): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders();
@@ -43,7 +36,7 @@ export class RolesService {
       .set('roleName', roleName)
       .set('roleDescription', roleDescription)
       .set('editPermissionNames', permissionNames);
-    const options = { params: parames, headers: headers,withCredentials: true };
+    const options = { params: parames, headers: headers, withCredentials: true };
     return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/saveEditedRole", options);
   }
   editRole(postData: RolesForm): Observable<TreeNode[]> {

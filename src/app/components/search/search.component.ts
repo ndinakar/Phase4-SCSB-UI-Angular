@@ -8,6 +8,7 @@ import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { SearchService } from 'src/app/services/search/search.service';
 import { ReportsService } from 'src/app/services/reports/reports.service';
+import { count } from 'rxjs/operators';
 declare var $: any;
 
 @Component({
@@ -31,6 +32,7 @@ declare var $: any;
 })
 export class SearchComponent implements OnInit {
   toggleCheck = true;
+  count: number = 4;
   instList: any[];
   owningInstitutionInst: any[];
   instVal: string[];
@@ -358,9 +360,6 @@ export class SearchComponent implements OnInit {
       this.searchForm = this.formBuilder.group({
         fieldValue: [searchallvalue.fieldValue],
         fieldName: [searchallvalue.fieldName],
-        // owningInstitutionNYPL: [false],
-        // owningInstitutionCUL: [false],
-        // owningInstitutionPUL: [false],
         Monograph: [false],
         Serial: [false],
         others: [false],
@@ -372,8 +371,8 @@ export class SearchComponent implements OnInit {
         NoRestrictions: [false],
         InLibraryUse: [false],
         SupervisedUse: [false]
-
       });
+      this.searchForm.markAsDirty();
     } else {
       this.checked = true;
       this.reportsService.getInstitutions().subscribe(
@@ -383,9 +382,6 @@ export class SearchComponent implements OnInit {
       this.searchForm = this.formBuilder.group({
         fieldValue: [searchallvalue.fieldValue],
         fieldName: [searchallvalue.fieldName],
-        // owningInstitutionNYPL: [true],
-        // owningInstitutionCUL: [true],
-        // owningInstitutionPUL: [true],
         Monograph: [true],
         Serial: [true],
         others: [true],
@@ -397,7 +393,6 @@ export class SearchComponent implements OnInit {
         NoRestrictions: [true],
         InLibraryUse: [true],
         SupervisedUse: [true]
-
       });
 
     }
@@ -601,7 +596,8 @@ export class SearchComponent implements OnInit {
     }
   }
   clearSearchText() {
-    this.fieldValue = '';
+    // this.fieldValue = '';
+    $("#fieldValue").val('');
     $("#clearSearchText").hide();
     $("#resetSearch").prop('disabled', true);
   }
@@ -609,5 +605,16 @@ export class SearchComponent implements OnInit {
     if (event.checked === true) {
       this.clicked = false;
     } else { this.clicked = true; }
+  }
+  enableResetSearch(val) {
+    if (!val) {
+      this.count = this.count - 1;
+      this.searchForm.markAsDirty();
+    } else {
+      this.count = this.count + 1;
+      if (this.count == 4) {
+        this.searchForm.markAsPristine();
+      }
+    }
   }
 }
