@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { NGXLogger } from 'ngx-logger';
+import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/services/login/login.service';
 import { urls } from 'src/config/urls';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,7 +13,9 @@ import { urls } from 'src/config/urls';
 
 
 export class HomeComponent implements OnInit {
+
   baseUrl = urls.baseUrl;
+  homeUrl = urls.homeUrl;
   registerForm: FormGroup;
   serviceUrl: string;
   submitted = false;
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
   institutionErrorMessageDiv = false;
   institution: string = undefined;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private cookieService: CookieService, private loginService: LoginService, private http: HttpClient) { }
+  constructor(private logger: NGXLogger, private cookieService: CookieService, private loginService: LoginService) { }
   ngAfterViewInit() {
     // @ts-ignore
     twttr.widgets.load();
@@ -30,24 +31,22 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.institution = undefined;
+    //this.cookieService.deleteAll();
+    //localStorage.clear();
+    this.logger.info('TESTING');
     this.loginService.getInstitutions().subscribe(
       (res) => {
         this.Institutions = Object.keys(res).map(function (data) {
           return [data, res[data]];
         });
-        this.cookieService.delete('userName');
-        this.cookieService.delete('loggedInInstitution');
-        this.cookieService.delete('isAuthenticated');
-        this.cookieService.delete('CSRF-TOKEN');
-        this.cookieService.delete('JSESSIONID');
       });
   }
-  navigate(): void {
+  navigate(institution): void {
     if (this.institution == '' || this.institution == null || this.institution == undefined) {
       this.institutionErrorMessageDiv = true;
     } else {
       this.institutionErrorMessageDiv = false;
-      window.location.href = this.baseUrl + "/login-scsb?institution=" + this.institution;
+      this.loginService.routeToAuth(institution);
     }
   }
 

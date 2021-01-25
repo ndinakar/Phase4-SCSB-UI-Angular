@@ -3,9 +3,11 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
+import { CookieService } from 'ngx-cookie-service';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,8 +15,9 @@ export class AuthGuard implements CanActivate {
 
   resVal: Object;
   baseUrl = urls.baseUrl;
+  homeUrl = environment.homeUrl;
 
-  constructor(private http: HttpClient,
+  constructor(private cookieService: CookieService, private http: HttpClient,
     private router: Router, private rolesService: RolesPermissionsService) { }
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
@@ -27,7 +30,8 @@ export class AuthGuard implements CanActivate {
       map(res => {
         this.resVal = res.body;
         if (!res.body['isAuthenticated']) {
-          this.router.navigate(['/home']);
+          this.cookieService.deleteAll();
+          sessionStorage.clear();
           return false;
         } else {
           this.rolesService.setRes(this.resVal);

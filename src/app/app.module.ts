@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CookieService } from 'ngx-cookie-service';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { AppConfig } from 'src/config/app.config.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,6 +45,7 @@ export function appInit(appConfig: AppConfig) {
     DataExportComponent,
   ],
   imports: [
+    LoggerModule.forRoot({ level: NgxLoggerLevel.TRACE }),
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -53,7 +55,7 @@ export function appInit(appConfig: AppConfig) {
     NgSelectModule,
     NgxSpinnerModule
   ],
-  providers: [AppConfig,CookieService,
+  providers: [AppConfig, CookieService,
     {
       provide: APP_INITIALIZER,
       useFactory: appInit,

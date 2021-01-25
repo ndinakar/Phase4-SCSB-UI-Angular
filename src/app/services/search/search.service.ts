@@ -14,8 +14,8 @@ export class SearchService {
   constructor(private httpClient: HttpClient, private appConfig: AppConfig) { }
   baseUrl = urls.baseUrl;
   prefix = urls.search;
-  checkPermission(prefix: string): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + '/' + prefix + "/checkPermission",
+  checkPermission(prefix: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(this.baseUrl + '/' + prefix + "/checkPermission",
       appHeaders.httpOptions());
   }
   getSearch(postData: SearchRecordRequest): Observable<TreeNode[]> {

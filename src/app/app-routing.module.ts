@@ -33,6 +33,7 @@ const routes: Routes = [
       {
         path: 'search',
         component: SearchComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'collection',
@@ -65,6 +66,7 @@ const routes: Routes = [
       {
         path: 'jobs',
         component: JobsComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'monitoring',

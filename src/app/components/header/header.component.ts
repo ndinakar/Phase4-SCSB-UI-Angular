@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
@@ -18,6 +19,7 @@ export class HeaderComponent implements OnInit {
   }
 
   baseUrl = urls.baseUrl;
+  homeUrl = environment.homeUrl;
 
   ngOnInit(): void {
     this.userName = this.cookieService.get('userName');
@@ -32,8 +34,8 @@ export class HeaderComponent implements OnInit {
     this.http.get(this.baseUrl + '/api/logout', httpOptions).subscribe((res) => {
       if (res) {
         this.cookieService.deleteAll();
-        window.location.reload(true);
-        this.router.navigate(['/home']);
+        sessionStorage.clear()
+        this.router.navigate(['home']);
       }
     });
   }

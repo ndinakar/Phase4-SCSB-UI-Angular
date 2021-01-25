@@ -15,5 +15,5 @@ export const urls = {
     dataExport: '/dataExport',
     openMarc: '/openMarcRecord',
     batchScheduleUrl: coreUrl + ':9096',
-    homeUrl: coreUrl + ':9091' + '/home'
+    homeUrl: coreUrl
 }
