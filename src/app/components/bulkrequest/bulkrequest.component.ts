@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { BulkRequestService } from 'src/app/services/bulkRequest/bulk-request.service';
 declare var $: any;
 
@@ -136,12 +138,8 @@ export class BulkrequestComponent implements OnInit {
         this.patronBarcodeId = '';
         this.patronEmailId = '';
         this.requestNotesId = '';
-      },
-      (error) => {
-
-      }
-
-    );
+      }),
+      catchError(error => of(error.toString()));
   }
 
   initialloadnew() {

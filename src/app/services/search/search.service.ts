@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { SearchRecordRequest } from 'src/app/model/SearchRecordRequest';
-import { AppConfig } from 'src/config/app.config.service';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
 
@@ -11,13 +10,10 @@ import { urls } from 'src/config/urls';
   providedIn: 'root'
 })
 export class SearchService {
-  constructor(private httpClient: HttpClient, private appConfig: AppConfig) { }
+  constructor(private httpClient: HttpClient) { }
   baseUrl = urls.baseUrl;
   prefix = urls.search;
-  checkPermission(prefix: string): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + '/' + prefix + "/checkPermission",
-      appHeaders.httpOptions());
-  }
+
   getSearch(postData: SearchRecordRequest): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchResults", postData,
       {

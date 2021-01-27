@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private dashBoardService: DashBoardService) { }
+  versionNumber: string;
   ngOnInit(): void {
+    this.dashBoardService.getVersionNumber().subscribe(
+      versionRes => {
+        this.versionNumber = versionRes;
+      },
+      (error) => {
+      }
+    );
   }
-
 }

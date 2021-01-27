@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { NGXLogger } from 'ngx-logger';
 import { LoginService } from 'src/app/services/login/login.service';
 import { urls } from 'src/config/urls';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,43 +13,59 @@ import { urls } from 'src/config/urls';
 
 
 export class HomeComponent implements OnInit {
+  reloadStatus: boolean;
+  institution: string = 'default';
+  url: string = '';
   baseUrl = urls.baseUrl;
-  registerForm: FormGroup;
+  casPrefix = urls.casPrefix;
+  redirectForm: FormGroup;
   serviceUrl: string;
   submitted = false;
   Institutions: any = [];
   institutionErrorMessageDiv = false;
-  institution: string = undefined;
+  validate = false;
+  constructor(private router: Router, private logger: NGXLogger, private formBuilder: FormBuilder, private cookieService: CookieService, private loginService: LoginService) {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private cookieService: CookieService, private loginService: LoginService, private http: HttpClient) { }
+  }
   ngAfterViewInit() {
     // @ts-ignore
     twttr.widgets.load();
   }
 
   ngOnInit(): void {
-    this.institution = undefined;
+    this.cookieService.deleteAll();
+    sessionStorage.clear();
+    this.redirectForm = this.formBuilder.group({
+      institution: ''
+    });
+    this.reloadStatus = localStorage.reload;
+    this.reloadComponent(this.reloadStatus);
+    this.institution = 'default';
+    this.cookieService.deleteAll();
     this.loginService.getInstitutions().subscribe(
       (res) => {
-        this.Institutions = Object.keys(res).map(function (data) {
-          return [data, res[data]];
-        });
-        this.cookieService.delete('userName');
-        this.cookieService.delete('loggedInInstitution');
-        this.cookieService.delete('isAuthenticated');
-        this.cookieService.delete('CSRF-TOKEN');
-        this.cookieService.delete('JSESSIONID');
+        this.Institutions = res;
       });
   }
-  navigate(): void {
-    if (this.institution == '' || this.institution == null || this.institution == undefined) {
+  changeInst() {
+    if (this.institution == 'default') {
       this.institutionErrorMessageDiv = true;
+      this.validate = false;
     } else {
       this.institutionErrorMessageDiv = false;
-      window.location.href = this.baseUrl + "/login-scsb?institution=" + this.institution;
+      this.url = this.baseUrl + this.casPrefix + this.institution;
+      this.validate = true;
     }
   }
-
+  reloadComponent(reloadStatus) {
+    if (reloadStatus == 'true') {
+      localStorage.setItem('reload', 'false');
+      window.location.reload(true);
+    }
+  }
+  returnZero() {
+    return 0
+  }
   getinTouch: any[] = [{
     "for": "Princeton users, Role administration, please contact",
     "url": 'mailto:Recapproblems@princeton.edu',
