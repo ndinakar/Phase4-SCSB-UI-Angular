@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
 
   resVal: Object;
   baseUrl = urls.baseUrl;
-  homeUrl = environment.homeUrl;
+  api = urls.api;
 
   constructor(private cookieService: CookieService, private http: HttpClient,
     private router: Router, private rolesService: RolesPermissionsService) { }
@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
       withCredentials: true,
       observe: 'response' as 'response'
     };
-    return this.http.get(this.baseUrl + '/api/loginCheck', httpOptions).pipe(
+    return this.http.get(this.baseUrl + this.api + '/loginCheck', httpOptions).pipe(
       map(res => {
         this.resVal = res.body;
         if (!res.body['isAuthenticated']) {

@@ -19,7 +19,6 @@ export class HeaderComponent implements OnInit {
   }
 
   baseUrl = urls.baseUrl;
-  homeUrl = environment.homeUrl;
   api = urls.api;
 
   ngOnInit(): void {
