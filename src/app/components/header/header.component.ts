@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
 
   baseUrl = urls.baseUrl;
   homeUrl = environment.homeUrl;
+  api = urls.api;
 
   ngOnInit(): void {
     this.userName = this.cookieService.get('userName');
@@ -31,10 +32,11 @@ export class HeaderComponent implements OnInit {
       withCredentials: true,
       observe: 'response' as 'response'
     };
-    this.http.get(this.baseUrl + '/api/logout', httpOptions).subscribe((res) => {
+    this.http.get(this.baseUrl + this.api + '/logout', httpOptions).subscribe((res) => {
       if (res) {
         this.cookieService.deleteAll();
-        sessionStorage.clear()
+        sessionStorage.clear();
+        localStorage.setItem('reload', 'true');
         this.router.navigate(['home']);
       }
     });

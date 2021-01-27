@@ -1,5 +1,5 @@
 import { urls } from 'src/config/urls';
 export const environment = {
     production: false,
-    homeUrl: urls.homeUrl + '/home'
+    homeUrl: urls.appUrl + '/home'
 };

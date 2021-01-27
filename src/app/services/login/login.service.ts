@@ -1,35 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { url } from 'inspector';
 import { Observable } from 'rxjs';
 import { appHeaders } from 'src/config/headers';
-import { environment } from 'src/environments/environment';
 import { urls } from 'src/config/urls';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private router: Router) { }
   homeUrl = environment.homeUrl;
   baseUrl = urls.baseUrl;
-  prefix = urls.login;
+  casPrefix = urls.casPrefix;
+  api = urls.api;
 
   getInstitutions(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "/api/institutions",
+    return this.httpClient.get<any>(this.baseUrl + this.api + '/institutions',
       {
         headers: appHeaders.getHeaders()
       });
-  }
-  routeToAuth(institution) {
-    if (window.location.href == this.homeUrl) {
-      //window.location.replace(this.baseUrl + "/login-scsb?institution=" + institution);
-      window.location.href = this.baseUrl + "/login-scsb?institution=" + institution;
-    } else {
-      window.location.replace(window.location.protocol + '//' + window.location.hostname + ':9091/home');
-      console.log(window.location.href);
-      window.location.href = this.baseUrl + "/login-scsb?institution=" + institution;
-    }
   }
   loginCheck(): Observable<any> {
     const httpOptions = {
@@ -37,6 +30,6 @@ export class LoginService {
       withCredentials: true,
       observe: 'response' as 'response'
     };
-    return this.httpClient.get<any>(this.baseUrl + "/api/loginCheck", httpOptions);
+    return this.httpClient.get<any>(this.baseUrl + this.api + '/loginCheck', httpOptions);
   }
 }

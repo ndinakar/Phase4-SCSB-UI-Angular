@@ -148,8 +148,7 @@
                     "options": {
                         "browserTarget": "project:build",
                         "proxyConfig": "proxy.conf.json",
-                        "port": 80,
-                        "host": "test-recap.htcinc.com"
+                        "port": 9091
                     },
                     "configurations": {
                         "production": {

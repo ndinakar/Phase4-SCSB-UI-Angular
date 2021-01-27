@@ -5,6 +5,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { BulkrequestComponent } from './components/bulkrequest/bulkrequest.component';
 import { CollectionComponent } from './components/collection/collection.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DataExportComponent } from './components/data-export/data-export.component';
 import { HomeComponent } from './components/home/home.component';
 import { JobsComponent } from './components/jobs/jobs.component';
 import { LoggingComponent } from './components/logging/logging.component';
@@ -16,10 +17,12 @@ import { RequestComponent } from './components/request/request.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
-import { DataExportComponent } from './components/data-export/data-export.component';
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'home',
+    component: HomeComponent
+  },
   { path: 'logout', component: HomeComponent },
   {
     path: 'openMarcRecord', component: OpenMarcComponent,
@@ -90,7 +93,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    useHash: false, enableTracing: false, initialNavigation: true, onSameUrlNavigation: 'reload'
+  })],
   exports: [RouterModule],
   providers: [AuthGuard]
 })

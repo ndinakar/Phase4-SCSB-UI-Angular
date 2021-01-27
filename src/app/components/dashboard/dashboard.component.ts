@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
-import { SearchService } from 'src/app/services/search/search.service';
 import { urls } from 'src/config/urls';
 @Component({
   selector: 'app-maindashboard',
@@ -14,21 +14,21 @@ export class DashboardComponent implements OnInit {
   res: Object;
   isAuthenticated = false;
   constructor(private http: HttpClient,
-    private router: Router, private rolesService: RolesPermissionsService, private searchService: SearchService) { }
+    private router: Router, private rolesService: RolesPermissionsService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
     this.res = this.rolesService.getRes();
   }
   checkPermission(prefix) {
-    this.searchService.checkPermission(prefix).subscribe(
+    this.dashBoardService.checkPermission(prefix).subscribe(
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['home']);
         }
       },
       (error) => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['home']);
       }
     );
   }

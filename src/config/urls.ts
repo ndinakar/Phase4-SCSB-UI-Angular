@@ -1,7 +1,7 @@
 
-var coreUrl = window.location.protocol + '//' + window.location.hostname;
+var appURL = window.location.protocol + '//' + window.location.hostname;
 export const urls = {
-    baseUrl: coreUrl + ':9089',
+    baseUrl: appURL + ':9089',
     search: '/search',
     collection: '/collection',
     requests: '/request',
@@ -14,6 +14,9 @@ export const urls = {
     login: '/login',
     dataExport: '/dataExport',
     openMarc: '/openMarcRecord',
-    batchScheduleUrl: coreUrl + ':9096',
-    homeUrl: coreUrl
+    dashBoard: '/validation',
+    casPrefix: '/login-scsb?institution=',
+    api: '/api',
+    batchScheduleUrl: appURL + ':9096',
+    appUrl: appURL
 }

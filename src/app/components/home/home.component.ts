@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { NGXLogger } from 'ngx-logger';
-import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/services/login/login.service';
 import { urls } from 'src/config/urls';
 @Component({
@@ -13,43 +13,59 @@ import { urls } from 'src/config/urls';
 
 
 export class HomeComponent implements OnInit {
-
+  reloadStatus: boolean;
+  institution: string = 'default';
+  url: string = '';
   baseUrl = urls.baseUrl;
-  homeUrl = urls.homeUrl;
-  registerForm: FormGroup;
+  casPrefix = urls.casPrefix;
+  redirectForm: FormGroup;
   serviceUrl: string;
   submitted = false;
   Institutions: any = [];
   institutionErrorMessageDiv = false;
-  institution: string = undefined;
+  validate = false;
+  constructor(private router: Router, private logger: NGXLogger, private formBuilder: FormBuilder, private cookieService: CookieService, private loginService: LoginService) {
 
-  constructor(private logger: NGXLogger, private cookieService: CookieService, private loginService: LoginService) { }
+  }
   ngAfterViewInit() {
     // @ts-ignore
     twttr.widgets.load();
   }
 
   ngOnInit(): void {
-    this.institution = undefined;
-    //this.cookieService.deleteAll();
-    //localStorage.clear();
-    this.logger.info('TESTING');
+    this.cookieService.deleteAll();
+    sessionStorage.clear();
+    this.redirectForm = this.formBuilder.group({
+      institution: ''
+    });
+    this.reloadStatus = localStorage.reload;
+    this.reloadComponent(this.reloadStatus);
+    this.institution = 'default';
+    this.cookieService.deleteAll();
     this.loginService.getInstitutions().subscribe(
       (res) => {
-        this.Institutions = Object.keys(res).map(function (data) {
-          return [data, res[data]];
-        });
+        this.Institutions = res;
       });
   }
-  navigate(institution): void {
-    if (this.institution == '' || this.institution == null || this.institution == undefined) {
+  changeInst() {
+    if (this.institution == 'default') {
       this.institutionErrorMessageDiv = true;
+      this.validate = false;
     } else {
       this.institutionErrorMessageDiv = false;
-      this.loginService.routeToAuth(institution);
+      this.url = this.baseUrl + this.casPrefix + this.institution;
+      this.validate = true;
     }
   }
-
+  reloadComponent(reloadStatus) {
+    if (reloadStatus == 'true') {
+      localStorage.setItem('reload', 'false');
+      window.location.reload(true);
+    }
+  }
+  returnZero() {
+    return 0
+  }
   getinTouch: any[] = [{
     "for": "Princeton users, Role administration, please contact",
     "url": 'mailto:Recapproblems@princeton.edu',
