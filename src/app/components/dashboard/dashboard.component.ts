@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
     private router: Router, private rolesService: RolesPermissionsService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
+    localStorage.setItem('casUrlStatus', 'false');
     this.res = this.rolesService.getRes();
   }
   checkPermission(prefix) {

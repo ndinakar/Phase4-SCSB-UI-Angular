@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
       if (res) {
         this.cookieService.deleteAll();
         sessionStorage.clear();
-        localStorage.setItem('reload', 'true');
+        localStorage.setItem('casUrlStatus', 'false');
         this.router.navigate(['home']);
       }
     });

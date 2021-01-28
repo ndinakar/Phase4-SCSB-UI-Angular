@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { NGXLogger } from 'ngx-logger';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { LoginService } from 'src/app/services/login/login.service';
 import { urls } from 'src/config/urls';
 @Component({
@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
   submitted = false;
   Institutions: any = [];
   institutionErrorMessageDiv = false;
-  validate = false;
-  constructor(private router: Router, private logger: NGXLogger, private formBuilder: FormBuilder, private cookieService: CookieService, private loginService: LoginService) {
+  validate: boolean;
+  constructor(private spinner: NgxSpinnerService, private logger: NGXLogger, private cookieService: CookieService, private loginService: LoginService) {
 
   }
   ngAfterViewInit() {
@@ -33,15 +33,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinner.hide();
     this.cookieService.deleteAll();
     sessionStorage.clear();
-    this.redirectForm = this.formBuilder.group({
-      institution: ''
-    });
-    this.reloadStatus = localStorage.reload;
-    this.reloadComponent(this.reloadStatus);
+    this.redirectToCas();
     this.institution = 'default';
-    this.cookieService.deleteAll();
     this.loginService.getInstitutions().subscribe(
       (res) => {
         this.Institutions = res;
@@ -57,14 +53,26 @@ export class HomeComponent implements OnInit {
       this.validate = true;
     }
   }
-  reloadComponent(reloadStatus) {
-    if (reloadStatus == 'true') {
-      localStorage.setItem('reload', 'false');
-      window.location.reload(true);
+  redirectToCas() {
+    if (localStorage.casUrlStatus == 'true') {
+      this.spinner.show();
+      const link = document.createElement('a');
+      link.href = localStorage.casURL;
+      link.setAttribute('visibility', 'hidden');
+      link.click();
+      localStorage.setItem('casUrlStatus', 'false');
     }
   }
   returnZero() {
     return 0
+  }
+  navigateToCAS() {
+    localStorage.setItem('casURL', this.url);
+    localStorage.setItem('casUrlStatus', 'true');
+    const link = document.createElement('a');
+    link.href = this.url;
+    link.setAttribute('visibility', 'hidden');
+    link.click();
   }
   getinTouch: any[] = [{
     "for": "Princeton users, Role administration, please contact",
