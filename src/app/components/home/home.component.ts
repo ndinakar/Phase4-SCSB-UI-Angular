@@ -35,8 +35,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.hide();
-    //this.cookieService.deleteAll();
-    //sessionStorage.clear();
+    this.cookieService.deleteAll();
+    sessionStorage.clear();
     this.redirectToCas();
     this.institution = 'default';
     this.loginService.getInstitutions().subscribe(
@@ -55,6 +55,7 @@ export class HomeComponent implements OnInit {
     }
   }
   redirectToCas() {
+    this.cookieService.deleteAll();
     if (localStorage.casUrlStatus == 'true') {
       this.spinner.show();
       // const link = document.createElement('a');
@@ -69,6 +70,7 @@ export class HomeComponent implements OnInit {
     return 0
   }
   navigateToCAS() {
+    this.cookieService.deleteAll();
     localStorage.setItem('casURL', this.url);
     localStorage.setItem('casUrlStatus', 'true');
     // const link = document.createElement('a');
