@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { NGXLogger } from 'ngx-logger';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit {
   Institutions: any = [];
   institutionErrorMessageDiv = false;
   validate: boolean;
-  constructor(private spinner: NgxSpinnerService, private logger: NGXLogger, private cookieService: CookieService, private loginService: LoginService) {
+  constructor(private router: Router, private spinner: NgxSpinnerService, private logger: NGXLogger, private cookieService: CookieService, private loginService: LoginService) {
 
   }
   ngAfterViewInit() {
@@ -34,8 +35,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.hide();
-    this.cookieService.deleteAll();
-    sessionStorage.clear();
+    //this.cookieService.deleteAll();
+    //sessionStorage.clear();
     this.redirectToCas();
     this.institution = 'default';
     this.loginService.getInstitutions().subscribe(
@@ -56,10 +57,11 @@ export class HomeComponent implements OnInit {
   redirectToCas() {
     if (localStorage.casUrlStatus == 'true') {
       this.spinner.show();
-      const link = document.createElement('a');
-      link.href = localStorage.casURL;
-      link.setAttribute('visibility', 'hidden');
-      link.click();
+      // const link = document.createElement('a');
+      // link.href = localStorage.casURL;
+      // link.setAttribute('visibility', 'hidden');
+      // link.click();
+      window.location.href = localStorage.casURL;
       localStorage.setItem('casUrlStatus', 'false');
     }
   }
@@ -69,10 +71,11 @@ export class HomeComponent implements OnInit {
   navigateToCAS() {
     localStorage.setItem('casURL', this.url);
     localStorage.setItem('casUrlStatus', 'true');
-    const link = document.createElement('a');
-    link.href = this.url;
-    link.setAttribute('visibility', 'hidden');
-    link.click();
+    // const link = document.createElement('a');
+    // link.href = localStorage.casURL;
+    // link.setAttribute('visibility', 'hidden');
+    // link.click();
+    window.location.href = localStorage.casURL;
   }
   getinTouch: any[] = [{
     "for": "Princeton users, Role administration, please contact",

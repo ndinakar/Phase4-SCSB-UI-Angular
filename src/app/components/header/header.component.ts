@@ -33,10 +33,15 @@ export class HeaderComponent implements OnInit {
     };
     this.http.get(this.baseUrl + this.api + '/logout', httpOptions).subscribe((res) => {
       if (res) {
-        this.cookieService.deleteAll();
-        sessionStorage.clear();
-        localStorage.setItem('casUrlStatus', 'false');
-        this.router.navigate(['home']);
+        console.log(res.body);
+        if (res.body == true) {
+          this.cookieService.deleteAll();
+          sessionStorage.clear();
+          localStorage.setItem('casUrlStatus', 'false');
+          this.router.navigate(['home']);
+        } else {
+          this.router.navigate(['error']);
+        }
       }
     });
   }

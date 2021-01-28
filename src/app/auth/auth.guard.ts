@@ -32,6 +32,7 @@ export class AuthGuard implements CanActivate {
         if (!res.body['isAuthenticated']) {
           this.cookieService.deleteAll();
           sessionStorage.clear();
+          this.router.navigate(['home']);
           return false;
         } else {
           this.rolesService.setRes(this.resVal);
@@ -39,7 +40,7 @@ export class AuthGuard implements CanActivate {
         }
       }),
       catchError((err) => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['home']);
         return of(false);
       })
     );

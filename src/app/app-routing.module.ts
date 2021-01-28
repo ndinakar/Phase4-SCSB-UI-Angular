@@ -17,6 +17,7 @@ import { RequestComponent } from './components/request/request.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     component: HomeComponent
   },
   { path: 'logout', component: HomeComponent },
+  { path: 'error', component: ErrorPageComponent },
   {
     path: 'openMarcRecord', component: OpenMarcComponent,
     canActivate: [AuthGuard],
@@ -36,7 +38,6 @@ const routes: Routes = [
       {
         path: 'search',
         component: SearchComponent,
-        canActivate: [AuthGuard],
       },
       {
         path: 'collection',

@@ -39,6 +39,7 @@ import { RequestComponent } from './components/request/request.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 export function appInit(appConfig: AppConfig) {
   return () => appConfig.load();
@@ -64,7 +65,8 @@ export function appInit(appConfig: AppConfig) {
     HeaderComponent,
     FooterComponent,
     CollectionComponent,
-    OpenMarcComponent
+    OpenMarcComponent,
+    ErrorPageComponent
   ],
   imports: [
     LoggerModule.forRoot({ level: NgxLoggerLevel.TRACE }),
