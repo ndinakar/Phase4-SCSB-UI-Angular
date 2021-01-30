@@ -11,22 +11,21 @@ import { urls } from 'src/config/urls';
 export class RolesService {
 
   constructor(private httpClient: HttpClient) { }
-  baseUrl = urls.baseUrl;
   prefix = urls.roles;
   searchRoles(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchRoles", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/searchRoles", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   populatePermissionName(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/populatePermissionName",
+    return this.httpClient.get<TreeNode[]>(this.prefix + "/populatePermissionName",
       {
         headers: appHeaders.getHeaders()
       });
   }
   createRole(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createRole", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/createRole", postData,
       appHeaders.httpOptions());
   }
   saveEditedRole(roleId, roleName, roleDescription, permissionNames): Observable<TreeNode[]> {
@@ -37,46 +36,46 @@ export class RolesService {
       .set('roleDescription', roleDescription)
       .set('editPermissionNames', permissionNames);
     const options = { params: parames, headers: headers, withCredentials: true };
-    return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/saveEditedRole", options);
+    return this.httpClient.get<TreeNode[]>(this.prefix + "/saveEditedRole", options);
   }
   editRole(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/editRole", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/editRole", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   delete(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/delete", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/delete", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   pageSizeChange(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/pageSizeChange", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/pageSizeChange", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   previousCall(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/previous", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   nextCall(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/next", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/next", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   firstCall(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/first", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/first", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   lastCall(postData: RolesForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/last", postData,
       {
         headers: appHeaders.getHeaders()
       });

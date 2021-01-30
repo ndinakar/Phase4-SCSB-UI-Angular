@@ -13,7 +13,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/phase4-scsb-ui-angular",
+                        "outputPath": "dist",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -29,7 +29,7 @@
                         "scripts": []
                     },
                     "configurations": {
-                        "production": {
+                        "prod": {
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
@@ -57,11 +57,11 @@
                                 }
                             ]
                         },
-                        "test-ip": {
+                        "dev": {
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.test-ip.ts"
+                                    "with": "src/environments/environment.dev.ts"
                                 }
                             ],
                             "optimization": true,
@@ -147,8 +147,7 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
                         "browserTarget": "project:build",
-                        "proxyConfig": "proxy.conf.json",
-                        "port": 9091
+                        "proxyConfig": "proxy.conf.json"
                     },
                     "configurations": {
                         "production": {

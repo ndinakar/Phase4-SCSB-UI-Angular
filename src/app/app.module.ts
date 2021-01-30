@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -30,7 +30,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { JobsComponent } from './components/jobs/jobs.component';
 import { LoggingComponent } from './components/logging/logging.component';
-import { LoginComponent } from './components/login/login.component';
 import { MonitoringComponent } from './components/monitoring/monitoring.component';
 import { OpenMarcComponent } from './components/open-marc/open-marc.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -40,6 +39,7 @@ import { RolesComponent } from './components/roles/roles.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { HttpErrorInterceptor } from './http-error.interceptor';
 
 export function appInit(appConfig: AppConfig) {
   return () => appConfig.load();
@@ -58,7 +58,6 @@ export function appInit(appConfig: AppConfig) {
     MonitoringComponent,
     LoggingComponent,
     AdminComponent,
-    LoginComponent,
     DataExportComponent,
     DashboardComponent,
     SearchComponent,
@@ -95,6 +94,11 @@ export function appInit(appConfig: AppConfig) {
       useFactory: appInit,
       multi: true,
       deps: [AppConfig]
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
     }],
   bootstrap: [AppComponent]
 })

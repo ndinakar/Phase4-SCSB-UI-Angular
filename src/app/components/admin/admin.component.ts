@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
+import { catchError } from 'rxjs/operators';
 import { AdminService } from 'src/app/services/admin/admin.service';
 @Component({
   selector: 'app-admin',
@@ -10,9 +11,9 @@ export class AdminComponent implements OnInit {
   AdminPanelDiv = true;
   IMSLocationDiv = true;
   enableOnBoardDiv: boolean = false;
-  enableIMSLocationDiv : boolean = false;
-  uploadRes: TreeNode [];
-  resIMS: TreeNode [];
+  enableIMSLocationDiv: boolean = false;
+  uploadRes: TreeNode[];
+  resIMS: TreeNode[];
   errorMessageDiv = false;
   choosenFile: string = '';
   onBoardFile: boolean;
@@ -40,14 +41,12 @@ export class AdminComponent implements OnInit {
         res => {
           this.uploadRes = res;
           this.onBoardStatusDiv = true;
-          //this.successMessageDiv = true;
-          //this.errorMessageDiv = true;
-          this.choosenFile='';
+          this.choosenFile = '';
         }, error => {
         });
     }
   }
-  uploadIMSFIle(){
+  uploadIMSFIle() {
     if ((this.choosenFile == undefined || this.choosenFile == '')) {
       this.onBoardFile = true;
     } else {
@@ -56,10 +55,8 @@ export class AdminComponent implements OnInit {
         res => {
           this.resIMS = res;
           this.onBoardIMSStatusDiv = true;
-          //this.successMessageDiv = true;
-          //this.errorMessageDiv = true;
-          this.choosenFile='';
-        }, error => {
+          this.choosenFile = '';
+        }, (error) => {
         });
     }
   }
@@ -70,10 +67,10 @@ export class AdminComponent implements OnInit {
       this.onBoardFile = false;
     }
   }
-  enableOnBoardDivs(){
+  enableOnBoardDivs() {
     this.onBoardStatusDiv = false;
   }
-  enableOnBoardIMSDivs(){
+  enableOnBoardIMSDivs() {
     this.onBoardIMSStatusDiv = false;
   }
 }

@@ -1,7 +1,7 @@
 
 var appURL = window.location.protocol + '//' + window.location.hostname;
+
 export const urls = {
-    baseUrl: appURL + ':9089',
     search: '/search',
     collection: '/collection',
     requests: '/request',
@@ -18,5 +18,7 @@ export const urls = {
     casPrefix: '/login-scsb?institution=',
     api: '/api',
     batchScheduleUrl: appURL + ':9096',
-    appUrl: appURL
+    LOGOUT: '/logout?CSRF-TOKEN=',
+    appUrl: appURL,
+    PORT: window.location.port
 }

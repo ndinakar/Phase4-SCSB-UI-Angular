@@ -11,42 +11,41 @@ import { urls } from 'src/config/urls';
 })
 export class SearchService {
   constructor(private httpClient: HttpClient) { }
-  baseUrl = urls.baseUrl;
   prefix = urls.search;
 
   getSearch(postData: SearchRecordRequest): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchResults", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/searchResults", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   searchLast(postData: SearchRecordRequest): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/last", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   searchFirst(postData: SearchRecordRequest): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/first", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/first", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   searchPrevious(postData: SearchRecordRequest): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/previous", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   searchNext(postData: SearchRecordRequest): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/next", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/next", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
 
   onPageSizeChange(postData: SearchRecordRequest): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/pageChanges", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/pageChanges", postData,
       {
         headers: appHeaders.getHeaders()
       });

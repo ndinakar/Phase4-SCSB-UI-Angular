@@ -11,7 +11,6 @@ import { urls } from 'src/config/urls';
 export class OpenMarcService {
 
   constructor(private httpClient: HttpClient) { }
-  baseUrl = urls.baseUrl;
   prefix = urls.openMarc;
 
   openMarc(bibId: any): Observable<TreeNode[]> {
@@ -19,6 +18,6 @@ export class OpenMarcService {
     let parames = new HttpParams()
       .set('bibId', bibId);
     const options = { params: parames, headers: headers };
-    return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix, options);
+    return this.httpClient.get<TreeNode[]>(this.prefix, options);
   }
 }

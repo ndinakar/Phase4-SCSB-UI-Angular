@@ -16,6 +16,7 @@ export class FooterComponent implements OnInit {
         this.versionNumber = versionRes;
       },
       (error) => {
+
       }
     );
   }
