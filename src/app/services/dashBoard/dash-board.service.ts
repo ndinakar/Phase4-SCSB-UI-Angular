@@ -9,14 +9,13 @@ import { urls } from 'src/config/urls';
 })
 export class DashBoardService {
   constructor(private httpClient: HttpClient) { }
-  baseUrl = urls.baseUrl;
   prefix = urls.dashBoard;
   checkPermission(prefix: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(this.baseUrl + this.prefix + "/checkPermission",
+    return this.httpClient.get<boolean>(this.prefix + "/checkPermission",
       appHeaders.httpOptions());
   }
   getVersionNumber(): Observable<string> {
-    return this.httpClient.get<string>(this.baseUrl + this.prefix + "/getVersionNumberService",
+    return this.httpClient.get<string>(this.prefix + "/getVersionNumberService",
       appHeaders.httpOptions());
   }
 }

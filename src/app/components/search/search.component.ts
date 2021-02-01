@@ -6,9 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { SearchService } from 'src/app/services/search/search.service';
 import { ReportsService } from 'src/app/services/reports/reports.service';
-import { count } from 'rxjs/operators';
+import { SearchService } from 'src/app/services/search/search.service';
 declare var $: any;
 
 @Component({

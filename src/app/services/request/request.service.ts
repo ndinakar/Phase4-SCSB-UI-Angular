@@ -10,69 +10,68 @@ import { urls } from 'src/config/urls';
 })
 export class RequestService {
 
-  baseUrl = urls.baseUrl;
   prefix = urls.requests;
   constructor(@Inject(HttpClient) private httpClient: HttpClient) { }
 
   createRequest(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/createRequest", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/createRequest", postData, appHeaders.httpOptions());
   }
   populateItemtDetails(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/populateItem", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/populateItem", postData, appHeaders.httpOptions());
   }
   loadCreateRequest(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/loadCreateRequest", appHeaders.httpOptions());
+    return this.httpClient.get<TreeNode[]>(this.prefix + "/loadCreateRequest", appHeaders.httpOptions());
   }
   searchRequests(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchRequests", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/searchRequests", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   loadSearchRequest(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.baseUrl + this.prefix + "/loadSearchRequest", appHeaders.httpOptions());
+    return this.httpClient.get<TreeNode[]>(this.prefix + "/loadSearchRequest", appHeaders.httpOptions());
   }
   goToSearchRequest(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/goToSearchRequest", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/goToSearchRequest", postData, appHeaders.httpOptions());
   }
   resubmitRequest(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/resubmitRequest", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/resubmitRequest", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   cancelRequest(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/cancelRequest", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/cancelRequest", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   firstCall(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/first", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/first", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   nextCall(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/next", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/next", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   previousCall(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/previous", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   lastCall(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/last", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   onRequestPageSizeChange(postData: RequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/requestPageSizeChange", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/requestPageSizeChange", postData,
       {
         headers: appHeaders.getHeaders()
       });

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { EMPTY } from 'rxjs';
 import { RolesService } from 'src/app/services/roles/roles.service';
 @Component({
   selector: 'app-roles',

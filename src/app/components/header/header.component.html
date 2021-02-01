@@ -8,12 +8,12 @@
                             <div class="row">
                                 <div class="dashboard_recap col-sm-4">
                                     <a href="http://recap.princeton.edu/">
-                                        <img src="../../../../assets/images/recap-logo.png" class="" alt="ReCAP" />
+                                        <img class src="../../../../assets/images/recap-logo.png" alt="ReCAP">
                                     </a>
                                     <h1></h1>
                                 </div>
                                 <div class="dashboard_recaptext col-sm-8">
-                                    The Research Collections And<br/>Preservation Consortium
+                                    The Research Collections And<br>Preservation Consortium
                                 </div>
                             </div>
                         </div>
@@ -29,13 +29,13 @@
                                 <div class="row margin-top-15 text-right" style="margin-bottom: 15px;">
                                     <div class="col-xs-12">
                                         <div class="pull-right  margin-left-30">
-                                            <form>
-                                                <input type="hidden" />
-                                                <button id="logout" (click)="logout()" type="button" class="btn logout-login logout" style="background-color: transparent;box-shadow: none;outline: none;color: #0c0c0c"><span></span>Logout</button>
+                                            <form id="logoutForm" name="logoutForm" ngNoForm [action]="url" method="GET">
+                                                <input type="hidden">
+                                                <button class="btn logout-login logout" id="logout" type="submit" style="background-color: transparent;box-shadow: none;outline: none;color: #0c0c0c"><span></span>Logout</button>
                                             </form>
                                         </div>
                                         <div class="pull-right" style="margin-top: 5px;">
-                                            <a id="help" href="https://htcrecap.atlassian.net/wiki/display/RTG/Search" class="" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> Help</a>
+                                            <a class id="help" href="https://htcrecap.atlassian.net/wiki/display/RTG/Search" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> Help</a>
                                         </div>
                                     </div>
                                 </div>

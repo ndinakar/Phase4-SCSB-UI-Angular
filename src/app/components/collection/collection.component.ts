@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
+
 import { CollectionService } from 'src/app/services/collection/collection.service';
 
 declare var $: any;
@@ -676,9 +677,9 @@ export class CollectionComponent implements OnInit {
         });
 
     } else if (this.DeaccessionNotes == undefined || this.DeaccessionNotes == '') {
-        this.deaccessionNotesErrorMessage = true;
-      }
-      this.spinner.hide();
+      this.deaccessionNotesErrorMessage = true;
+    }
+    this.spinner.hide();
   }
   validateResponse() {
     this.message = this.crossinstitutionVal['message'];

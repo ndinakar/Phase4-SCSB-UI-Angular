@@ -10,13 +10,12 @@ import { urls } from 'src/config/urls';
   providedIn: 'root'
 })
 export class BulkRequestService {
-  baseUrl = urls.baseUrl;
   prefix = urls.bulkRequest
 
   constructor(@Inject(HttpClient) private httpClient: HttpClient) { }
 
   loadCreateRequest(): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/loadCreateRequest",
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/loadCreateRequest",
       {
         headers: appHeaders.getHeaders()
       });
@@ -39,54 +38,54 @@ export class BulkRequestService {
       params: parames, headers: headers,
       withCredentials: true
     };
-    return this.httpClient.post<any>(this.baseUrl + this.prefix + "/createBulkRequest", formdata,
+    return this.httpClient.post<any>(this.prefix + "/createBulkRequest", formdata,
       options);
   }
   populateDeliveryLocations(postData: BulkRequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/populateDeliveryLocations", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/populateDeliveryLocations", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   searchRequest(postData: BulkRequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/searchRequest", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/searchRequest", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
 
   firstCall(postData: BulkRequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/first", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/first", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   nextCall(postData: BulkRequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/next", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/next", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   previousCall(postData: BulkRequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/previous", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/previous", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   lastCall(postData: BulkRequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/last", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/last", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   onRequestPageSizeChange(postData: BulkRequestForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.baseUrl + this.prefix + "/requestPageSizeChange", postData,
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/requestPageSizeChange", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   downloadReports(requestId: string): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + this.prefix + '/' + requestId,
+    return this.httpClient.get<any>(this.prefix + '/' + requestId,
       {
         headers: appHeaders.getHeaders()
       });

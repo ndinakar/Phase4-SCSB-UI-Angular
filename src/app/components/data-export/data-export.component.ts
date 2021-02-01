@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { error } from 'console';
-import { TreeNode } from 'primeng/api';
-import { DataExportService } from '../../services/dataExport/data-export.service';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
+import { TreeNode } from 'primeng/api';
+
+import { DataExportService } from '../../services/dataExport/data-export.service';
 @Component({
   selector: 'app-data-export',
   templateUrl: './data-export.component.html',
@@ -38,7 +39,7 @@ export class DataExportComponent implements OnInit {
 
   successMessageDiv = false;
   errorMessageDiv = false;
-  constructor(private dataExportService: DataExportService, private spinner: NgxSpinnerService) { }
+  constructor(private router: Router, private dataExportService: DataExportService, private spinner: NgxSpinnerService) { }
   res: any[];
   ngOnInit(): void {
     this.result = [];
@@ -71,8 +72,9 @@ export class DataExportComponent implements OnInit {
         }
 
       },
-      (error) => {
+      error => {
         this.spinner.hide();
+        this.router.navigate(['error']);
       }
     );
   }

@@ -4,7 +4,7 @@
 import { urls } from 'src/config/urls';
 export const environment = {
   production: false.valueOf,
-  homeUrl: urls.appUrl + ':9091/home'
+  homeUrl: urls.appUrl + ':' + urls.PORT
 };
 
 /*

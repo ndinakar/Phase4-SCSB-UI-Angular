@@ -21,7 +21,7 @@
                 <div class="col-sm-6 col-md-7 col-lg-6">
                     <!-- Login Section-->
                     <div class="login-wrapper">
-                        <form class="form-horizontal" id="home_login" style="padding-bottom: 30px;">
+                        <form class="form-horizontal" id="home_login" ngNoForm [action]="url" style="padding-bottom: 30px;">
                             <h2 class="heading">Login</h2>
                             <div class="form-group">
                                 <div class="col-md-3 text-right">
@@ -45,7 +45,7 @@
                                 <div class="col-md-3 text-right"></div>
                                 <div class="col-md-9">
                                     <div class="login-form-button-wrapper  margin-btm-10">
-                                        <button class="btn btn-default themed-button" id="submitBtn" type="button" [disabled]="!validate" (click)="navigateToCAS()">
+                                        <button class="btn btn-default themed-button" id="submitBtn" type="submit" [disabled]="!validate">
                                             Submit </button>
                                         <div id="emailBtn" data-target="#emailModal" data-toggle="modal" style="padding-left: 200px;margin-top: -35px;">
                                             <a name="touch_us">Get in touch with us</a>

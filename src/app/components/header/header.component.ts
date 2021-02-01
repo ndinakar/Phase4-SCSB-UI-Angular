@@ -12,33 +12,13 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  LOGOUT = urls.LOGOUT;
   userName: string;
-  username: string;
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {
-    this.username = this.userName;
-  }
-
-  baseUrl = urls.baseUrl;
-  api = urls.api;
+  url: string = '';
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
 
   ngOnInit(): void {
+    this.url = environment.homeUrl + this.LOGOUT + this.cookieService.get('CSRF-TOKEN');
     this.userName = this.cookieService.get('userName');
   }
-
-  logout() {
-    const httpOptions = {
-      headers: appHeaders.getHeaders(),
-      withCredentials: true,
-      observe: 'response' as 'response'
-    };
-    this.http.get(this.baseUrl + this.api + '/logout', httpOptions).subscribe((res) => {
-      if (res) {
-        this.cookieService.deleteAll();
-        sessionStorage.clear();
-        localStorage.setItem('casUrlStatus', 'false');
-        this.router.navigate(['home']);
-      }
-    });
-  }
-
 }
