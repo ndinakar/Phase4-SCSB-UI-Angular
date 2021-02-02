@@ -205,6 +205,8 @@
                                                     <div class="execute-wrapper"><button class="btn execute opblock-control__btn" id="dataBumpBtn" name="dataBumpBtn" (click)="startDataDump(collectionGroupIds,date,emailToAddress,fetchType,imsDepositoryCodes,institutionCodes,outputFormat,requestingInstitutionCode,transmissionType)">
                                                             Start Export Data
                                                             Dump</button>
+                                                            <button class="btn execute opblock-control__btn btn-clear" id="dataBumpBtn" name="dataBumpBtn" (click)="resetFields(); clearDivs()" style="background-color: gray;">
+                                                               Clear</button>
                                                     </div>
                                                 </div>
                                             </div>

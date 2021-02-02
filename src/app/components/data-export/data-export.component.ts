@@ -177,4 +177,8 @@ export class DataExportComponent implements OnInit {
     this.institutionCodesErrorMessageDiv = false;
     this.fetchTypeErrorMessageDiv = false;
   }
+  clearDivs() {
+    this.successMessageDiv = false;
+    this.errorMessageDiv = false;
+  }
 }

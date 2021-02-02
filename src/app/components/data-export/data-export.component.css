@@ -160,3 +160,8 @@ hr {
 .row-bg {
     background-color: white !important;
 }
+
+.btn-clear {
+    color: white !important;
+    background-color: gray;
+}
