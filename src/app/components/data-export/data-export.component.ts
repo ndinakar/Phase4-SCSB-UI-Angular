@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-
 import { DataExportService } from '../../services/dataExport/data-export.service';
+declare var $: any;
 @Component({
   selector: 'app-data-export',
   templateUrl: './data-export.component.html',
@@ -39,10 +39,18 @@ export class DataExportComponent implements OnInit {
 
   successMessageDiv = false;
   errorMessageDiv = false;
+  //Descriptions
+  institutionCodesDescription: string;
+  resInstDescription: TreeNode[];
   constructor(private router: Router, private dataExportService: DataExportService, private spinner: NgxSpinnerService) { }
   res: any[];
   ngOnInit(): void {
     this.result = [];
+    this.dataExportService.getDescriptions().subscribe(
+      (res) => {
+        this.resInstDescription = res;
+        this.institutionCodesDescription = this.resInstDescription['desc'];
+      });
   }
   tryOutToggle() {
     this.try_out_toggle = !this.try_out_toggle;
@@ -87,6 +95,7 @@ export class DataExportComponent implements OnInit {
     this.errorMessageDiv = false;
     this.successMessageDiv = false;
     this.hideErrorDivs();
+    this.resetFields();
   }
   mappingRes(data) {
     var groups = new Set(data.map(item => item.institution));
@@ -104,15 +113,16 @@ export class DataExportComponent implements OnInit {
     if (this.validateMandatoryInputs(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType)) {
       this.dataExportService.startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType).subscribe(
         (res) => {
+          window.scroll(0, 0);
           this.resValExport = res;
           if (this.resValExport['message'] != null) {
             this.successMessageDiv = true;
             this.errorMessageDiv = false;
-            this.resetFields();
+            //this.resetFields();
           } else {
             this.successMessageDiv = false;
             this.errorMessageDiv = true;
-            this.resetFields();
+            //this.resetFields();
           }
         },
         (error) => {

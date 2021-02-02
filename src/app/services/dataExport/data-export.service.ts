@@ -35,4 +35,10 @@ export class DataExportService {
     };
     return this.httpClient.get<TreeNode[]>(this.prefix + "/exportDataDump", options);
   }
+  getDescriptions(): Observable<TreeNode[]> {
+    return this.httpClient.get<TreeNode[]>(this.prefix + "/getDescriptions",
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
 }
