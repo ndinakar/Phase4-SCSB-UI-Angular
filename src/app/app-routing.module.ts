@@ -27,8 +27,7 @@ const routes: Routes = [
   { path: 'logout', component: HomeComponent },
   { path: 'error', component: ErrorPageComponent },
   {
-    path: 'openMarcRecord', component: OpenMarcComponent,
-    canActivate: [AuthGuard],
+    path: 'openMarcRecord', component: OpenMarcComponent
   },
   {
     path: '',

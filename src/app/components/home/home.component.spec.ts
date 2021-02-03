@@ -9,11 +9,11 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports:[RouterTestingModule],
-      declarations: [ HomeComponent ],
+      imports: [RouterTestingModule],
+      declarations: [HomeComponent],
       providers: [FormBuilder],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -27,8 +27,7 @@ describe('HomeComponent', () => {
   });
   xit('Testing Fields', () => {
     expect(component.submitted).toBe(false);
-    expect(component.Institution).toBeInstanceOf;
-    const spy=spyOn(component,'onSubmit');
+    expect(component.institution).toBeInstanceOf;
     component.ngOnInit();
     //expect(component.onSubmit()).toHaveBeenCalled();
     //expect(spy).toHaveBeenCalled();

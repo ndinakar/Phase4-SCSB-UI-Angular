@@ -183,9 +183,9 @@ export class UserRolesComponent implements OnInit {
         this.editnetworkLoginId = this.userResponse['editNetworkLoginId'];
         this.editinstitutionId = this.userResponse['editInstitutionId'];
       },
-      (erro)=>{
+      (erro) => {
       }
-      );
+    );
   }
   deleteUserRole(userId, networkLoginId, roleName) {
     this.spinner.show();
@@ -212,6 +212,8 @@ export class UserRolesComponent implements OnInit {
       });
   }
   searchUserRoles() {
+    this.deletedSuccessMsgDiv = false;
+    this.deleteErrorMsgDiv = false;
     this.spinner.show();
     this.userRolesService.searchRoles(this.setPostData('searchUsers')).subscribe(
       (res) => {
@@ -240,7 +242,7 @@ export class UserRolesComponent implements OnInit {
         }
         this.spinner.hide();
       },
-      (error)=>{
+      (error) => {
         this.spinner.hide();
       }
     );
@@ -319,7 +321,7 @@ export class UserRolesComponent implements OnInit {
           this.networkLoginId = '';
           this.spinner.hide();
         },
-        (error)=>{
+        (error) => {
           this.spinner.hide();
         });
     }
@@ -390,7 +392,7 @@ export class UserRolesComponent implements OnInit {
             this.editerrormsgDiv = true;
           }
         },
-        (error)=>{
+        (error) => {
           this.spinner.hide();
         });
     }
@@ -418,10 +420,10 @@ export class UserRolesComponent implements OnInit {
         }
         this.spinner.hide();
       },
-      (error)=>{
+      (error) => {
         this.spinner.hide();
       }
-      );
+    );
   }
   userRoles() {
     this.userRolesService.userRoles().subscribe(
@@ -429,7 +431,7 @@ export class UserRolesComponent implements OnInit {
         this.userRolesVal = res;
         this.userRoleListVal = this.userRolesVal['roles'].map(function (x) { return { id: x[0], name: x[1] }; });
       },
-      (error)=>{
+      (error) => {
         this.spinner.hide();
       });
   }

@@ -29,8 +29,9 @@ div {
 }
 
 .swagger-ui {
-    font-family: Open Sans, sans-serif;
-    color: #3b4151
+    font-family: 'roboto-condensed', sans-serif;
+    color: #848484;
+    font-size: 14px;
 }
 
 .swagger-ui .wrapper {
@@ -38,16 +39,17 @@ div {
     max-width: 1460px;
     margin: 0 auto;
     padding: 0 20px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box
+    box-sizing: border-box;
+    background-color: white;
 }
 
 .swagger-ui .table-container {
-    padding: 20px
+    padding: 20px;
+    background-color: white;
 }
 
 .swagger-ui .opblock.opblock-get {
-    border-color: #61affe;
+    border-color: #f2f2f2;
     background: rgba(97, 175, 254, .1)
 }
 
@@ -71,11 +73,9 @@ div {
 }
 
 .swagger-ui .parameter__name {
-    font-size: 16px;
-    font-weight: 400;
-    font-family: Titillium Web, sans-serif;
-    color: #3b4151;
-    padding-top: 10px
+    font-family: 'roboto-condensed', sans-serif;
+    color: #848484;
+    font-size: 14px;
 }
 
 td {
@@ -84,6 +84,9 @@ td {
 }
 
 .swagger-ui .parameters-col_description input[type=text] {
+    border: 1px solid #717170;
+    border-radius: 0;
+    height: 35px;
     width: 100%;
     max-width: 340px
 }
@@ -94,7 +97,7 @@ td {
     padding: 8px 10px;
     border: 1px solid #d9d9d9;
     border-radius: 4px;
-    background: #fff
+    background: white;
 }
 
 p {
@@ -105,14 +108,23 @@ p {
 }
 
 .swagger-ui .btn.execute {
-    background-color: #4990e2;
+    background-color: #f2f2f2;
     color: #fff;
-    border-color: #4990e2
+    border-color: #f2f2f2
 }
 
 .swagger-ui .execute-wrapper .btn {
-    width: 100%;
-    padding: 8px 40px
+    width: 15%;
+    position: relative;
+    background-color: #d38c0d;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.swagger-ui .execute-wrapper {
+    background-color: white;
+    text-align: center;
 }
 
 .swagger-ui button {
@@ -121,8 +133,7 @@ p {
 }
 
 .swagger-ui .btn {
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 16px;
     padding: 5px 23px;
     -webkit-transition: all .3s;
     transition: all .3s;
@@ -131,8 +142,8 @@ p {
     background: 0 0;
     -webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
     box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
-    font-family: Titillium Web, sans-serif;
-    color: #3b4151
+    font-family: 'roboto-condensed', sans-serif;
+    color: #848484;
 }
 
 hr {
@@ -147,5 +158,10 @@ hr {
 }
 
 .row-bg {
-    background-color: rgb(239, 247, 255) !important;
+    background-color: white !important;
+}
+
+.btn-clear {
+    color: white !important;
+    background-color: gray;
 }
