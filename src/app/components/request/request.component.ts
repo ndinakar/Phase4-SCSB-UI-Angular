@@ -42,6 +42,8 @@ export class RequestComponent implements OnInit {
   deliveryLocationErrorMessage = false;
   itemBarcodeErrorMessage = false;
   itemBarcodeNotFoundErrorMessage = false;
+  itemBarcodeNotAvailableErrorMessage = false;
+  itemBarcodeNoPermissionErrorMessage = false;
   patronBarcodeErrorMessage = false
   itembarcodeVal: TreeNode[];
   deliveryLocVal: any[];
@@ -208,11 +210,7 @@ export class RequestComponent implements OnInit {
         this.requestVal = res;
         for (var i = 0; i < this.requestVal['requestingInstitutions'].length; i++) {
           this.institutions.push(this.requestVal['requestingInstitutions'][i]);
-        }
-        for (var j = 0; j < this.requestVal['requestTypes'].length; j++) {
-          this.requestTypes.push(this.requestVal['requestTypes'][j]);
-        }
-        this.requestTypeId = this.requestVal['requestType'];
+        }        
         this.requestingInstitutionId = '';
         this.patronBarcodeId = '';
         this.patronEmailId = '';
@@ -296,9 +294,9 @@ export class RequestComponent implements OnInit {
       "itemBarcodeInRequest": itemBarcodeId,
       "deliveryLocationInRequest": null,
       "itemTitle": null,
-      "itemOwningInstitution": null,
+      "itemOwningInstitution": this.itemOwningInstitutionId,
       "patronEmailAddress": null,
-      "requestingInstitution": "PUL",
+      "requestingInstitution": this.requestingInstitutionId,
       "requestType": null,
       "requestNotes": null,
       "startPage": null,
@@ -333,7 +331,7 @@ export class RequestComponent implements OnInit {
 
       ],
       "disableRequestingInstitution": false,
-      "onChange": false,
+      "onChange": true,
       "institution": null,
       "showRequestErrorMsg": null,
       "requestingInstituionHidden": null,
@@ -348,21 +346,42 @@ export class RequestComponent implements OnInit {
           this.itemBarcodeNotFoundErrorMessage = true;
           this.itemTitleId = '';
           this.itemOwningInstitutionId = '';
-        } else {
+        } else if (this.itembarcodeVal['notAvailableErrorMessage'] != null) {
+          this.itemBarcodeNotAvailableErrorMessage = true;
           this.itemBarcodeNotFoundErrorMessage = false;
           this.itemTitleId = this.itembarcodeVal['itemTitle'];
           this.itemOwningInstitutionId = this.itembarcodeVal['itemOwningInstitution'];
+        } else if (this.itembarcodeVal['noPermissionErrorMessage'] != null) {
+          this.itemBarcodeNoPermissionErrorMessage = true;
+          this.itemTitleId = this.itembarcodeVal['itemTitle'];
+          this.itemOwningInstitutionId = this.itembarcodeVal['itemOwningInstitution'];
+        } else {
+          this.itemBarcodeNotFoundErrorMessage = false;
+          this.itemBarcodeNotAvailableErrorMessage = false;
+          this.itemBarcodeNoPermissionErrorMessage = false;
+          this.itemTitleId = this.itembarcodeVal['itemTitle'];
+          this.itemOwningInstitutionId = this.itembarcodeVal['itemOwningInstitution'];
         }
-
+        this.requestTypes = [];
+        for (var j = 0; j < this.itembarcodeVal['requestTypes'].length; j++) {
+          this.requestTypes.push(this.itembarcodeVal['requestTypes'][j]);
+        }
+        this.requestTypeId = this.itembarcodeVal['requestType'];
+        var del = this.itembarcodeVal['deliveryLocation'];
+        if (del != null) {
+          this.deliveryLocVal = ['', ''];
+          this.deliveryLocVal = Object.keys(del).map(function (data) {
+            return [data, del[data]];
+          });
+        }        
       },
       (error) => {
 
       }
     );
-
   }
-  populateDeliveryLocations(insituval) {
 
+  populateDeliveryLocations(insituval) {
     this.postData = {
       "requestId": null,
       "patronBarcode": null,
