@@ -224,6 +224,8 @@
                                                     <input type="text" [(ngModel)]="itemBarcodeId" [disabled]="createsubmit" id="itemBarcodeId" name="itemBarcodeName" class="form-control themed-input" (blur)="populateItemDetails(itemBarcodeId)" />
                                                     <span id="itemBarcodeErrorMessage" *ngIf="itemBarcodeErrorMessage" style="color: red;">Item barcode is required.</span>
                                                     <span id="itemBarcodeNotFoundErrorMessage" *ngIf="itemBarcodeNotFoundErrorMessage" style="color: red;">{{itembarcodeVal['errorMessage']}}</span>
+                                                    <span id="itemBarcodeNotAvailableErrorMessage" *ngIf="itemBarcodeNotAvailableErrorMessage" style="color: red;">{{itembarcodeVal['notAvailableErrorMessage']}}</span>
+                                                    <span id="itemBarcodeNoPermissionErrorMessage" *ngIf="itemBarcodeNoPermissionErrorMessage" style="color: red;">{{itembarcodeVal['noPermissionErrorMessage']}}</span>
                                                 </div>
                                             </div>
                                         </div>
