@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { url } from 'inspector';
 import { Observable } from 'rxjs';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
@@ -12,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginService {
 
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient) { }
   homeUrl = environment.homeUrl;
   casPrefix = urls.casPrefix;
   api = urls.api;

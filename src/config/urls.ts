@@ -13,7 +13,7 @@ export const urls = {
     admin: '/admin',
     login: '/login',
     dataExport: '/dataExport',
-    openMarc: '/openMarcRecord',
+    openMarc: '/openMarcRecordByBibId',
     dashBoard: '/validation',
     casPrefix: '/login-scsb?institution=',
     api: '/api',

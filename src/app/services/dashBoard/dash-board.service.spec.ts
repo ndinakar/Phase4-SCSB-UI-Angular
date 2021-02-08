@@ -1,16 +1,43 @@
-import { TestBed } from '@angular/core/testing';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { async, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs/internal/observable/of';
 
 import { DashBoardService } from './dash-board.service';
 
 describe('DashBoardService', () => {
   let service: DashBoardService;
+  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
 
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [],
+      providers: [DashBoardService, HttpClient, HttpHandler, Router]
+
+    })
+      .compileComponents();
+  }));
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(DashBoardService);
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
+    service = new DashBoardService(httpClientSpy as any);
   });
-
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+  var test = 'test';
+  it('validate checkPermission response', () => {
+    httpClientSpy.get.and.returnValues(of(test));
+    service.checkPermission(test).subscribe((res) =>
+      expect(res).toBeNull);
+  });
+  it('validate getVersionNumber response', () => {
+    httpClientSpy.get.and.returnValues(of(test));
+    service.getVersionNumber().subscribe((res) =>
+      expect(res).toBeNull);
   });
 });
