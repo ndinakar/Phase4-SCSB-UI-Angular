@@ -1,12 +1,31 @@
-import { TestBed, async } from '@angular/core/testing';
 import { HttpClient, HttpHandler } from "@angular/common/http";
+import { async, inject, TestBed } from '@angular/core/testing';
 import { Router } from "@angular/router";
-import { from, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { RolesService } from './roles.service';
-import { RolesForm }from 'src/app/model/RolesFrom';
 
 describe('RolesService', () => {
- const postData ={
+
+  let service: RolesService;
+
+  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [],
+      providers: [RolesService, HttpClient, HttpHandler, Router]
+
+    })
+      .compileComponents();
+  }));
+  beforeEach(() => {
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
+    service = new RolesService(httpClientSpy as any);
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+  const postData = {
     "roleName": "",
     "roleDescription": null,
     "permissionNames": "",
@@ -37,28 +56,64 @@ describe('RolesService', () => {
     "rolesSearchResults": [],
     "showIntial": true
   }
-  let service: RolesService;
-
-  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [],
-      providers: [RolesService, HttpClient, HttpHandler,Router]
-
-    })
-      .compileComponents();
-  }));
-  beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
-    service = new RolesService(httpClientSpy as any);
-  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-  it('validate displyRecords() response',() => {
+  it('validate searchRoles response', () => {
     httpClientSpy.post.and.returnValues(of(postData));
-    service.searchRoles(postData).subscribe((res) => 
-    expect(res).toBeNaN);
+    service.searchRoles(postData).subscribe((res) =>
+      expect(res).toBeNaN);
+  });
+  it('validate populatePermissionName response', () => {
+    httpClientSpy.get.and.returnValues(of(postData));
+    service.populatePermissionName().subscribe((res) =>
+      expect(res).toBeNaN);
+  });
+  it('validate createRole response', () => {
+    httpClientSpy.post.and.returnValues(of(postData));
+    service.createRole(postData).subscribe((res) =>
+      expect(res).toBeNaN);
+  });
+  it('validate saveEditedRole response', async(inject([RolesService], (service: RolesService) => {
+    //spyOn(service, 'saveEditedRole').and.returnValues(of());
+    httpClientSpy.post.and.returnValues(of());
+    service.saveEditedRole('test', 'test', 'test', 'test').subscribe((res) =>
+      expect(res).toBeNaN);
+  })));
+  it('validate editRole response', () => {
+    httpClientSpy.post.and.returnValues(of(postData));
+    service.editRole(postData).subscribe((res) =>
+      expect(res).toBeNaN);
+  });
+  it('validate delete response', () => {
+    httpClientSpy.post.and.returnValues(of(postData));
+    service.delete(postData).subscribe((res) =>
+      expect(res).toBeNaN);
+  });
+  it('validate pageSizeChange response', () => {
+    httpClientSpy.post.and.returnValues(of(postData));
+    service.pageSizeChange(postData).subscribe((res) =>
+      expect(res).toBeNaN);
+  });
+  it('validate previousCall response', () => {
+    httpClientSpy.post.and.returnValues(of(postData));
+    service.previousCall(postData).subscribe((res) =>
+      expect(res).toBeNaN);
+  });
+  it('validate nextCall response', () => {
+    httpClientSpy.post.and.returnValues(of(postData));
+    service.nextCall(postData).subscribe((res) =>
+      expect(res).toBeNaN);
+  });
+  it('validate firstCall response', () => {
+    httpClientSpy.post.and.returnValues(of(postData));
+    service.firstCall(postData).subscribe((res) =>
+      expect(res).toBeNaN);
+  });
+  it('validate lastCall response', () => {
+    httpClientSpy.post.and.returnValues(of(postData));
+    service.lastCall(postData).subscribe((res) =>
+      expect(res).toBeNaN);
   });
 });
