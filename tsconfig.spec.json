@@ -12,10 +12,8 @@
     "src/polyfills.ts"
   ],
   "include": [
-    "src/**/*.spec.ts",
+    "src/services/*.spec.ts",
     "src/**/*.ts"
   ],
-  "exclude": [
-   // "src/app/services/**/*"
-  ]
+  "exclude": []
 }

@@ -1,24 +1,36 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { DataExportService } from 'src/app/services/dataExport/data-export.service';
 
 import { DataExportComponent } from './data-export.component';
 
 describe('DataExportComponent', () => {
   let component: DataExportComponent;
   let fixture: ComponentFixture<DataExportComponent>;
+  let service: DataExportService;
+  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
+  let spinner: NgxSpinnerService;
+  let router: Router;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataExportComponent ]
+      declarations: [],
+      providers: [DataExportService, NgxSpinnerService, HttpClient, HttpHandler, Router]
+
     })
-    .compileComponents();
+      .compileComponents();
   }));
-
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataExportComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
+    service = new DataExportService(httpClientSpy as any);
+    component = new DataExportComponent(router, service, spinner);
+    spinner = new NgxSpinnerService();
   });
-
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
   it('should create', () => {
     expect(component).toBeTruthy();
   });

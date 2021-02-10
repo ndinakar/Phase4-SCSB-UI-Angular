@@ -1,25 +1,32 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CookieService } from 'ngx-cookie-service';
 
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
-  let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
+  let component: HeaderComponent;
+  let service: CookieService;
+  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [],
+      providers: [HttpClient, HttpHandler]
 
+    })
+      .compileComponents();
+  }));
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
+    component = new HeaderComponent(service);
   });
-
-  xit('should create', () => {
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
