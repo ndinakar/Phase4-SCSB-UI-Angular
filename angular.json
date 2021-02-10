@@ -180,7 +180,11 @@
                         ],
                         "scripts": [],
                         "codeCoverage": true,
-                        "codeCoverageExclude": []
+                        "codeCoverageExclude": [
+                            "src/app/components/**/*",
+                            "src/app/auth/**/*",
+                            "src/enviroments/*"
+                        ]
                     }
                 },
                 "lint": {
