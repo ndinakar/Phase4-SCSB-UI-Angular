@@ -21,7 +21,7 @@
                                         </div>
                                     </div>
                                     <div class="input-group-btn search-panel">
-                                        <select class="form-control btn themed-button themed-button-allfields dropdown-toggle" id="allfields" formControlName="fieldName" style="width: 170px; border-left-width: 0px;">
+                                        <select class="form-control btn themed-button themed-button-allfields dropdown-toggle" id="allfields" formControlName="fieldName" (change)="checkFieldValue()" style="width: 170px; border-left-width: 0px;">
                                             <option value="">ALL Fields</option>
                                             <option *ngFor="let fld of searchfieldval" [value]="fld.id">{{fld.name}}
                                             </option>

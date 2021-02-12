@@ -1,15 +1,15 @@
 <!-- Request Tab-->
 <div id="requestContentId" name="requestContentName">
-    <link rel="stylesheet" />
+    <link rel="stylesheet">
     <script type="text/javascript"></script>
     <div id="requestFormDivId" name="requestFormDivName">
-        <form id="request-form" name="request-form" class="form-horizontal" method="post">
+        <form class="form-horizontal" id="request-form" name="request-form" method="post">
             <fieldset>
-                <div role="tabpanel" class="tab-pane" id="request">
+                <div class="tab-pane" id="request" role="tabpanel">
                     <div class="row margin-btm-10" *ngIf="searchBar">
                         <div class="col-sm-12 text-right backtext"><a name="btn_loadCreateRequest" (click)="loadCreateRequestnew()" style="cursor: pointer;"><span class="glyphicon glyphicon-menu-left"></span> Go Back</a></div>
                     </div>
-                    <div *ngIf="searchBar" id="searchRequestsSection" class="request-main-section">
+                    <div class="request-main-section" id="searchRequestsSection" *ngIf="searchBar">
                         <div class="search-bar">
                             <div class="row margin-0">
                                 <div class="col-xs-12  padding-0">
@@ -17,18 +17,18 @@
                                         <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12">
                                             <div class="col-md-32 col-sm-3 col-lg-2 padding-right-20 padding-left-0">
                                                 <label class="fontcolor-dark margin-btm-10">Patron Barcode</label>
-                                                <input id="patronBarcode" name="patronBarcode" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchPatronBarcode" type="text" class="form-control themed-input" />
+                                                <input class="form-control themed-input" id="patronBarcode" name="patronBarcode" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchPatronBarcode">
                                                 <p id="patronBarcodeSearchError" *ngIf="patronBarcodeSearchError" style="color: red;">Patron barcode is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Item Barcode</label>
-                                                <input id="itemBarcode" name="itemBarcode" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchItemBarcode" class="form-control themed-input" />
+                                                <input class="form-control themed-input" id="itemBarcode" name="itemBarcode" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchItemBarcode">
                                                 <p id="itemBarcodeSearchError" *ngIf="itemBarcodeSearchError" style="color: red;">Item barcode is required.</p>
                                             </div>
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Status</label>
                                                 <div class="select-holder">
-                                                    <select id="requestStatus" name="requestStatus" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestStatus" class="themed-input themed-select" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;" (change)="onChangeRequestStatus(requestStatus)">
+                                                    <select class="themed-input themed-select" id="requestStatus" name="requestStatus" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestStatus" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;" (change)="onChangeRequestStatus(requestStatus)">
                                                         <option value="">ALL</option>
                                                         <option value="active">ACTIVE</option>
                                                         <option *ngFor="let del4 of searchReqVal['requestStatuses']" [ngValue]="del4">
@@ -41,19 +41,19 @@
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Institution</label>
                                                 <div class="select-holder">
-                                                    <select id="searchInstitutionList" name="searchInstitutionList" class="themed-input themed-select" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchInstitutionList" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;">
+                                                    <select class="themed-input themed-select" id="searchInstitutionList" name="searchInstitutionList" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchInstitutionList" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;">
                                                         <option value=""></option>
                                                         <option *ngFor="let del5 of searchReqVal['institutionList']" [ngValue]="del5">
                                                             {{del5}}
                                                           </option>
                                                     </select>
                                                 </div>
-                                                <input type="hidden" id="searchInstitutionHdn" />
+                                                <input id="searchInstitutionHdn" type="hidden">
                                             </div>
 
                                             <div class="col-md-3 col-sm-3 col-lg-3">
                                                 <div class="input-group-btn search-panel padding-right-10">
-                                                    <button id="searchRequestsButton" class="btn themed-button themed-button-search" type="button" name="searchRequestsButton" (click)="searchRequests()">Search</button>
+                                                    <button class="btn themed-button themed-button-search" id="searchRequestsButton" name="searchRequestsButton" type="button" (click)="searchRequests()">Search</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="search-results-container" *ngIf="searchReqresultFirst">
                             <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
-                            <div *ngIf="messageNoSearchRecords" class="row margin-btm-10">
+                            <div class="row margin-btm-10" *ngIf="messageNoSearchRecords">
                                 <div class="col-sm-12">
                                     <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span name="noSearchRecords"> {{searchreqResultVal['message']}}</span></div>
                                 </div>
@@ -79,7 +79,7 @@
                                     <div class="col-sm-3 col-md-2 col-lg-2 margin-top-05 show-entries-section">
                                         <div class="">
                                             <span class="show-title margin-right-05">Show Entries</span>
-                                            <select id="numOfRecordsId" name="numOfRecordsName" class="themed-input" [(ngModel)]="showentries" class="themed-input" (change)="onPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}">  
+                                            <select class="themed-input" id="numOfRecordsId" name="numOfRecordsName" [(ngModel)]="showentries" (change)="onPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}">  
                                                 <option value="10" selected="selected">10</option>
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <table id="request-result-table" class="table table-striped margin-btm-0">
+                                        <table class="table table-striped margin-btm-0" id="request-result-table">
                                             <thead class="tablesorter-headerRow">
                                                 <tr name="results_rowhdrs">
                                                     <th>Patron Barcode</th>
@@ -116,11 +116,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr id="rowData_results_{{i}}" class="requestRow" *ngFor="let item of searchreqResultVal['searchResultRows']; let i=index">
-                                                    <input id="requestRowRequestId-{{i}}" name="requestRowRequestId-index-{{i}}" type="hidden" value="{{item.requestId}}" />
+                                                <tr class="requestRow" id="rowData_results_{{i}}" *ngFor="let item of searchreqResultVal['searchResultRows']; let i=index">
+                                                    <input id="requestRowRequestId-{{i}}" name="requestRowRequestId-index-{{i}}" type="hidden" value="{{item.requestId}}">
                                                     <th id="data_pb_{{i}}">{{ item.patronBarcode }}</th>
                                                     <td id="data_ri_{{i}}">{{ item.requestingInstitution }}</td>
-                                                    <td><a target="_blank" routerLink="/openMarcRecord" [queryParams]="{bibId: item['bibId']}" id="data_br_{{i}}">{{ item.barcode }}</a></td>
+                                                    <td><a id="data_br_{{i}}" target="_blank" routerLink="/openMarcRecord" [queryParams]="{bibId: item['bibId']}">{{ item.barcode }}</a></td>
                                                     <td id="data_oi_{{i}}">{{ item.owningInstitution }}</td>
                                                     <td id="data_dl_{{i}}">{{ item.deliveryLocation }}</td>
                                                     <td id="data_rt_{{i}}">{{ item.requestType }}</td>
@@ -129,31 +129,30 @@
                                                     <td id="data_cd_{{i}}">{{ item.createdDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
                                                     <td id="data_ld_{{i}}">{{ item.lastUpdatedDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
                                                     <td id="data_st_{{i}}">{{ item.status }}</td>
-                                                    <td style="text-align: center"><button id="btn_reqNotes_{{i}}" style="border-radius: revert;" type="button" (click)="reqNotemodal(item.requestNotes)" name="action"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
+                                                    <td style="text-align: center"><button id="btn_reqNotes_{{i}}" name="action" type="button" style="border-radius: revert;" (click)="reqNotemodal(item.requestNotes)"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
                                                     <td>
-                                                        <button id="bt_cancleRq_{{i}}" (click)="cancelRequest(item.requestId)" *ngIf="item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='LAS REFILE REQUEST PLACED'" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7"
-                                                            th:title="'Cancel Request'" type="button" class="btn btn-round" name="action">Cancel Note
+                                                        <button class="btn btn-round" id="bt_cancleRq_{{i}}" name="action" type="button" (click)="cancelRequest(item.requestId)" *ngIf="item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='LAS REFILE REQUEST PLACED'" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" th:title="'Cancel Request'">Cancel Note
                                                         </button>
 
-                                                        <button id="btn_rs_{{i}}" *ngIf="item.status=='EXCEPTION'" [disabled]="item.availability == 'Not Available'" (click)="resubmitReq(item.barcode,item.requestId)" type="button" class="btn btn-round" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7">Resubmit Request
+                                                        <button class="btn btn-round" id="btn_rs_{{i}}" type="button" *ngIf="(item.status=='EXCEPTION' && (rolesRes['isReSubmitRequestAllowed'] || rolesRes['isSuperAdmin']))" [disabled]="item.availability == 'Not Available'" (click)="resubmitReq(item.barcode,item.requestId)" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7">Resubmit Request
                                                         </button>
                                                     </td>
                                                     <!-- </tr> -->
                                                     <!-- PopUP for Cancel Request-->
-                                                    <div id="cancelConfirmationModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+                                                    <div class="modal fade" id="cancelConfirmationModal" data-backdrop="static" data-keyboard="false" role="dialog">
                                                         <div class="modal-dialog">
-                                                            <div id="deleteConfModalContent" class="modal-content">
+                                                            <div class="modal-content" id="deleteConfModalContent">
                                                                 <div class="modal-header">
                                                                     <h4 class="modal-title">Cancel Confirmation</h4>
                                                                 </div>
                                                                 <div class="modal-body" style="height: 100px;">
                                                                     <p>Do you want to cancel the existing request?</p>
                                                                     <div class="col-sm-4 pull-right">
-                                                                        <input id="cancelConfirmIndexId" name="cancelConfirmIndexId" type="text" hidden="hidden" />
-                                                                        <input id="cancelConfirmRequestId" name="cancelConfirmRequestId" type="text" hidden="hidden" />
-                                                                        <button id="proceedBtn" type="button" name="action" style="margin-right: 6px;" class="btn btn-primary" (click)="cancelRequestItem()">Proceed
+                                                                        <input id="cancelConfirmIndexId" name="cancelConfirmIndexId" type="text" hidden="hidden">
+                                                                        <input id="cancelConfirmRequestId" name="cancelConfirmRequestId" type="text" hidden="hidden">
+                                                                        <button class="btn btn-primary" id="proceedBtn" name="action" type="button" style="margin-right: 6px;" (click)="cancelRequestItem()">Proceed
                                                                         </button>
-                                                                        <button id="cancelBtn" type="button" name="cancel" data-dismiss="modal" class="btn btn-danger">Cancel
+                                                                        <button class="btn btn-danger" id="cancelBtn" name="cancel" data-dismiss="modal" type="button">Cancel
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -165,7 +164,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div id="requestPaginationDivId" name="requestPaginationDivName" class="col-md-12" style="margin-bottom: -20px;">
+                                    <div class="col-md-12" id="requestPaginationDivId" name="requestPaginationDivName" style="margin-bottom: -20px;">
                                         <div class="pull-right">
                                             <div id="requestPaginationId" name="requestPaginationName" xmlns:th="http://www.w3.org/1999/xhtml">
                                                 <ul class="pagination">
@@ -190,16 +189,16 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="create_request" id="createRequestSection" class="create-request-section">
-                        <div *ngIf="createRequestError" id="errorMessageId1" class="row margin-btm-10">
+                    <div class="create-request-section" id="createRequestSection" *ngIf="create_request">
+                        <div class="row margin-btm-10" id="errorMessageId1" *ngIf="createRequestError">
                             <div class="col-sm-12">
                                 <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{errorMessage}}</span></div>
                             </div>
                         </div>
-                        <input id="deliveryLocationInRequestHdn" name="deliveryLocationInRequestHdn" type="text" value="" hidden="hidden" />
-                        <input id="patronEmailIdHdn" name="patronEmailIdHdn" type="text" value="" hidden="hidden" />
-                        <input id="requestingInstitutionHdn" name="requestingInstitutionHdn" type="text" value="" hidden="hidden" />
-                        <input id="requestTypesHdn" name="requestIdHdn" type="text" hidden="hidden" />
+                        <input id="deliveryLocationInRequestHdn" name="deliveryLocationInRequestHdn" type="text" value hidden="hidden">
+                        <input id="patronEmailIdHdn" name="patronEmailIdHdn" type="text" value hidden="hidden">
+                        <input id="requestingInstitutionHdn" name="requestingInstitutionHdn" type="text" value hidden="hidden">
+                        <input id="requestTypesHdn" name="requestIdHdn" type="text" hidden="hidden">
                         <div class="row margin-top-0">
                             <div class="col-sm-6 margin-top-0">
                                 <h3 class="margin-0">Create Request</h3>
@@ -210,18 +209,17 @@
                             <div class="col-xs-12 divider-horizontal margin-top-10 margin-btm-10"></div>
                         </div>
                         <div class="buscador-principal">
-                            <div *ngIf="createsubmit" id="successTextIdForRequest" class="text-success">
-                                Your request was received and will be processed.To track the request's status, please <a id="trackRquest_click" style="cursor: pointer" (click)="goToSearchRequest(this.patronBarcodeId)"><b><u>click here</u></b></a><br />                                To create another request for the same patron, please <a id="samePattron_click" style="cursor: pointer" (click)="loadCreateRequestForSamePatron(this.patronBarcodeId,this.requestingInstitutionId)"><b><u>click here</u></b></a><br
-                                /> To create another request for a different patron, please <a id="differentPattron_click" style="cursor: pointer" (click)="differentpatron()"><b><u>click here</u></b></a>
+                            <div class="text-success" id="successTextIdForRequest" *ngIf="createsubmit">
+                                Your request was received and will be processed.To track the request's status, please <a id="trackRquest_click" style="cursor: pointer" (click)="goToSearchRequest(this.patronBarcodeId)"><b><u>click here</u></b></a><br>                                To create another request for the same patron, please <a id="samePattron_click" style="cursor: pointer" (click)="loadCreateRequestForSamePatron(this.patronBarcodeId,this.requestingInstitutionId)"><b><u>click here</u></b></a><br> To create another request for a different patron, please <a id="differentPattron_click" style="cursor: pointer" (click)="differentpatron()"><b><u>click here</u></b></a>
                             </div>
                             <div class="row margin-top-25 margin-btm-30">
                                 <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-md-8 col-sm-6">
                                             <div class="form-group">
-                                                <div class="col-md-3 col-sm-4 text-right margin-top-15"><label for="itemBarcodeId" class="fontcolor-dark">Item Barcode <span class="error-color">*</span></label></div>
+                                                <div class="col-md-3 col-sm-4 text-right margin-top-15"><label class="fontcolor-dark" for="itemBarcodeId">Item Barcode <span class="error-color">*</span></label></div>
                                                 <div class="col-md-9 col-sm-8">
-                                                    <input type="text" [(ngModel)]="itemBarcodeId" [disabled]="createsubmit" id="itemBarcodeId" name="itemBarcodeName" class="form-control themed-input" (blur)="populateItemDetails(itemBarcodeId)" />
+                                                    <input class="form-control themed-input" id="itemBarcodeId" name="itemBarcodeName" type="text" [(ngModel)]="itemBarcodeId" [disabled]="createsubmit" (blur)="populateItemDetails(itemBarcodeId)">
                                                     <span id="itemBarcodeErrorMessage" *ngIf="itemBarcodeErrorMessage" style="color: red;">Item barcode is required.</span>
                                                     <span id="itemBarcodeNotFoundErrorMessage" *ngIf="itemBarcodeNotFoundErrorMessage" style="color: red;">{{itembarcodeVal['errorMessage']}}</span>
                                                     <span id="itemBarcodeNotAvailableErrorMessage" *ngIf="itemBarcodeNotAvailableErrorMessage" style="color: red;">{{itembarcodeVal['notAvailableErrorMessage']}}</span>
@@ -231,17 +229,17 @@
                                         </div>
                                         <div class="col-md-4 col-sm-6">
                                             <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 text-right margin-top-15"><label for="requestingInstitutionId" class="fontcolor-dark">Requesting Institution <span class="error-color">*</span></label></div>
+                                                <div class="col-md-6 col-sm-6 text-right margin-top-15"><label class="fontcolor-dark" for="requestingInstitutionId">Requesting Institution <span class="error-color">*</span></label></div>
                                                 <div class="col-md-6 col-sm-6">
                                                     <div class="select-holder">
-                                                        <select id="requestingInstitutionId" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestingInstitutionId" name="requestingInstitutionName" class="form-control themed-input themed-select" [disabled]="createsubmit" (change)="populateDeliveryLocations(requestingInstitutionId)">
+                                                        <select class="form-control themed-input themed-select" id="requestingInstitutionId" name="requestingInstitutionName" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestingInstitutionId" [disabled]="createsubmit" (change)="populateDeliveryLocations(requestingInstitutionId)">
                                                             <option value=""></option>
-                                                            <option  *ngFor="let del2 of institutions" [ngValue]="del2">
+                                                            <option *ngFor="let del2 of institutions" [ngValue]="del2">
                                                                 {{del2}}
                                                               </option>
                                                         </select>
                                                         <span id="requestingInstitutionErrorMessage" *ngIf="requestingInstitutionErrorMessage" style="color: red;">Requesting institution is required.</span>
-                                                        <input type="hidden" id="reqInstituionHidden" />
+                                                        <input id="reqInstituionHidden" type="hidden">
                                                     </div>
                                                 </div>
 
@@ -252,19 +250,19 @@
                                     <div class="row">
                                         <div class="col-md-8 col-sm-6">
                                             <div class="form-group">
-                                                <div class="col-md-3 col-sm-4 text-right margin-top-15"><label for="itemTitleId" class="fontcolor-dark">Item Title</label></div>
+                                                <div class="col-md-3 col-sm-4 text-right margin-top-15"><label class="fontcolor-dark" for="itemTitleId">Item Title</label></div>
                                                 <div class="col-md-9 col-sm-8">
-                                                    <textarea type="text" tabindex="-1" [(ngModel)]="itemTitleId" [disabled]="createsubmit" id="itemTitleId" name="itemTitleName" class="form-control themed-input" readonly="readonly">
+                                                    <textarea class="form-control themed-input" id="itemTitleId" name="itemTitleName" type="text" tabindex="-1" [(ngModel)]="itemTitleId" [disabled]="createsubmit" readonly="readonly">
                                                     </textarea>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-6">
                                             <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 text-right margin-top-15"><label for="itemOwningInstitutionId" class="fontcolor-dark">Item Owning Institution</label></div>
+                                                <div class="col-md-6 col-sm-6 text-right margin-top-15"><label class="fontcolor-dark" for="itemOwningInstitutionId">Item Owning Institution</label></div>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <input type="text" tabindex="-1" [(ngModel)]="itemOwningInstitutionId" [disabled]="createsubmit" id="itemOwningInstitutionId" name="itemOwningInstitutionName" class="form-control themed-input" readonly="readonly" />
-                                                    <input type="hidden" id="onChangeOwnInst" />
+                                                    <input class="form-control themed-input" id="itemOwningInstitutionId" name="itemOwningInstitutionName" type="text" tabindex="-1" [(ngModel)]="itemOwningInstitutionId" [disabled]="createsubmit" readonly="readonly">
+                                                    <input id="onChangeOwnInst" type="hidden">
                                                 </div>
                                             </div>
                                         </div>
@@ -274,18 +272,18 @@
                                             <div class="row">
                                                 <div class="col-md-4 col-sm-6">
                                                     <div class="form-group">
-                                                        <div class="col-md-6 col-sm-4 text-right margin-top-15"><label for="patronBarcodeId" class="fontcolor-dark">Patron Barcode <span class="error-color">*</span></label></div>
+                                                        <div class="col-md-6 col-sm-4 text-right margin-top-15"><label class="fontcolor-dark" for="patronBarcodeId">Patron Barcode <span class="error-color">*</span></label></div>
                                                         <div class="col-md-6 col-sm-8">
-                                                            <input type="text" [(ngModel)]="patronBarcodeId" [disabled]="createsubmit" id="patronBarcodeId" name="patronBarcodeName" class="form-control themed-input" />
+                                                            <input class="form-control themed-input" id="patronBarcodeId" name="patronBarcodeName" type="text" [(ngModel)]="patronBarcodeId" [disabled]="createsubmit">
                                                             <span id="patronBarcodeErrorMessage" *ngIf="patronBarcodeErrorMessage" style="color: red;">Patron barcode is required.</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-sm-6">
                                                     <div class="form-group">
-                                                        <div class="col-md-4 col-sm-6 text-right margin-top-05"><label for="patronEmailId" class="fontcolor-dark">Patron <span id="emailMandatory" class="error-color" *ngIf="eddshow">*</span><br/>Email Address</label></div>
+                                                        <div class="col-md-4 col-sm-6 text-right margin-top-05"><label class="fontcolor-dark" for="patronEmailId">Patron <span class="error-color" id="emailMandatory" *ngIf="eddshow">*</span><br>Email Address</label></div>
                                                         <div class="col-md-8 col-sm-6">
-                                                            <input type="email" [(ngModel)]="patronEmailId" [disabled]="createsubmit" id="patronEmailId" name="patronEmailName" class="form-control themed-input" (blur)="validateEmailAddress(patronEmailId)" />
+                                                            <input class="form-control themed-input" id="patronEmailId" name="patronEmailName" type="email" [(ngModel)]="patronEmailId" [disabled]="createsubmit" (blur)="validateEmailAddress(patronEmailId)">
                                                             <span id="patronEmailIdErrorMessage" *ngIf="patronEmailIdErrorMessage" style="color: red;">Email address is invalid.</span>
                                                             <span id="EmailMandatoryErrorMessage" *ngIf="EmailMandatoryErrorMessage" style="color: red;">Patron Email Address is required.</span>
                                                         </div>
@@ -301,10 +299,10 @@
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6">
                                                     <div class="form-group">
-                                                        <div class="col-md-6 col-sm-4 text-right margin-top-15"><label for="requestTypeId" class="fontcolor-dark">Request Type <span class="error-color">*</span></label></div>
+                                                        <div class="col-md-6 col-sm-4 text-right margin-top-15"><label class="fontcolor-dark" for="requestTypeId">Request Type <span class="error-color">*</span></label></div>
                                                         <div class="col-md-6 col-sm-8">
                                                             <div class="select-holder">
-                                                                <select id="requestTypeId" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestTypeId" [disabled]="createsubmit" name="requestTypeName" class="form-control themed-input themed-select" (change)="reqTpeEDD(requestTypeId)">
+                                                                <select class="form-control themed-input themed-select" id="requestTypeId" name="requestTypeName" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestTypeId" [disabled]="createsubmit" (change)="reqTpeEDD(requestTypeId)">
                                                                         <option *ngFor="let del1 of requestTypes" [ngValue]="del1">
                                                                             {{del1}}
                                                                           </option>
@@ -316,12 +314,12 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6" id="deliverylocation_request" *ngIf="!eddshow">
                                                     <div class="form-group">
-                                                        <div class="col-md-4 col-sm-6 text-right margin-top-05"><label for="deliveryLocationId" class="fontcolor-dark">Delivery
-                                                            <br/>Location <span class="error-color">*</span></label></div>
+                                                        <div class="col-md-4 col-sm-6 text-right margin-top-05"><label class="fontcolor-dark" for="deliveryLocationId">Delivery
+                                                            <br>Location <span class="error-color">*</span></label></div>
                                                         <div class="col-md-8 col-sm-6">
                                                             <div class="select-holder">
 
-                                                                <select id="deliveryLocationId" [ngModelOptions]="{standalone: true}" [(ngModel)]="deliveryLocationId" [disabled]="createsubmit" name="deliveryLocationName" class="form-control themed-input themed-select">
+                                                                <select class="form-control themed-input themed-select" id="deliveryLocationId" name="deliveryLocationName" [ngModelOptions]="{standalone: true}" [(ngModel)]="deliveryLocationId" [disabled]="createsubmit">
                                                                     <option value=""></option>
                                                                     <option *ngFor="let del3 of deliveryLocVal" [ngValue]="del3[0]">
                                                                         {{del3[1]}}-{{del3[0]}}
@@ -344,18 +342,18 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <div class="col-md-6 col-sm-4 margin-top-15"><label for="StartPage" class="fontcolor-dark">Start Page <span class="error-color">*</span></label></div>
+                                                        <div class="col-md-6 col-sm-4 margin-top-15"><label class="fontcolor-dark" for="StartPage">Start Page <span class="error-color">*</span></label></div>
                                                         <div class="col-md-6 col-sm-8">
-                                                            <input type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="StartPage" class="form-control themed-input" id="StartPage" name="StartPage" />
+                                                            <input class="form-control themed-input" id="StartPage" name="StartPage" type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="StartPage">
                                                             <span id="startPageErrorMessage" *ngIf="startPageErrorMessage" style="color: red;">Start page is required.</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <div class="col-md-6 col-sm-4 text-right margin-top-15"><label for="EndPage" class="fontcolor-dark">End Page <span class="error-color">*</span></label></div>
+                                                        <div class="col-md-6 col-sm-4 text-right margin-top-15"><label class="fontcolor-dark" for="EndPage">End Page <span class="error-color">*</span></label></div>
                                                         <div class="col-md-6 col-sm-8">
-                                                            <input type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="EndPage" class="form-control themed-input" id="EndPage" name="EndPage" />
+                                                            <input class="form-control themed-input" id="EndPage" name="EndPage" type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="EndPage">
                                                             <span id="endPageErrorMessage" *ngIf="endPageErrorMessage" style="color: red;">End page is required.</span>
                                                         </div>
                                                     </div>
@@ -363,9 +361,9 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <div class="col-md-6 col-sm-4 text-right margin-top-15"><label for="VolumeNumber" class="fontcolor-dark">Volume Number</label></div>
+                                                        <div class="col-md-6 col-sm-4 text-right margin-top-15"><label class="fontcolor-dark" for="VolumeNumber">Volume Number</label></div>
                                                         <div class="col-md-6 col-sm-8">
-                                                            <input type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="VolumeNumber" class="form-control themed-input" id="VolumeNumber" name="VolumeNumber" />
+                                                            <input class="form-control themed-input" id="VolumeNumber" name="VolumeNumber" type="text" maxlength="20" [disabled]="createsubmit" [(ngModel)]="VolumeNumber">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -373,17 +371,17 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <div class="col-md-6 col-sm-4 margin-top-15"><label for="Issue" class="fontcolor-dark">Issue</label></div>
+                                                        <div class="col-md-6 col-sm-4 margin-top-15"><label class="fontcolor-dark" for="Issue">Issue</label></div>
                                                         <div class="col-md-6 col-sm-8">
-                                                            <input maxlength="20" [(ngModel)]="Issue" [disabled]=createsubmit type="text" class="form-control themed-input" id="Issue" name="Issue" />
+                                                            <input class="form-control themed-input" id="Issue" name="Issue" type="text" maxlength="20" [(ngModel)]="Issue" [disabled]="createsubmit">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <div class="col-md-3 col-sm-4 text-right margin-top-15"><label for="ArticleAuthor" class="fontcolor-dark">Article Author</label></div>
+                                                        <div class="col-md-3 col-sm-4 text-right margin-top-15"><label class="fontcolor-dark" for="ArticleAuthor">Article Author</label></div>
                                                         <div class="col-md-9 col-sm-8">
-                                                            <input type="text" maxlength="150" [disabled]="createsubmit" [(ngModel)]="ArticleAuthor" class="form-control themed-input" id="ArticleAuthor" name="ArticleAuthor" />
+                                                            <input class="form-control themed-input" id="ArticleAuthor" name="ArticleAuthor" type="text" maxlength="150" [disabled]="createsubmit" [(ngModel)]="ArticleAuthor">
                                                         </div>
                                                     </div>
 
@@ -393,10 +391,10 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
-                                                        <div class="col-md-2 col-sm-4 margin-top-15"><label for="ArticleChapterTitle" class="fontcolor-dark">Article /
+                                                        <div class="col-md-2 col-sm-4 margin-top-15"><label class="fontcolor-dark" for="ArticleChapterTitle">Article /
                                                             Chapter Title <span class="error-color">*</span></label></div>
                                                         <div class="col-md-10 col-sm-8">
-                                                            <input type="text" maxlength="150" [disabled]="createsubmit" [ngModelOptions]="{standalone: true}" [(ngModel)]="ChapterTitle" class="form-control themed-input" id="ArticleChapterTitle" />
+                                                            <input class="form-control themed-input" id="ArticleChapterTitle" type="text" maxlength="150" [disabled]="createsubmit" [ngModelOptions]="{standalone: true}" [(ngModel)]="ChapterTitle">
                                                             <span id="articleTitleErrorMessage" *ngIf="articleTitleErrorMessage" style="color: red;">Article / Chapter title is required.</span>
                                                         </div>
                                                     </div>
@@ -407,12 +405,12 @@
                                     <div class="row">
                                         <div class="col-md-8 col-sm-12">
                                             <div class="form-group">
-                                                <div class="col-md-3 col-sm-2 text-right margin-top-15"><label for="requestNotesId" class="fontcolor-dark">Request Notes</label>
+                                                <div class="col-md-3 col-sm-2 text-right margin-top-15"><label class="fontcolor-dark" for="requestNotesId">Request Notes</label>
                                                 </div>
                                                 <div class="col-md-9 col-sm-10">
-                                                    <textarea type="text" [(ngModel)]="requestNotesId" [disabled]="createsubmit" id="requestNotesId" name="requestNotesName" class="form-control themed-input" (keyup)="NotesLengthValidation(requestNotesId)" style="overflow:hidden" rows="5" maxlength="1000">
+                                                    <textarea class="form-control themed-input" id="requestNotesId" name="requestNotesName" type="text" [(ngModel)]="requestNotesId" [disabled]="createsubmit" (keyup)="NotesLengthValidation(requestNotesId)" style="overflow:hidden" rows="5" maxlength="1000">
                                                     </textarea>
-                                                    <span *ngIf="notesLengthErrMsg" id="notesLengthErrMsg" style="color: red;">Only 1000 characters are allowed.</span>
+                                                    <span id="notesLengthErrMsg" *ngIf="notesLengthErrMsg" style="color: red;">Only 1000 characters are allowed.</span>
                                                     <p id="requestNotesRemainingCharacters" *ngIf="!createsubmit">Remaining Characters : <span id="remainingCharacters">1000</span></p>
                                                 </div>
                                             </div>
@@ -424,7 +422,7 @@
                                         <div class="col-md-8 col-sm-12">
                                             <div class="row">
                                                 <div class="col-md-3 col-sm-2 text-right margin-top-15"></div>
-                                                <div id="textField" class="col-md-9 col-sm-10">
+                                                <div class="col-md-9 col-sm-10" id="textField">
                                                     Fields marked with asterisk(<span class="error-color">*</span>) are mandatory.
                                                 </div>
                                             </div>
@@ -437,8 +435,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 text-center">
-                                    <button type="button" *ngIf="!createsubmit" class="btn btn-default themed-button btn-primary" id="createrequestsubmit" (click)="createRequest()">Create Request</button>
-                                    <button type="button" *ngIf="!createsubmit" class="pull-right btn btn-default themed-button themed-button-cancel" id="createrequestclear" (click)="resetDefaults()">Clear</button>
+                                    <button class="btn btn-default themed-button btn-primary" id="createrequestsubmit" type="button" *ngIf="!createsubmit" (click)="createRequest()">Create Request</button>
+                                    <button class="pull-right btn btn-default themed-button themed-button-cancel" id="createrequestclear" type="button" *ngIf="!createsubmit" (click)="resetDefaults()">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -446,11 +444,11 @@
                 </div>
 
                 <!-- Cancel Modal Data-->
-                <div id="cancelRequestModal" class="modal fade create-request-details" tabindex="-2" role="dialog" aria-labelledby="cancelRequestLargeModalLabel" data-keyboard="false" data-backdrop="static">
+                <div class="modal fade create-request-details" id="cancelRequestModal" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="cancelRequestLargeModalLabel" tabindex="-2">
                     <div class="modal-dialog" role="document">
-                        <div id="cancelRequestModalContent" class="modal-content">
+                        <div class="modal-content" id="cancelRequestModalContent">
                             <div class="modal-header bg-success">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <button class="close" data-dismiss="modal" type="button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h2 class="modal-title text-center text-success" id="cancelRequestModalLabel">Cancel Request</h2>
                             </div>
                             <div class="modal-body">
@@ -468,11 +466,11 @@
                 <!-- Cancel Modal Data-->
 
                 <!-- Resubmit Request Modal Data-->
-                <div id="resubmitRequestModal" class="modal fade create-request-details" tabindex="-2" role="dialog" aria-labelledby="resubmitRequestLargeModalLabel" data-keyboard="false" data-backdrop="static">
+                <div class="modal fade create-request-details" id="resubmitRequestModal" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="resubmitRequestLargeModalLabel" tabindex="-2">
                     <div class="modal-dialog" role="document">
-                        <div id="resubmitRequestModalContent" class="modal-content">
+                        <div class="modal-content" id="resubmitRequestModalContent">
                             <div class="modal-header bg-success">
-                                <button id="closeResubmitRequest" type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetToResubmitRequest()"><span aria-hidden="true">&times;</span></button>
+                                <button class="close" id="closeResubmitRequest" data-dismiss="modal" type="button" aria-label="Close" onclick="resetToResubmitRequest()"><span aria-hidden="true">&times;</span></button>
                                 <h2 class="modal-title text-center text-success" id="resubmitRequestModalLabel">Resubmit Request</h2>
                             </div>
                             <div class="modal-body">
@@ -487,10 +485,10 @@
                                                     <span>Barcode : <span id="resubmitReqItemBarcode">{{resubmitReqConfirmItemBarcode}}</span></span>
                                                 </div>
                                                 <div *ngIf="status">
-                                                    <span id="resubmitRequestStatus" class="text-success">{{resubmitResponseMessage}}</span>
+                                                    <span class="text-success" id="resubmitRequestStatus">{{resubmitResponseMessage}}</span>
                                                 </div>
                                                 <div *ngIf="!status">
-                                                    <span id="resubmitRequestStatus" class="error-color">{{resubmitResponseMessage}}</span>
+                                                    <span class="error-color" id="resubmitRequestStatus">{{resubmitResponseMessage}}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -498,9 +496,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer" style="padding-top: 0px;">
-                                <div id="resubmitRequestConfirmFooterId" class="pull-right">
-                                    <button id="resubmitRequestYes" style="height:35px;font-size:15px;" *ngIf="resubmitRequestConfirmBodyId" type="button" class="btn btn-default themed-button btn-primary" (click)="resubmitRequestItem()">Yes</button>
-                                    <button id="resubmitRequestNo" style="height:35px;font-size:15px;" *ngIf="resubmitRequestConfirmBodyId" type="button" class="btn btn-default themed-button themed-button-cancel" data-dismiss="modal" (click)="closeResubmitRequestItem()">No</button>
+                                <div class="pull-right" id="resubmitRequestConfirmFooterId">
+                                    <button class="btn btn-default themed-button btn-primary" id="resubmitRequestYes" type="button" style="height:35px;font-size:15px;" *ngIf="resubmitRequestConfirmBodyId" (click)="resubmitRequestItem()">Yes</button>
+                                    <button class="btn btn-default themed-button themed-button-cancel" id="resubmitRequestNo" data-dismiss="modal" type="button" style="height:35px;font-size:15px;" *ngIf="resubmitRequestConfirmBodyId" (click)="closeResubmitRequestItem()">No</button>
                                 </div>
                             </div>
                         </div>
@@ -509,11 +507,11 @@
                 <!-- Resubmit Request Modal Data-->
 
                 <!-- Notes Modal Data-->
-                <div id="requestNotesModal" class="modal fade create-request-details" tabindex="-2" role="dialog" aria-labelledby="requestNotesLargeModalLabel" data-keyboard="false" data-backdrop="static">
+                <div class="modal fade create-request-details" id="requestNotesModal" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="requestNotesLargeModalLabel" tabindex="-2">
                     <div class="modal-dialog" role="document">
-                        <div id="requestNotesModalContent" class="modal-content">
+                        <div class="modal-content" id="requestNotesModalContent">
                             <div class="modal-header bg-success">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <button class="close" data-dismiss="modal" type="button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h2 class="modal-title text-center text-success" id="requestNotesModalLabel">Request Notes</h2>
                             </div>
                             <div class="modal-body">

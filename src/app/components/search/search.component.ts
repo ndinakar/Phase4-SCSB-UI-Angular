@@ -30,6 +30,7 @@ declare var $: any;
   ]
 })
 export class SearchComponent implements OnInit {
+  fieldValuseStatus = false;
   toggleCheck = true;
   count: number = 4;
   instList: any[];
@@ -105,7 +106,6 @@ export class SearchComponent implements OnInit {
     "index": null,
     "errorMessage": null
   }
-
   searchfieldval = [
     { id: 'Author_search', name: "Author" },
     { id: 'Title_search', name: "Title" },
@@ -587,6 +587,7 @@ export class SearchComponent implements OnInit {
   }
   clearFieldvalue() {
     if ($("#fieldValue").val().length > 0) {
+      this.fieldValuseStatus = false;
       $("#clearSearchText").show();
       $("#resetSearch").prop('disabled', false);
     } else {
@@ -595,10 +596,16 @@ export class SearchComponent implements OnInit {
     }
   }
   clearSearchText() {
-    // this.fieldValue = '';
+    this.fieldValuseStatus = true;
     $("#fieldValue").val('');
+    this.searchForm.value.fieldValue = '';
     $("#clearSearchText").hide();
     $("#resetSearch").prop('disabled', true);
+  }
+  checkFieldValue() {
+    if (this.fieldValuseStatus) {
+      this.searchForm.value.fieldValue = '';
+    }
   }
   onTableHeaderCheckboxToggle1(event: any) {
     if (event.checked === true) {

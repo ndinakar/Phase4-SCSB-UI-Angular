@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { RequestService } from 'src/app/services/request/request.service';
+import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
 
 
 declare var $: any;
@@ -89,12 +90,14 @@ export class RequestComponent implements OnInit {
   resubmitResponse: TreeNode[];
   resubmitResponseMessage: string;
   createResponse: TreeNode[];
+  rolesRes: Object;
   status: boolean;
   createRequestError: boolean;
   errorMessage: string;
-  constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService) { }
+  constructor(private rolesService: RolesPermissionsService, private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.rolesRes = this.rolesService.getRes();
     this.router.paramMap.subscribe(params => {
       this.barcode_id = params.get('barcode');
       if (this.barcode_id) {
@@ -210,7 +213,7 @@ export class RequestComponent implements OnInit {
         this.requestVal = res;
         for (var i = 0; i < this.requestVal['requestingInstitutions'].length; i++) {
           this.institutions.push(this.requestVal['requestingInstitutions'][i]);
-        }        
+        }
         this.requestingInstitutionId = '';
         this.patronBarcodeId = '';
         this.patronEmailId = '';
@@ -373,7 +376,7 @@ export class RequestComponent implements OnInit {
           this.deliveryLocVal = Object.keys(del).map(function (data) {
             return [data, del[data]];
           });
-        }        
+        }
       },
       (error) => {
 
@@ -557,7 +560,7 @@ export class RequestComponent implements OnInit {
         }
         this.spinner.show();
         this.requestService.createRequest(this.postData).subscribe(
-          (res) => {           
+          (res) => {
             this.createResponse = res;
             if (this.createResponse['errorMessage'] != null) {
               this.errorMessage = this.createResponse['errorMessage'];
