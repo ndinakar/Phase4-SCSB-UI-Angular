@@ -1,12 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DatePipe } from '@angular/common';
-import { Component, Injectable, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ReportsService } from 'src/app/services/reports/reports.service';
+import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
 import { SearchService } from 'src/app/services/search/search.service';
 declare var $: any;
 
@@ -53,6 +54,7 @@ export class SearchComponent implements OnInit {
   lastbutton = false;
   showentries = 10;
   pageNumber = 0;
+  rolesRes: Object;
   totalPageCount: number = 0;
   owningInstitutions: any = [];
   collectionGroupDesignations: any = [];
@@ -123,15 +125,39 @@ export class SearchComponent implements OnInit {
     { id: 'Barcode', name: "Barcode" },
     { id: 'ImsLocation', name: "IMS Location Code" }
   ];
+  validateCols = [
+    { field: 'title', header: 'Title' },
+    { field: 'author', header: 'Author' },
+    { field: 'publisher', header: 'Publisher' },
+    { field: 'publisherDate', header: 'Publisher Date' },
+    { field: 'owningInstitution', header: 'OI' },
+    { field: 'customerCode', header: 'CC' },
+    { field: 'collectionGroupDesignation', header: 'CGD' },
+    { field: 'useRestriction', header: 'Use Restriction' },
+    { field: 'barcode', header: 'Barcode' },
+    { field: 'summaryHoldings', header: 'SH' }
+  ];
+  validateCols1 = [
+    { field: 'callNumber', header: 'Call Number' },
+    { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
+    { field: 'customerCode', header: 'CC' },
+    { field: 'collectionGroupDesignation', header: 'CGD' },
+    { field: 'useRestriction', header: 'Use Restriction' },
+    { field: 'barcode', header: 'Barcode' },
+  ];
 
   @ViewChild('dt') dt: Table;
-  constructor(private reportsService: ReportsService, private searchService: SearchService,
+  constructor(private rolesService: RolesPermissionsService, private reportsService: ReportsService, private searchService: SearchService,
     private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
     private spinner: NgxSpinnerService) { }
 
   public data: Object[];
 
   ngOnInit(): void {
+    this.rolesRes = this.rolesService.getRes();
+    if (this.rolesRes['isBarcodeRestricted'] == true) {
+      this.validateColumns();
+    }
     this.selectedNodes1 = [];
     this.selectedNodes2 = [];
     $("#clearSearchText").hide();
@@ -521,27 +547,8 @@ export class SearchComponent implements OnInit {
     }
   }
   mappingResults() {
-    this.cols = [
-      { field: 'title', header: 'Title' },
-      { field: 'author', header: 'Author' },
-      { field: 'publisher', header: 'Publisher' },
-      { field: 'publisherDate', header: 'Publisher Date' },
-      { field: 'owningInstitution', header: 'OI' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-      { field: 'summaryHoldings', header: 'SH' }
-    ];
-
-    this.cols1 = [
-      { field: 'callNumber', header: 'Call Number' },
-      { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
-      { field: 'customerCode', header: 'CC' },
-      { field: 'collectionGroupDesignation', header: 'CGD' },
-      { field: 'useRestriction', header: 'Use Restriction' },
-      { field: 'barcode', header: 'Barcode' },
-    ];
+    this.cols = this.validateCols;
+    this.cols1 = this.validateCols1;
   }
   setPostData(searchfullrec, actionName) {
     if (actionName == 'search') {
@@ -620,6 +627,25 @@ export class SearchComponent implements OnInit {
       this.count = this.count + 1;
       if (this.count == 4) {
         this.searchForm.markAsPristine();
+      }
+    }
+  }
+  validateColumns() {
+
+    if (this.rolesRes['isBarcodeRestricted'] == false) {
+      for (let order of this.validateCols) {
+        if (order.field == 'barcode') {
+          this.validateCols.splice(this.validateCols.indexOf(order), 1);
+          break;
+        }
+      }
+    }
+    if (this.rolesRes['isBarcodeRestricted'] == false) {
+      for (let order of this.validateCols1) {
+        if (order.field == 'barcode') {
+          this.validateCols1.splice(this.validateCols1.indexOf(order), 1);
+          break;
+        }
       }
     }
   }
