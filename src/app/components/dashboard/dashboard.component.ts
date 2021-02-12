@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
     this.res = this.rolesService.getRes();
   }
   checkPermission(prefix) {
-    this.dashBoardService.checkPermission(prefix).subscribe(
+    this.dashBoardService.checkPermission('/' + prefix).subscribe(
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
