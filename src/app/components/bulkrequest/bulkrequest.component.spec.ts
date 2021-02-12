@@ -8,18 +8,14 @@ describe('BulkrequestComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BulkrequestComponent ]
+      declarations: [BulkrequestComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(BulkrequestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  xit('should create', () => {
-    expect(component).toBeTruthy();
   });
 });

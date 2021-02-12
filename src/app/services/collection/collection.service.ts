@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
-import { Inject, Injectable } from '@angular/core';
+import { error } from "@angular/compiler/src/util";
+import { Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { CollectionForm } from 'src/app/model/CollectionForm';
@@ -12,7 +13,7 @@ import { urls } from 'src/config/urls';
 
 export class CollectionService {
   prefix = urls.collection;
-  constructor(@Inject(HttpClient) private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   displyRecords(postData: CollectionForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.prefix + "/displayRecords", postData,

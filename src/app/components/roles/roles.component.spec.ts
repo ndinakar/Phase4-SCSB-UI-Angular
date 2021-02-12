@@ -1,55 +1,36 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClient, HttpParams,HttpHandler } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHandler } from '@angular/common/http';
 import { RolesComponent } from './roles.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { RolesService } from 'src/app/services/roles/roles.service';
 declare var $: any;
-fdescribe('RolesComponent', () => {
-  let component: RolesComponent;
+describe('RolesComponent', () => {
   let fixture: ComponentFixture<RolesComponent>;
+  let component: RolesComponent;
+  let service: RolesService;
+  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
+  let spinner: NgxSpinnerService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RolesComponent ],
-      providers:[HttpClient,HttpHandler]
-    })
-    .compileComponents();
-  }));
+      declarations: [],
+      providers: [RolesService, HttpClient, HttpHandler]
 
+    })
+      .compileComponents();
+  }));
   beforeEach(() => {
     fixture = TestBed.createComponent(RolesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
+    service = new RolesService(httpClientSpy as any);
+    component = new RolesComponent(service, spinner);
+    spinner = new NgxSpinnerService();
+  });
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
-  });
-  it('Testing Fields', () => {
-    expect(component.rolesVal).toBeUndefined();
-    expect(component.roleName).toBeUndefined();
-    component.resetFields();
-    component.searchRoles();
-    //expect().toHaveBeenCalled();
-    component.pageNumber=2;
-    component.rolesVal=[];
-    component.roleName= "test";
-    component.permissionName = "test";
-    component.setPostData('searchRole');
-    component.permissionNameId="Test";
-    component.deletePermissionNameId = ["test"];
-    component.setPostData('createRole');
-    component.setPostData('firstCall');
-    component.setPostData('lastCall');
-    component.setPostData('previousCall');
-    component.setPostData('nextCall');
-    component.setPostData('deleteRole');
-    component.setPostData('pageSize');
-    //component.pagination();
-    component.saveEditedRole(1,'test','test','test');
-    component.editRole(1,'test','test','test');
-    component.deleteRole(1,'test','test','test');
-    component.createRole();
-    component.pageNumber=2;
-    component.rolesVal=[];
-    component.pagination();
   });
 });

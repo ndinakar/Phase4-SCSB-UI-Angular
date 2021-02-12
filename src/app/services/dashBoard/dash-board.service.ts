@@ -11,11 +11,13 @@ export class DashBoardService {
   constructor(private httpClient: HttpClient) { }
   prefix = urls.dashBoard;
   checkPermission(prefix: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(this.prefix + "/checkPermission",
+    return this.httpClient.get<boolean>(prefix + "/checkPermission",
       appHeaders.httpOptions());
   }
   getVersionNumber(): Observable<string> {
     return this.httpClient.get<string>(this.prefix + "/getVersionNumberService",
-      appHeaders.httpOptions());
+      {
+        headers: appHeaders.getHeaders()
+      });
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
-import { catchError } from 'rxjs/operators';
 import { AdminService } from 'src/app/services/admin/admin.service';
 @Component({
   selector: 'app-admin',

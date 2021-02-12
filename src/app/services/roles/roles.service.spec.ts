@@ -1,7 +1,8 @@
 import { HttpClient, HttpHandler } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, inject, TestBed } from '@angular/core/testing';
 import { Router } from "@angular/router";
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { RolesService } from './roles.service';
 
 describe('RolesService', () => {
@@ -13,7 +14,10 @@ describe('RolesService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [],
-      providers: [RolesService, HttpClient, HttpHandler, Router]
+      providers: [RolesService, HttpClient, Router],
+      imports: [
+        HttpClientTestingModule
+      ]
 
     })
       .compileComponents();
@@ -76,7 +80,6 @@ describe('RolesService', () => {
       expect(res).toBeNaN);
   });
   it('validate saveEditedRole response', async(inject([RolesService], (service: RolesService) => {
-    //spyOn(service, 'saveEditedRole').and.returnValues(of());
     httpClientSpy.post.and.returnValues(of());
     service.saveEditedRole('test', 'test', 'test', 'test').subscribe((res) =>
       expect(res).toBeNaN);

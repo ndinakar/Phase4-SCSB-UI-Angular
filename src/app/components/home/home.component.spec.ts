@@ -1,35 +1,31 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { LoginService } from 'src/app/services/login/login.service';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
-  let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  let component: HomeComponent;
+  let service: LoginService;
+  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [HomeComponent],
-      providers: [FormBuilder],
+      declarations: [],
+      providers: [LoginService, HttpClient, HttpHandler]
+
     })
       .compileComponents();
   }));
-
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
+    service = new LoginService(httpClientSpy as any);
+    component = new HomeComponent(service);
   });
-
-  xit('should create', () => {
-    expect(component).toBeTruthy();
-  });
-  xit('Testing Fields', () => {
-    expect(component.submitted).toBe(false);
-    expect(component.institution).toBeInstanceOf;
-    component.ngOnInit();
-    //expect(component.onSubmit()).toHaveBeenCalled();
-    //expect(spy).toHaveBeenCalled();
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 });

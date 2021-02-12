@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { JobsService } from 'src/app/services/jobs/jobs.service';
@@ -27,7 +26,7 @@ export class JobsComponent implements OnInit {
   jobInstanceId: number;
   batchScheduleUrl = urls.batchScheduleUrl;
   url: string = this.batchScheduleUrl + '/jobs/';
-  constructor(private jobsService: JobsService, private router: ActivatedRoute, private spinner: NgxSpinnerService) { }
+  constructor(private jobsService: JobsService, private spinner: NgxSpinnerService) { }
   ngOnInit(): void {
     this.spinner.show();
     this.jobsService.displayJobs().subscribe(

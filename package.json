@@ -9,10 +9,11 @@
         "build:dev": "ng build --configuration=dev",
         "build:test": "ng build --configuration=test",
         "build:prod": "ng build --configuration=prod",
-        "test": "ng test",
+        "test": "ng test --watch=false",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "aot": "ng serve --aot"
+        "aot": "ng serve --aot",
+        "sonar": "sonar-scanner  -Dsonar.sources=src/app/ -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.test.inclusions=src/app/components/**/*,**/*.spec.ts,src/app/*.ts,src/app/model -Dsonar.language=ts -Dsonar.projectName=Phase4-SCSB-UI-ANGULAR"
     },
     "private": true,
     "dependencies": {
@@ -62,7 +63,9 @@
         "karma-jasmine": "~3.0.1",
         "karma-jasmine-html-reporter": "^1.4.2",
         "karma-jquery": "^0.2.4",
+        "karma-sonarqube-unit-reporter": "0.0.23",
         "protractor": "~7.0.0",
+        "sonar-scanner": "^3.1.0",
         "ts-node": "~8.3.0",
         "tslint": "~6.1.0",
         "typescript": "~3.8.3"
