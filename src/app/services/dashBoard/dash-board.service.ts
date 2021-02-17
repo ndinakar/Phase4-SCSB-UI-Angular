@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
@@ -14,8 +15,8 @@ export class DashBoardService {
     return this.httpClient.get<boolean>(prefix + "/checkPermission",
       appHeaders.httpOptions());
   }
-  getVersionNumber(): Observable<string> {
-    return this.httpClient.get<string>(this.prefix + "/getVersionNumberService",
+  getVersionNumber(): Observable<TreeNode[]> {
+    return this.httpClient.get<TreeNode[]>(this.prefix + "/getVersionNumberService",
       {
         headers: appHeaders.getHeaders()
       });

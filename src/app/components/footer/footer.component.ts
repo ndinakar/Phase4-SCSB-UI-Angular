@@ -13,7 +13,7 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
     this.dashBoardService.getVersionNumber().subscribe(
       res => {
-        this.versionNumber = res;
+        this.versionNumber = res['versionNumber'];
       },
       (error) => {
 
