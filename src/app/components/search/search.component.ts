@@ -632,7 +632,7 @@ export class SearchComponent implements OnInit {
   }
   validateColumns() {
 
-    if (this.rolesRes['isBarcodeRestricted'] == false) {
+    if (this.rolesRes['isBarcodeRestricted'] == true) {
       for (let order of this.validateCols) {
         if (order.field == 'barcode') {
           this.validateCols.splice(this.validateCols.indexOf(order), 1);
@@ -640,7 +640,7 @@ export class SearchComponent implements OnInit {
         }
       }
     }
-    if (this.rolesRes['isBarcodeRestricted'] == false) {
+    if (this.rolesRes['isBarcodeRestricted'] == true) {
       for (let order of this.validateCols1) {
         if (order.field == 'barcode') {
           this.validateCols1.splice(this.validateCols1.indexOf(order), 1);
