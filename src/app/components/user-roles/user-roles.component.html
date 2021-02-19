@@ -114,9 +114,9 @@
                                                                 <span>{{userRolesList['roleName']}}</span>
                                                             </td>
                                                             <td class="text-center" id="colData_editDelete_{{i}}">
-                                                                <a id="userDataEdit_{{i}}">
+                                                                <a id="userDataEdit_{{i}}" *ngIf="userRolesList['showEditDeleteIcon']">
                                                                     <span class="glyphicon glyphicon-pencil" title="Edit User" (click)="editUser(userRolesList['userId'],userRolesList['networkLoginId'],userRolesList['roleName'])" style="cursor: pointer;"></span></a>
-                                                                <a id="userDataDelete_{{i}}">
+                                                                <a id="userDataDelete_{{i}}" *ngIf="userRolesList['showEditDeleteIcon']">
                                                                     <span class="glyphicon glyphicon-trash" title="Delete User" (click)="deleteUserRole(userRolesList['userId'],userRolesList['networkLoginId'],userRolesList['roleName'])" style="cursor: pointer;margin-left: 5px;"></span></a>
                                                             </td>
 
