@@ -414,6 +414,7 @@ export class UserRolesComponent implements OnInit {
           this.showUserSearchView = true;
           this.errorMessageDiv = false;
           this.errorMessageforSearchDiv = false;
+          this.searchNetworkId = "";
         } else if (this.userRoleFormVal['errorMessage'] != null) {
           this.deletedSuccessMsgDiv = false;
           this.deleteErrorMsgDiv = true;
