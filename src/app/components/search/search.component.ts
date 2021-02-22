@@ -425,6 +425,11 @@ export class SearchComponent implements OnInit {
   onReset() {
     this.showresultdiv = false;
     this.checked = true;
+    $("#clearSearchText").hide();
+    this.reportsService.getInstitutions().subscribe(
+      (res) => {
+        this.owningInstitutionInst = res['incompleteShowByInst'];
+      });
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],

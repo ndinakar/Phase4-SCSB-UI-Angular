@@ -232,7 +232,7 @@
                                                 <div class="col-md-6 col-sm-6 text-right margin-top-15"><label class="fontcolor-dark" for="requestingInstitutionId">Requesting Institution <span class="error-color">*</span></label></div>
                                                 <div class="col-md-6 col-sm-6">
                                                     <div class="select-holder">
-                                                        <select class="form-control themed-input themed-select" id="requestingInstitutionId" name="requestingInstitutionName" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestingInstitutionId" [disabled]="createsubmit" (change)="populateDeliveryLocations(requestingInstitutionId)">
+                                                        <select class="form-control themed-input themed-select" id="requestingInstitutionId" name="requestingInstitutionName" [ngModelOptions]="{standalone: true}" [(ngModel)]="requestingInstitutionId" [disabled]="createsubmit || disableRequestingInstitution" (change)="populateDeliveryLocations(requestingInstitutionId)">
                                                             <option value=""></option>
                                                             <option *ngFor="let del2 of institutions" [ngValue]="del2">
                                                                 {{del2}}

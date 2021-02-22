@@ -29,6 +29,7 @@ export class RequestComponent implements OnInit {
   create_request = false;
   itemBarcodeId: string;
   requestingInstitutionId: string;
+  disableRequestingInstitution: string;
   itemTitleId: string;
   itemOwningInstitutionId: string;
   patronBarcodeId: string;
@@ -101,8 +102,7 @@ export class RequestComponent implements OnInit {
     this.router.paramMap.subscribe(params => {
       this.barcode_id = params.get('barcode');
       if (this.barcode_id) {
-        this.itemBarcodeId = this.barcode_id;
-        this.populateItemDetails(this.barcode_id);
+        this.itemBarcodeId = this.barcode_id;        
         this.initialloadroute();
       } else {
         this.initialload();
@@ -172,6 +172,7 @@ export class RequestComponent implements OnInit {
   initialload() {
     this.requestTypes = [];
     this.institutions = [];
+    this.deliveryLocVal = [];
     this.createRequestError = false;
     this.create_request = true;
     this.requestService.loadCreateRequest().subscribe(
@@ -185,7 +186,7 @@ export class RequestComponent implements OnInit {
         }
         this.requestTypeId = this.requestVal['requestType'];
         this.itemBarcodeId = '';
-        this.requestingInstitutionId = '';
+        this.requestingInstitutionId = this.requestVal['requestingInstitution'];
         this.itemTitleId = '';
         this.itemOwningInstitutionId = '';
         this.patronBarcodeId = '';
@@ -198,6 +199,7 @@ export class RequestComponent implements OnInit {
         this.Issue = '';
         this.ArticleAuthor = '';
         this.ChapterTitle = '';
+        this.disableRequestingInstitution = this.requestVal['disableRequestingInstitution'];
       },
       (error) => {
         this.spinner.hide();
@@ -214,7 +216,7 @@ export class RequestComponent implements OnInit {
         for (var i = 0; i < this.requestVal['requestingInstitutions'].length; i++) {
           this.institutions.push(this.requestVal['requestingInstitutions'][i]);
         }
-        this.requestingInstitutionId = '';
+        this.requestingInstitutionId = this.requestVal['requestingInstitution'];
         this.patronBarcodeId = '';
         this.patronEmailId = '';
         this.deliveryLocationId = '';
@@ -225,10 +227,13 @@ export class RequestComponent implements OnInit {
         this.Issue = '';
         this.ArticleAuthor = '';
         this.ChapterTitle = '';
+        this.disableRequestingInstitution = this.requestVal['disableRequestingInstitution'];
+
+        this.populateItemDetails(this.itemBarcodeId);
       },
       (error) => {
+        this.spinner.hide();
       }
-
     );
   }
 
