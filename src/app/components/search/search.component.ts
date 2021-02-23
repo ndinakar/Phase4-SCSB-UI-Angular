@@ -425,6 +425,11 @@ export class SearchComponent implements OnInit {
   onReset() {
     this.showresultdiv = false;
     this.checked = true;
+    $("#clearSearchText").hide();
+    this.reportsService.getInstitutions().subscribe(
+      (res) => {
+        this.owningInstitutionInst = res['incompleteShowByInst'];
+      });
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],
@@ -632,7 +637,7 @@ export class SearchComponent implements OnInit {
   }
   validateColumns() {
 
-    if (this.rolesRes['isBarcodeRestricted'] == false) {
+    if (this.rolesRes['isBarcodeRestricted'] == true) {
       for (let order of this.validateCols) {
         if (order.field == 'barcode') {
           this.validateCols.splice(this.validateCols.indexOf(order), 1);
@@ -640,7 +645,7 @@ export class SearchComponent implements OnInit {
         }
       }
     }
-    if (this.rolesRes['isBarcodeRestricted'] == false) {
+    if (this.rolesRes['isBarcodeRestricted'] == true) {
       for (let order of this.validateCols1) {
         if (order.field == 'barcode') {
           this.validateCols1.splice(this.validateCols1.indexOf(order), 1);

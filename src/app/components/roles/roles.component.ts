@@ -223,6 +223,7 @@ export class RolesComponent implements OnInit {
           this.successDiv = true;
           this.rolesPanel = true;
           this.showResults = true;
+          this.roleName = "";
         }
       });
   }
