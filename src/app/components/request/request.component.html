@@ -41,7 +41,7 @@
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Institution</label>
                                                 <div class="select-holder">
-                                                    <select class="themed-input themed-select" id="searchInstitutionList" name="searchInstitutionList" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchInstitutionList" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;">
+                                                    <select class="form-control themed-input themed-select" id="searchInstitutionList" name="searchInstitutionList" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchInstitutionList" [disabled]="disableSearchInstitution">
                                                         <option value=""></option>
                                                         <option *ngFor="let del5 of searchReqVal['institutionList']" [ngValue]="del5">
                                                             {{del5}}
