@@ -1,1 +1,23 @@
-<p>monitoring works!</p>
+<!-- Monitoring Tab Start -->
+<!DOCTYPE html>
+<html>
+<html>
+<body>
+<div id="monitoringContentId" name="monitoringContentName">
+    <div class="tab-hyp-head">
+        <a href="{{scsbURL}}" target="iFrame">SCSB
+        Application Metrics</a></div>
+    <div class="bar-hyp-head">|</div>
+    <div class="tab-hyp">
+        <a href="{{dockerURL}}" target="iFrame">SCSB Docker Container
+            Metrics</a>
+    </div>
+    <div class="bar-hyp-head">|</div>
+    <div class="tab-hyp-head-ls">
+        <a href="{{awsURL}}" target="iFrame">SCSB Server Metrics</a>
+    </div>
+    <iframe id="iFrame" name="iFrame" [src]="sanitizer.bypassSecurityTrustResourceUrl(scsbURL)" height="650px" scrolling="Yes" style="border: none;" width="100%"></iframe>
+</div>
+</body>
+</html>
+<!-- MOnitoring Tab End --></html>

@@ -20,5 +20,6 @@ export const urls = {
     batchScheduleUrl: appURL + ':9096',
     LOGOUT: '/logout?CSRF-TOKEN=',
     appUrl: appURL,
-    PORT: window.location.port
+    PORT: window.location.port,
+    MONITORING: '/monitoring'
 }
