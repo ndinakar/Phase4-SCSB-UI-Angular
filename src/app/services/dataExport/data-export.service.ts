@@ -18,7 +18,7 @@ export class DataExportService {
         headers: appHeaders.getHeaders()
       });
   }
-  startDataDump(collectionGroupIds: string, date: string, emailToAddress: string, fetchType: string, imsDepositoryCodes: string, institutionCodes: string, outputFormat: string, requestingInstitutionCode: string, transmissionType: string): Observable<TreeNode[]> {
+  startDataDump(collectionGroupIds: string, date: string, emailToAddress: string, fetchType: string, imsDepositoryCodes: string, institutionCodes: string, outputFormat: string, requestingInstitutionCode: string, transmissionType: string, userName: string): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders_formData();
     let parames = new HttpParams()
       .set('collectionGroupIds', collectionGroupIds)
@@ -29,7 +29,8 @@ export class DataExportService {
       .set('institutionCodes', institutionCodes)
       .set('outputFormat', outputFormat)
       .set('requestingInstitutionCode', requestingInstitutionCode)
-      .set('transmissionType', transmissionType);
+      .set('transmissionType', transmissionType)
+      .set('userName', userName);
     const options = {
       params: parames, headers: headers
     };
