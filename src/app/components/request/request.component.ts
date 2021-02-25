@@ -31,6 +31,7 @@ export class RequestComponent implements OnInit {
   itemBarcodeId: string;
   requestingInstitutionId: string;
   disableRequestingInstitution: string;
+  disableSearchInstitution: string;
   itemTitleId: string;
   itemOwningInstitutionId: string;
   patronBarcodeId: string;
@@ -250,6 +251,8 @@ export class RequestComponent implements OnInit {
     this.requestService.loadSearchRequest().subscribe(
       (res) => {
         this.searchReqVal = res;
+        this.searchInstitutionList = this.searchReqVal['institution'];
+        this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
         this.searchBar = true;
         this.spinner.hide();
       },
@@ -259,6 +262,7 @@ export class RequestComponent implements OnInit {
 
     );
   }
+
   loadCreateRequestnew() {
     this.searchBar = false;
     this.create_request = true;
@@ -464,6 +468,7 @@ export class RequestComponent implements OnInit {
   reqTpeEDD(val) {
     this.deliveryLocationErrorMessage = false;
     if (val == 'EDD') {
+      this.deliveryLocationId = '';
       this.eddshow = true;
       this.removeErrorMessagesofnEDD();
     } else {
@@ -876,6 +881,8 @@ export class RequestComponent implements OnInit {
             this.create_request = false;
             this.searchReqresult = true;
             this.searchreqResultVal = res;
+            this.searchInstitutionList = this.searchreqResultVal['institution'];
+            this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
             this.pagination();
             this.spinner.hide();
           },
@@ -941,9 +948,7 @@ export class RequestComponent implements OnInit {
           "requestStatuses": [
 
           ],
-          "institutionList": [
-
-          ],
+          "institutionList": this.searchReqVal['institutionList'],
           "disableRequestingInstitution": false,
           "onChange": false,
           "institution": this.searchInstitutionList,
@@ -1031,9 +1036,7 @@ export class RequestComponent implements OnInit {
         "requestStatuses": [
 
         ],
-        "institutionList": [
-
-        ],
+        "institutionList": this.searchReqVal['institutionList'],
         "disableRequestingInstitution": false,
         "onChange": false,
         "institution": this.searchInstitutionList,
