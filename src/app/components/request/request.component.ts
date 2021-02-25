@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
+import { isEmpty } from 'rxjs/operators';
 import { RequestService } from 'src/app/services/request/request.service';
 import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
 
@@ -30,6 +31,7 @@ export class RequestComponent implements OnInit {
   itemBarcodeId: string;
   requestingInstitutionId: string;
   disableRequestingInstitution: string;
+  disableSearchInstitution: string;
   itemTitleId: string;
   itemOwningInstitutionId: string;
   patronBarcodeId: string;
@@ -102,7 +104,7 @@ export class RequestComponent implements OnInit {
     this.router.paramMap.subscribe(params => {
       this.barcode_id = params.get('barcode');
       if (this.barcode_id) {
-        this.itemBarcodeId = this.barcode_id;        
+        this.itemBarcodeId = this.barcode_id;
         this.initialloadroute();
       } else {
         this.initialload();
@@ -249,6 +251,8 @@ export class RequestComponent implements OnInit {
     this.requestService.loadSearchRequest().subscribe(
       (res) => {
         this.searchReqVal = res;
+        this.searchInstitutionList = this.searchReqVal['institution'];
+        this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
         this.searchBar = true;
         this.spinner.hide();
       },
@@ -258,6 +262,7 @@ export class RequestComponent implements OnInit {
 
     );
   }
+
   loadCreateRequestnew() {
     this.searchBar = false;
     this.create_request = true;
@@ -463,6 +468,7 @@ export class RequestComponent implements OnInit {
   reqTpeEDD(val) {
     this.deliveryLocationErrorMessage = false;
     if (val == 'EDD') {
+      this.deliveryLocationId = '';
       this.eddshow = true;
       this.removeErrorMessagesofnEDD();
     } else {
@@ -493,7 +499,12 @@ export class RequestComponent implements OnInit {
     var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
 
     if (!pattern.test(val)) {
-      this.patronEmailIdErrorMessage = true;
+      if (!(val == '')) {
+        this.patronEmailIdErrorMessage = true;
+        this.EmailMandatoryErrorMessage = false;
+      } else {
+        this.patronEmailIdErrorMessage = false;
+      }
     } else {
       this.patronEmailIdErrorMessage = false;
     }
@@ -688,6 +699,9 @@ export class RequestComponent implements OnInit {
     } else {
       this.patronBarcodeErrorMessage = false;
     }
+    if (this.patronEmailIdErrorMessage == true) {
+      this.status_fields = false;
+    }
     if (this.deliveryLocationId == undefined || this.deliveryLocationId == '') {
       this.deliveryLocationErrorMessage = true;
       this.status_fields = false;
@@ -723,7 +737,9 @@ export class RequestComponent implements OnInit {
       this.patronBarcodeErrorMessage = false;
     }
     if (this.patronEmailId == undefined || this.patronEmailId == '' || this.patronEmailIdErrorMessage == true) {
-      this.EmailMandatoryErrorMessage = true;
+      if (this.patronEmailIdErrorMessage == false) {
+        this.EmailMandatoryErrorMessage = true;
+      }
       this.status_fields = false;
     } else {
       this.EmailMandatoryErrorMessage = false;
@@ -865,6 +881,8 @@ export class RequestComponent implements OnInit {
             this.create_request = false;
             this.searchReqresult = true;
             this.searchreqResultVal = res;
+            this.searchInstitutionList = this.searchreqResultVal['institution'];
+            this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
             this.pagination();
             this.spinner.hide();
           },
@@ -930,9 +948,7 @@ export class RequestComponent implements OnInit {
           "requestStatuses": [
 
           ],
-          "institutionList": [
-
-          ],
+          "institutionList": this.searchReqVal['institutionList'],
           "disableRequestingInstitution": false,
           "onChange": false,
           "institution": this.searchInstitutionList,
@@ -1020,9 +1036,7 @@ export class RequestComponent implements OnInit {
         "requestStatuses": [
 
         ],
-        "institutionList": [
-
-        ],
+        "institutionList": this.searchReqVal['institutionList'],
         "disableRequestingInstitution": false,
         "onChange": false,
         "institution": this.searchInstitutionList,

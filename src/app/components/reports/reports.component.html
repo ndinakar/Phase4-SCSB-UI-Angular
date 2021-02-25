@@ -1,45 +1,39 @@
 <div id="reportsContentId" name="reportsContentName">
 
     <div id="reportsFormDivId" name="reportsFormDivName">
-        <form id="reports-form" name="reports-form" class="form-horizontal">
-            <input type="hidden" />
+        <form class="form-horizontal" id="reports-form" name="reports-form">
+            <input type="hidden">
             <fieldset>
-                <div role="tabpanel" class="tab-pane" id="recapreports">
+                <div class="tab-pane" id="recapreports" role="tabpanel">
                     <!-- Reports Form Section-->
                     <div class="reports-main-section">
                         <div class="row margin-0">
                             <div class="col-xs-12  padding-0">
-                                <div *ngIf="reportType_panel" class="search-bar">
+                                <div class="search-bar" *ngIf="reportType_panel">
                                     <div class="buscador-principal">
                                         <h4 class="margin-top-0 margin-btm-10 inline-box">Report Type</h4> <span class="error-color">*</span>
                                         <div class="form-group" style="padding-left: 40px;">
-                                            <label for="ReportRequestclick" accesskey="R" class="radio-inline report-hide-shadow" style="padding-right: 30px;" tabindex="0">
-                                                <input type="radio" name="ReportTypeoption" id="ReportRequestclick"
-                                                    value="Request" (click)="enableRequestPage()" />
+                                            <label class="radio-inline report-hide-shadow" for="ReportRequestclick" accesskey="R" style="padding-right: 30px;" tabindex="0">
+                                                <input id="ReportRequestclick" name="ReportTypeoption" type="radio" value="Request" (click)="enableRequestPage()">
                                                 Requests
                                             </label>
-                                            <label for="ReportAccessionDeaccessionclick" accesskey="A" class="radio-inline report-hide-shadow" style="padding-right: 30px;" tabindex="0">
-                                                <input type="radio" name="ReportTypeoption"
-                                                    id="ReportAccessionDeaccessionclick" value="Accession/Deaccesion"
-                                                    (click)="enableAccessionPage()" [checked]="isChecked" />
+                                            <label class="radio-inline report-hide-shadow" for="ReportAccessionDeaccessionclick" accesskey="A" style="padding-right: 30px;" tabindex="0">
+                                                <input id="ReportAccessionDeaccessionclick" name="ReportTypeoption" type="radio" value="Accession/Deaccesion" (click)="enableAccessionPage()" [checked]="isChecked">
                                                 Accession/Deaccession
                                             </label>
-                                            <label for="ReportCollectionGroupDesignationclick" accesskey="C" class="radio-inline report-hide-shadow" style="padding-right: 30px" tabindex="0">
-                                                <input type="radio" name="ReportTypeoption"
-                                                    id="ReportCollectionGroupDesignationclick"
-                                                    value="CollectionGroupDesignation" (click)="enableCGDPage()" />
+                                            <label class="radio-inline report-hide-shadow" for="ReportCollectionGroupDesignationclick" accesskey="C" style="padding-right: 30px" tabindex="0">
+                                                <input id="ReportCollectionGroupDesignationclick" name="ReportTypeoption" type="radio" value="CollectionGroupDesignation" (click)="enableCGDPage()">
                                                 Collection Group Designation
                                             </label>
-                                            <label for="ReportIncompleteRadio" accesskey="I" class="radio-inline report-hide-shadow" style="padding-right: 30px" tabindex="0">
-                                                <input type="radio" name="ReportTypeoption" id="ReportIncompleteRadio"
-                                                    value="IncompleteRecordsReport" (click)="enableincompletePage()" />
+                                            <label class="radio-inline report-hide-shadow" for="ReportIncompleteRadio" accesskey="I" style="padding-right: 30px" tabindex="0">
+                                                <input id="ReportIncompleteRadio" name="ReportTypeoption" type="radio" value="IncompleteRecordsReport" (click)="enableincompletePage()">
                                                 Incomplete Records
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Request Option View-->
-                                <div *ngIf="requestPage" id="ReportRequestclickview">
+                                <div id="ReportRequestclickview" *ngIf="requestPage">
                                     <div class="search-bar">
                                         <div class="buscador-principal">
                                             <div id="ReportRequestsection" style="margin-top: -20px;">
@@ -47,8 +41,7 @@
                                                     <div class="col-md-3 col-sm-3 padding-right-50" style="margin-top:26px">
                                                         <div class="form-group">
                                                             <div>
-                                                                <label for="ReportShowBy">Show By <span
-                                                                        class="error-color">*</span> </label>
+                                                                <label for="ReportShowBy">Show By <span class="error-color">*</span> </label>
                                                             </div>
                                                             <div class="select-holder">
                                                                 <select class="form-control themed-input themed-select" id="ReportShowBy" name="ReportShowBy" [ngModelOptions]="{standalone: true}" [(ngModel)]="ReportShowBy" (change)="reportShowBy()">
@@ -57,17 +50,16 @@
                                                                     <option value="RequestType">Request Type</option>
                                                                 </select>
                                                             </div>
-                                                            <p *ngIf="showByErrorText" id="showByErrorText" style="color: red">
+                                                            <p id="showByErrorText" *ngIf="showByErrorText" style="color: red">
                                                                 This Field is Required</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3 col-sm-3 col-lg-2 padding-right-50">
                                                         <div class="form-group">
-                                                            <label for="RequestDateRangefrom">Date Range <span
-                                                                    class="error-color">*</span> </label><br />
+                                                            <label for="RequestDateRangefrom">Date Range <span class="error-color">*</span> </label><br>
                                                             <label>From</label>
-                                                            <div class='input-group date' id="reportrequesdatepickerfrom">
-                                                                <input type='date' placeholder="MM/DD/YYYY" class="form-control themed-input" id="RequestDateRangefrom" [ngModelOptions]="{standalone: true}" [(ngModel)]="RequestDateRangefrom" name="RequestDateRangefrom" />
+                                                            <div class="input-group date" id="reportrequesdatepickerfrom">
+                                                                <input class="form-control themed-input" id="RequestDateRangefrom" name="RequestDateRangefrom" type="date" placeholder="MM/DD/YYYY" [ngModelOptions]="{standalone: true}" [(ngModel)]="RequestDateRangefrom">
                                                                 <span class="input-group-addon">
                                                                     <!-- <span class="glyphicon glyphicon-calendar">
                                                                             </span> -->
@@ -79,10 +71,10 @@
                                                     </div>
                                                     <div class="col-md-3 col-sm-3 col-lg-2 padding-right-50" style="margin-top: 3px;">
                                                         <div class="form-group">
-                                                            <br />
+                                                            <br>
                                                             <label>To</label>
-                                                            <div class='input-group date' id="reportrequesdatepickerto">
-                                                                <input type='date' placeholder="MM/DD/YYYY" class="form-control themed-input" id="RequestDateRangeto" [ngModelOptions]="{standalone: true}" [(ngModel)]="RequestDateRangeto" name="RequestDateRangeto" />
+                                                            <div class="input-group date" id="reportrequesdatepickerto">
+                                                                <input class="form-control themed-input" id="RequestDateRangeto" name="RequestDateRangeto" type="date" placeholder="MM/DD/YYYY" [ngModelOptions]="{standalone: true}" [(ngModel)]="RequestDateRangeto">
                                                                 <span class="input-group-addon">
                                                                     <!-- <span class="glyphicon glyphicon-calendar">
                                                                                 </span> -->
@@ -91,7 +83,7 @@
                                                             <p id="requestToDateErrorText" *ngIf="requestToDateErrorText" style="color: red;">This Field is Required
                                                             </p>
                                                             <p id="requestFromToError" *ngIf="requestFromToError" style="color: red">To Date must be greater than or
-                                                                <br />equal to the From Date</p>
+                                                                <br>equal to the From Date</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-1 col-md-3 col-sm-3" style="margin-top: 18px;">
@@ -102,16 +94,16 @@
                                                 <div style="padding-left:5px;">Fields marked with asterisk(
                                                     <span class="error-color">*</span>) are mandatory.
                                                 </div>
-                                                <div class="" id="note-partners" style="padding-left:5px;margin-top:4px;">
+                                                <div class id="note-partners" style="padding-left:5px;margin-top:4px;">
                                                     <strong>Note:</strong>
-                                                    <ul class="" style="list-style-type:disc;">
+                                                    <ul class style="list-style-type:disc;">
                                                         This report illustrates requests by owning institution and Collection Group Designation (CGD).
                                                         <li>“Private” counts requests for CGD Private items that were requested by and are owned by the institution listed in the column header.</li>
                                                         <li>“Shared and Open to Self” counts requests for shared and open items that were requested by and are owned by the institution listed in the column header</li>
                                                         <li>“Shared and Open to Partners” counts requests for items owned by the institution listed in the column header and delivered to partners.</li>
                                                     </ul>
                                                 </div>
-                                                <div class="" id="note-requesttype" style="padding-left:5px;margin-top:4px;">
+                                                <div class id="note-requesttype" style="padding-left:5px;margin-top:4px;">
                                                     <strong>Note:</strong> Count of retrievals and/or recalls for each partner institution.
                                                 </div>
                                             </div>
@@ -119,13 +111,13 @@
                                     </div>
 
                                     <!--Report Table Section-->
-                                    <div *ngIf="requestResultsPage" class="row margin-top-20">
+                                    <div class="row margin-top-20" *ngIf="requestResultsPage">
                                         <div class="col-xs-12">
                                             <div id="showReportResultsText">
                                                 <h4>Report Results</h4>
                                                 <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
                                             </div>
-                                            <div *ngIf="partnersResults" id="partners-tableview">
+                                            <div id="partners-tableview" *ngIf="partnersResults">
                                                 <div class="table-wrapper">
                                                     <table class="table table-striped text-center margin-btm-0" id="partners-request-table">
                                                         <thead class="tablesorter-headerRow results">
@@ -137,7 +129,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tr class=" results ">
-                                                            <td rowspan="4 " class="v-middle-data gray-light fontcolor-white large-font " style="font-family:sans-serif; ">
+                                                            <td class="v-middle-data gray-light fontcolor-white large-font " rowspan="4 " style="font-family:sans-serif; ">
                                                                 Physical
                                                             </td>
                                                             <td class="results ">Private</td>
@@ -164,7 +156,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr class="results ">
-                                                            <td rowspan="4 " class="v-middle-data gray-dark fontcolor-white large-font " style="font-family:sans-serif; ">
+                                                            <td class="v-middle-data gray-dark fontcolor-white large-font " rowspan="4 " style="font-family:sans-serif; ">
                                                                 EDD
                                                             </td>
                                                             <td class="results ">Private</td>
@@ -200,7 +192,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div *ngIf="requestTypeResults " id="requesttype-tableview ">
+                                            <div id="requesttype-tableview " *ngIf="requestTypeResults ">
                                                 <div class="table-wrapper ">
                                                     <table class="table table-striped text-center margin-btm-0 ">
                                                         <thead class="tablesorter-headerRow ">
@@ -243,7 +235,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="accesionPage " id="ReportAccessionDeaccessionclickview " class=" ">
+                                <div class=" " id="ReportAccessionDeaccessionclickview " *ngIf="accesionPage ">
                                     <div class="search-bar " style="margin-top: -20px; ">
                                         <div class="buscador-principal ">
                                             <div class="row ">
@@ -252,10 +244,10 @@
                                                         <div class="form-group ">
                                                             <label for="AccessionDeaccessionDateRangefrom ">Date Range
                                                                 <span class="error-color ">*</span> </label>
-                                                            <br /><label>From</label>
-                                                            <div class='input-group date' id="reportaccessiondeaccessionsectiondatepickerfrom ">
-                                                                <input type='date' class="form-control themed-input " placeholder="MM/DD/YYYY " id="AccessionDeaccessionDateRangefrom " [ngModelOptions]="{standalone: true} " [(ngModel)]="AccessionDeaccessionDateRangefrom
-                                                                    " name="AccessionDeaccessionDateRangefrom " />
+                                                            <br><label>From</label>
+                                                            <div class="input-group date" id="reportaccessiondeaccessionsectiondatepickerfrom ">
+                                                                <input class="form-control themed-input " id="AccessionDeaccessionDateRangefrom " name="AccessionDeaccessionDateRangefrom " type="date" placeholder="MM/DD/YYYY " [ngModelOptions]="{standalone: true} " [(ngModel)]="AccessionDeaccessionDateRangefrom
+                                                                    ">
                                                                 <span class="input-group-addon ">
                                                                 </span>
 
@@ -266,21 +258,21 @@
                                                     </div>
                                                     <div class="col-md-5 col-sm-5 padding-right-50 " style="margin-top: 5px; ">
                                                         <div class="form-group ">
-                                                            <br /><label>To</label>
-                                                            <div class='input-group date' id="reportaccessiondeaccessionsectiondatepickerto ">
-                                                                <input type='date' class="form-control themed-input " placeholder="MM/DD/YYYY " id="AccessionDeaccessionDateRangeto " [ngModelOptions]="{standalone: true} " [(ngModel)]="AccessionDeaccessionDateRangeto
-                                                                    " name="AccessionDeaccessionDateRangeto " />
+                                                            <br><label>To</label>
+                                                            <div class="input-group date" id="reportaccessiondeaccessionsectiondatepickerto ">
+                                                                <input class="form-control themed-input " id="AccessionDeaccessionDateRangeto " name="AccessionDeaccessionDateRangeto " type="date" placeholder="MM/DD/YYYY " [ngModelOptions]="{standalone: true} " [(ngModel)]="AccessionDeaccessionDateRangeto
+                                                                    ">
                                                                 <span class="input-group-addon ">
                                                                 </span>
                                                             </div>
                                                             <p id="deaccessionErrorText " *ngIf="deaccessionErrorText " style="color: red; ">This Field is Required
                                                             </p>
                                                             <p id="accessionFromToError " *ngIf="accessionFromToError " style="color: red ">To Date must be greater than or
-                                                                <br /> equal to the From Date</p>
+                                                                <br> equal to the From Date</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 col-sm-2 " style="margin-top: 20px; ">
-                                                        <button class="btn themed-button themed-button-search " (click)="submitAccession() " id="accessionSearchButton ">Generate Report
+                                                        <button class="btn themed-button themed-button-search " id="accessionSearchButton " (click)="submitAccession() ">Generate Report
                                                         </button>
                                                     </div>
                                                 </div>
@@ -306,14 +298,14 @@
                                         </div>
                                     </div>
                                     <!--Report Table Section-->
-                                    <div *ngIf="accessionPageResponse" class="row margin-top-20 " id="showAccessionDeaccessionTable " data-th-if="${reportsForm.showAccessionDeaccessionTable} ">
+                                    <div class="row margin-top-20 " id="showAccessionDeaccessionTable " data-th-if="${reportsForm.showAccessionDeaccessionTable} " *ngIf="accessionPageResponse">
 
-                                        <div *ngIf="accessionErrorMessageDiv" id="accessionErrorMessageId" class="row margin-btm-10 ">
+                                        <div class="row margin-btm-10 " id="accessionErrorMessageId" *ngIf="accessionErrorMessageDiv">
                                             <div class="col-sm-12 " style="padding-left:45px;padding-right:45px;margin-top:10px; ">
                                                 <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="accessionErrorMessageSpanId">{{reportstVal['errorMessage']}}</span></div>
                                             </div>
                                         </div>
-                                        <div *ngIf="accessionPageResponseResultsDiv" class="col-xs-12 ">
+                                        <div class="col-xs-12 " *ngIf="accessionPageResponseResultsDiv">
                                             <h4>Report Results</h4>
                                             <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
                                             <div id="Accession_Deaccession-tableview ">
@@ -328,7 +320,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tr class="results ">
-                                                            <td rowspan="4 " class="v-middle-data gray-light fontcolor-white large-font " style="font-family:sans-serif; ">
+                                                            <td class="v-middle-data gray-light fontcolor-white large-font " rowspan="4 " style="font-family:sans-serif; ">
                                                                 Accessioned
                                                             </td>
                                                             <td class="results ">Private</td>
@@ -358,7 +350,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td rowspan="4 " class="v-middle-data gray-dark fontcolor-white large-font " style="font-family:sans-serif; ">
+                                                            <td class="v-middle-data gray-dark fontcolor-white large-font " rowspan="4 " style="font-family:sans-serif; ">
                                                                 Deaccessioned
                                                             </td>
                                                             <td class="results ">Private</td>
@@ -383,7 +375,7 @@
                                                             <td class="fontcolor-dark large-font text-right results ">
                                                                 Subtotal</td>
                                                             <td id="deacessionCount " *ngFor="let subToatlDeaccCount of subtotalEDDDeaccession">
-                                                                <a name="deacessionCount" href="# " class="Deaccession-tableshow " (click)="deaccession(subToatlDeaccCount.institution)">
+                                                                <a class="Deaccession-tableshow " name="deacessionCount" href="# " (click)="deaccession(subToatlDeaccCount.institution)">
                                                                     <button id="btn_{{subToatlDeaccCount.institution}}" *ngIf="subToatlDeaccCount.count !=0 ">{{subToatlDeaccCount.count}}</button></a>
                                                                 <span *ngIf="subToatlDeaccCount.count==0 ">{{subToatlDeaccCount.count}}</span>
                                                             </td>
@@ -396,7 +388,7 @@
                                 </div>
                                 <!-- Accession/Deaccession Option View End-->
                                 <!-- Collection Group Designation Option View-->
-                                <div *ngIf="cgdPage " id="ReportCollectionGroupDesignationclickview " class=" ">
+                                <div class=" " id="ReportCollectionGroupDesignationclickview " *ngIf="cgdPage ">
 
                                     <div class="search-bar " style="margin-top: -20px; ">
                                         <div class="buscador-principal ">
@@ -405,13 +397,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div *ngIf="cgdErrorMessageDiv" id="cgdErrorMessageId" class="row margin-btm-10" style="margin-top: 15px;">
+                                    <div class="row margin-btm-10" id="cgdErrorMessageId" *ngIf="cgdErrorMessageDiv" style="margin-top: 15px;">
                                         <div class="col-sm-12 " style="padding-left:45px;padding-right:45px;margin-top:10px; ">
                                             <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="cgdErrorMessageSpanId">{{reportstVal['errorMessage']}}</span></div>
                                         </div>
                                     </div>
                                     <!--CollectionGroupDesignation Report Table Section-->
-                                    <div *ngIf="cgdPageResultsDiv" class="row margin-top-20 ">
+                                    <div class="row margin-top-20 " *ngIf="cgdPageResultsDiv">
                                         <div class="col-xs-12 ">
                                             <h4>Report Results</h4>
                                             <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
@@ -466,22 +458,21 @@
                     </div>
                     <!-- Reports Form Section Ends-->
                     <!-- Deaccession tableview -->
-                    <div *ngIf="Deaccessiontableshow " class="reports-detail-table " id="Deaccession-tableview ">
+                    <div class="reports-detail-table " id="Deaccession-tableview " *ngIf="Deaccessiontableshow ">
                         <!-- <input type="hidden" id="ownInst " /> -->
-                        <button id="pageSizeChangeButtonId " type="submit " name="action " value="pageSizeChange " hidden="hidden "></button>
+                        <button id="pageSizeChangeButtonId " name="action " type="submit " value="pageSizeChange " hidden="hidden "></button>
                         <div class="row ">
                             <h4 class="col-sm-9 margin-top-05 margin-btm-0 ">Report Results</h4>
                             <div class="col-sm-3 text-right Deaccessionbacklink ">
-                                <a href="javascript: history.go(0)" class=" " (click)="goBack($event)"><span
-                                        class="glyphicon glyphicon-menu-left "></span> Go Back</a>
+                                <a class=" " href="javascript: history.go(0)" (click)="goBack($event)"><span class="glyphicon glyphicon-menu-left "></span> Go Back</a>
                             </div>
                         </div>
                         <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
-                        <div id="showEntriesAndNumFoundDiv " name="showEntriesAndNumFoundDiv " class="row ">
+                        <div class="row " id="showEntriesAndNumFoundDiv " name="showEntriesAndNumFoundDiv ">
                             <div class="col-sm-2 margin-top-05 show-entries-section ">
                                 <div class=" ">
                                     <span class="show-title ">Show Entries</span>
-                                    <select id="numOfRecordsId " name="numOfRecordsName " class="themed-input " [(ngModel)]="showentries" class="themed-input " [ngModelOptions]="{standalone: true} " style="margin-left: 5px; " (change)="deaccessionInformationOnChange(showentries) ">
+                                    <select class="themed-input " id="numOfRecordsId " name="numOfRecordsName " [(ngModel)]="showentries" [ngModelOptions]="{standalone: true} " style="margin-left: 5px; " (change)="deaccessionInformationOnChange(showentries) ">
                                         <option value="10" selected>10</option>
                                         <option value="25">25</option>
                                         <option value="50">50</option>
@@ -523,9 +514,9 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <input id="reportsPageNumber " name="reportsPageNumber " type="text " th:field="${reportsForm.pageNumber} " hidden="hidden " />
-                            <input id="reportstotalPageCount " name="reportstotalPageCount " type="text " th:field="${reportsForm.totalPageCount} " hidden="hidden " />
-                            <div id="reportPaginationId " name="reportPaginationName " class="pull-right " style="margin-top: -10px; ">
+                            <input id="reportsPageNumber " name="reportsPageNumber " type="text " th:field="${reportsForm.pageNumber} " hidden="hidden ">
+                            <input id="reportstotalPageCount " name="reportstotalPageCount " type="text " th:field="${reportsForm.totalPageCount} " hidden="hidden ">
+                            <div class="pull-right " id="reportPaginationId " name="reportPaginationName " style="margin-top: -10px; ">
                                 <ul class="pagination " id="reportPaginationUl ">
                                     <li [ngClass]="(firstbutton==true)? 'disabled': '' ">
                                         <span id="btn_first " (click)="deaccessionfirstCall() " style="cursor: pointer ">First</span>
@@ -547,7 +538,7 @@
                     </div>
 
                     <!--IncompleteRecordsReport view -->
-                    <div *ngIf="incompletePage " id="ReportIncompleteRecordsview " class=" ">
+                    <div class=" " id="ReportIncompleteRecordsview " *ngIf="incompletePage ">
                         <div class="search-bar " style="margin-top: -20px; ">
                             <div class="buscador-principal ">
                                 <div class="row ">
@@ -558,10 +549,9 @@
                                                     <label for="incompleteShowBy ">Show By
                                                         <span class="error-color ">*</span> </label>
                                                     <div class="select-holder ">
-                                                        <select id="incompleteShowBy " name="incompleteShowBy " class="themed-input themed-select " style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;
+                                                        <select class="themed-input themed-select " id="incompleteShowBy " name="incompleteShowBy " style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;
                                                                     " [ngModelOptions]="{standalone: true} " [(ngModel)]="incompleteShowBy ">
-                                                            <option *ngFor="let inst of instVal[ 'incompleteShowByInst'] "
-                                                                [ngValue]="inst ">
+                                                            <option *ngFor="let inst of instVal[ 'incompleteShowByInst'] " [ngValue]="inst ">
                                                                 {{inst}}
                                                             </option>
                                                         </select>
@@ -573,7 +563,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-3 ">
-                                        <button class="btn themed-button themed-button-search " type="button " id="incompleteSubmitBtn " (click)="incompleteRecords() ">Generate Report
+                                        <button class="btn themed-button themed-button-search " id="incompleteSubmitBtn " type="button " (click)="incompleteRecords() ">Generate Report
                                         </button>
                                     </div>
                                 </div>
@@ -596,20 +586,20 @@
                             </div>
                         </div>
                         <!--IncompleteRecordsReport Report Table Section-->
-                        <div *ngIf="incompleteResultsPage" class="row " id="IncompleteReporttableview ">
-                            <div *ngIf="errorMessageId " id="errorMessageId " class="row margin-btm-10 ">
+                        <div class="row " id="IncompleteReporttableview " *ngIf="incompleteResultsPage">
+                            <div class="row margin-btm-10 " id="errorMessageId " *ngIf="errorMessageId ">
                                 <div class="col-sm-12 " style="padding-left:45px;padding-right:45px;margin-top:10px; ">
                                     <div class="bg-danger text-danger padding-10 "><span class="margin-right-05 glyphicon glyphicon-warning-sign "></span><span id="errorMessageSpanId ">{{reportstVal['errorMessage']}}</span></div>
                                 </div>
                             </div>
-                            <div *ngIf="incompleteResultsDiv" class="col-xs-12 " style="padding-left:30px;padding-right:30px; ">
+                            <div class="col-xs-12 " *ngIf="incompleteResultsDiv" style="padding-left:30px;padding-right:30px; ">
                                 <h4>Report Results</h4>
                                 <h4 class="pull-right " style="margin-top: -20px; ">Total Records Found:
                                     <span>{{reportstVal['incompleteTotalRecordsCount']}}</span></h4>
                                 <div class="col-sm-offset-2 show-entries-section " style="margin-top: -30px; ">
                                     <div class=" ">
                                         <span class="show-title ">Show Entries</span>
-                                        <select id="incompleteShowRecords " name="numOfRecordsName " class="themed-input " [(ngModel)]="incompletePageSize " class="themed-input " (change)="incompleteReportPageSizeChange(incompletePageSize)
+                                        <select class="themed-input " id="incompleteShowRecords " name="numOfRecordsName " [(ngModel)]="incompletePageSize " (change)="incompleteReportPageSizeChange(incompletePageSize)
                                                                     " [ngModelOptions]="{standalone: true} " style="margin-left: 5px; ">
                                             <option value="10" selected>10</option>
                                             <option value="25">25</option>
@@ -637,7 +627,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr id="rowData_results_{{i}} " *ngFor="let incompleteResult of reportstVal[ 'incompleteReportResultsRows']; let i=index " class="parentRow ">
+                                                <tr class="parentRow " id="rowData_results_{{i}} " *ngFor="let incompleteResult of reportstVal[ 'incompleteReportResultsRows']; let i=index ">
                                                     <td id="colData_title_{{i}} ">
                                                         <span>{{incompleteResult.title}}</span>
                                                     </td>
@@ -661,9 +651,9 @@
                             </div>
                             <!--IncompleteRecordsReport Pagination-->
 
-                            <input id="incompletePageNumber " name="incompletePageNumber " type="text " th:field="${reportsForm.incompletePageNumber} " hidden="hidden " />
-                            <input id="incompletetotalPageCount " name="incompletetotalPageCount " type="text " th:field="${reportsForm.incompleteTotalPageCount} " hidden="hidden " />
-                            <div *ngIf="incompletetotalPaginationDiv" id="incompletePaginationId " name="reportPaginationName " class="pull-left " style="margin-top: -10px;padding-left:35px; " data-th-if="${reportsForm.showIncompletePagination} ">
+                            <input id="incompletePageNumber " name="incompletePageNumber " type="text " th:field="${reportsForm.incompletePageNumber} " hidden="hidden ">
+                            <input id="incompletetotalPageCount " name="incompletetotalPageCount " type="text " th:field="${reportsForm.incompleteTotalPageCount} " hidden="hidden ">
+                            <div class="pull-left " id="incompletePaginationId " name="reportPaginationName " data-th-if="${reportsForm.showIncompletePagination} " *ngIf="incompletetotalPaginationDiv" style="margin-top: -10px;padding-left:35px; ">
                                 <ul class="pagination " id="incompletePaginationUl ">
                                     <li [ngClass]="(firstbutton==true)? 'disabled': '' ">
                                         <span id="btn_first_in " (click)="firstCall() " style="cursor: pointer ">First</span>
@@ -681,7 +671,7 @@
                             </div>
                             <!--IncompletePagination Ends-->
                             <div *ngIf="exportRecorsButtonDiv" style="padding-right:35px; ">
-                                <button id="export " class="btn btn-md btn-danger pull-right " style="margin-top: 10px " (click)="exportRecords() ">Export Records
+                                <button class="btn btn-md btn-danger pull-right " id="export " style="margin-top: 10px " (click)="exportRecords() ">Export Records
                                 </button>
                             </div>
                         </div>
