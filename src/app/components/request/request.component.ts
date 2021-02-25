@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
+import { isEmpty } from 'rxjs/operators';
 import { RequestService } from 'src/app/services/request/request.service';
 import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
 
@@ -102,7 +103,7 @@ export class RequestComponent implements OnInit {
     this.router.paramMap.subscribe(params => {
       this.barcode_id = params.get('barcode');
       if (this.barcode_id) {
-        this.itemBarcodeId = this.barcode_id;        
+        this.itemBarcodeId = this.barcode_id;
         this.initialloadroute();
       } else {
         this.initialload();
@@ -493,7 +494,12 @@ export class RequestComponent implements OnInit {
     var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
 
     if (!pattern.test(val)) {
-      this.patronEmailIdErrorMessage = true;
+      if (!(val == '')) {
+        this.patronEmailIdErrorMessage = true;
+        this.EmailMandatoryErrorMessage = false;
+      } else {
+        this.patronEmailIdErrorMessage = false;
+      }
     } else {
       this.patronEmailIdErrorMessage = false;
     }
@@ -688,6 +694,9 @@ export class RequestComponent implements OnInit {
     } else {
       this.patronBarcodeErrorMessage = false;
     }
+    if (this.patronEmailIdErrorMessage == true) {
+      this.status_fields = false;
+    }
     if (this.deliveryLocationId == undefined || this.deliveryLocationId == '') {
       this.deliveryLocationErrorMessage = true;
       this.status_fields = false;
@@ -723,7 +732,9 @@ export class RequestComponent implements OnInit {
       this.patronBarcodeErrorMessage = false;
     }
     if (this.patronEmailId == undefined || this.patronEmailId == '' || this.patronEmailIdErrorMessage == true) {
-      this.EmailMandatoryErrorMessage = true;
+      if (this.patronEmailIdErrorMessage == false) {
+        this.EmailMandatoryErrorMessage = true;
+      }
       this.status_fields = false;
     } else {
       this.EmailMandatoryErrorMessage = false;

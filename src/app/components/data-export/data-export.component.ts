@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { DataExportService } from '../../services/dataExport/data-export.service';
@@ -42,7 +43,7 @@ export class DataExportComponent implements OnInit {
   //Descriptions
   institutionCodesDescription: string;
   resInstDescription: TreeNode[];
-  constructor(private router: Router, private dataExportService: DataExportService, private spinner: NgxSpinnerService) { }
+  constructor(private router: Router, private dataExportService: DataExportService, private spinner: NgxSpinnerService, private cookieService: CookieService) { }
   res: any[];
   ngOnInit(): void {
     this.result = [];
@@ -111,7 +112,7 @@ export class DataExportComponent implements OnInit {
   }
   startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType) {
     if (this.validateMandatoryInputs(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType)) {
-      this.dataExportService.startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType).subscribe(
+      this.dataExportService.startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType, this.cookieService.get('userName')).subscribe(
         (res) => {
           window.scroll(0, 0);
           this.resValExport = res;

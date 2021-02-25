@@ -1,6 +1,7 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataExportService } from 'src/app/services/dataExport/data-export.service';
 
@@ -13,6 +14,7 @@ describe('DataExportComponent', () => {
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
   let spinner: NgxSpinnerService;
   let router: Router;
+  let cookieService: CookieService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,7 +27,7 @@ describe('DataExportComponent', () => {
   beforeEach(() => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
     service = new DataExportService(httpClientSpy as any);
-    component = new DataExportComponent(router, service, spinner);
+    component = new DataExportComponent(router, service, spinner, cookieService);
     spinner = new NgxSpinnerService();
   });
   afterEach(() => {
