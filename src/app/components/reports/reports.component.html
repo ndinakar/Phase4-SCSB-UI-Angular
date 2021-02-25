@@ -503,7 +503,7 @@
                                     </thead>
                                     <tbody>
                                         <tr id="rowData_results_de_{{i}} " *ngFor="let deaccessionRow of deaccessionRes[ 'deaccessionItemResultsRows']; let i=index ">
-                                            <td id="colData_dd_de_{{i}} "><span>{{deaccessionRow.deaccessionDate | date:'MM/dd/yyyy':'-0500'}}</span></td>
+                                            <td id="colData_dd_de_{{i}} "><span>{{deaccessionRow.deaccessionDate}}</span></td>
                                             <td id="colData_dt_de_{{i}} "><span>{{deaccessionRow.title}}</span></td>
                                             <td id="colData_di_de_{{i}} "><span id="ownInstDeacc_{{i}} ">{{deaccessionRow.deaccessionOwnInst}}</span></td>
                                             <td id="colData_ib_de_{{i}} "><span>{{deaccessionRow.itemBarcode}}</span></td>
@@ -641,7 +641,7 @@
                                                         <span>{{incompleteResult.barcode}}</span>
                                                     </td>
                                                     <td id="colData_cd_{{i}} ">
-                                                        <span>{{incompleteResult.createdDate | date:'MM/dd/yyyy':'-0500'}}</span>
+                                                        <span>{{incompleteResult.createdDate}}</span>
                                                     </td>
                                                 </tr>
                                             </tbody>

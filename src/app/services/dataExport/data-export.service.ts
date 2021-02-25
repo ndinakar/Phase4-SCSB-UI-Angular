@@ -29,8 +29,7 @@ export class DataExportService {
       .set('institutionCodes', institutionCodes)
       .set('outputFormat', outputFormat)
       .set('requestingInstitutionCode', requestingInstitutionCode)
-      .set('transmissionType', transmissionType)
-      .set('userName', userName);
+      .set('transmissionType', transmissionType);
     const options = {
       params: parames, headers: headers
     };
