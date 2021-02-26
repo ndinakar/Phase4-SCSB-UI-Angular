@@ -288,7 +288,7 @@ export class BulkrequestComponent implements OnInit {
       this.patronBarcodeErrorMessage = false;
       this.EmailMandatoryErrorMessage = false;
       this.spinner.show();
-      this.bulkrequestService.createBulkRequest(this.deliveryLocation, this.requestingInstitutionId, this.patronBarcodeId, this.BulkRequestName, this.choosenFile, this.patronEmailId, this.uploadFile).subscribe(
+      this.bulkrequestService.createBulkRequest(this.deliveryLocation, this.requestingInstitutionId, this.patronBarcodeId, this.BulkRequestName, this.choosenFile, this.patronEmailId, this.uploadFile, this.requestNotesId).subscribe(
         (res) => {
           this.spinner.hide();
           this.createResponse = res;
