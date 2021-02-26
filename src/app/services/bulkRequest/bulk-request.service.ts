@@ -22,7 +22,7 @@ export class BulkRequestService {
   }
   createBulkRequest(deliveryLocation: string, requestingInstitutionId: string,
     patronBarcodeId: string, BulkRequestName: string, choosenFile:
-      string, patronEmailId: string, file: File):
+      string, patronEmailId: string, file: File, requestNotesId : string):
     Observable<any> {
     const formdata: FormData = new FormData();
     formdata.append('file', file, file.name);
@@ -33,7 +33,8 @@ export class BulkRequestService {
       .set('patronBarcodeId', patronBarcodeId)
       .set('BulkRequestName', BulkRequestName)
       .set('choosenFile', choosenFile)
-      .set('patronEmailId', patronEmailId);
+      .set('patronEmailId', patronEmailId)
+      .set('notes', requestNotesId);
     const options = {
       params: parames, headers: headers,
       withCredentials: true
