@@ -16,17 +16,26 @@ export class DashboardComponent implements OnInit {
     this.res = this.rolesService.getRes();
   }
   checkPermission(prefix) {
-    this.dashBoardService.checkPermission('/' + prefix).subscribe(
+    this.dashBoardService.checkPermission('http://localhost:9091' + '/' + prefix).subscribe(
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
+          console.log('test home');
           this.router.navigate(['home']);
+        } else {
+          this.reload();
         }
       },
       error => {
         this.router.navigate(['home']);
       }
     );
+  }
+  reload() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 }
 
