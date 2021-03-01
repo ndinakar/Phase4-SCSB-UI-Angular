@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit {
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          console.log('test home');
           this.router.navigate(['home']);
         } else {
           this.reload();
