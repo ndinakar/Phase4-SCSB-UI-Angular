@@ -97,6 +97,8 @@ export class RequestComponent implements OnInit {
   status: boolean;
   createRequestError: boolean;
   errorMessage: string;
+  interval: any;
+
   constructor(private rolesService: RolesPermissionsService, private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
@@ -282,6 +284,9 @@ export class RequestComponent implements OnInit {
     this.ArticleAuthor = '';
     this.ChapterTitle = '';
     this.initialload();
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
   NotesLengthValidation(val) {
@@ -881,6 +886,10 @@ export class RequestComponent implements OnInit {
             this.create_request = false;
             this.searchReqresult = true;
             this.searchreqResultVal = res;
+            var refreshStatus = this.refreshRequestStatus();
+            if (refreshStatus) {
+                this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
+            }
             this.searchInstitutionList = this.searchreqResultVal['institution'];
             this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
             this.pagination();
@@ -970,6 +979,10 @@ export class RequestComponent implements OnInit {
             } else {
               this.messageNoSearchRecords = false;
               this.searchReqresult = true;
+              var refreshStatus = this.refreshRequestStatus();
+              if (refreshStatus) {
+                  this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
+              }
             }
             this.spinner.hide();
           },
@@ -1058,6 +1071,10 @@ export class RequestComponent implements OnInit {
           } else {
             this.messageNoSearchRecords = false;
             this.searchReqresult = true;
+            var refreshStatus = this.refreshRequestStatus();
+            if (refreshStatus) {
+                this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
+            }
           }
           this.spinner.hide();
         },
@@ -1068,6 +1085,49 @@ export class RequestComponent implements OnInit {
       //search api call end
 
     }
+  }
+
+  refreshRequestStatus(): boolean {
+    let refreshStatus = false;
+    let statusJson = {
+      "status": []
+    };
+    if (this.searchreqResultVal != null && this.searchreqResultVal != undefined) {
+      let searchResults = this.searchreqResultVal['searchResultRows'];
+      searchResults.forEach((item, index) => {
+        if (item.status == 'PROCESSING ...' || item.status == 'PENDING') {
+          statusJson.status.push(item.requestId + '-' + index);
+        }
+      });
+
+      if (statusJson.status.length > 0) {
+        refreshStatus = true;
+        this.requestService.refreshStatus(JSON.stringify(statusJson)).subscribe(
+          (res) => {
+            let changeStatus = res['Status'];
+            let changeNotes = res['Notes'];
+            if (changeStatus != null && changeStatus != '' && changeNotes != null && changeNotes != '') {
+              Object.keys(changeStatus).forEach(statusKey => {
+                let reqStatus = changeStatus[statusKey];
+                this.searchreqResultVal['searchResultRows'][statusKey].status = reqStatus;
+                if (reqStatus !== "PROCESSING ..." && reqStatus !== "PENDING") {
+                  $('#refreshIcon-' + statusKey).hide();
+                }
+                
+                Object.keys(changeNotes).forEach(notesKey => {
+                  let reqNotes = changeNotes[notesKey];
+                  this.searchreqResultVal['searchResultRows'][notesKey].requestNotes = reqNotes;
+                });
+              })
+            }
+          },
+          (error) => {
+            this.spinner.hide();
+            //Called when error
+          });
+      }
+    }
+    return refreshStatus;
   }
 
   onChangeRequestStatus(statusVal) {
