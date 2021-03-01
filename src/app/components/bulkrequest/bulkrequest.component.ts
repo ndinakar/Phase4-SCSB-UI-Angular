@@ -208,7 +208,11 @@ export class BulkrequestComponent implements OnInit {
     var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
 
     if (!pattern.test(val)) {
-      this.patronEmailIdErrorMessage = true;
+      if (!(val == '')) {
+        this.patronEmailIdErrorMessage = true;
+      } else {
+        this.patronEmailIdErrorMessage = false;
+      }
     } else {
       this.patronEmailIdErrorMessage = false;
     }
@@ -333,6 +337,9 @@ export class BulkrequestComponent implements OnInit {
       this.bulkRequestFileRequired = true;
       this.statusInputs = false;
     } else { this.bulkRequestFileRequired = false; }
+    if (this.patronEmailIdErrorMessage == true) {
+      this.statusInputs = false;
+    }
     // if (this.patronEmailId == undefined || this.patronEmailId == '' || this.patronEmailIdErrorMessage == true) {
     //   this.EmailMandatoryErrorMessage = true;
     //   this.statusInputs = false;
