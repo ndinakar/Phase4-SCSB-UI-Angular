@@ -76,5 +76,11 @@ export class RequestService {
         headers: appHeaders.getHeaders()
       });
   }
+  refreshStatus(postData: string): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.prefix + "/refreshStatus", postData, 
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
 
 }
