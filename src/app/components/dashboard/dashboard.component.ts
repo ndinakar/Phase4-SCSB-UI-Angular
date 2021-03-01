@@ -21,12 +21,20 @@ export class DashboardComponent implements OnInit {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
           this.router.navigate(['home']);
+        } else {
+          this.reload();
         }
       },
       error => {
         this.router.navigate(['home']);
       }
     );
+  }
+  reload() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 }
 
