@@ -27,19 +27,19 @@
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isUserRoleAllowed']" (click)="checkPermission('userRoles')">
                         <a class="tab-users" aria-controls="users" routerLink="/userRoles"><span class="icons"></span><span>Users</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']" (click)="reload()">
                         <a class="tab-jobs" aria-controls="jobs" routerLink="/jobs"><span class="icons"></span><span>Jobs</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isMonitoring']">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isMonitoring']" (click)="reload()">
                         <a class="tab-monitor" aria-controls="monitoring" routerLink="/monitoring"><span class="icons"></span><span>Monitoring</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isLogging']">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isLogging']" (click)="reload()">
                         <a class="tab-logg" aria-controls="logging" routerLink="/logging"><span class="icons"></span><span>Logging</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']" (click)="reload()">
                         <a class="tab-users " aria-controls="logging" routerLink="/admin"><span class="icons"></span><span>Admin</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isDataExport']">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isDataExport']" (click)="reload()">
                         <a class="tab-users" aria-controls="logging" routerLink="/dataExport"><span class="icons"></span><span>Data Export</span></a>
                     </li>
                 </ul>
