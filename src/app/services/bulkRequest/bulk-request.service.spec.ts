@@ -73,7 +73,7 @@ describe('BulkRequestService', () => {
   }));
   it('createBulkRequest response', async(() => {
     httpClientSpy.post.and.returnValues(of(null));
-    service.createBulkRequest('test', 'test', 'test', 'test', 'test', 'test', new File([], 'test')).subscribe((res) =>
+    service.createBulkRequest('test', 'test', 'test', 'test', 'test', 'test', new File([], 'test'), 'test').subscribe((res) =>
       expect(res).toBeNaN);
   }));
   it('populateDeliveryLocations response', () => {
