@@ -22,7 +22,7 @@ export class DataExportComponent implements OnInit {
   dataExportDiv = false;
   dataExport_panel = true;
   try_out_toggle = false;
-  isChecked = false;
+  isChecked = true;
   collectionGroupIds: string = null;
   date: string = null;
   emailToAddress: string = null;
@@ -51,6 +51,7 @@ export class DataExportComponent implements OnInit {
       (res) => {
         this.resInstDescription = res;
         this.institutionCodesDescription = this.resInstDescription['desc'];
+        this.enableDataDumpDetails();
       });
   }
   tryOutToggle() {
