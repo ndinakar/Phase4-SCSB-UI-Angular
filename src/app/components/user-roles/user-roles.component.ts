@@ -151,16 +151,6 @@ export class UserRolesComponent implements OnInit {
   }
   enableCreateUser() {
     this.userRoles();
-    this.institutionId = null;
-    this.editinstitutionId = null;
-    this.editsuccessMsgDiv = false;
-    this.createSuccussMessageDiv = false;
-    //this.UserPanel = false;
-    //this.searchBarDiv =false;
-    this.createUserDiv = true;
-    this.errorMessageDiv = false;
-    this.showUserSearchView = false;
-    this.deleteUserDiv = false;
   }
   editUser(userId, networkLoginId, roleName) {
     this.editusersDiv = true;
@@ -431,6 +421,16 @@ export class UserRolesComponent implements OnInit {
       (res) => {
         this.userRolesVal = res;
         this.userRoleListVal = this.userRolesVal['roles'].map(function (x) { return { id: x[0], name: x[1] }; });
+        this.institutionId = null;
+        this.editinstitutionId = null;
+        this.editsuccessMsgDiv = false;
+        this.createSuccussMessageDiv = false;
+        //this.UserPanel = false;
+        //this.searchBarDiv =false;
+        this.createUserDiv = true;
+        this.errorMessageDiv = false;
+        this.showUserSearchView = false;
+        this.deleteUserDiv = false;
       },
       (error) => {
         this.spinner.hide();

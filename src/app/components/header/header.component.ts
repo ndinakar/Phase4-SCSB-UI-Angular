@@ -11,11 +11,16 @@ import { environment } from 'src/environments/environment';
 export class HeaderComponent implements OnInit {
   LOGOUT = urls.LOGOUT;
   userName: string;
+  tempUserName: string;
   url: string = '';
   constructor(private cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.url = environment.homeUrl + this.LOGOUT + this.cookieService.get('CSRF-TOKEN');
-    this.userName = this.cookieService.get('userName');
+    this.tempUserName = this.cookieService.get('userName');
+    if (this.tempUserName) {
+      localStorage.setItem("userName", this.tempUserName);
+      this.userName = localStorage.getItem("userName");
+    }
   }
 }
