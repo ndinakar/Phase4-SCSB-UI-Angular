@@ -225,7 +225,7 @@
                                                     <div class="select-holder">
                                                         <select class="form-control themed-input themed-select" id="deliveryLocation" name="deliveryLocation" [ngModelOptions]="{standalone: true}" [(ngModel)]="deliveryLocation" [disabled]="createsubmit">
                                                         <option value=""></option>
-                                                        <option *ngFor="let del1 of deliveryLocVal" [ngValue]="del1[1].description+'-'+del1[1].customerCode">
+                                                        <option *ngFor="let del1 of deliveryLocVal" [ngValue]="del1[1].customerCode">
                                                             {{del1[1].description}}-{{del1[1].customerCode}}
                                                           </option>
                                                         </select>

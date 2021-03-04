@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    localStorage.clear();
     this.institution = 'default';
     this.loginService.getInstitutions().subscribe(
       (res) => {

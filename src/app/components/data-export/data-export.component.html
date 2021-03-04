@@ -4,13 +4,13 @@
             <div class="buscador-principal">
                 <h4 class="margin-top-0 margin-btm-10 inline-box">Data Dump Details</h4> <span class="error-color">*</span>
                 <div class="form-group" style="padding-left: 40px;">
-                    <label class="radio-inline report-hide-shadow" for="exportDataDump" accesskey="R" style="padding-right: 30px;" tabindex="0">
-                        <input id="exportDataDump" name="dataTypeoption" type="radio" value="exportDataDump" (click)="enabledDataExport()">
-                        Export Data Dump
-                    </label>
                     <label class="radio-inline report-hide-shadow" for="dataDumpDetails" accesskey="A" style="padding-right: 30px;" tabindex="0">
                         <input id="dataDumpDetails" name="dataTypeoption" type="radio" value="dataDumpDetails" (click)="enableDataDumpDetails()" [checked]="isChecked">
                         Data Dump Details
+                    </label>
+                    <label class="radio-inline report-hide-shadow" for="exportDataDump" accesskey="R" style="padding-right: 30px;" tabindex="0">
+                        <input id="exportDataDump" name="dataTypeoption" type="radio" value="exportDataDump" (click)="enabledDataExport()">
+                        Export Data Dump
                     </label>
                 </div>
             </div>
@@ -191,9 +191,9 @@
                                                                         <td class="col parameters-col_description">
                                                                             <input class id="transmissionType" type="text" title *ngIf="!try_out_toggle" [ngModelOptions]="{standalone: true}" [(ngModel)]="transmissionType">
                                                                             <div class="markdown">
-                                                                                <p>Type of transmission - for FTP use 0,
+                                                                                <p>Type of transmission - for S3 use 0,
                                                                                     for HTTP response use 1. Default is
-                                                                                    FTP.
+                                                                                    S3.
                                                                                 </p>
                                                                             </div>
                                                                         </td>
@@ -229,6 +229,9 @@
         <div class="col-xs-12 " *ngIf="dataDumpResultsDiv">
             <h4>Data Dump Results</h4>
             <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
+            <div>
+                <p style="text-align: center;">CGD: 1-Shared, 2-Open, 3-Private.</p>
+            </div>
             <div id="Accession_Deaccession-tableview ">
                 <div class="table-wrapper ">
                     <table class="table text-center margin-btm-0" id="acessionDeaccessionTable " style="border-collapse:collapse;">

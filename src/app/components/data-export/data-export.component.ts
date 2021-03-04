@@ -22,7 +22,7 @@ export class DataExportComponent implements OnInit {
   dataExportDiv = false;
   dataExport_panel = true;
   try_out_toggle = false;
-  isChecked = false;
+  isChecked = true;
   collectionGroupIds: string = null;
   date: string = null;
   emailToAddress: string = null;
@@ -51,6 +51,7 @@ export class DataExportComponent implements OnInit {
       (res) => {
         this.resInstDescription = res;
         this.institutionCodesDescription = this.resInstDescription['desc'];
+        this.enableDataDumpDetails();
       });
   }
   tryOutToggle() {
@@ -111,9 +112,12 @@ export class DataExportComponent implements OnInit {
     });
   }
   startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType) {
+
     if (this.validateMandatoryInputs(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType)) {
+      this.spinner.show();
       this.dataExportService.startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType, this.cookieService.get('userName')).subscribe(
         (res) => {
+          this.spinner.hide();
           window.scroll(0, 0);
           this.resValExport = res;
           if (this.resValExport['message'] != null) {
@@ -127,7 +131,7 @@ export class DataExportComponent implements OnInit {
           }
         },
         (error) => {
-
+          this.spinner.hide();
         });
     } else { }
   }
