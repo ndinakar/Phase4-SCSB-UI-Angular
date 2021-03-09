@@ -21,4 +21,21 @@ export class DashBoardService {
         headers: appHeaders.getHeaders()
       });
   }
+  checkPermission_Monitoring(prefix: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(prefix + "/monitoring",
+      appHeaders.httpOptions());
+  }
+  checkPermission_Loggig(prefix: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(prefix + "/logging",
+      appHeaders.httpOptions());
+  }
+  getEmail(): Observable<TreeNode[]> {
+    return this.httpClient.get<TreeNode[]>(this.prefix + "/getEmail",
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  logout(): void {
+    this.httpClient.get<any>("/logout", appHeaders.httpOptions());
+  }
 }

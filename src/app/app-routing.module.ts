@@ -18,6 +18,7 @@ import { RolesComponent } from './components/roles/roles.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { UserLoginComponent } from './components/user-login/user-login.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
   { path: 'error', component: ErrorPageComponent },
   {
     path: 'openMarcRecord', component: OpenMarcComponent
+  },
+  {
+    path: 'userLogin',
+    component: UserLoginComponent,
   },
   {
     path: '',

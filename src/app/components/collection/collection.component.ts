@@ -4,6 +4,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 
 import { CollectionService } from 'src/app/services/collection/collection.service';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 declare var $: any;
 
@@ -61,7 +62,7 @@ export class CollectionComponent implements OnInit {
   errorMessage: string;
   radioSwitchEditCGD: boolean;
   radioSwitchDeaccession: boolean;
-  constructor(private formBuilder: FormBuilder, private collectionService: CollectionService, private spinner: NgxSpinnerService) { }
+  constructor(private formBuilder: FormBuilder, private collectionService: CollectionService, private spinner: NgxSpinnerService, private dashBoard: DashboardComponent) { }
 
   ngOnInit(): void {
     this.collectionForm = this.formBuilder.group({
@@ -196,6 +197,7 @@ export class CollectionComponent implements OnInit {
   }
 
   openMarcView(bibid, barcode, itemId) {
+    this.dashBoard.validate('collection');
     this.spinner.show();
     this.radioSwitchDeaccession = false;
     this.CGDselect = '';

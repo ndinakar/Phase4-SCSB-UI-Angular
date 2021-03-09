@@ -36,5 +36,46 @@ export class DashboardComponent implements OnInit {
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([currentUrl]);
   }
+  validate(prefix) {
+    this.dashBoardService.checkPermission('/' + prefix).subscribe(
+      response => {
+        this.isAuthenticated = response;
+        if (this.isAuthenticated == false) {
+          this.router.navigate(['home']);
+        }
+      },
+      error => {
+        this.router.navigate(['home']);
+      }
+    );
+  }
+  validate_monitoring(prefix) {
+    this.dashBoardService.checkPermission_Monitoring('/' + prefix).subscribe(
+      response => {
+        this.isAuthenticated = response;
+        console.log(this.isAuthenticated);
+        if (this.isAuthenticated == false) {
+          this.router.navigate(['home']);
+        }
+      },
+      error => {
+        this.router.navigate(['home']);
+      }
+    );
+  }
+  validate_logging(prefix) {
+    this.dashBoardService.checkPermission_Loggig('/' + prefix).subscribe(
+      response => {
+        this.isAuthenticated = response;
+        console.log(this.isAuthenticated);
+        if (this.isAuthenticated == false) {
+          this.router.navigate(['home']);
+        }
+      },
+      error => {
+        this.router.navigate(['home']);
+      }
+    );
+  }
 }
 
