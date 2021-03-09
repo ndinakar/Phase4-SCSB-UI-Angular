@@ -40,6 +40,7 @@ import { SearchComponent } from './components/search/search.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { HttpErrorInterceptor } from './http-error.interceptor';
+import { UserLoginComponent } from './components/user-login/user-login.component';
 
 export function appInit(appConfig: AppConfig) {
   return () => appConfig.load();
@@ -65,7 +66,8 @@ export function appInit(appConfig: AppConfig) {
     FooterComponent,
     CollectionComponent,
     OpenMarcComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    UserLoginComponent
   ],
   imports: [
     LoggerModule.forRoot({ level: NgxLoggerLevel.TRACE }),
