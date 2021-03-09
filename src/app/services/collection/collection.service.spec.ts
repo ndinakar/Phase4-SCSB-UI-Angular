@@ -91,7 +91,6 @@ describe('CollectionService', () => {
     service.openMarcView(postData).subscribe((res) =>
       expect(res).toBeNaN,
       (error) => {
-        console.log(error);
       });
   });
   it('validate updateCollection() response', () => {
@@ -99,7 +98,6 @@ describe('CollectionService', () => {
     service.updateCollection(postData).subscribe((res) =>
       expect(res).toBeNaN,
       (error) => {
-        console.log(error);
       });
   });
   it('validate checkCrossInstitutionBorrowed() response', () => {

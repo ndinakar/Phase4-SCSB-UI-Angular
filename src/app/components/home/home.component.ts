@@ -48,7 +48,6 @@ export class HomeComponent implements OnInit {
       this.institutionErrorMessageDiv = false;
       this.url = environment.homeUrl + this.casPrefix + this.institution;
       this.validate = true;
-      console.log(this.url);
     }
   }
   returnZero() {
