@@ -224,6 +224,9 @@ export class SearchComponent implements OnInit {
 
   //show entries api end
   searchRecord() {
+    this.clicked = true;
+    this.selectedNodes1 = [];
+    this.selectedNodes2 = [];
     this.spinner.show();
     $("#search-filter").slideUp();
     this.showentries = 10;
