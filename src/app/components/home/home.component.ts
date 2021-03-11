@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from 'src/app/services/login/login.service';
 import { urls } from 'src/config/urls';
 import { environment } from 'src/environments/environment';
@@ -21,7 +22,7 @@ export class HomeComponent implements OnInit {
   Institutions: any = [];
   institutionErrorMessageDiv = false;
   validate: boolean;
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private cookieService: CookieService) {
 
   }
   ngAfterViewInit() {
@@ -30,6 +31,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.url = '';
+    this.cookieService.deleteAll();
     localStorage.clear();
     this.institution = 'default';
     this.loginService.getInstitutions().subscribe(

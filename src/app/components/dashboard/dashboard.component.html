@@ -27,7 +27,7 @@
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isUserRoleAllowed']" (click)="checkPermission('userRoles')">
                         <a class="tab-users" aria-controls="users" routerLink="/userRoles"><span class="icons"></span><span>Users</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']" (click)="reload()">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']" (click)="checkPermission('search')">
                         <a class="tab-jobs" aria-controls="jobs" routerLink="/jobs"><span class="icons"></span><span>Jobs</span></a>
                     </li>
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isMonitoring']" (click)="reload()">
@@ -39,7 +39,7 @@
                     <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']" (click)="reload()">
                         <a class="tab-users " aria-controls="logging" routerLink="/admin"><span class="icons"></span><span>Admin</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isDataExport']" (click)="reload()">
+                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isDataExport']" (click)="checkPermission('dataExport')">
                         <a class="tab-users" aria-controls="logging" routerLink="/dataExport"><span class="icons"></span><span>Data Export</span></a>
                     </li>
                 </ul>

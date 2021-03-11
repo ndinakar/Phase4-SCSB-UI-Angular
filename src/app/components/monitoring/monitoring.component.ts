@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MonitoringService } from 'src/app/services/monitoring/monitoring.service';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-monitoring',
@@ -14,9 +15,10 @@ export class MonitoringComponent implements OnInit {
   dockerURL: string;
   awsURL: string;
 
-  constructor(private monitoring: MonitoringService, public sanitizer: DomSanitizer) { }
+  constructor(private monitoring: MonitoringService, public sanitizer: DomSanitizer, private dashBoard: DashboardComponent) { }
 
   ngOnInit(): void {
+    this.dashBoard.validate_monitoring('monitoring');
     this.monitoring.pullData().subscribe(
       (res) => {
         this.data = res;

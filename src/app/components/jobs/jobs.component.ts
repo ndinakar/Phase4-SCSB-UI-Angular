@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { JobsService } from 'src/app/services/jobs/jobs.service';
 import { urls } from 'src/config/urls';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-jobs',
@@ -24,10 +26,13 @@ export class JobsComponent implements OnInit {
   jobNameId: string;
   jobId: number;
   jobInstanceId: number;
+  res: Object;
+  isAuthenticated = false;
   batchScheduleUrl = urls.batchScheduleUrl;
   url: string = this.batchScheduleUrl + '/jobs/';
-  constructor(private jobsService: JobsService, private spinner: NgxSpinnerService) { }
+  constructor(private router: Router, private jobsService: JobsService, private spinner: NgxSpinnerService, private dashBoard: DashboardComponent) { }
   ngOnInit(): void {
+    this.dashBoard.validate('search');
     this.spinner.show();
     this.jobsService.displayJobs().subscribe(
       (res) => {

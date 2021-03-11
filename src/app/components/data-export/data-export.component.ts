@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { DataExportService } from '../../services/dataExport/data-export.service';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 declare var $: any;
 @Component({
   selector: 'app-data-export',
@@ -43,9 +44,10 @@ export class DataExportComponent implements OnInit {
   //Descriptions
   institutionCodesDescription: string;
   resInstDescription: TreeNode[];
-  constructor(private router: Router, private dataExportService: DataExportService, private spinner: NgxSpinnerService, private cookieService: CookieService) { }
+  constructor(private router: Router, private dataExportService: DataExportService, private spinner: NgxSpinnerService, private cookieService: CookieService, private dashBoard: DashboardComponent) { }
   res: any[];
   ngOnInit(): void {
+    this.dashBoard.validate('dataExport');
     this.result = [];
     this.dataExportService.getDescriptions().subscribe(
       (res) => {
@@ -115,7 +117,7 @@ export class DataExportComponent implements OnInit {
 
     if (this.validateMandatoryInputs(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType)) {
       this.spinner.show();
-      this.dataExportService.startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType, this.cookieService.get('userName')).subscribe(
+      this.dataExportService.startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType, localStorage.getItem("userName")).subscribe(
         (res) => {
           this.spinner.hide();
           window.scroll(0, 0);
