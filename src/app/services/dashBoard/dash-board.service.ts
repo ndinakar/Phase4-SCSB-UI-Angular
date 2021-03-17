@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DashBoardService {
-  LOGOUT = urls.LOGOUT;
   res: Object;
   isAuthenticated = false;
   constructor(private router: Router, private httpClient: HttpClient, private cookieService: CookieService) { }
@@ -75,9 +74,7 @@ export class DashBoardService {
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          //this.logout();
-          location.replace(environment.homeUrl + this.LOGOUT + this.cookieService.get('CSRF-TOKEN'));
-          //this.router.navigate(['home']);
+          this.router.navigate(['home']);
         }
       },
       error => {
