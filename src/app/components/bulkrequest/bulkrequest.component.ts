@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { BulkRequestService } from 'src/app/services/bulkRequest/bulk-request.service';
+import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 declare var $: any;
 
 @Component({
@@ -74,9 +75,10 @@ export class BulkrequestComponent implements OnInit {
   fileName: string;
   dataDecode: string;
   file: File = null;
-  constructor(private formBuilder: FormBuilder, private bulkrequestService: BulkRequestService, private spinner: NgxSpinnerService) { }
+  constructor(private bulkrequestService: BulkRequestService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
+    this.dashBoardService.validate('bulkRequest');
     this.initialload();
   }
 
@@ -163,6 +165,7 @@ export class BulkrequestComponent implements OnInit {
   }
 
   loadSearchRequest() {
+    this.dashBoardService.validate('bulkRequest');
     this.createReqsection = false;
     this.searchReqsection = true;
   }
@@ -283,7 +286,7 @@ export class BulkrequestComponent implements OnInit {
   }
 
   createBulkRequest() {
-
+    this.dashBoardService.validate('bulkRequest');
     if (this.validateInputs()) {
       this.BulkRequestNameErrorMessage = false;
       this.requestingInstitutionErrorMessage = false;
@@ -311,6 +314,7 @@ export class BulkrequestComponent implements OnInit {
     }
   }
   goToSearchRequest() {
+    this.dashBoardService.validate('bulkRequest');
     this.loadSearchRequest();
     this.createReqsection = false;
     this.searchReqsection = true;
@@ -369,6 +373,7 @@ export class BulkrequestComponent implements OnInit {
 
   //**********************search Request start*******************
   searchRequests() {
+    this.dashBoardService.validate('bulkRequest');
     this.postData = {
       "requestId": null,
       "patronBarcode": null,

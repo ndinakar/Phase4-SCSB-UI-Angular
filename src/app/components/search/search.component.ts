@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 import { ReportsService } from 'src/app/services/reports/reports.service';
 import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
 import { SearchService } from 'src/app/services/search/search.service';
@@ -149,11 +150,12 @@ export class SearchComponent implements OnInit {
   @ViewChild('dt') dt: Table;
   constructor(private rolesService: RolesPermissionsService, private reportsService: ReportsService, private searchService: SearchService,
     private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   public data: Object[];
 
   ngOnInit(): void {
+    this.dashBoardService.validate('search');
     this.rolesRes = this.rolesService.getRes();
     if (this.rolesRes['isBarcodeRestricted'] == true) {
       this.validateColumns();
@@ -224,6 +226,7 @@ export class SearchComponent implements OnInit {
 
   //show entries api end
   searchRecord() {
+    this.dashBoardService.validate('search');
     this.clicked = true;
     this.selectedNodes1 = [];
     this.selectedNodes2 = [];

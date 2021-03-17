@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
+import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 import { ReportsService } from 'src/app/services/reports/reports.service';
 declare var $: any;
 @Component({
@@ -10,9 +11,10 @@ declare var $: any;
 })
 export class ReportsComponent implements OnInit {
 
-  constructor(private reportsService: ReportsService, private spinner: NgxSpinnerService) { }
+  constructor(private reportsService: ReportsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
+    this.dashBoardService.validate('reports');
     this.spinner.hide();
     this.ReportShowBy = 'Partners';
   }
@@ -209,6 +211,7 @@ export class ReportsComponent implements OnInit {
   }
 
   submitRequest() {
+    this.dashBoardService.validate('reports');
     this.requestToDateErrorText = false;
     this.showByErrorText = false;
     this.requestFromDateErrorText = false;
@@ -391,6 +394,7 @@ export class ReportsComponent implements OnInit {
     return (parseFloat(this.start) > parseFloat(this.end));
   }
   submitAccession() {
+    this.dashBoardService.validate('reports');
     this.accessionErrorText = false;
     this.deaccessionErrorText = false;
     this.accessionFromToError = false;
@@ -567,6 +571,7 @@ export class ReportsComponent implements OnInit {
     }
   }
   incompleteRecords() {
+    this.dashBoardService.validate('reports');
     this.incompleteResultsPage = false;
     this.incompleteErrorText = false;
     this.statusRequest = false;
@@ -635,6 +640,7 @@ export class ReportsComponent implements OnInit {
     this.isChecked = true;
   }
   enableCGDPage() {
+    this.dashBoardService.validate('reports');
     this.spinner.show();
     this.resetFields();
     this.reportsService.collectionGroupDesignation().subscribe(

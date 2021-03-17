@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-
 import { CollectionService } from 'src/app/services/collection/collection.service';
-import { DashboardComponent } from '../dashboard/dashboard.component';
+import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
+
 
 declare var $: any;
 
@@ -62,9 +62,10 @@ export class CollectionComponent implements OnInit {
   errorMessage: string;
   radioSwitchEditCGD: boolean;
   radioSwitchDeaccession: boolean;
-  constructor(private formBuilder: FormBuilder, private collectionService: CollectionService, private spinner: NgxSpinnerService, private dashBoard: DashboardComponent) { }
+  constructor(private formBuilder: FormBuilder, private collectionService: CollectionService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
+    this.dashBoardService.validate('collection');
     this.collectionForm = this.formBuilder.group({
       barcodeFieldName: ['']
     });
@@ -123,6 +124,7 @@ export class CollectionComponent implements OnInit {
     this.showresultdiv = false;
   }
   displayRecords() {
+    this.dashBoardService.validate('collection');
     this.spinner.show();
     this.barerrmsg = '';
     this.showresultdiv = true;
@@ -197,7 +199,7 @@ export class CollectionComponent implements OnInit {
   }
 
   openMarcView(bibid, barcode, itemId) {
-    this.dashBoard.validate('collection');
+    this.dashBoardService.validate('collection');
     this.spinner.show();
     this.radioSwitchDeaccession = false;
     this.CGDselect = '';

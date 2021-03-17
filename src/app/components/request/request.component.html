@@ -41,7 +41,7 @@
                                             <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
                                                 <label class="fontcolor-dark margin-btm-10">Institution</label>
                                                 <div class="select-holder">
-                                                    <select class="form-control themed-input themed-select" id="searchInstitutionList" name="searchInstitutionList" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchInstitutionList" [disabled]="disableSearchInstitution">
+                                                    <select class="themed-input themed-select" id="searchInstitutionList" name="searchInstitutionList" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchInstitutionList" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;" [disabled]="disableSearchInstitution">
                                                         <option value=""></option>
                                                         <option *ngFor="let del5 of searchReqVal['institutionList']" [ngValue]="del5">
                                                             {{del5}}
@@ -129,7 +129,7 @@
                                                     <td id="data_cd_{{i}}">{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':'-0500'}}</td>
                                                     <td id="data_ld_{{i}}">{{ item.lastUpdatedDate |  date:'yyyy-MM-dd HH:mm:ss':'-0500'}}</td>
                                                     <td id="data_st_{{i}}">
-                                                        <i id="refreshIcon-{{i}}" class="fa fa-refresh fa-spin" style="font-size: 18px;" *ngIf="item.status == 'PROCESSING ...' || item.status == 'PENDING'"></i>&nbsp;
+                                                        <i class="fa fa-refresh fa-spin" id="refreshIcon-{{i}}" style="font-size: 18px;" *ngIf="item.status == 'PROCESSING ...' || item.status == 'PENDING'"></i>&nbsp;
                                                         {{ item.status }}
                                                     </td>
                                                     <td style="text-align: center"><button id="btn_reqNotes_{{i}}" name="action" type="button" style="border-radius: revert;" (click)="reqNotemodal(item.requestNotes)"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
