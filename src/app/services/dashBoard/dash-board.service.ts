@@ -1,18 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashBoardService {
+  LOGOUT = urls.LOGOUT;
   res: Object;
   isAuthenticated = false;
-  constructor(private router: Router, private httpClient: HttpClient) { }
+  constructor(private router: Router, private httpClient: HttpClient, private cookieService: CookieService) { }
   prefix = urls.dashBoard;
   checkPermission(prefix: string): Observable<boolean> {
     return this.httpClient.get<boolean>(prefix + "/checkPermission",
@@ -46,7 +49,6 @@ export class DashBoardService {
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          //this.logout();
           this.router.navigate(['home']);
         }
       },
@@ -60,7 +62,6 @@ export class DashBoardService {
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          //this.logout();
           this.router.navigate(['home']);
         }
       },
@@ -75,7 +76,8 @@ export class DashBoardService {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
           //this.logout();
-          this.router.navigate(['home']);
+          location.replace(environment.homeUrl + this.LOGOUT + this.cookieService.get('CSRF-TOKEN'));
+          //this.router.navigate(['home']);
         }
       },
       error => {
