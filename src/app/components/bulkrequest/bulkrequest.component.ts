@@ -165,6 +165,7 @@ export class BulkrequestComponent implements OnInit {
   }
 
   loadSearchRequest() {
+    this.dashBoardService.validate('bulkRequest');
     this.createReqsection = false;
     this.searchReqsection = true;
   }

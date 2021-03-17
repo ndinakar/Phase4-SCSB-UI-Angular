@@ -91,6 +91,7 @@ export class JobsComponent implements OnInit {
   }
 
   invokeScheduleJob(scheduleType) {
+    this.dashBoardService.validate('search');
     this.spinner.show();
     this.postData = {
       "jobId": this.jobId,
@@ -125,6 +126,7 @@ export class JobsComponent implements OnInit {
       });
   }
   closeScheduleJob() {
+    this.dashBoardService.validate('search');
     this.spinner.show();
     this.jobsService.displayJobs().subscribe(
       (res) => {
