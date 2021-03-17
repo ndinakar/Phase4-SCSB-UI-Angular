@@ -46,7 +46,7 @@ export class DashBoardService {
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          this.logout();
+          //this.logout();
           this.router.navigate(['home']);
         }
       },
@@ -60,7 +60,7 @@ export class DashBoardService {
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          this.logout();
+          //this.logout();
           this.router.navigate(['home']);
         }
       },
@@ -74,7 +74,7 @@ export class DashBoardService {
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          this.logout();
+          //this.logout();
           this.router.navigate(['home']);
         }
       },
