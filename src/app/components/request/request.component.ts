@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { isEmpty } from 'rxjs/operators';
+import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 import { RequestService } from 'src/app/services/request/request.service';
 import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
 
@@ -99,9 +100,10 @@ export class RequestComponent implements OnInit {
   errorMessage: string;
   interval: any;
 
-  constructor(private rolesService: RolesPermissionsService, private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService) { }
+  constructor(private rolesService: RolesPermissionsService, private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
+    this.dashBoardService.validate('request');
     this.rolesRes = this.rolesService.getRes();
     this.router.paramMap.subscribe(params => {
       this.barcode_id = params.get('barcode');
@@ -242,6 +244,7 @@ export class RequestComponent implements OnInit {
   }
 
   loadSearchRequest() {
+    this.dashBoardService.validate('request');
     this.spinner.show();
     this.searchInstitutionList = '';
     this.requestStatus = '';
@@ -515,6 +518,7 @@ export class RequestComponent implements OnInit {
     }
   }
   createRequest() {
+    this.dashBoardService.validate('request');
     if (this.eddshow) {
       if (this.validateInputs_edd()) {
         this.itemBarcodeErrorMessage = false;
@@ -888,7 +892,7 @@ export class RequestComponent implements OnInit {
             this.searchreqResultVal = res;
             var refreshStatus = this.refreshRequestStatus();
             if (refreshStatus) {
-                this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
+              this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
             }
             this.searchInstitutionList = this.searchreqResultVal['institution'];
             this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
@@ -908,6 +912,7 @@ export class RequestComponent implements OnInit {
   }
 
   searchRequests() {
+    this.dashBoardService.validate('request');
     this.spinner.show();
     if (this.requestStatus == '' || this.requestStatus == undefined) {
       if (this.searchItemBarcode || this.searchPatronBarcode) {
@@ -981,7 +986,7 @@ export class RequestComponent implements OnInit {
               this.searchReqresult = true;
               var refreshStatus = this.refreshRequestStatus();
               if (refreshStatus) {
-                  this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
+                this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
               }
             }
             this.spinner.hide();
@@ -1073,7 +1078,7 @@ export class RequestComponent implements OnInit {
             this.searchReqresult = true;
             var refreshStatus = this.refreshRequestStatus();
             if (refreshStatus) {
-                this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
+              this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
             }
           }
           this.spinner.hide();
@@ -1113,7 +1118,7 @@ export class RequestComponent implements OnInit {
                 if (reqStatus !== "PROCESSING ..." && reqStatus !== "PENDING") {
                   $('#refreshIcon-' + statusKey).hide();
                 }
-                
+
                 Object.keys(changeNotes).forEach(notesKey => {
                   let reqNotes = changeNotes[notesKey];
                   this.searchreqResultVal['searchResultRows'][notesKey].requestNotes = reqNotes;

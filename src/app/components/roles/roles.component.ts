@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
+import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 import { RolesService } from 'src/app/services/roles/roles.service';
 @Component({
   selector: 'app-roles',
@@ -9,9 +10,10 @@ import { RolesService } from 'src/app/services/roles/roles.service';
 })
 export class RolesComponent implements OnInit {
 
-  constructor(private rolesService: RolesService, private spinner: NgxSpinnerService) { }
+  constructor(private rolesService: RolesService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
+    this.dashBoardService.validate('roles');
     this.spinner.hide();
   }
   rolesVal: TreeNode[];
@@ -107,6 +109,7 @@ export class RolesComponent implements OnInit {
     "showIntial": true
   }
   searchRoles() {
+    this.dashBoardService.validate('roles');
     this.spinner.show();
     this.rolesService.searchRoles(this.setPostData('searchRole')).subscribe(
       (res) => {
@@ -155,6 +158,7 @@ export class RolesComponent implements OnInit {
     return statusCreateRole;
   }
   saveEditedRole(roleId, roleName, roleDescription, permissionNames) {
+    this.dashBoardService.validate('roles');
     if (this.validateEditRole()) {
       this.spinner.show();
       this.rolesService.saveEditedRole(roleId, roleName, roleDescription, permissionNames).subscribe(
@@ -196,6 +200,7 @@ export class RolesComponent implements OnInit {
     return String(permissinNameValue).split(',');
   }
   deleteRole(roleId, roleName, roleDescription, permissionNames) {
+    this.dashBoardService.validate('roles');
     this.populatePermissionNames();
     this.showResults = false;
     this.rolesPanel = false;
@@ -257,6 +262,7 @@ export class RolesComponent implements OnInit {
     return statusCreateRole;
   }
   saveCreateRole() {
+    this.dashBoardService.validate('roles');
     if (this.validateCreateRole()) {
       this.spinner.show();
       this.rolesService.createRole(this.setPostData('createRole')).subscribe(
