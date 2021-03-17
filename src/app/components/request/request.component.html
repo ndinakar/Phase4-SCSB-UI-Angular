@@ -132,7 +132,7 @@
                                                         <i class="fa fa-refresh fa-spin" id="refreshIcon-{{i}}" style="font-size: 18px;" *ngIf="item.status == 'PROCESSING ...' || item.status == 'PENDING'"></i>&nbsp;
                                                         {{ item.status }}
                                                     </td>
-                                                    <td style="text-align: center"><button id="btn_reqNotes_{{i}}" name="action" type="button" style="border-radius: revert;" (click)="reqNotemodal(item.requestNotes)"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
+                                                    <td style="text-align: center"><button id="btn_reqNotes_{{i}}" name="action" type="button" title="{{item.requestNotes}}" style="border-radius: revert;" (click)="reqNotemodal(item.requestNotes)"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
                                                     <td>
                                                         <button class="btn btn-round" id="bt_cancleRq_{{i}}" name="action" type="button" (click)="cancelRequest(item.requestId)" *ngIf="(item.status=='RETRIEVAL ORDER PLACED' || item.status=='RECALL ORDER PLACED' || item.status=='EDD ORDER PLACED' || item.status=='LAS REFILE REQUEST PLACED') && item.showItems" style="background-color:transparent;box-shadow: none;outline: none;color: #337ab7;border-color:#337ab7" th:title="'Cancel Request'">Cancel Note
                                                         </button>
