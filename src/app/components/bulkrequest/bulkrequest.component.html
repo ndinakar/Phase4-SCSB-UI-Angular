@@ -114,7 +114,7 @@
                                                         <span><a *ngIf="item.status == 'PROCESSED'" (click)="downloadReports(item.bulkRequestId)" style="cursor: pointer;"><span>Results_</span>{{item.fileName}}</a>
                                                         </span>
                                                     </td>
-                                                    <td style="text-align: center"><button name="action" type="button" style="border-radius: revert;" (click)="reqNotemodal(item.bulkRequestNotes)"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
+                                                    <td style="text-align: center"><button name="action" type="button" title="{{item.bulkRequestNotes}}" style="border-radius: revert;" (click)="reqNotemodal(item.bulkRequestNotes)"><i class="fa fa-file-text-o" aria-hidden="true"></i></button></td>
                                                 </tr>
                                             </tbody>
                                         </table>
