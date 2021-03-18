@@ -6,40 +6,40 @@
         <div class="row">
             <div class="dashboard-content col-sm-12">
                 <ul class="nav nav-tabs" id="search-content-tab" role="tablist">
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSearchAllowed']" (click)="checkPermission('search')">
+                    <li class="tab-search-holder" routerLinkActive="tab-search-holder active" *ngIf="res['isSearchAllowed']" (click)="reload()">
                         <a class="tab-search" aria-controls="search" routerLink="/search"><span class="icons"></span><span>Search</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isCollectionAllowed'] || res['isDeaccessionAllowed']" (click)="checkPermission('collection')">
+                    <li class="tab-collection-holder" routerLinkActive="tab-collection-holder active" *ngIf="res['isCollectionAllowed'] || res['isDeaccessionAllowed']" (click)="reload()">
                         <a class="tab-collection" aria-controls="collection" routerLink="/collection"><span class="icons"></span><span>Collection</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isRequestAllowed'] || res['isRequestAllAllowed'] || res['isRequestItemAllowed']" (click)="checkPermission('request')">
+                    <li class="tab-request-holder" routerLinkActive="tab-request-holder active" *ngIf="res['isRequestAllowed'] || res['isRequestAllAllowed'] || res['isRequestItemAllowed']" (click)="reload()">
                         <a class="tab-request" aria-controls="request" routerLink="/request"><span class="icons"></span><span>Request</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isBulkRequestAllowed']" (click)="checkPermission('bulkRequest')">
+                    <li class="tab-request-holder" routerLinkActive="tab-request-holder active" *ngIf="res['isBulkRequestAllowed']" (click)="reload()">
                         <a class="tab-request" aria-controls="request" routerLink="/bulkrequest"><span class="icons"></span><span>Bulk Request</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isReportAllowed']" (click)="checkPermission('reports')">
+                    <li class="tab-reports-holder" routerLinkActive="tab-reports-holder active" *ngIf="res['isReportAllowed']" (click)="reload()">
                         <a class="tab-reports" aria-controls="reports" routerLink="/reports"><span class="icons"></span><span>Reports</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isRoleAllowed']" (click)="checkPermission('roles')">
+                    <li class="tab-roles-holder" routerLinkActive="tab-roles-holder active" *ngIf="res['isRoleAllowed']" (click)="reload()">
                         <a class="tab-role" aria-controls="roles" routerLink="/roles"><span class="icons"></span><span>Roles</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isUserRoleAllowed']" (click)="checkPermission('userRoles')">
+                    <li class="tab-users-holder" routerLinkActive="tab-users-holder active" *ngIf="res['isUserRoleAllowed']" (click)="reload()">
                         <a class="tab-users" aria-controls="users" routerLink="/userRoles"><span class="icons"></span><span>Users</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']" (click)="checkPermission('search')">
+                    <li routerLinkActive="tab-users-holder active" *ngIf="res['isSuperAdmin']" (click)="reload()">
                         <a class="tab-jobs" aria-controls="jobs" routerLink="/jobs"><span class="icons"></span><span>Jobs</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isMonitoring']" (click)="reload()">
+                    <li routerLinkActive="tab-users-holder active" *ngIf="res['isMonitoring']" (click)="reload()">
                         <a class="tab-monitor" aria-controls="monitoring" routerLink="/monitoring"><span class="icons"></span><span>Monitoring</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isLogging']" (click)="reload()">
+                    <li routerLinkActive="tab-users-holder active" *ngIf="res['isLogging']" (click)="reload()">
                         <a class="tab-logg" aria-controls="logging" routerLink="/logging"><span class="icons"></span><span>Logging</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isSuperAdmin']" (click)="reload()">
+                    <li routerLinkActive="tab-users-holder active" *ngIf="res['isSuperAdmin']" (click)="reload()">
                         <a class="tab-users " aria-controls="logging" routerLink="/admin"><span class="icons"></span><span>Admin</span></a>
                     </li>
-                    <li routerLinkActive="tab-collection-holder active" *ngIf="res['isDataExport']" (click)="checkPermission('dataExport')">
+                    <li routerLinkActive="tab-users-holder active" *ngIf="res['isDataExport']" (click)="reload()">
                         <a class="tab-users" aria-controls="logging" routerLink="/dataExport"><span class="icons"></span><span>Data Export</span></a>
                     </li>
                 </ul>

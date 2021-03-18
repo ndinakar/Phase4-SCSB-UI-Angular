@@ -10,72 +10,16 @@ import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles
 export class DashboardComponent implements OnInit {
   res: Object;
   isAuthenticated = false;
-  constructor(private router: Router, private rolesService: RolesPermissionsService, private dashBoardService: DashBoardService) { }
+  constructor(private router: Router, private rolesService: RolesPermissionsService) { }
 
   ngOnInit(): void {
     this.res = this.rolesService.getRes();
-  }
-  checkPermission(prefix) {
-    this.dashBoardService.checkPermission('/' + prefix).subscribe(
-      response => {
-        this.isAuthenticated = response;
-        if (this.isAuthenticated == false) {
-          this.router.navigate(['home']);
-        } else {
-          this.reload();
-        }
-      },
-      error => {
-        this.router.navigate(['home']);
-      }
-    );
   }
   reload() {
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([currentUrl]);
-  }
-  validate(prefix) {
-    this.dashBoardService.checkPermission('/' + prefix).subscribe(
-      response => {
-        this.isAuthenticated = response;
-        if (this.isAuthenticated == false) {
-          this.router.navigate(['home']);
-        }
-      },
-      error => {
-        this.router.navigate(['home']);
-      }
-    );
-  }
-  validate_monitoring(prefix) {
-    this.dashBoardService.checkPermission_Monitoring('/' + prefix).subscribe(
-      response => {
-        this.isAuthenticated = response;
-        console.log(this.isAuthenticated);
-        if (this.isAuthenticated == false) {
-          this.router.navigate(['home']);
-        }
-      },
-      error => {
-        this.router.navigate(['home']);
-      }
-    );
-  }
-  validate_logging(prefix) {
-    this.dashBoardService.checkPermission_Loggig('/' + prefix).subscribe(
-      response => {
-        this.isAuthenticated = response;
-        console.log(this.isAuthenticated);
-        if (this.isAuthenticated == false) {
-          this.router.navigate(['home']);
-        }
-      },
-      error => {
-        this.router.navigate(['home']);
-      }
-    );
   }
 }
 
