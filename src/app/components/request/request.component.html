@@ -126,8 +126,8 @@
                                                     <td id="data_rt_{{i}}">{{ item.requestType }}</td>
                                                     <td id="data_rcb_{{i}}">{{ item.requestCreatedBy }}</td>
                                                     <td id="data_pe_{{i}}">{{ item.patronEmailId }}</td>
-                                                    <td id="data_cd_{{i}}">{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':'-0500'}}</td>
-                                                    <td id="data_ld_{{i}}">{{ item.lastUpdatedDate |  date:'yyyy-MM-dd HH:mm:ss':'-0500'}}</td>
+                                                    <td id="data_cd_{{i}}">{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}</td>
+                                                    <td id="data_ld_{{i}}">{{ item.lastUpdatedDate |  date:'yyyy-MM-dd HH:mm:ss':timezone(item.lastUpdatedDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}</td>
                                                     <td id="data_st_{{i}}">
                                                         <i class="fa fa-refresh fa-spin" id="refreshIcon-{{i}}" style="font-size: 18px;" *ngIf="item.status == 'PROCESSING ...' || item.status == 'PENDING'"></i>&nbsp;
                                                         {{ item.status }}
