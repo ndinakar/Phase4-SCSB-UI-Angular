@@ -6,8 +6,7 @@ import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
-import { environment } from 'src/environments/environment';
-
+var moment = require('moment-timezone');
 @Injectable({
   providedIn: 'root'
 })
@@ -81,5 +80,18 @@ export class DashBoardService {
         this.router.navigate(['home']);
       }
     );
+  }
+
+  setTimeZone(date) {
+    if (date) {
+      var zone = "America/New_York";
+      var d = moment.tz(date, zone).format();
+      var splitted = d.split("-");
+      if (splitted[3] == '04:00') {
+        return 'EDT';
+      } else {
+        return 'EST';
+      }
+    }
   }
 }

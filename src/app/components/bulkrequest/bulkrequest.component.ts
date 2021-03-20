@@ -769,4 +769,7 @@ export class BulkrequestComponent implements OnInit {
       this.bulkRequestIdSearchError = false;
     }
   }
+  timezone(date) {
+    return this.dashBoardService.setTimeZone(date);
+  }
 }

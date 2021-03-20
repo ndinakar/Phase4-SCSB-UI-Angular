@@ -189,4 +189,7 @@ export class DataExportComponent implements OnInit {
     this.successMessageDiv = false;
     this.errorMessageDiv = false;
   }
+  timezone(date) {
+    return this.dashBoardService.setTimeZone(date);
+  }
 }

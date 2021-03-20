@@ -257,7 +257,7 @@
                                 <td class="results ">{{data.values[0].bibCount}}</td>
                                 <td class="results ">{{data.values[0].itemCount}}</td>
                                 <td class="results ">{{data.values[0].keyLastModified | date:'yyyy-MM-dd
-                                    HH:mm:ss':'-0500'}}
+                                    HH:mm:ss':timezone(data.values[0].keyLastModified | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}
                                 </td>
                                 <td class="results ">{{data.values[0].keySize}}</td>
                             </tr>
@@ -269,7 +269,7 @@
                                     <td class="results ">{{instData.bibCount}}</td>
                                     <td class="results ">{{instData.itemCount}}</td>
                                     <td class="results ">{{instData.keyLastModified | date:'yyyy-MM-dd
-                                        HH:mm:ss':'-0500'}}
+                                        HH:mm:ss':timezone(instData.keyLastModified | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}
                                     </td>
                                     <td class="results ">{{instData.keySize}}</td>
                                 </tr>
