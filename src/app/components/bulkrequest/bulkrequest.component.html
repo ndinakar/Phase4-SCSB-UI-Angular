@@ -109,7 +109,7 @@
                                                     <td>{{ item.deliveryLocation }}</td>
                                                     <td>{{item.createdBy}}</td>
                                                     <td>{{ item.emailAddress }}</td>
-                                                    <td>{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':'-0500'}}</td>
+                                                    <td>{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}</td>
                                                     <td> <span>{{item.status}}</span><br>
                                                         <span><a *ngIf="item.status == 'PROCESSED'" (click)="downloadReports(item.bulkRequestId)" style="cursor: pointer;"><span>Results_</span>{{item.fileName}}</a>
                                                         </span>

@@ -4,7 +4,6 @@ import { TreeNode } from 'primeng/api';
 import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 import { JobsService } from 'src/app/services/jobs/jobs.service';
 import { urls } from 'src/config/urls';
-
 @Component({
   selector: 'app-jobs',
   templateUrl: './jobs.component.html',
@@ -143,5 +142,8 @@ export class JobsComponent implements OnInit {
       (error) => {
         this.spinner.hide();
       });
+  }
+  timezone(date) {
+    return this.dashBoardService.setTimeZone(date);
   }
 }

@@ -1665,4 +1665,7 @@ export class RequestComponent implements OnInit {
       this.lastbutton = false;
     }
   }
+  timezone(date) {
+    return this.dashBoardService.setTimeZone(date);
+  }
 }
