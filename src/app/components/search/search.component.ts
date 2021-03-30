@@ -518,7 +518,7 @@ export class SearchComponent implements OnInit {
       this.materialTypes.push('Serial')
     }
     if (searchfullrec.others == true) {
-      this.materialTypes.push('Others')
+      this.materialTypes.push('Other')
     }
 
     if (searchfullrec.NoRestrictions == true) {
