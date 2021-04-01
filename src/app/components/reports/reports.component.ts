@@ -4,6 +4,7 @@ import { TreeNode } from 'primeng/api';
 import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 import { ReportsService } from 'src/app/services/reports/reports.service';
 declare var $: any;
+var moment = require('moment-timezone');
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -375,13 +376,10 @@ export class ReportsComponent implements OnInit {
     }
 
   }
-  toDate(param: string) {
-    var date = new Date(param);
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var year = date.getFullYear();
-    var newDate = month + "/" + day + "/" + year;
-    return newDate;
+  toDate(param) {
+    var tempDate = param.split("-");
+    var date = tempDate[1] + '/' + tempDate[2] + '/' + tempDate[0];
+    return date;
   }
   convertDate(date) {
     var a = new Date(date);
