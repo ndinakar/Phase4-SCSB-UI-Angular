@@ -3,8 +3,14 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 import { ReportsService } from 'src/app/services/reports/reports.service';
+import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
+import { DatePipe } from '@angular/common';
 declare var $: any;
 var moment = require('moment-timezone');
+
+enum CONSTANTS {
+  EXCEPTIONS = 'exceptions'
+}
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -18,7 +24,21 @@ export class ReportsComponent implements OnInit {
     this.dashBoardService.validate('reports');
     this.spinner.hide();
     this.ReportShowBy = 'Partners';
+    this.getInstitutions(CONSTANTS.EXCEPTIONS);
   }
+
+  csvOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: 'Export Exceptions Reports',
+    useBom: true,
+    noDownload: false,
+    headers: ["Patron Barcod", "RI", "Item Barcode", "Item OI", "DL", "RT", "Request Created By", "Patron Email Address", "Created Date", "Last Updated Date", "Request Notes"]
+  };
+
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
   accessionErrorMessageDiv = false;
@@ -83,6 +103,8 @@ export class ReportsComponent implements OnInit {
   dateAccessionTo: string;
   dateFrom: string;
   dateTo: string;
+  dateFromException: string;
+  dateToException: string;
   dFromDate: string;
   dToDate: string;
   start: any;
@@ -100,7 +122,18 @@ export class ReportsComponent implements OnInit {
   incompleteTotalRecordsCount: string;
   showBy: string;
   requestType: string;
-
+  //request Exception
+  messageNoSearchRecords = false;
+  searchReqExceptionresult = false;
+  requestExceptionFromToError = false;
+  requestExceptionFromDateErrorText = false;
+  requestExceptionToDateErrorText = false;
+  RequestExceptionDateRangeto: string;
+  RequestExceptionDateRangefrom: string;
+  requestExceptionReportDiv = false;
+  searchreqExceptionResultVal: TreeNode[];
+  searchreqExceptionResultValExport: TreeNode[];
+  ExceptionReportsResultsDiv = false;
   postData = {
     "showBy": null,
     "requestType": null,
@@ -210,7 +243,76 @@ export class ReportsComponent implements OnInit {
     "eddRequestCulCount": null,
     "eddRequestNyplCount": null
   }
+  validateExceptionDateRange() {
+    this.statusRequest = false;
+    if (this.RequestExceptionDateRangefrom == '' || this.RequestExceptionDateRangefrom == undefined) {
+      this.requestExceptionFromDateErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.requestExceptionFromDateErrorText = false;
+    }
+    if (this.RequestExceptionDateRangeto == '' || this.RequestExceptionDateRangeto == undefined) {
+      this.requestExceptionToDateErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.requestExceptionToDateErrorText = false;
+    }
+    this.dateFromException = this.toDate(this.RequestExceptionDateRangefrom);
+    this.dateToException = this.toDate(this.RequestExceptionDateRangeto);
+    if (this.compareDate(this.dateFromException, this.dateToException)) {
+      this.statusRequest = true;
+      this.requestExceptionFromToError = true;
+    } else {
+      this.requestExceptionFromToError = false;
+    }
+    return this.statusRequest;
+  }
 
+  submitRequestException() {
+    if (!this.validateExceptionDateRange()) {
+      this.spinner.show();
+      this.reportsService.exceptionReports(this.incompleteShowBy, this.RequestDateRangefrom, this.RequestDateRangeto).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.searchreqExceptionResultVal = res;
+          if (this.searchreqExceptionResultVal['message']) {
+            this.searchReqExceptionresult = true;
+            this.ExceptionReportsResultsDiv = false;
+            this.messageNoSearchRecords = true;
+          } else {
+            this.searchReqExceptionresult = true;
+            this.messageNoSearchRecords = false;
+            this.ExceptionReportsResultsDiv = true;
+          }
+        },
+        (error) => {
+          this.searchReqExceptionresult = false;
+          this.spinner.hide();
+        });
+    }
+  }
+
+  exportExceptionRecords() {
+    this.spinner.show();
+    this.reportsService.exportExceptionReports(this.incompleteShowBy, this.RequestDateRangefrom, this.RequestDateRangeto).subscribe(
+      (res) => {
+        this.spinner.hide();
+        var fileNmae = 'ExportRecords' + '_' +
+          new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'UTC');
+        this.searchreqExceptionResultValExport = res;
+        new AngularCsv(this.searchreqExceptionResultValExport['searchResultRows'], fileNmae, this.csvOptions);
+      },
+      (error) => {
+        this.spinner.hide();
+      });
+  }
+  removeProperties(items) {
+    items = items.forEach(element => {
+      delete element.author;
+      delete element.availability;
+    });
+    return items;
+  }
   submitRequest() {
     this.dashBoardService.validate('reports');
     this.requestToDateErrorText = false;
@@ -610,7 +712,23 @@ export class ReportsComponent implements OnInit {
       );
     }
   }
-
+  enableRequestExceptionPage() {
+    this.spinner.hide();
+    //this.getInstitutions(CONSTANTS.EXCEPTIONS);
+    this.searchreqExceptionResultVal = null;
+    this.resetFields();
+    this.requestPage = false;
+    this.accesionPage = false;
+    this.cgdPage = false;
+    this.incompletePage = false;
+    this.requestToDateErrorText = false;
+    this.showByErrorText = false;
+    this.requestFromDateErrorText = false;
+    this.requestFromToError = false;
+    this.requestResultsPage = false;
+    this.searchReqExceptionresult = false;
+    this.requestExceptionReportDiv = true;
+  }
   enableRequestPage() {
     this.spinner.hide();
     this.resetFields();
@@ -623,6 +741,7 @@ export class ReportsComponent implements OnInit {
     this.requestFromDateErrorText = false;
     this.requestFromToError = false;
     this.requestResultsPage = false;
+    this.requestExceptionReportDiv = false;
   }
   enableAccessionPage() {
     this.spinner.hide();
@@ -636,6 +755,7 @@ export class ReportsComponent implements OnInit {
     this.accessionFromToError = false;
     this.accessionPageResponse = false;
     this.isChecked = true;
+    this.requestExceptionReportDiv = false;
   }
   enableCGDPage() {
     this.dashBoardService.validate('reports');
@@ -652,6 +772,7 @@ export class ReportsComponent implements OnInit {
           this.cgdErrorMessageDiv = true;
           this.cgdPageResultsDiv = false;
           this.incompletePage = false;
+          this.requestExceptionReportDiv = false;
         } else {
           this.requestPage = false;
           this.accesionPage = false;
@@ -659,7 +780,7 @@ export class ReportsComponent implements OnInit {
           this.cgdPageResultsDiv = true;
           this.cgdErrorMessageDiv = false;
           this.incompletePage = false;
-
+          this.requestExceptionReportDiv = false;
         }
       },
       (error) => {
@@ -669,7 +790,7 @@ export class ReportsComponent implements OnInit {
   enableincompletePage() {
     this.spinner.hide();
     this.resetFields();
-    this.getInstitutions();
+    this.getInstitutions('incomplete');
   }
   incompleteReportPageSizeChange(value) {
     this.incompletePageSize = value;
@@ -683,6 +804,7 @@ export class ReportsComponent implements OnInit {
       }
     );
   }
+  requestExceptionPageSizeChange(value) { }
   deaccessionInformationOnChange(value) {
     this.pageSize = value;
     this.reportsService.incompleteReportPageSizeChange(this.setPostData('pageSize', 'deaccession')).subscribe(
@@ -822,20 +944,26 @@ export class ReportsComponent implements OnInit {
       }
     );
   }
-  getInstitutions() {
+  getInstitutions(action) {
     this.reportsService.getInstitutions().subscribe(
       (res) => {
         this.instVal = res;
-        this.requestPage = false;
-        this.accesionPage = false;
-        this.cgdPage = false;
-        this.incompletePage = true;
         this.incompleteShowBy = this.instVal['incompleteShowByInst'][0];
+        if (action == CONSTANTS.EXCEPTIONS) {
+          this.requestPage = false;
+          this.accesionPage = false;
+          this.cgdPage = false;
+          this.requestExceptionReportDiv = true;
+          this.incompletePage = false;
+        } else {
+          this.requestPage = false;
+          this.accesionPage = false;
+          this.cgdPage = false;
+          this.requestExceptionReportDiv = false;
+          this.incompletePage = true;
+        }
       },
-      (error) => {
-
-      }
-
+      (error) => { }
     );
   }
   pagination(actionName) {
@@ -1109,5 +1237,8 @@ export class ReportsComponent implements OnInit {
       this.incompleteTotalPageCount = this.reportstVal['incompleteTotalPageCount'];
       this.incompleteTotalRecordsCount = this.reportstVal['incompleteTotalRecordsCount'];
     }
+  }
+  timezone(date) {
+    return this.dashBoardService.setTimeZone(date);
   }
 }

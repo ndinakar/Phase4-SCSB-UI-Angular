@@ -31,6 +31,7 @@
         "@syncfusion/ej2-angular-treegrid": "^18.4.35",
         "@syncfusion/ej2-treegrid": "^18.4.35",
         "angular-tree-table": "^0.6.2",
+        "angular7-csv": "^0.2.12",
         "bootstrap": "^4.6.0",
         "file-saver": "^2.0.5",
         "font-awesome": "^4.7.0",
