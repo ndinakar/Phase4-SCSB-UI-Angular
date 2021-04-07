@@ -78,6 +78,7 @@ export class RequestComponent implements OnInit {
   noteAll = true;
   noteActive = false;
   searchreqResultVal: TreeNode[];
+  searchRecCount: string;
 
   requestNotesData: string;
   resubmitReqConfirmItemBarcode: string;
@@ -977,6 +978,7 @@ export class RequestComponent implements OnInit {
           (res) => {
             this.searchReqresultFirst = true;
             this.searchreqResultVal = res;
+            this.searchRecCount = this.searchreqResultVal['totalRecordsCount'];
             this.pagination();
             if (this.searchreqResultVal['message'] != null) {
               this.messageNoSearchRecords = true;
@@ -1069,6 +1071,7 @@ export class RequestComponent implements OnInit {
         (res) => {
           this.searchReqresultFirst = true;
           this.searchreqResultVal = res;
+          this.searchRecCount = this.searchreqResultVal['totalRecordsCount'];
           this.pagination();
           if (this.searchreqResultVal['message'] != null) {
             this.messageNoSearchRecords = true;
@@ -1236,7 +1239,6 @@ export class RequestComponent implements OnInit {
         this.resubmitResponse = res;
         this.resubmitResponseMessage = this.resubmitResponse['Message'];
         this.status = this.resubmitResponse['Status'];
-        //this.searchRequests();
         this.spinner.hide();
       },
       (error) => {
@@ -1367,9 +1369,9 @@ export class RequestComponent implements OnInit {
       "institutionList": this.searchReqVal['institutionList'],
       "disableRequestingInstitution": false,
       "onChange": false,
-      "institution": this.searchReqVal['institution'],
+      "institution": this.searchInstitutionList,
       "showRequestErrorMsg": null,
-      "requestingInstituionHidden": null,
+      "requestingInstituionHidden": this.searchInstitutionList,
       "itemBarcodeHidden": null,
       "disableSearchInstitution": false,
       "searchInstitutionHdn": this.searchReqVal['institution']
@@ -1432,9 +1434,9 @@ export class RequestComponent implements OnInit {
       "institutionList": this.searchReqVal['institutionList'],
       "disableRequestingInstitution": false,
       "onChange": false,
-      "institution": this.searchReqVal['institution'],
+      "institution": this.searchInstitutionList,
       "showRequestErrorMsg": null,
-      "requestingInstituionHidden": null,
+      "requestingInstituionHidden": this.searchInstitutionList,
       "itemBarcodeHidden": null,
       "disableSearchInstitution": false,
       "searchInstitutionHdn": this.searchReqVal['institution']
@@ -1496,9 +1498,9 @@ export class RequestComponent implements OnInit {
       "institutionList": this.searchReqVal['institutionList'],
       "disableRequestingInstitution": false,
       "onChange": false,
-      "institution": this.searchReqVal['institution'],
+      "institution": this.searchInstitutionList,
       "showRequestErrorMsg": null,
-      "requestingInstituionHidden": null,
+      "requestingInstituionHidden": this.searchInstitutionList,
       "itemBarcodeHidden": null,
       "disableSearchInstitution": false,
       "searchInstitutionHdn": this.searchReqVal['institution']
@@ -1560,9 +1562,9 @@ export class RequestComponent implements OnInit {
       "institutionList": this.searchReqVal['institutionList'],
       "disableRequestingInstitution": false,
       "onChange": false,
-      "institution": this.searchReqVal['institution'],
+      "institution": this.searchInstitutionList,
       "showRequestErrorMsg": null,
-      "requestingInstituionHidden": null,
+      "requestingInstituionHidden": this.searchInstitutionList,
       "itemBarcodeHidden": null,
       "disableSearchInstitution": false,
       "searchInstitutionHdn": this.searchReqVal['institution']
@@ -1625,9 +1627,9 @@ export class RequestComponent implements OnInit {
       "institutionList": this.searchReqVal['institutionList'],
       "disableRequestingInstitution": false,
       "onChange": false,
-      "institution": this.searchReqVal['institution'],
+      "institution": this.searchInstitutionList,
       "showRequestErrorMsg": null,
-      "requestingInstituionHidden": null,
+      "requestingInstituionHidden": this.searchInstitutionList,
       "itemBarcodeHidden": null,
       "disableSearchInstitution": false,
       "searchInstitutionHdn": this.searchReqVal['institution']
