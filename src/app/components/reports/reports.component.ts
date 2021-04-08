@@ -5,12 +5,10 @@ import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service'
 import { ReportsService } from 'src/app/services/reports/reports.service';
 import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 import { DatePipe } from '@angular/common';
+import { ThrowStmt } from '@angular/compiler';
 declare var $: any;
 var moment = require('moment-timezone');
 
-enum CONSTANTS {
-  EXCEPTIONS = 'exceptions'
-}
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -24,7 +22,7 @@ export class ReportsComponent implements OnInit {
     this.dashBoardService.validate('reports');
     this.spinner.hide();
     this.ReportShowBy = 'Partners';
-    this.getInstitutions(CONSTANTS.EXCEPTIONS);
+    this.getInstitutions();
   }
 
   csvOptions = {
@@ -134,6 +132,30 @@ export class ReportsComponent implements OnInit {
   searchreqExceptionResultVal: TreeNode[];
   searchreqExceptionResultValExport: TreeNode[];
   ExceptionReportsResultsDiv = false;
+
+  firstbuttonException = false;
+  previousbuttonException = false;
+  nextbuttonException = false;
+  lastbuttonException = false;
+
+  itemList: any = [];
+  //Transaction Report
+  TransactionReportRadio: string;
+  transactionReportDiv = false;
+  transactionReportResultsDiv = false;
+  typeOptions: any;
+  owningInstitutionList: any;
+  borrowingInstitutionList: any;
+  instList_transactons: any;
+  Transactiontableshow = false;
+  isTransactionChecked = false;
+  TYPE_LIST_USE = [
+    { value: 'Retreival', name: 'Retreival' },
+    { value: 'EDD', name: 'EDD' },
+    { value: 'ILL', name: 'ILL' },
+    { value: 'Recall', name: 'Recall' }
+  ];
+
   postData = {
     "showBy": null,
     "requestType": null,
@@ -243,6 +265,11 @@ export class ReportsComponent implements OnInit {
     "eddRequestCulCount": null,
     "eddRequestNyplCount": null
   }
+
+  transactionReprt() {
+    this.transactionReportResultsDiv = true;
+  }
+
   validateExceptionDateRange() {
     this.statusRequest = false;
     if (this.RequestExceptionDateRangefrom == '' || this.RequestExceptionDateRangefrom == undefined) {
@@ -271,7 +298,33 @@ export class ReportsComponent implements OnInit {
   submitRequestException() {
     if (!this.validateExceptionDateRange()) {
       this.spinner.show();
-      this.reportsService.exceptionReports(this.incompleteShowBy, this.RequestDateRangefrom, this.RequestDateRangeto).subscribe(
+      this.reportsService.exceptionReports(this.incompleteShowBy, this.dateFromException, this.dateToException).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.searchreqExceptionResultVal = res;
+          this.showentries = 10;
+          if (this.searchreqExceptionResultVal['message']) {
+            this.searchReqExceptionresult = true;
+            this.ExceptionReportsResultsDiv = false;
+            this.messageNoSearchRecords = true;
+          } else {
+            this.searchReqExceptionresult = true;
+            this.messageNoSearchRecords = false;
+            this.ExceptionReportsResultsDiv = true;
+            this.paginationRequestException();
+          }
+        },
+        (error) => {
+          this.searchReqExceptionresult = false;
+          this.spinner.hide();
+        });
+    }
+  }
+
+  requestExceptionPageSizeChange(pageSize) {
+    if (!this.validateExceptionDateRange()) {
+      this.spinner.show();
+      this.reportsService.pageSizeexceptionReports(this.incompleteShowBy, this.dateFromException, this.dateToException, pageSize).subscribe(
         (res) => {
           this.spinner.hide();
           this.searchreqExceptionResultVal = res;
@@ -283,6 +336,7 @@ export class ReportsComponent implements OnInit {
             this.searchReqExceptionresult = true;
             this.messageNoSearchRecords = false;
             this.ExceptionReportsResultsDiv = true;
+            this.paginationRequestException();
           }
         },
         (error) => {
@@ -291,27 +345,44 @@ export class ReportsComponent implements OnInit {
         });
     }
   }
-
   exportExceptionRecords() {
     this.spinner.show();
-    this.reportsService.exportExceptionReports(this.incompleteShowBy, this.RequestDateRangefrom, this.RequestDateRangeto).subscribe(
+    this.reportsService.exportExceptionReports(this.incompleteShowBy, this.dateFromException, this.dateToException).subscribe(
       (res) => {
         this.spinner.hide();
         var fileNmae = 'ExportRecords' + '_' +
-          new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'UTC');
+          new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
         this.searchreqExceptionResultValExport = res;
-        new AngularCsv(this.searchreqExceptionResultValExport['searchResultRows'], fileNmae, this.csvOptions);
+        new AngularCsv(this.removeProperties(this.searchreqExceptionResultValExport['searchResultRows']), fileNmae, this.csvOptions);
       },
       (error) => {
         this.spinner.hide();
       });
   }
   removeProperties(items) {
-    items = items.forEach(element => {
-      delete element.author;
-      delete element.availability;
-    });
-    return items;
+    for (var i = 0; i < items.length; i++) {
+      var item = {};
+      item['patronBarcode'] = items[i].patronBarcode;
+      item['requestingInstitution'] = items[i].requestingInstitution;
+      item['barcode'] = items[i].barcode;
+
+      item['owningInstitution'] = items[i].owningInstitution;
+      item['deliveryLocation'] = items[i].deliveryLocation;
+      item['requestType'] = items[i].requestType;
+
+      item['requestCreatedBy'] = items[i].requestCreatedBy;
+      item['patronEmailId'] = items[i].patronEmailId;
+      item['createdDate'] = this.toTimeZone(items[i].createdDate);
+      item['lastUpdatedDate'] = this.toTimeZone(items[i].lastUpdatedDate);
+
+      item['requestNotes'] = items[i].requestNotes;
+      this.itemList.push(item);
+    }
+    return this.itemList;
+  }
+  toTimeZone(time) {
+    var format = 'YYYY-MM-DD HH:mm:ss';
+    return moment.utc(time).tz("America/New_York").format(format);
   }
   submitRequest() {
     this.dashBoardService.validate('reports');
@@ -714,7 +785,6 @@ export class ReportsComponent implements OnInit {
   }
   enableRequestExceptionPage() {
     this.spinner.hide();
-    //this.getInstitutions(CONSTANTS.EXCEPTIONS);
     this.searchreqExceptionResultVal = null;
     this.resetFields();
     this.requestPage = false;
@@ -727,7 +797,25 @@ export class ReportsComponent implements OnInit {
     this.requestFromToError = false;
     this.requestResultsPage = false;
     this.searchReqExceptionresult = false;
+    this.transactionReportDiv = false;
     this.requestExceptionReportDiv = true;
+  }
+  enableTransactionReportPage() {
+    this.spinner.hide();
+    this.searchreqExceptionResultVal = null;
+    this.resetFields();
+    this.requestPage = false;
+    this.accesionPage = false;
+    this.cgdPage = false;
+    this.incompletePage = false;
+    this.requestToDateErrorText = false;
+    this.showByErrorText = false;
+    this.requestFromDateErrorText = false;
+    this.requestFromToError = false;
+    this.requestResultsPage = false;
+    this.searchReqExceptionresult = false;
+    this.requestExceptionReportDiv = false;
+    this.transactionReportDiv = true;
   }
   enableRequestPage() {
     this.spinner.hide();
@@ -742,6 +830,7 @@ export class ReportsComponent implements OnInit {
     this.requestFromToError = false;
     this.requestResultsPage = false;
     this.requestExceptionReportDiv = false;
+    this.transactionReportDiv = false;
   }
   enableAccessionPage() {
     this.spinner.hide();
@@ -756,6 +845,7 @@ export class ReportsComponent implements OnInit {
     this.accessionPageResponse = false;
     this.isChecked = true;
     this.requestExceptionReportDiv = false;
+    this.transactionReportDiv = false;
   }
   enableCGDPage() {
     this.dashBoardService.validate('reports');
@@ -789,8 +879,13 @@ export class ReportsComponent implements OnInit {
   }
   enableincompletePage() {
     this.spinner.hide();
+    this.requestExceptionReportDiv = false;
+    this.requestPage = false;
+    this.accesionPage = false;
+    this.cgdPage = false;
+    this.incompletePage = true;
     this.resetFields();
-    this.getInstitutions('incomplete');
+    this.getInstitutions();
   }
   incompleteReportPageSizeChange(value) {
     this.incompletePageSize = value;
@@ -804,7 +899,7 @@ export class ReportsComponent implements OnInit {
       }
     );
   }
-  requestExceptionPageSizeChange(value) { }
+
   deaccessionInformationOnChange(value) {
     this.pageSize = value;
     this.reportsService.incompleteReportPageSizeChange(this.setPostData('pageSize', 'deaccession')).subscribe(
@@ -944,24 +1039,12 @@ export class ReportsComponent implements OnInit {
       }
     );
   }
-  getInstitutions(action) {
+  getInstitutions() {
     this.reportsService.getInstitutions().subscribe(
       (res) => {
         this.instVal = res;
         this.incompleteShowBy = this.instVal['incompleteShowByInst'][0];
-        if (action == CONSTANTS.EXCEPTIONS) {
-          this.requestPage = false;
-          this.accesionPage = false;
-          this.cgdPage = false;
-          this.requestExceptionReportDiv = true;
-          this.incompletePage = false;
-        } else {
-          this.requestPage = false;
-          this.accesionPage = false;
-          this.cgdPage = false;
-          this.requestExceptionReportDiv = false;
-          this.incompletePage = true;
-        }
+        this.instList_transactons = this.instVal['incompleteShowByInst'].map(function (x) { return { name: x }; });
       },
       (error) => { }
     );
@@ -1035,6 +1118,8 @@ export class ReportsComponent implements OnInit {
     this.RequestDateRangefrom = '';
     this.RequestDateRangeto = '';
     this.ReportShowBy = 'Partners';
+    this.RequestExceptionDateRangefrom = '';
+    this.RequestExceptionDateRangeto = '';
   }
   reportShowBy() {
     this.requestResultsPage = false;
@@ -1237,6 +1322,159 @@ export class ReportsComponent implements OnInit {
       this.incompleteTotalPageCount = this.reportstVal['incompleteTotalPageCount'];
       this.incompleteTotalRecordsCount = this.reportstVal['incompleteTotalRecordsCount'];
     }
+  }
+  firstCallException() {
+    if (!this.validateExceptionDateRange()) {
+      this.spinner.show();
+      this.reportsService.pageSizeexceptionReports(this.incompleteShowBy, this.dateFromException, this.dateToException, this.showentries.toString()).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.searchreqExceptionResultVal = res;
+          if (this.searchreqExceptionResultVal['message']) {
+            this.searchReqExceptionresult = true;
+            this.ExceptionReportsResultsDiv = false;
+            this.messageNoSearchRecords = true;
+          } else {
+            this.searchReqExceptionresult = true;
+            this.messageNoSearchRecords = false;
+            this.ExceptionReportsResultsDiv = true;
+            this.paginationRequestException();
+          }
+        },
+        (error) => {
+          this.searchReqExceptionresult = false;
+          this.spinner.hide();
+        });
+    }
+  }
+  nextCallException() {
+    if (!this.validateExceptionDateRange()) {
+      this.spinner.show();
+      this.pageNumber = this.searchreqExceptionResultVal['pageNumber'] + 1;
+      this.reportsService.nextCallexceptionReports(this.incompleteShowBy, this.dateFromException, this.dateToException, this.pageNumber.toString(), this.showentries.toString()).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.searchreqExceptionResultVal = res;
+          if (this.searchreqExceptionResultVal['message']) {
+            this.searchReqExceptionresult = true;
+            this.ExceptionReportsResultsDiv = false;
+            this.messageNoSearchRecords = true;
+          } else {
+            this.searchReqExceptionresult = true;
+            this.messageNoSearchRecords = false;
+            this.ExceptionReportsResultsDiv = true;
+            this.paginationRequestException();
+          }
+        },
+        (error) => {
+          this.searchReqExceptionresult = false;
+          this.spinner.hide();
+        });
+    }
+  }
+  previousCallException() {
+    if (!this.validateExceptionDateRange()) {
+      this.spinner.show();
+      this.pageNumber = this.searchreqExceptionResultVal['pageNumber'] - 1;
+      this.reportsService.nextCallexceptionReports(this.incompleteShowBy, this.dateFromException, this.dateToException, this.pageNumber.toString(), this.showentries.toString()).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.searchreqExceptionResultVal = res;
+          if (this.searchreqExceptionResultVal['message']) {
+            this.searchReqExceptionresult = true;
+            this.ExceptionReportsResultsDiv = false;
+            this.messageNoSearchRecords = true;
+          } else {
+            this.searchReqExceptionresult = true;
+            this.messageNoSearchRecords = false;
+            this.ExceptionReportsResultsDiv = true;
+            this.paginationRequestException();
+          }
+        },
+        (error) => {
+          this.searchReqExceptionresult = false;
+          this.spinner.hide();
+        });
+    }
+  }
+  lastCallException() {
+    if (!this.validateExceptionDateRange()) {
+      this.spinner.show();
+      this.pageNumber = this.searchreqExceptionResultVal['totalPageCount'] - 1;
+      this.reportsService.nextCallexceptionReports(this.incompleteShowBy, this.dateFromException, this.dateToException, this.pageNumber.toString(), this.showentries.toString()).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.searchreqExceptionResultVal = res;
+          if (this.searchreqExceptionResultVal['message']) {
+            this.searchReqExceptionresult = true;
+            this.ExceptionReportsResultsDiv = false;
+            this.messageNoSearchRecords = true;
+          } else {
+            this.searchReqExceptionresult = true;
+            this.messageNoSearchRecords = false;
+            this.ExceptionReportsResultsDiv = true;
+            this.paginationRequestException();
+          }
+        },
+        (error) => {
+          this.searchReqExceptionresult = false;
+          this.spinner.hide();
+        });
+    }
+  }
+  paginationRequestException() {
+    if (this.searchreqExceptionResultVal['pageNumber'] == 0 && (this.searchreqExceptionResultVal['totalPageCount'] - 1 > 0)) {
+      this.firstbuttonException = true;
+      this.previousbuttonException = true;
+      this.nextbuttonException = false;
+      this.lastbuttonException = false;
+    } else if (this.searchreqExceptionResultVal['pageNumber'] == 0 && (this.searchreqExceptionResultVal['pageNumber'] == this.searchreqExceptionResultVal['totalPageCount'] - 1)) {
+      this.firstbuttonException = true;
+      this.previousbuttonException = true;
+      this.nextbuttonException = true;
+      this.lastbuttonException = true;
+    }
+    else if ((this.searchreqExceptionResultVal['pageNumber'] == this.searchreqExceptionResultVal['totalPageCount'] - 1) && this.searchreqExceptionResultVal['totalPageCount'] - 1 > 0) {
+      this.firstbuttonException = false;
+      this.previousbuttonException = false;
+      this.nextbuttonException = true;
+      this.lastbuttonException = true;
+    } else if ((this.searchreqExceptionResultVal['pageNumber'] < this.searchreqExceptionResultVal['totalPageCount'] - 1) && (this.searchreqExceptionResultVal['pageNumber'] != 0)) {
+      this.firstbuttonException = false;
+      this.previousbuttonException = false;
+      this.nextbuttonException = false;
+      this.lastbuttonException = false;
+    }
+  }
+  committedClick() { }
+  sharedClick() { }
+  openClick() { }
+  uncommitClick() { }
+  privateClick() { }
+  eddClick() {
+    this.Transactiontableshow = true;
+    this.reportType_panel = false;
+    this.isTransactionChecked = false;
+    this.transactionReportDiv = false;
+    this.transactionReportResultsDiv = false;
+  }
+  transactionfirstCall() { }
+  transactionpreviousCall() { }
+  transactionnextCall() { }
+  transactionlastCall() { }
+  transactionInformationOnChange(entry) { }
+
+  goBackTransaction($event) {
+    $event.stopPropagation();
+    $event.preventDefault();
+    this.transactionPage();
+  }
+  transactionPage() {
+    this.Transactiontableshow = false;
+    this.reportType_panel = true;
+    this.isTransactionChecked = true;
+    this.transactionReportDiv = true;
+    this.transactionReportResultsDiv = true;
   }
   timezone(date) {
     return this.dashBoardService.setTimeZone(date);

@@ -89,7 +89,32 @@ export class ReportsService {
     const options = {
       params: parames, headers: headers
     };
-    return this.httpClient.get<TreeNode[]>(this.prefix_request + "/exceptionReports", options);
+    return this.httpClient.get<TreeNode[]>(this.prefix_request + "/exportExceptionReportsWithDateRange", options);
+  }
+  pageSizeexceptionReports(institution: string, fromDate: string, toDate: string, pageSize: string): Observable<TreeNode[]> {
+    let headers = appHeaders.getHeaders_formData();
+    let parames = new HttpParams()
+      .set('institution', institution)
+      .set('fromDate', fromDate)
+      .set('toDate', toDate)
+      .set('pageSize', pageSize);
+    const options = {
+      params: parames, headers: headers
+    };
+    return this.httpClient.get<TreeNode[]>(this.prefix_request + "/exportExceptionReportsPageSizeChange", options);
+  }
+  nextCallexceptionReports(institution: string, fromDate: string, toDate: string, pageNumber: string, pageSize: string): Observable<TreeNode[]> {
+    let headers = appHeaders.getHeaders_formData();
+    let parames = new HttpParams()
+      .set('institution', institution)
+      .set('fromDate', fromDate)
+      .set('toDate', toDate)
+      .set('pageNumber', pageNumber)
+      .set('pageSize', pageSize);
+    const options = {
+      params: parames, headers: headers
+    };
+    return this.httpClient.get<TreeNode[]>(this.prefix_request + "/exportExceptionNextCall", options);
   }
   exportExceptionReports(institution: string, fromDate: string, toDate: string): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders_formData();

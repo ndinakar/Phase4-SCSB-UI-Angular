@@ -12,3 +12,42 @@ tr:nth-child(even) {
 .center-text {
     text-align: center
 }
+
+.b_inst {
+    text-align: center;
+    padding: 10px;
+    background-color: #A5A2A2;
+    color: #292117;
+    font-family: sans-serif;
+    font-size: 122%;
+    font-weight: 100;
+}
+
+.sum_tra {
+    text-align: center;
+    padding: 10px;
+    background-color: #7F807F;
+    color: white;
+    font-family: sans-serif;
+    font-size: 150%;
+}
+
+.inst_row {
+    font-family: sans-serif;
+    font-size: 122%;
+    background-color: #F3CACC;
+    color: #292117;
+}
+
+.inst_col_td1 {
+    font-family: sans-serif;
+    font-size: 122%;
+    background-color: #E7E6E6;
+    color: #292117;
+}
+
+.cnt_dec_a {
+    font-size: 20px;
+    text-decoration: underline;
+    cursor: pointer;
+}
