@@ -16,7 +16,6 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { TreeTableModule } from 'primeng/treetable';
-import { AppConfig } from 'src/config/app.config.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './auth/auth.guard';
@@ -41,10 +40,6 @@ import { UserRolesComponent } from './components/user-roles/user-roles.component
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { HttpErrorInterceptor } from './http-error.interceptor';
 import { UserLoginComponent } from './components/user-login/user-login.component';
-
-export function appInit(appConfig: AppConfig) {
-  return () => appConfig.load();
-}
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,13 +85,7 @@ export function appInit(appConfig: AppConfig) {
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [AppConfig, CookieService, AuthGuard,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInit,
-      multi: true,
-      deps: [AppConfig]
-    },
+  providers: [CookieService, AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,

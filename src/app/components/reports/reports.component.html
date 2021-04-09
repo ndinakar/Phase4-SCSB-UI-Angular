@@ -29,6 +29,15 @@
                                                 <input id="ReportIncompleteRadio" name="ReportTypeoption" type="radio" value="IncompleteRecordsReport" (click)="enableincompletePage()">
                                                 Incomplete Records
                                             </label>
+                                            <label class="radio-inline report-hide-shadow" for="RequestExceptionReportRadio" accesskey="E" style="padding-right: 30px" tabindex="0">
+                                                <input id="RequestExceptionReportRadio" name="ReportTypeoption" type="radio" value="RequestExceptionReport" (click)="enableRequestExceptionPage()">
+                                                Request Exceptions
+                                            </label>
+                                            <!-- <label class="radio-inline report-hide-shadow" for="TransactionReportRadio" accesskey="T" style="padding-right: 30px" tabindex="0">
+                                                <input id="TransactionReportRadio" name="ReportTypeoption" type="radio" value="TransactionReport" (click)="enableTransactionReportPage()" [checked]="isTransactionChecked">
+                                                Transactions Report
+                                            </label> -->
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -61,8 +70,6 @@
                                                             <div class="input-group date" id="reportrequesdatepickerfrom">
                                                                 <input class="form-control themed-input" id="RequestDateRangefrom" name="RequestDateRangefrom" type="date" placeholder="MM/DD/YYYY" [ngModelOptions]="{standalone: true}" [(ngModel)]="RequestDateRangefrom">
                                                                 <span class="input-group-addon">
-                                                                    <!-- <span class="glyphicon glyphicon-calendar">
-                                                                            </span> -->
                                                                 </span>
                                                             </div>
                                                             <p id="requestFromDateErrorText" *ngIf="requestFromDateErrorText" style="color: red">This Field is Required
@@ -76,8 +83,6 @@
                                                             <div class="input-group date" id="reportrequesdatepickerto">
                                                                 <input class="form-control themed-input" id="RequestDateRangeto" name="RequestDateRangeto" type="date" placeholder="MM/DD/YYYY" [ngModelOptions]="{standalone: true}" [(ngModel)]="RequestDateRangeto">
                                                                 <span class="input-group-addon">
-                                                                    <!-- <span class="glyphicon glyphicon-calendar">
-                                                                                </span> -->
                                                                 </span>
                                                             </div>
                                                             <p id="requestToDateErrorText" *ngIf="requestToDateErrorText" style="color: red;">This Field is Required
@@ -214,7 +219,6 @@
                                                             <td class="results " *ngFor="let recallCount of reportstVal['reportsInstitutionFormList']">
                                                                 <span>{{recallCount.recallRequestCount}}</span>
                                                             </td>
-
                                                         </tr>
                                                         <tr class="border-style-top-white ">
                                                             <td class="gray-dark fontcolor-white large-font results " style="font-family:sans-serif; ">EDD</td>
@@ -250,7 +254,6 @@
                                                                     ">
                                                                 <span class="input-group-addon ">
                                                                 </span>
-
                                                             </div>
                                                             <p id="accessionErrorText " *ngIf="accessionErrorText " style="color: red ">This Field is Required
                                                             </p>
@@ -677,6 +680,389 @@
                         </div>
                     </div>
                     <!--IncompleteRecordsReport view ends-->
+                    <!--Request Exception-->
+                    <div class="search-results-container" *ngIf="requestExceptionReportDiv">
+                        <div class="search-bar">
+                            <div class="buscador-principal">
+                                <div id="ReportRequestsection" style="margin-top: -20px;">
+                                    <div class="row" style="padding-left: 20px">
+                                        <div class="col-md-3 col-sm-3 padding-right-50" style="margin-top:26px;width:15%;">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="ReportShowBy">Show By <span class="error-color">*</span> </label>
+                                                </div>
+                                                <div class="select-holder ">
+                                                        <select class="themed-input themed-select " id="incompleteShowBy " name="incompleteShowBy " style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;
+                                                                    " [ngModelOptions]="{standalone: true} " [(ngModel)]="incompleteShowBy ">
+                                                            <option *ngFor="let inst of instVal[ 'incompleteShowByInst'] " [ngValue]="inst ">
+                                                                {{inst}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                <p id="showByErrorText" *ngIf="showByErrorText" style="color: red">
+                                                    This Field is Required</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-lg-2 padding-right-50">
+                                            <div class="form-group">
+                                                <label for="RequestExceptionDateRangefrom">Date Range <span class="error-color">*</span> </label><br>
+                                                <label>From</label>
+                                                <div class="input-group date" id="reportrequeExceptionsdatepickerfrom">
+                                                    <input class="form-control themed-input" id="RequestExceptionDateRangefrom" name="RequestExceptionDateRangefrom" type="date" placeholder="MM/DD/YYYY" [ngModelOptions]="{standalone: true}" [(ngModel)]="RequestExceptionDateRangefrom">
+                                                    <span class="input-group-addon">
+                                                    </span>
+                                                </div>
+                                                <p id="requestExceptionFromDateErrorText" *ngIf="requestExceptionFromDateErrorText" style="color: red">This Field is Required
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-lg-2 padding-right-50" style="margin-top: 3px;">
+                                            <div class="form-group">
+                                                <br>
+                                                <label>To</label>
+                                                <div class="input-group date" id="reportExceptionrequesdatepickerto">
+                                                    <input class="form-control themed-input" id="RequestExceptionDateRangeto" name="RequestExceptionDateRangeto" type="date" placeholder="MM/DD/YYYY" [ngModelOptions]="{standalone: true}" [(ngModel)]="RequestExceptionDateRangeto">
+                                                    <span class="input-group-addon">
+                                                    </span>
+                                                </div>
+                                                <p id="requestExceptionToDateErrorText" *ngIf="requestExceptionToDateErrorText" style="color: red;">This Field is Required
+                                                </p>
+                                                <p id="requestExceptionFromToError" *ngIf="requestExceptionFromToError" style="color: red">To Date must be greater than or
+                                                    <br>equal to the From Date</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-3 col-sm-3" style="margin-top: 18px;">
+                                            <button class="btn themed-button themed-button-search" id="searchButton" (click)="submitRequestException()">Generate Report
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="padding-left:5px;">Fields marked with asterisk(
+                                        <span class="error-color">*</span>) are mandatory.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="searchReqExceptionresult">
+                            <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
+                            <div class="row margin-btm-10" *ngIf="messageNoSearchRecords">
+                                <div class="col-sm-12">
+                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span name="noSearchRecords"> {{searchreqExceptionResultVal['message']}}</span></div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="ExceptionReportsResultsDiv">
+                                <div class="col-sm-3 col-md-2 col-lg-2 margin-top-05 show-entries-section">
+                                    <div class="">
+                                        <span class="show-title margin-right-05">Show Entries</span>
+                                        <select class="themed-input" id="numOfRecordsId" name="numOfRecordsName" [(ngModel)]="showentries" (change)="requestExceptionPageSizeChange(showentries)" [ngModelOptions]="{standalone: true}">  
+                                            <option value="10" selected="selected">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10">
+                                    <div class="row" style="text-align: center;">RI - Requesting Institution, RT - Request Type, OI - Owning Institution, DL - Delivery Location</div>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-3 text-right">
+                                    <h4>Search Results Found: <span>{{searchreqExceptionResultVal['totalRecordsCount']}}</span></h4>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 8px;" *ngIf="ExceptionReportsResultsDiv">
+                                <div class="col-xs-12">
+                                    <table class="table table-striped margin-btm-0" id="request-result-table">
+                                        <thead class="tablesorter-headerRow">
+                                            <tr name="results_rowhdrs">
+                                                <th>Patron Barcode</th>
+                                                <th title="'Request Institution'">RI</th>
+                                                <th>Item Barcode</th>
+                                                <th title="'Item Owning Institution'">Item OI</th>
+                                                <th title="'Delivery Location'">DL</th>
+                                                <th title="'Request Type'">RT</th>
+                                                <th>Request Created By</th>
+                                                <th>Patron Email Address</th>
+                                                <th>Created Date</th>
+                                                <th>Last Updated Date</th>
+                                                <th>Request Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="requestRow" id="rowData_results_{{i}}" *ngFor="let item of searchreqExceptionResultVal['searchResultRows']; let i=index">
+                                                <input id="requestRowRequestId-{{i}}" name="requestRowRequestId-index-{{i}}" type="hidden" value="{{item.requestId}}">
+                                                <th class="center-text" id="data_pb_{{i}}">{{ item.patronBarcode }}</th>
+                                                <td class="center-text" id="data_ri_{{i}}">{{ item.requestingInstitution }}</td>
+                                                <td class="center-text"><a id="data_br_{{i}}" target="_blank" routerLink="/openMarcRecord" [queryParams]="{bibId: item['bibId']}">{{ item.barcode }}</a></td>
+                                                <td class="center-text" id="data_oi_{{i}}">{{ item.owningInstitution }}</td>
+                                                <td class="center-text" id="data_dl_{{i}}">{{ item.deliveryLocation }}</td>
+                                                <td class="center-text" id="data_rt_{{i}}">{{ item.requestType }}</td>
+                                                <td class="center-text" id="data_rcb_{{i}}">{{ item.requestCreatedBy }}</td>
+                                                <td class="center-text" id="data_pe_{{i}}">{{ item.patronEmailId }}</td>
+                                                <td class="center-text" id="data_cd_{{i}}">{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}</td>
+                                                <td class="center-text" id="data_ld_{{i}}">{{ item.lastUpdatedDate |  date:'yyyy-MM-dd HH:mm:ss':timezone(item.lastUpdatedDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}</td>
+                                                <td class="center-text" id="data_rn_{{i}}">{{item.requestNotes}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-12" id="requestPaginationDivId" name="requestPaginationDivName" style="margin-bottom: -20px;">
+                                    <div class="pull-right">
+                                        <div id="requestPaginationId" name="requestPaginationName">
+                                            <ul class="pagination">
+                                                <li [ngClass]="(firstbuttonException==true)?'disabled':''">
+                                                    <span id="first" (click)="firstCallException()" style="cursor: pointer;">First</span>
+                                                </li>
+                                                <li [ngClass]="(previousbuttonException==true)?'disabled':''">
+                                                    <span id="previous" (click)="previousCallException()" style="cursor: pointer;">Previous</span>
+                                                </li>
+                                                <li [ngClass]="(nextbuttonException==true)?'disabled':''">
+                                                    <span id="next" (click)="nextCallException()" style="cursor: pointer;">Next</span>
+
+                                                </li>
+                                                <li [ngClass]="(lastbuttonException==true)?'disabled':''">
+                                                    <span id="last" (click)="lastCallException()" style="cursor: pointer;">Last</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <button class="btn btn-primary pull-right" id="export" name="action" type="button" (click)="exportExceptionRecords()" value="export" style="margin-right: 10px;">Exception Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                        <!--Transaction Report-->
+                    <div class="search-results-container" *ngIf="transactionReportDiv">
+                        <div class="search-bar">
+                            <div class="buscador-principal">
+                                <div id="ReportRequestsection" style="margin-top: -20px;">
+                                    <div class="row" style="padding-left: 20px">
+                                        <div class="col-md-3 col-sm-3 padding-right-50" style="margin-top:26px;width:15%;">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="ReportShowBy">Borrowing Institution<span class="error-color">*</span> </label>
+                                                </div>
+                                                <div class="">
+                                                    <ng-select id="borrowingInstitutionList" [items]="instVal['incompleteShowByInst']" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="borrowingInstitutionList" placeholder="Select One or More">
+                                                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                            <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected"> {{item}}
+                                                        </ng-template>
+                                                    </ng-select>
+                                                    </div>
+                                                <p id="showByErrorText" *ngIf="showByErrorText" style="color: red">
+                                                    This Field is Required</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 padding-right-50" style="margin-top:26px;width:15%;">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="ReportShowBy">Owning Institution<span class="error-color">*</span> </label>
+                                                </div>
+                                                <div class="">
+                                                    <ng-select id="owningInstitutionList" [items]="instVal['incompleteShowByInst']" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="owningInstitutionList" placeholder="Select One or More">
+                                                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                            <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected"> {{item}}
+                                                        </ng-template>
+                                                    </ng-select>
+                                                    </div>
+                                                <p id="showByErrorText" *ngIf="showByErrorText" style="color: red">
+                                                    This Field is Required</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 padding-right-50" style="margin-top:26px;width:15%;">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="ReportShowBy">Type of Use <span class="error-color">*</span> </label>
+                                                </div>
+                                                <div class="">
+                                                        <ng-select id="typeOptions" [items]="TYPE_LIST_USE" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="typeOptions" placeholder="Select One or More">
+                                                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                                <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected"> {{item.name}}
+                                                            </ng-template>
+                                                        </ng-select>
+                                                </div>
+                                                <p id="showByErrorText" *ngIf="showByErrorText" style="color: red">
+                                                    This Field is Required</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-lg-2 padding-right-50">
+                                            <div class="form-group">
+                                                <label for="RequestExceptionDateRangefrom">Date Range <span class="error-color">*</span> </label><br>
+                                                <label>From</label>
+                                                <div class="input-group date" id="reportrequeExceptionsdatepickerfrom">
+                                                    <input class="form-control themed-input" id="RequestExceptionDateRangefrom" name="RequestExceptionDateRangefrom" type="date" placeholder="MM/DD/YYYY" [ngModelOptions]="{standalone: true}" [(ngModel)]="RequestExceptionDateRangefrom">
+                                                    <span class="input-group-addon">
+                                                    </span>
+                                                </div>
+                                                <p id="requestExceptionFromDateErrorText" *ngIf="requestExceptionFromDateErrorText" style="color: red">This Field is Required
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-lg-2 padding-right-50" style="margin-top: 3px;">
+                                            <div class="form-group">
+                                                <br>
+                                                <label>To</label>
+                                                <div class="input-group date" id="reportExceptionrequesdatepickerto">
+                                                    <input class="form-control themed-input" id="RequestExceptionDateRangeto" name="RequestExceptionDateRangeto" type="date" placeholder="MM/DD/YYYY" [ngModelOptions]="{standalone: true}" [(ngModel)]="RequestExceptionDateRangeto">
+                                                    <span class="input-group-addon">
+                                                    </span>
+                                                </div>
+                                                <p id="requestExceptionToDateErrorText" *ngIf="requestExceptionToDateErrorText" style="color: red;">This Field is Required
+                                                </p>
+                                                <p id="requestExceptionFromToError" *ngIf="requestExceptionFromToError" style="color: red">To Date must be greater than or
+                                                    <br>equal to the From Date</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-3 col-sm-3" style="margin-top: 18px;">
+                                            <button class="btn themed-button themed-button-search" id="searchButton" (click)="transactionReprt()">Generate Report
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="padding-left:5px;">Fields marked with asterisk(
+                                        <span class="error-color">*</span>) are mandatory.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " *ngIf="transactionReportResultsDiv">
+                            <h4>Report Results</h4>
+                            <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
+                            <div class="sum_tra">Summary report of Transactions</div>
+                            <div id="Accession_Deaccession-tableview ">
+                                <div class="table-wrapper ">
+                                    <table class="table table-striped text-center margin-btm-0 " id="acessionDeaccessionTable " style="border-collapse: unset;">
+                                        <thead class="tablesorter-headerRow ">
+                                            <tr>
+                                                <th class="b_inst" [attr.colspan]="instVal['incompleteShowByInst'].length + 1">Borrowing Institution</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="b_inst" width="15%">Owning Institution</th>
+                                                <th class="inst_row" *ngFor="let inst of instList_transactons">
+                                                    {{inst.name}}</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="b_inst" [attr.colspan]="instVal['incompleteShowByInst'].length + 1">Physical Requests</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let inst of instList_transactons">
+                                                <tr>
+                                                    <td class="inst_row" id="inst_{{inst.name}}">{{inst.name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="inst_col_td1">Committed</td>
+                                                    <td id="committed_{{inst.name}}" *ngFor="let inst of instList_transactons">
+                                                        <span class="cnt_dec_a"><a (click)="committedClick()">12</a></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="inst_col_td1">Shared</td>
+                                                    <td id="sahred{{inst.name}}" *ngFor="let inst of instList_transactons">
+                                                        <span class="cnt_dec_a"><a (click)="sharedClick()">12</a></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="inst_col_td1">Open</td>
+                                                    <td id="open_{{inst.name}}" *ngFor="let inst of instList_transactons">
+                                                        <span class="cnt_dec_a"><a (click)="openClick()">12</a></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="inst_col_td1">Uncommitable</td>
+                                                    <td id="uncommit_{{inst.name}}" *ngFor="let inst of instList_transactons">
+                                                    <span class="cnt_dec_a"><a (click)="uncommitClick()">12</a></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="inst_col_td1">Private</td>
+                                                    <td id="private_{{inst.name}}" *ngFor="let inst of instList_transactons">
+                                                        <span class="cnt_dec_a"><a (click)="privateClick()">12</a></span></td>
+                                                </tr>  
+                                        </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td class="sum_tra">EDD</td>
+                                            </tr>
+                                            <tr *ngFor="let inst of instList_transactons">
+                                                <td class="inst_row">{{inst.name}}</td>
+                                                <td *ngFor="let inst of instList_transactons">
+                                                    <span class="cnt_dec_a"><a (click)="eddClick()">12</a></span></td>
+                                            </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Transport tableview -->
+                    <div class="reports-detail-table " id="Transaction-tableview " *ngIf="Transactiontableshow ">
+                        <!-- <input type="hidden" id="ownInst " /> -->
+                        <button id="pageSizeChangeButtonId " name="action " type="submit " value="pageSizeChange " hidden="hidden "></button>
+                        <div class="row ">
+                            <h4 class="col-sm-9 margin-top-05 margin-btm-0 ">Report Results</h4>
+                            <div class="col-sm-3 text-right Deaccessionbacklink ">
+                                <a class=" " href="javascript: history.go(0)" (click)="goBackTransaction($event)"><span class="glyphicon glyphicon-menu-left "></span> Go Back</a>
+                            </div>
+                        </div>
+                        <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
+                        <div class="row " id="showEntriesAndNumFoundDiv " name="showEntriesAndNumFoundDiv ">
+                            <div class="col-sm-2 margin-top-05 show-entries-section ">
+                                <div class=" ">
+                                    <span class="show-title ">Show Entries</span>
+                                    <select class="themed-input " id="numOfRecordsId " name="numOfRecordsName " [(ngModel)]="showentries" [ngModelOptions]="{standalone: true} " style="margin-left: 5px; " (change)="transactionInformationOnChange(showentries) ">
+                                        <option value="10" selected>10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="transactionInformation ">
+                            <div>
+                                <table class="table table-striped text-center margin-btm-0" id="deaccessionResultsTable" style=" margin-top: 5px;">
+                                    <thead class="tablesorter-headerRow ">
+                                        <tr>
+                                            <th style="font-family:sans-serif; ">Requesting Institution</th>
+                                            <th style="font-family:sans-serif; ">Owning Institution</th>
+                                            <th style="font-family:sans-serif; ">RT/Type of Use</th>
+                                            <th style="font-family:sans-serif; ">Item Barcode</th>
+                                            <th style="font-family:sans-serif; ">Date and Time of Request</th>
+                                            <th style="font-family:sans-serif; ">CGD Status</th>
+                                            <th style="font-family:sans-serif; ">Current Status</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- <tbody>
+                                        <tr id="rowData_results_de_{{i}} " *ngFor="let deaccessionRow of deaccessionRes[ 'deaccessionItemResultsRows']; let i=index ">
+                                            <td id="colData_dd_de_{{i}} "><span>{{deaccessionRow.deaccessionDate}}</span></td>
+                                            <td id="colData_dt_de_{{i}} "><span>{{deaccessionRow.title}}</span></td>
+                                            <td id="colData_di_de_{{i}} "><span id="ownInstDeacc_{{i}} ">{{deaccessionRow.deaccessionOwnInst}}</span></td>
+                                            <td id="colData_ib_de_{{i}} "><span>{{deaccessionRow.itemBarcode}}</span></td>
+                                            <td id="colData_cgd_de_{{i}} "><span>{{deaccessionRow.cgd}}</span></td>
+                                            <td id="colData_dn_de_{{i}} "><span>{{deaccessionRow.deaccessionNotes}}</span></td>
+                                            <td id="colData_dcb_de_{{i}} "><span>{{deaccessionRow.deaccessionCreatedBy}}</span></td>
+                                        </tr>
+                                    </tbody> -->
+                                </table>
+                            </div>
+                            <input id="reportsPageNumber " name="reportsPageNumber " type="text " th:field="${reportsForm.pageNumber} " hidden="hidden ">
+                            <input id="reportstotalPageCount " name="reportstotalPageCount " type="text " th:field="${reportsForm.totalPageCount} " hidden="hidden ">
+                            <div class="pull-right " id="reportPaginationId " name="reportPaginationName " style="margin-top: -10px; ">
+                                <ul class="pagination " id="reportPaginationUl ">
+                                    <li [ngClass]="(firstbutton==true)? 'disabled': '' ">
+                                        <span id="btn_first " (click)="transactionfirstCall() " style="cursor: pointer ">First</span>
+                                    </li>
+                                    <li [ngClass]=" (previousbutton==true)? 'disabled': '' ">
+                                        <span id="btn_previous " (click)="transactionpreviousCall() " style="cursor: pointer ">Previous</span>
+                                    </li>
+                                    <li [ngClass]="(nextbutton==true)? 'disabled': '' ">
+                                        <span id="btn_next " (click)="transactionnextCall() " style="cursor: pointer ">Next</span>
+
+                                    </li>
+                                    <li [ngClass]="(lastbutton==true)? 'disabled': '' ">
+                                        <span id="btn_last " (click)="transactionlastCall() " style="cursor: pointer ">Last</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </fieldset>
         </form>

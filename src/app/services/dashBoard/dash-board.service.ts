@@ -7,6 +7,15 @@ import { Observable } from 'rxjs';
 import { appHeaders } from 'src/config/headers';
 import { urls } from 'src/config/urls';
 var moment = require('moment-timezone');
+
+enum CONSTANTS {
+  TIMEZONE = 'America/New_York',
+  TIME_DIFF = '04:00',
+  TIME_EDT = 'EDT',
+  TIME_EST = 'EST',
+  SPLIT_BY = '-'
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -84,13 +93,13 @@ export class DashBoardService {
 
   setTimeZone(date) {
     if (date) {
-      var zone = "America/New_York";
+      var zone = CONSTANTS.TIMEZONE;
       var d = moment.tz(date, zone).format();
-      var splitted = d.split("-");
-      if (splitted[3] == '04:00') {
-        return 'EDT';
+      var splitted = d.split(CONSTANTS.SPLIT_BY);
+      if (splitted[3] == CONSTANTS.TIME_DIFF) {
+        return CONSTANTS.TIME_EDT;
       } else {
-        return 'EST';
+        return CONSTANTS.TIME_EST;
       }
     }
   }
