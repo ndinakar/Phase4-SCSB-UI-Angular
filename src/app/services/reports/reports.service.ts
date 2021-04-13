@@ -2,9 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { ReportsForm } from 'src/app/model/ReportsForm';
-import { appHeaders } from 'src/config/headers';
-import { urls } from 'src/config/urls';
+import { ReportsForm } from '@model/ReportsForm';
+import { appHeaders } from '@config/headers';
+import { urls } from '@config/urls';
 
 @Injectable({
   providedIn: 'root'
@@ -126,5 +126,32 @@ export class ReportsService {
       params: parames, headers: headers
     };
     return this.httpClient.get<TreeNode[]>(this.prefix_request + "/exportExceptionReports", options);
+  }
+  getTransactionReportCount(owningInsts: string, requestingInsts: string, typeOfUses: string, fromDate: string, toDate: string): Observable<TreeNode[]> {
+    let headers = appHeaders.getHeaders_formData();
+    let parames = new HttpParams()
+      .set('owningInsts', owningInsts)
+      .set('requestingInsts', requestingInsts)
+      .set('typeOfUses', typeOfUses)
+      .set('fromDate', fromDate)
+      .set('toDate', toDate);
+    const options = {
+      params: parames, headers: headers
+    };
+    return this.httpClient.get<TreeNode[]>(this.prefix_request + "/transactionData", options);
+  }
+  getTransactionReport(owningInsts: string, requestingInsts: string, typeOfUses: string, fromDate: string, toDate: string, cgdType: string): Observable<TreeNode[]> {
+    let headers = appHeaders.getHeaders_formData();
+    let parames = new HttpParams()
+      .set('owningInsts', owningInsts)
+      .set('requestingInsts', requestingInsts)
+      .set('typeOfUses', typeOfUses)
+      .set('fromDate', fromDate)
+      .set('toDate', toDate)
+      .set('cgdType', cgdType);
+    const options = {
+      params: parames, headers: headers
+    };
+    return this.httpClient.get<TreeNode[]>(this.prefix_request + "/transactionReports", options);
   }
 }

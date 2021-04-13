@@ -1,11 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
-import { ReportsService } from 'src/app/services/reports/reports.service';
-import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
-import { DatePipe } from '@angular/common';
-import { ThrowStmt } from '@angular/compiler';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
+import { ReportsService } from '@service/reports/reports.service';
 declare var $: any;
 var moment = require('moment-timezone');
 
@@ -147,13 +146,33 @@ export class ReportsComponent implements OnInit {
   owningInstitutionList: any;
   borrowingInstitutionList: any;
   instList_transactons: any;
+  instList_transactons_with_id: any;
   Transactiontableshow = false;
   isTransactionChecked = false;
+  borrowingErrorText = false;
+  owningErrorText = false;
+  useErrorText = false;
+  transactionDateRangefrom: string;
+  transactionDateRangeto: string;
+  transactionDateRangefromDateErrorText = false;
+  transactionToDateErrorText = false;
+  transactionFromToError = false;
+  transactionReportVal: TreeNode[];
+  transactionReportRecords: TreeNode[];
+  dateFromTransaction: string;
+  dateToTransaction: string;
+  messageNoSearchRecordsTransaction = false;
+  transactionReportResultsIfRecordsDiv = false;
+
+  firstbuttonTransaction = false;
+  previousbuttonTransaction = false;
+  nextbuttonTransaction = false;
+  lastbuttonTransaction = false;
+
   TYPE_LIST_USE = [
-    { value: 'Retreival', name: 'Retreival' },
-    { value: 'EDD', name: 'EDD' },
-    { value: 'ILL', name: 'ILL' },
-    { value: 'Recall', name: 'Recall' }
+    'Retrieval',
+    'EDD',
+    'Recall'
   ];
 
   postData = {
@@ -265,11 +284,127 @@ export class ReportsComponent implements OnInit {
     "eddRequestCulCount": null,
     "eddRequestNyplCount": null
   }
-
-  transactionReprt() {
-    this.transactionReportResultsDiv = true;
+  postDataTransaction = {
+    "totalRecordsCount": "0",
+    "pageNumber": 0,
+    "pageSize": 10,
+    "totalPageCount": 0,
+    "message": null,
+    "transactionReportList": null,
+    "owningInsts": null,
+    "requestingInsts": null,
+    "typeOfUses": null,
+    "fromDate": null,
+    "toDate": null,
+    "trasactionCallType": null,
+    "cgdType": null
   }
-
+  transactionReprtCount() {
+    if (!this.validateTransactionDateRange()) {
+      this.postDataTransaction = {
+        "totalRecordsCount": "0",
+        "pageNumber": 0,
+        "pageSize": 10,
+        "totalPageCount": 0,
+        "message": null,
+        "transactionReportList": null,
+        "owningInsts": this.owningInstitutionList,
+        "requestingInsts": this.borrowingInstitutionList,
+        "typeOfUses": this.typeOptions,
+        "fromDate": this.dateFromTransaction,
+        "toDate": this.dateToTransaction,
+        "trasactionCallType": null,
+        "cgdType": null
+      }
+      this.reportsService.getTransactionReportCount(this.owningInstitutionList, this.borrowingInstitutionList, this.typeOptions, this.dateFromTransaction, this.dateToTransaction).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.transactionReportVal = res;
+          if (this.transactionReportVal['message']) {
+            this.transactionReportResultsDiv = true;
+            this.messageNoSearchRecordsTransaction = true;
+            this.transactionReportResultsIfRecordsDiv = false;
+          } else {
+            this.transactionReportResultsIfRecordsDiv = true;
+            this.messageNoSearchRecordsTransaction = false;
+            this.transactionReportResultsDiv = true;
+          }
+        },
+        (error) => {
+          this.spinner.hide();
+        });
+    } else {
+      this.transactionReportResultsDiv = false;
+    }
+  }
+  transactionReport(reqInstCodes, OwningInstCodes, cgdType) {
+    if (!this.validateTransactionDateRange()) {
+      this.reportsService.getTransactionReport(reqInstCodes, OwningInstCodes, this.typeOptions, this.dateFromTransaction, this.dateToTransaction, cgdType).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.transactionReportRecords = res;
+          if (this.transactionReportRecords['message']) {
+            this.transactionPage();
+          } else {
+            this.spinner.hide();
+            this.reportType_panel = false;
+            this.isTransactionChecked = false;
+            this.transactionReportDiv = false;
+            this.transactionReportResultsDiv = false;
+            this.messageNoSearchRecordsTransaction = false;
+            this.transactionReportResultsIfRecordsDiv = false;
+            this.Transactiontableshow = true;
+          }
+        },
+        (error) => {
+          this.spinner.hide();
+        });
+    } else {
+      this.transactionReportResultsDiv = false;
+    }
+  }
+  validateTransactionDateRange() {
+    this.statusRequest = false;
+    if (this.borrowingInstitutionList == '' || this.borrowingInstitutionList == undefined) {
+      this.borrowingErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.borrowingErrorText = false;
+    }
+    if (this.owningInstitutionList == '' || this.owningInstitutionList == undefined) {
+      this.owningErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.owningErrorText = false;
+    }
+    if (this.typeOptions == '' || this.typeOptions == undefined) {
+      this.useErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.useErrorText = false;
+    }
+    if (this.transactionDateRangefrom == '' || this.transactionDateRangefrom == undefined) {
+      this.transactionDateRangefromDateErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.transactionDateRangefromDateErrorText = false;
+    }
+    if (this.transactionDateRangeto == '' || this.transactionDateRangeto == undefined) {
+      this.transactionToDateErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.transactionToDateErrorText = false;
+    }
+    this.dateFromTransaction = this.toDate(this.transactionDateRangefrom);
+    this.dateToTransaction = this.toDate(this.transactionDateRangeto);
+    if (this.compareDate(this.dateFromTransaction, this.dateToTransaction)) {
+      this.statusRequest = true;
+      this.transactionFromToError = true;
+    } else {
+      this.transactionFromToError = false;
+    }
+    return this.statusRequest;
+  }
   validateExceptionDateRange() {
     this.statusRequest = false;
     if (this.RequestExceptionDateRangefrom == '' || this.RequestExceptionDateRangefrom == undefined) {
@@ -550,8 +685,10 @@ export class ReportsComponent implements OnInit {
 
   }
   toDate(param) {
-    var tempDate = param.split("-");
-    var date = tempDate[1] + '/' + tempDate[2] + '/' + tempDate[0];
+    if (param) {
+      var tempDate = param.split("-");
+      var date = tempDate[1] + '/' + tempDate[2] + '/' + tempDate[0];
+    }
     return date;
   }
   convertDate(date) {
@@ -1120,6 +1257,40 @@ export class ReportsComponent implements OnInit {
     this.ReportShowBy = 'Partners';
     this.RequestExceptionDateRangefrom = '';
     this.RequestExceptionDateRangeto = '';
+    //requestException
+    this.messageNoSearchRecords = false;
+    this.searchReqExceptionresult = false;
+    this.requestExceptionFromToError = false;
+    this.requestExceptionFromDateErrorText = false;
+    this.requestExceptionToDateErrorText = false;
+    this.RequestExceptionDateRangeto = '';
+    this.RequestExceptionDateRangefrom = '';
+    this.requestExceptionReportDiv = false;
+    this.searchreqExceptionResultVal = null;
+    this.searchreqExceptionResultValExport = null;
+    this.ExceptionReportsResultsDiv = false;
+
+    this.firstbuttonException = false;
+    this.previousbuttonException = false;
+    this.nextbuttonException = false;
+    this.lastbuttonException = false;
+
+    // transcaction
+    this.transactionReportDiv = false;
+    this.transactionReportResultsDiv = false;
+    this.typeOptions = '';
+    this.owningInstitutionList = '';
+    this.borrowingInstitutionList = '';
+    this.Transactiontableshow = false;
+    this.isTransactionChecked = false;
+    this.borrowingErrorText = false;
+    this.owningErrorText = false;
+    this.useErrorText = false;
+    this.transactionDateRangefrom = '';
+    this.transactionDateRangeto = '';
+    this.transactionDateRangefromDateErrorText = false;
+    this.transactionToDateErrorText = false;
+    this.transactionFromToError = false;
   }
   reportShowBy() {
     this.requestResultsPage = false;
@@ -1446,17 +1617,19 @@ export class ReportsComponent implements OnInit {
       this.lastbuttonException = false;
     }
   }
-  committedClick() { }
-  sharedClick() { }
-  openClick() { }
-  uncommitClick() { }
-  privateClick() { }
+
+  pullReports(index_req, index_owning, cgdType) {
+    this.transactionReport(this.instList_transactons_with_id.find(item => item.id == index_req).name, this.instList_transactons_with_id.find(item => item.id == index_owning).name, cgdType);
+  }
+
   eddClick() {
     this.Transactiontableshow = true;
     this.reportType_panel = false;
     this.isTransactionChecked = false;
     this.transactionReportDiv = false;
     this.transactionReportResultsDiv = false;
+    this.messageNoSearchRecordsTransaction = false;
+    this.transactionReportResultsIfRecordsDiv = false;
   }
   transactionfirstCall() { }
   transactionpreviousCall() { }
@@ -1475,7 +1648,48 @@ export class ReportsComponent implements OnInit {
     this.isTransactionChecked = true;
     this.transactionReportDiv = true;
     this.transactionReportResultsDiv = true;
+    this.transactionReportResultsIfRecordsDiv = true;
   }
+  paginationTransactionReport() {
+    if (this.transactionReportRecords['pageNumber'] == 0 && (this.transactionReportRecords['totalPageCount'] - 1 > 0)) {
+      this.firstbuttonTransaction = true;
+      this.previousbuttonTransaction = true;
+      this.nextbuttonTransaction = false;
+      this.lastbuttonTransaction = false;
+    } else if (this.transactionReportRecords['pageNumber'] == 0 && (this.transactionReportRecords['pageNumber'] == this.transactionReportRecords['totalPageCount'] - 1)) {
+      this.firstbuttonTransaction = true;
+      this.previousbuttonTransaction = true;
+      this.nextbuttonTransaction = true;
+      this.lastbuttonTransaction = true;
+    }
+    else if ((this.transactionReportRecords['pageNumber'] == this.transactionReportRecords['totalPageCount'] - 1) && this.transactionReportRecords['totalPageCount'] - 1 > 0) {
+      this.firstbuttonTransaction = false;
+      this.previousbuttonTransaction = false;
+      this.nextbuttonTransaction = true;
+      this.lastbuttonTransaction = true;
+    } else if ((this.transactionReportRecords['pageNumber'] < this.transactionReportRecords['totalPageCount'] - 1) && (this.transactionReportRecords['pageNumber'] != 0)) {
+      this.firstbuttonTransaction = false;
+      this.previousbuttonTransaction = false;
+      this.nextbuttonTransaction = false;
+      this.lastbuttonTransaction = false;
+    }
+  }
+  findCount(reqType, index_req, index_owning, CGD) {
+    this.instList_transactons_with_id = this.instList_transactons.map(function (x, index) { return { id: index, name: x.name }; });
+    var count = 0;
+    for (var i = 0; i < this.transactionReportVal['transactionReportList'].length; i++) {
+      if (this.transactionReportVal['transactionReportList'][i].owningInst == this.instList_transactons_with_id.find(item => item.id == index_owning).name &&
+        this.transactionReportVal['transactionReportList'][i].requestingInst == this.instList_transactons_with_id.find(item => item.id == index_req).name) {
+        if (reqType == 'Physical') {
+          count = this.transactionReportVal['transactionReportList'][i].cgd == CGD ? count + this.transactionReportVal['transactionReportList'][i].count : count;
+        } else {
+          count = this.transactionReportVal['transactionReportList'][i].cgd == 'EDD' ? count + this.transactionReportVal['transactionReportList'][i].count : count;
+        }
+      }
+    }
+    return count == 0 ? '' : count;
+  }
+
   timezone(date) {
     return this.dashBoardService.setTimeZone(date);
   }
