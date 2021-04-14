@@ -958,28 +958,28 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="inst_col_td1">Committed</td>
-                                                    <td id="committed_{{inst.name}}" *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a (click)="pullReports(i,j,'Committed')">{{findCount('Physical',i,j,'Committed')}}</a></span></td>
+                                                    <td id="committed_{{inst.name}}_j" *ngFor="let inst of instList_transactons;let j=index">
+                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Committed')">{{findCount('Physical',i,j,'Committed')}}</a></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="inst_col_td1">Shared</td>
-                                                    <td id="sahred{{inst.name}}" *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a (click)="pullReports(i,j,'Shared')">{{findCount('Physical',i,j,'Shared')}}</a></span></td>
+                                                    <td id="sahred{{inst.name}}_j" *ngFor="let inst of instList_transactons;let j=index">
+                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Shared')">{{findCount('Physical',i,j,'Shared')}}</a></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="inst_col_td1">Open</td>
-                                                    <td id="open_{{inst.name}}" *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a (click)="pullReports(i,j,'Open')">{{findCount('Physical',i,j,'Open')}}</a></span></td>
+                                                    <td id="open_{{inst.name}}_j" *ngFor="let inst of instList_transactons;let j=index">
+                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Open')">{{findCount('Physical',i,j,'Open')}}</a></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="inst_col_td1">Uncommittable</td>
-                                                    <td id="uncommit_{{inst.name}}" *ngFor="let inst of instList_transactons;let j=index">
-                                                    <span class="cnt_dec_a"><a (click)="pullReports(i,j,'Uncommittable')">{{findCount('Physical',i,j,'Uncommittable')}}</a></span></td>
+                                                    <td id="uncommit_{{inst.name}}_j" *ngFor="let inst of instList_transactons;let j=index">
+                                                    <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Uncommittable')">{{findCount('Physical',i,j,'Uncommittable')}}</a></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="inst_col_td1">Private</td>
-                                                    <td id="private_{{inst.name}}" *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a (click)="pullReports(i,j,'Private')">{{findCount('Physical',i,j,'Private')}}</a></span></td>
+                                                    <td id="private_{{inst.name}}_j" *ngFor="let inst of instList_transactons;let j=index">
+                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Private')">{{findCount('Physical',i,j,'Private')}}</a></span></td>
                                                 </tr>  
                                         </tbody>
                                         <tbody>
@@ -989,7 +989,7 @@
                                             <tr *ngFor="let inst of instList_transactons;let i =index">
                                                 <td class="inst_row">{{inst.name}}</td>
                                                 <td *ngFor="let inst of instList_transactons; let j = index">
-                                                    <span class="cnt_dec_a"><a (click)="eddClick()">{{findCount('EDD',i,j,'Private')}}</a></span></td>
+                                                    <span class="cnt_dec_a"><a (click)="pullReportsEDD('EDD',i,j)">{{findCount('EDD',i,j,'')}}</a></span></td>
                                             </tr>
                                     </tbody>
                                     </table>
@@ -1013,13 +1013,17 @@
                             <div class="col-sm-2 margin-top-05 show-entries-section ">
                                 <div class=" ">
                                     <span class="show-title ">Show Entries</span>
-                                    <select class="themed-input " id="numOfRecordsId " name="numOfRecordsName " [(ngModel)]="showentries" [ngModelOptions]="{standalone: true} " style="margin-left: 5px; " (change)="transactionInformationOnChange(showentries) ">
+                                    <select class="themed-input " id="numOfRecordsId " name="numOfRecordsName " [(ngModel)]="showentriesTransaction" [ngModelOptions]="{standalone: true} " style="margin-left: 5px; " (change)="transactionReportsOnChange()">
                                         <option value="10" selected>10</option>
                                         <option value="25">25</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"></div>
+                            <div class="col-sm-12 col-md-12 col-lg-3 text-right">
+                                <h4>Search Results Found: <span>{{transactionReportRecords['totalRecordsCount']}}</span></h4>
                             </div>
                         </div>
                         <div id="transactionInformation ">

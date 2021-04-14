@@ -52,7 +52,7 @@ export class DashBoardService {
     this.httpClient.get<any>("/logout", appHeaders.httpOptions());
   }
   validate_monitoring(prefix: string) {
-    this.checkPermission_Monitoring('http://localhost:9091' + '/' + prefix).subscribe(
+    this.checkPermission_Monitoring('/' + prefix).subscribe(
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
@@ -65,7 +65,7 @@ export class DashBoardService {
     );
   }
   validate_logging(prefix: string) {
-    this.checkPermission_Loggig('http://localhost:9091' + '/' + prefix).subscribe(
+    this.checkPermission_Loggig('/' + prefix).subscribe(
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
@@ -78,7 +78,7 @@ export class DashBoardService {
     );
   }
   validate(prefix) {
-    this.checkPermission('http://localhost:9091' + '/' + prefix).subscribe(
+    this.checkPermission('/' + prefix).subscribe(
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {

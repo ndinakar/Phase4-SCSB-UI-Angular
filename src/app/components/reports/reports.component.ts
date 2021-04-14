@@ -168,6 +168,11 @@ export class ReportsComponent implements OnInit {
   previousbuttonTransaction = false;
   nextbuttonTransaction = false;
   lastbuttonTransaction = false;
+  requestInstCodesList: string[];
+  owningnInstCodesList: string[];
+  cgdTypeList: string[];
+  totalCount: any;
+  showentriesTransaction: number = 10;
 
   TYPE_LIST_USE = [
     'Retrieval',
@@ -313,10 +318,10 @@ export class ReportsComponent implements OnInit {
         "typeOfUses": this.typeOptions,
         "fromDate": this.dateFromTransaction,
         "toDate": this.dateToTransaction,
-        "trasactionCallType": null,
+        "trasactionCallType": 'COUNT',
         "cgdType": null
       }
-      this.reportsService.getTransactionReportCount(this.owningInstitutionList, this.borrowingInstitutionList, this.typeOptions, this.dateFromTransaction, this.dateToTransaction).subscribe(
+      this.reportsService.getTransactionReportCount(this.postDataTransaction).subscribe(
         (res) => {
           this.spinner.hide();
           this.transactionReportVal = res;
@@ -337,9 +342,24 @@ export class ReportsComponent implements OnInit {
       this.transactionReportResultsDiv = false;
     }
   }
-  transactionReport(reqInstCodes, OwningInstCodes, cgdType) {
+  transactionReport(requestInstCodesList, owningnInstCodesList, cgdTypeList, totalCount) {
     if (!this.validateTransactionDateRange()) {
-      this.reportsService.getTransactionReport(reqInstCodes, OwningInstCodes, this.typeOptions, this.dateFromTransaction, this.dateToTransaction, cgdType).subscribe(
+      this.postDataTransaction = {
+        "totalRecordsCount": totalCount,
+        "pageNumber": 0,
+        "pageSize": this.showentriesTransaction,
+        "totalPageCount": 0,
+        "message": null,
+        "transactionReportList": null,
+        "owningInsts": requestInstCodesList,
+        "requestingInsts": owningnInstCodesList,
+        "typeOfUses": this.typeOptions,
+        "fromDate": this.dateFromTransaction,
+        "toDate": this.dateToTransaction,
+        "trasactionCallType": 'REPORTS',
+        "cgdType": cgdTypeList
+      }
+      this.reportsService.getTransactionReport(this.postDataTransaction).subscribe(
         (res) => {
           this.spinner.hide();
           this.transactionReportRecords = res;
@@ -347,6 +367,7 @@ export class ReportsComponent implements OnInit {
             this.transactionPage();
           } else {
             this.spinner.hide();
+            this.paginationTransactionReport();
             this.reportType_panel = false;
             this.isTransactionChecked = false;
             this.transactionReportDiv = false;
@@ -1618,24 +1639,83 @@ export class ReportsComponent implements OnInit {
     }
   }
 
-  pullReports(index_req, index_owning, cgdType) {
-    this.transactionReport(this.instList_transactons_with_id.find(item => item.id == index_req).name, this.instList_transactons_with_id.find(item => item.id == index_owning).name, cgdType);
+  pullReports(reqType, index_req, index_owning, cgdType) {
+    this.showentriesTransaction = 10;
+    this.pullReportsData(reqType, index_req, index_owning, cgdType)
+  }
+  pullReportsEDD(reqType, index_req, index_owning) {
+    this.showentriesTransaction = 10;
+    this.pullReportsData(reqType, index_req, index_owning, '')
+  }
+  transactionfirstCall() {
+    this.transactionReport(this.requestInstCodesList, this.owningnInstCodesList, this.cgdTypeList, this.totalCount);
+  }
+  transactionpreviousCall() {
+    this.paginationPullReports(this.transactionReportRecords['pageNumber'] - 1);
+  }
+  transactionnextCall() {
+    this.paginationPullReports(this.transactionReportRecords['pageNumber'] + 1);
+  }
+  transactionlastCall() {
+    this.paginationPullReports(this.transactionReportRecords['totalPageCount'] - 1);
+  }
+  transactionReportsOnChange() {
+    this.transactionfirstCall();
+  }
+  paginationPullReports(pageNumber) {
+    if (!this.validateTransactionDateRange()) {
+      this.postDataTransaction = {
+        "totalRecordsCount": this.totalCount,
+        "pageNumber": pageNumber,
+        "pageSize": this.showentriesTransaction,
+        "totalPageCount": this.transactionReportRecords['toatalPageCount'],
+        "message": null,
+        "transactionReportList": null,
+        "owningInsts": this.requestInstCodesList,
+        "requestingInsts": this.owningnInstCodesList,
+        "typeOfUses": this.typeOptions,
+        "fromDate": this.dateFromTransaction,
+        "toDate": this.dateToTransaction,
+        "trasactionCallType": 'REPORTS',
+        "cgdType": this.cgdTypeList
+      }
+      this.reportsService.getTransactionReport(this.postDataTransaction).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.transactionReportRecords = res;
+          if (this.transactionReportRecords['message']) {
+            this.transactionPage();
+          } else {
+            this.spinner.hide();
+            this.paginationTransactionReport();
+            this.reportType_panel = false;
+            this.isTransactionChecked = false;
+            this.transactionReportDiv = false;
+            this.transactionReportResultsDiv = false;
+            this.messageNoSearchRecordsTransaction = false;
+            this.transactionReportResultsIfRecordsDiv = false;
+            this.Transactiontableshow = true;
+          }
+        },
+        (error) => {
+          this.spinner.hide();
+        });
+    } else {
+      this.transactionReportResultsDiv = false;
+    }
   }
 
-  eddClick() {
-    this.Transactiontableshow = true;
-    this.reportType_panel = false;
-    this.isTransactionChecked = false;
-    this.transactionReportDiv = false;
-    this.transactionReportResultsDiv = false;
-    this.messageNoSearchRecordsTransaction = false;
-    this.transactionReportResultsIfRecordsDiv = false;
+  pullReportsData(reqType, index_req, index_owning, cgdType) {
+    var totalCount = this.findCount(reqType, index_req, index_owning, cgdType);
+    var requestInstCodesList: string[] = [this.instList_transactons_with_id.find(item => item.id == index_req).name];
+    var owningnInstCodesList: string[] = [this.instList_transactons_with_id.find(item => item.id == index_owning).name];
+    var cgdTypeList: string[] = [];
+    this.requestInstCodesList = requestInstCodesList;
+    this.owningnInstCodesList = owningnInstCodesList;
+    this.cgdTypeList = cgdTypeList;
+    this.totalCount = totalCount;
+    this.transactionReport(this.requestInstCodesList, this.owningnInstCodesList, this.cgdTypeList, this.totalCount);
   }
-  transactionfirstCall() { }
-  transactionpreviousCall() { }
-  transactionnextCall() { }
-  transactionlastCall() { }
-  transactionInformationOnChange(entry) { }
 
   goBackTransaction($event) {
     $event.stopPropagation();

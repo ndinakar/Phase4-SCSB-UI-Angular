@@ -83,7 +83,7 @@ export class ReportsService {
   exceptionReports(institution: string, fromDate: string, toDate: string): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders_formData();
     let parames = new HttpParams()
-      .set('institution', institution)
+      .set('institutionCode', institution)
       .set('fromDate', fromDate)
       .set('toDate', toDate);
     const options = {
@@ -94,7 +94,7 @@ export class ReportsService {
   pageSizeexceptionReports(institution: string, fromDate: string, toDate: string, pageSize: string): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders_formData();
     let parames = new HttpParams()
-      .set('institution', institution)
+      .set('institutionCode', institution)
       .set('fromDate', fromDate)
       .set('toDate', toDate)
       .set('pageSize', pageSize);
@@ -106,7 +106,7 @@ export class ReportsService {
   nextCallexceptionReports(institution: string, fromDate: string, toDate: string, pageNumber: string, pageSize: string): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders_formData();
     let parames = new HttpParams()
-      .set('institution', institution)
+      .set('institutionCode', institution)
       .set('fromDate', fromDate)
       .set('toDate', toDate)
       .set('pageNumber', pageNumber)
@@ -119,7 +119,7 @@ export class ReportsService {
   exportExceptionReports(institution: string, fromDate: string, toDate: string): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders_formData();
     let parames = new HttpParams()
-      .set('institution', institution)
+      .set('institutionCode', institution)
       .set('fromDate', fromDate)
       .set('toDate', toDate);
     const options = {
@@ -127,31 +127,17 @@ export class ReportsService {
     };
     return this.httpClient.get<TreeNode[]>(this.prefix_request + "/exportExceptionReports", options);
   }
-  getTransactionReportCount(owningInsts: string, requestingInsts: string, typeOfUses: string, fromDate: string, toDate: string): Observable<TreeNode[]> {
-    let headers = appHeaders.getHeaders_formData();
-    let parames = new HttpParams()
-      .set('owningInsts', owningInsts)
-      .set('requestingInsts', requestingInsts)
-      .set('typeOfUses', typeOfUses)
-      .set('fromDate', fromDate)
-      .set('toDate', toDate);
-    const options = {
-      params: parames, headers: headers
-    };
-    return this.httpClient.get<TreeNode[]>(this.prefix_request + "/transactionData", options);
+
+  getTransactionReportCount(postData): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.prefix_request + "/transactionData", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
   }
-  getTransactionReport(owningInsts: string, requestingInsts: string, typeOfUses: string, fromDate: string, toDate: string, cgdType: string): Observable<TreeNode[]> {
-    let headers = appHeaders.getHeaders_formData();
-    let parames = new HttpParams()
-      .set('owningInsts', owningInsts)
-      .set('requestingInsts', requestingInsts)
-      .set('typeOfUses', typeOfUses)
-      .set('fromDate', fromDate)
-      .set('toDate', toDate)
-      .set('cgdType', cgdType);
-    const options = {
-      params: parames, headers: headers
-    };
-    return this.httpClient.get<TreeNode[]>(this.prefix_request + "/transactionReports", options);
+  getTransactionReport(postData): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.prefix_request + "/transactionReports", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
   }
 }
