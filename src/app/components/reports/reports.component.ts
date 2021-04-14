@@ -35,7 +35,17 @@ export class ReportsComponent implements OnInit {
     noDownload: false,
     headers: ["Patron Barcod", "RI", "Item Barcode", "Item OI", "DL", "RT", "Request Created By", "Patron Email Address", "Created Date", "Last Updated Date", "Request Notes"]
   };
-
+  csvOptionsTransaction = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: 'Export Transaction Reports',
+    useBom: true,
+    noDownload: false,
+    headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use", "Item Barcode", "Date and Time of Request", "CGD Status", "Current Status"]
+  };
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
   accessionErrorMessageDiv = false;
@@ -159,6 +169,7 @@ export class ReportsComponent implements OnInit {
   transactionFromToError = false;
   transactionReportVal: TreeNode[];
   transactionReportRecords: TreeNode[];
+  transactionReportRecordsExport: TreeNode[];
   dateFromTransaction: string;
   dateToTransaction: string;
   messageNoSearchRecordsTransaction = false;
@@ -173,6 +184,7 @@ export class ReportsComponent implements OnInit {
   cgdTypeList: string[];
   totalCount: any;
   showentriesTransaction: number = 10;
+  itemListTransaction: any = [];
 
   TYPE_LIST_USE = [
     'Retrieval',
@@ -384,6 +396,38 @@ export class ReportsComponent implements OnInit {
       this.transactionReportResultsDiv = false;
     }
   }
+  transactionReportExport(requestInstCodesList, owningnInstCodesList, cgdTypeList, totalCount) {
+    if (!this.validateTransactionDateRange()) {
+      this.postDataTransaction = {
+        "totalRecordsCount": totalCount,
+        "pageNumber": 0,
+        "pageSize": this.showentriesTransaction,
+        "totalPageCount": 0,
+        "message": null,
+        "transactionReportList": null,
+        "owningInsts": requestInstCodesList,
+        "requestingInsts": owningnInstCodesList,
+        "typeOfUses": this.typeOptions,
+        "fromDate": this.dateFromTransaction,
+        "toDate": this.dateToTransaction,
+        "trasactionCallType": 'EXPORT',
+        "cgdType": cgdTypeList
+      }
+      this.reportsService.getTransactionReport(this.postDataTransaction).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.transactionReportRecordsExport = res;
+          var fileNmae = 'ExportTransactionRecords' + '_' +
+            new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
+          new AngularCsv(this.removePropertiesTrnsaction(this.transactionReportRecordsExport['transactionReportList']), fileNmae, this.csvOptionsTransaction);
+        },
+        (error) => {
+          this.spinner.hide();
+        });
+    } else {
+      this.transactionReportResultsDiv = false;
+    }
+  }
   validateTransactionDateRange() {
     this.statusRequest = false;
     if (this.borrowingInstitutionList == '' || this.borrowingInstitutionList == undefined) {
@@ -535,6 +579,22 @@ export class ReportsComponent implements OnInit {
       this.itemList.push(item);
     }
     return this.itemList;
+  }
+  removePropertiesTrnsaction(items) {
+    for (var i = 0; i < items.length; i++) {
+      var item = {};
+      item['requestingInst'] = items[i].requestingInst;
+      item['owningInst'] = items[i].owningInst;
+      item['requestType'] = items[i].requestType;
+
+      item['itemBarcode'] = items[i].itemBarcode;
+      item['createdDate'] = this.toTimeZone(items[i].createdDate);
+      item['cgd'] = items[i].cgd;
+      item['requestStatus'] = items[i].requestStatus;
+
+      this.itemListTransaction.push(item);
+    }
+    return this.itemListTransaction;
   }
   toTimeZone(time) {
     var format = 'YYYY-MM-DD HH:mm:ss';
@@ -1661,6 +1721,9 @@ export class ReportsComponent implements OnInit {
   }
   transactionReportsOnChange() {
     this.transactionfirstCall();
+  }
+  transactionReportsExport() {
+    this.transactionReportExport(this.requestInstCodesList, this.owningnInstCodesList, this.cgdTypeList, this.totalCount);
   }
   paginationPullReports(pageNumber) {
     if (!this.validateTransactionDateRange()) {
