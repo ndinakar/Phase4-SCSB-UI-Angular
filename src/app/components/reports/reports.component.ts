@@ -338,6 +338,7 @@ export class ReportsComponent implements OnInit {
         (res) => {
           this.spinner.hide();
           this.transactionReportVal = res;
+          console.log(this.transactionReportVal['transactionReportList']);
           if (this.transactionReportVal['message']) {
             this.transactionReportResultsDiv = true;
             this.messageNoSearchRecordsTransaction = true;
@@ -1773,7 +1774,7 @@ export class ReportsComponent implements OnInit {
   }
 
   pullReportsData(reqType, index_owning, index_req, cgdType) {
-    var totalCount = this.findCount(reqType, index_owning, index_req, cgdType);
+    var totalCount = this.findCount(reqType, index_req, index_owning, cgdType);
     var requestInstCodesList: string[] = [this.instList_transactons_with_id.find(item => item.id == index_req).name];
     var owningnInstCodesList: string[] = [this.instList_transactons_with_id.find(item => item.id == index_owning).name];
     var cgdTypeList: string[] = [];
@@ -1822,16 +1823,17 @@ export class ReportsComponent implements OnInit {
       this.lastbuttonTransaction = false;
     }
   }
+
   findCount(reqType, index_req, index_owning, CGD) {
     this.instList_transactons_with_id = this.instList_transactons.map(function (x, index) { return { id: index, name: x.name }; });
     var count = 0;
     for (var i = 0; i < this.transactionReportVal['transactionReportList'].length; i++) {
       if (this.transactionReportVal['transactionReportList'][i].owningInst == this.instList_transactons_with_id.find(item => item.id == index_owning).name &&
         this.transactionReportVal['transactionReportList'][i].requestingInst == this.instList_transactons_with_id.find(item => item.id == index_req).name) {
-        if (reqType == 'Physical') {
+        if (reqType == 'Physical' && this.transactionReportVal['transactionReportList'][i].requestType != 'EDD') {
           count = this.transactionReportVal['transactionReportList'][i].cgd == CGD ? count + this.transactionReportVal['transactionReportList'][i].count : count;
-        } else {
-          count = this.transactionReportVal['transactionReportList'][i].cgd == 'EDD' ? count + this.transactionReportVal['transactionReportList'][i].count : count;
+        } else if (reqType != 'Physical' && this.transactionReportVal['transactionReportList'][i].requestType == 'EDD') {
+          count = count + this.transactionReportVal['transactionReportList'][i].count;
         }
       }
     }

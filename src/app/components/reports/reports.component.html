@@ -959,27 +959,27 @@
                                                 <tr>
                                                     <td class="inst_col_td1">Committed</td>
                                                     <td id="committed_{{inst.name}}_j" *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Committed')">{{findCount('Physical',i,j,'Committed')}}</a></span></td>
+                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Committed')">{{findCount('Physical',j,i,'Committed')}}</a></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="inst_col_td1">Shared</td>
                                                     <td id="sahred{{inst.name}}_j" *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Shared')">{{findCount('Physical',i,j,'Shared')}}</a></span></td>
+                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Shared')">{{findCount('Physical',j,i,'Shared')}}</a></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="inst_col_td1">Open</td>
                                                     <td id="open_{{inst.name}}_j" *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Open')">{{findCount('Physical',i,j,'Open')}}</a></span></td>
+                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Open')">{{findCount('Physical',j,i,'Open')}}</a></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="inst_col_td1">Uncommittable</td>
                                                     <td id="uncommit_{{inst.name}}_j" *ngFor="let inst of instList_transactons;let j=index">
-                                                    <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Uncommittable')">{{findCount('Physical',i,j,'Uncommittable')}}</a></span></td>
+                                                    <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Uncommittable')">{{findCount('Physical',j,i,'Uncommittable')}}</a></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="inst_col_td1">Private</td>
                                                     <td id="private_{{inst.name}}_j" *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Private')">{{findCount('Physical',i,j,'Private')}}</a></span></td>
+                                                        <span class="cnt_dec_a"><a (click)="pullReports('Physical',i,j,'Private')">{{findCount('Physical',j,i,'Private')}}</a></span></td>
                                                 </tr>  
                                         </tbody>
                                         <tbody>
@@ -989,7 +989,7 @@
                                             <tr *ngFor="let inst of instList_transactons;let i =index">
                                                 <td class="inst_row">{{inst.name}}</td>
                                                 <td *ngFor="let inst of instList_transactons; let j = index">
-                                                    <span class="cnt_dec_a"><a (click)="pullReportsEDD('EDD',i,j)">{{findCount('EDD',i,j,'')}}</a></span></td>
+                                                    <span class="cnt_dec_a"><a (click)="pullReportsEDD('EDD',i,j)">{{findCount('EDD',j,i,'')}}</a></span></td>
                                             </tr>
                                     </tbody>
                                     </table>
