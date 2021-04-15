@@ -2,9 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { ReportsForm } from 'src/app/model/ReportsForm';
-import { appHeaders } from 'src/config/headers';
-import { urls } from 'src/config/urls';
+import { ReportsForm } from '@model/ReportsForm';
+import { appHeaders } from '@config/headers';
+import { urls } from '@config/urls';
 
 @Injectable({
   providedIn: 'root'
@@ -83,7 +83,7 @@ export class ReportsService {
   exceptionReports(institution: string, fromDate: string, toDate: string): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders_formData();
     let parames = new HttpParams()
-      .set('institution', institution)
+      .set('institutionCode', institution)
       .set('fromDate', fromDate)
       .set('toDate', toDate);
     const options = {
@@ -94,7 +94,7 @@ export class ReportsService {
   pageSizeexceptionReports(institution: string, fromDate: string, toDate: string, pageSize: string): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders_formData();
     let parames = new HttpParams()
-      .set('institution', institution)
+      .set('institutionCode', institution)
       .set('fromDate', fromDate)
       .set('toDate', toDate)
       .set('pageSize', pageSize);
@@ -106,7 +106,7 @@ export class ReportsService {
   nextCallexceptionReports(institution: string, fromDate: string, toDate: string, pageNumber: string, pageSize: string): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders_formData();
     let parames = new HttpParams()
-      .set('institution', institution)
+      .set('institutionCode', institution)
       .set('fromDate', fromDate)
       .set('toDate', toDate)
       .set('pageNumber', pageNumber)
@@ -119,12 +119,25 @@ export class ReportsService {
   exportExceptionReports(institution: string, fromDate: string, toDate: string): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders_formData();
     let parames = new HttpParams()
-      .set('institution', institution)
+      .set('institutionCode', institution)
       .set('fromDate', fromDate)
       .set('toDate', toDate);
     const options = {
       params: parames, headers: headers
     };
     return this.httpClient.get<TreeNode[]>(this.prefix_request + "/exportExceptionReports", options);
+  }
+
+  getTransactionReportCount(postData): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.prefix_request + "/transactionData", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
+  getTransactionReport(postData): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.prefix_request + "/transactionReports", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
   }
 }
