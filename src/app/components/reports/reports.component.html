@@ -1042,8 +1042,8 @@
                                     </thead>
                                     <tbody>
                                         <tr id="rowData_results_de_{{i}} " *ngFor="let records of transactionReportRecords['transactionReportList']; let i=index ">
-                                            <td id="colData_dd_de_{{i}} "><span>{{records.owningInst}}</span></td>
                                             <td id="colData_dt_de_{{i}} "><span>{{records.requestingInst}}</span></td>
+                                            <td id="colData_dd_de_{{i}} "><span>{{records.owningInst}}</span></td>
                                             <td id="colData_di_de_{{i}} "><span id="ownInstDeacc_{{i}} ">{{records.requestType}}</span></td>
                                             <td id="colData_ib_de_{{i}} "><span>{{records.itemBarcode}}</span></td>
                                             <td id="colData_cgd_de_{{i}} "><span>{{records.createdDate}}</span></td>
@@ -1073,10 +1073,11 @@
                                 </ul>
                             </div>
                         </div>
-                        <div style="margin-top: 20px;">
-                                <button class="btn btn-primary pull-right" id="export" name="action" type="button" (click)="transactionReportsExport()" value="export" style="margin-right: 10px;">Export Transaction Reports
-                                </button>
-                            </div>
+                    </div>
+                    <div style="margin-top: 70px;" *ngIf="transactionReportButtonDiv">
+                        <button class="btn btn-primary pull-right" id="export" name="action" type="button" (click)="transactionReportsExport()" value="export" style="margin-right: 10px;">Export Report to
+                            CSV
+                        </button>
                     </div>
                 </div>
             </fieldset>

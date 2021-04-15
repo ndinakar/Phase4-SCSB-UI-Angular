@@ -158,6 +158,7 @@ export class ReportsComponent implements OnInit {
   instList_transactons: any;
   instList_transactons_with_id: any;
   Transactiontableshow = false;
+  transactionReportButtonDiv = false;
   isTransactionChecked = false;
   borrowingErrorText = false;
   owningErrorText = false;
@@ -363,8 +364,8 @@ export class ReportsComponent implements OnInit {
         "totalPageCount": 0,
         "message": null,
         "transactionReportList": null,
-        "owningInsts": requestInstCodesList,
-        "requestingInsts": owningnInstCodesList,
+        "owningInsts": owningnInstCodesList,
+        "requestingInsts": requestInstCodesList,
         "typeOfUses": this.typeOptions,
         "fromDate": this.dateFromTransaction,
         "toDate": this.dateToTransaction,
@@ -387,6 +388,7 @@ export class ReportsComponent implements OnInit {
             this.messageNoSearchRecordsTransaction = false;
             this.transactionReportResultsIfRecordsDiv = false;
             this.Transactiontableshow = true;
+            this.transactionReportButtonDiv = true;
           }
         },
         (error) => {
@@ -405,8 +407,8 @@ export class ReportsComponent implements OnInit {
         "totalPageCount": 0,
         "message": null,
         "transactionReportList": null,
-        "owningInsts": requestInstCodesList,
-        "requestingInsts": owningnInstCodesList,
+        "owningInsts": owningnInstCodesList,
+        "requestingInsts": requestInstCodesList,
         "typeOfUses": this.typeOptions,
         "fromDate": this.dateFromTransaction,
         "toDate": this.dateToTransaction,
@@ -1363,6 +1365,7 @@ export class ReportsComponent implements OnInit {
     this.owningInstitutionList = '';
     this.borrowingInstitutionList = '';
     this.Transactiontableshow = false;
+    this.transactionReportButtonDiv = false;
     this.isTransactionChecked = false;
     this.borrowingErrorText = false;
     this.owningErrorText = false;
@@ -1734,8 +1737,8 @@ export class ReportsComponent implements OnInit {
         "totalPageCount": this.transactionReportRecords['toatalPageCount'],
         "message": null,
         "transactionReportList": null,
-        "owningInsts": this.requestInstCodesList,
-        "requestingInsts": this.owningnInstCodesList,
+        "owningInsts": this.owningnInstCodesList,
+        "requestingInsts": this.requestInstCodesList,
         "typeOfUses": this.typeOptions,
         "fromDate": this.dateFromTransaction,
         "toDate": this.dateToTransaction,
@@ -1758,6 +1761,7 @@ export class ReportsComponent implements OnInit {
             this.messageNoSearchRecordsTransaction = false;
             this.transactionReportResultsIfRecordsDiv = false;
             this.Transactiontableshow = true;
+            this.transactionReportButtonDiv = true;
           }
         },
         (error) => {
@@ -1768,8 +1772,8 @@ export class ReportsComponent implements OnInit {
     }
   }
 
-  pullReportsData(reqType, index_req, index_owning, cgdType) {
-    var totalCount = this.findCount(reqType, index_req, index_owning, cgdType);
+  pullReportsData(reqType, index_owning, index_req, cgdType) {
+    var totalCount = this.findCount(reqType, index_owning, index_req, cgdType);
     var requestInstCodesList: string[] = [this.instList_transactons_with_id.find(item => item.id == index_req).name];
     var owningnInstCodesList: string[] = [this.instList_transactons_with_id.find(item => item.id == index_owning).name];
     var cgdTypeList: string[] = [];
@@ -1787,6 +1791,7 @@ export class ReportsComponent implements OnInit {
   }
   transactionPage() {
     this.Transactiontableshow = false;
+    this.transactionReportButtonDiv = false;
     this.reportType_panel = true;
     this.isTransactionChecked = true;
     this.transactionReportDiv = true;
