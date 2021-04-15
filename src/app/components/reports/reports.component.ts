@@ -338,7 +338,6 @@ export class ReportsComponent implements OnInit {
         (res) => {
           this.spinner.hide();
           this.transactionReportVal = res;
-          console.log(this.transactionReportVal['transactionReportList']);
           if (this.transactionReportVal['message']) {
             this.transactionReportResultsDiv = true;
             this.messageNoSearchRecordsTransaction = true;
