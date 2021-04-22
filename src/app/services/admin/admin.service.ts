@@ -9,20 +9,18 @@ import { urls } from 'src/config/urls';
   providedIn: 'root'
 })
 export class AdminService {
-  prefix = urls.admin;
-
   constructor(@Inject(HttpClient) private httpClient: HttpClient) { }
-
+  PREFIX = urls.ADMIN;
   upload(file: File): Observable<TreeNode[]> {
     const formdata: FormData = new FormData();
     formdata.append('file', file, file.name);
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/upload", formdata, { headers: appHeaders.getHeadersXmlUpload() }
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/upload", formdata, { headers: appHeaders.getHeadersXmlUpload() }
     );
   }
   uploadIMSLocations(file: File): Observable<TreeNode[]> {
     const formdata: FormData = new FormData();
     formdata.append('file', file, file.name);
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/uploadIms", formdata, { headers: appHeaders.getHeadersXmlUpload() }
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/uploadIms", formdata, { headers: appHeaders.getHeadersXmlUpload() }
     );
   }
 }

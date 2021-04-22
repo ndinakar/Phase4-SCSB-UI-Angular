@@ -26,8 +26,8 @@ export class JobsComponent implements OnInit {
   jobInstanceId: number;
   res: Object;
   isAuthenticated = false;
-  batchScheduleUrl = urls.batchScheduleUrl;
-  url: string = this.batchScheduleUrl + '/jobs/';
+  BATCH_SCHEDULE = urls.BATCH_SCHEDULE;
+  url: string = this.BATCH_SCHEDULE + '/jobs/';
   constructor(private jobsService: JobsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   ngOnInit(): void {
     this.dashBoardService.validate('search');

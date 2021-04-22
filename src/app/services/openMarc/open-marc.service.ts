@@ -9,15 +9,13 @@ import { urls } from 'src/config/urls';
   providedIn: 'root'
 })
 export class OpenMarcService {
-
   constructor(private httpClient: HttpClient) { }
-  prefix = urls.openMarc;
-
+  PREFIX = urls.OPEN_MARC;
   openMarc(bibId: any): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders();
     let parames = new HttpParams()
       .set('bibId', bibId);
     const options = { params: parames, headers: headers };
-    return this.httpClient.get<TreeNode[]>(this.prefix, options);
+    return this.httpClient.get<TreeNode[]>(this.PREFIX, options);
   }
 }

@@ -11,7 +11,7 @@ import { urls } from 'src/config/urls';
 export class JobsService {
 
   constructor(private httpClient: HttpClient) { }
-  prefix = urls.jobs;
+  PREFIX = urls.JOBS;
   httpOptions() {
     const httpOptions = {
       headers: appHeaders.getHeaders(),
@@ -20,9 +20,9 @@ export class JobsService {
     return httpOptions;
   }
   displayJobs(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.prefix + "/jobs", this.httpOptions());
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/jobs", this.httpOptions());
   }
   scheduleJobs(postData: ScheduleJobsForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/jobs", postData, this.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/jobs", postData, this.httpOptions());
   }
 }

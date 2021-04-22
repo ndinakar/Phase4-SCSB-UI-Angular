@@ -9,11 +9,10 @@ import { urls } from 'src/config/urls';
   providedIn: 'root'
 })
 export class DataExportService {
-  prefix = urls.dataExport;
-
   constructor(@Inject(HttpClient) private httpClient: HttpClient) { }
+  PREFIX = urls.DATA_EXPORT;
   getRecentDataExportsInfo(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.prefix + "/getRecentDataExportsInfo",
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/getRecentDataExportsInfo",
       {
         headers: appHeaders.getHeaders()
       });
@@ -34,10 +33,10 @@ export class DataExportService {
     const options = {
       params: parames, headers: headers
     };
-    return this.httpClient.get<TreeNode[]>(this.prefix + "/exportDataDump", options);
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/exportDataDump", options);
   }
   getDescriptions(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.prefix + "/getDescriptions",
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/getDescriptions",
       {
         headers: appHeaders.getHeaders()
       });

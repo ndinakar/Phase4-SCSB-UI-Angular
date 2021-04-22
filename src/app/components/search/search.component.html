@@ -147,7 +147,7 @@
                                                     <input class="facetCheckBox" id="available" name="available" type="checkbox" formControlName="Available" [checked]="checked" value="Available">
                                                     <span class="cr"></span>
 
-                                                    &nbsp;In ReCAP
+                                                    &nbsp;In
                                                 </label>
                                             </div>
                                             <div>
@@ -209,19 +209,19 @@
                                             <div id="paginationId" name="paginationName">
                                                 <ul class="pagination">
                                                     <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                                        <span id="btm_first" (click)="firstapi()" style="cursor: pointer;">First</span>
+                                                        <span id="btm_first" (click)="firstClick()" style="cursor: pointer;">First</span>
 
                                                     </li>
                                                     <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                                        <span id="btm_previous" (click)="previousapi()" style="cursor: pointer;">Previous</span>
+                                                        <span id="btm_previous" (click)="previousClick()" style="cursor: pointer;">Previous</span>
 
                                                     </li>
                                                     <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                                        <span id="btm_next" (click)="nextapi()" style="cursor: pointer;">Next</span>
+                                                        <span id="btm_next" (click)="nextClick()" style="cursor: pointer;">Next</span>
 
                                                     </li>
                                                     <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                                        <span id="btm_last" (click)="lastapi()" style="cursor: pointer;">Last</span>
+                                                        <span id="btm_last" (click)="lastClick()" style="cursor: pointer;">Last</span>
 
                                                     </li>
                                                 </ul>
@@ -230,7 +230,7 @@
                                         <div class="pull-left margin-top-05 parent">
                                             <div class="recap-status">
                                                 <div class="inline-box margin-right-10">
-                                                    <img class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;"><span class="align-middle padding-5">In ReCAP</span>
+                                                    <img class="status" src="../../../../assets/images/inRecap.png" alt="In ReCAP" style="width:20px;height:25px;"><span class="align-middle padding-5">In</span>
                                                 </div>
                                                 <div class="inline-box margin-right-10">
                                                     <img class="status" src="../../../../assets/images/out.png" alt="Out" style="width:20px;height:25px;"><span class="align-middle padding-5">OUT</span>
@@ -259,7 +259,7 @@
                                     <div class="col-sm-7 margin-top-10">
                                         <div class="row" style="font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">
                                             OI - Owning Institution, CC - Customer Code, CGD - Collection Group
-                                            Designation, SH - Summary Holdings</div>
+                                            Designation, SH - Summary Holdings, SL - Storage Location</div>
                                     </div>
                                     <div class="col-sm-3 text-right" *ngIf="!searchVal['showTotalCount']" style="text-align: right;font-family: 'roboto-condensed' , sans-serif;color: #848484;font-size: 14px !important;">
                                         <span>Bibliographic Results Found:
@@ -357,19 +357,19 @@
                         <div id="paginationId" name="paginationName">
                             <ul class="pagination">
                                 <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                    <span id="first" (click)="firstapi()" style="cursor: pointer;">First</span>
+                                    <span id="first" (click)="firstClick()" style="cursor: pointer;">First</span>
 
                                 </li>
                                 <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                    <span id="previous" (click)="previousapi()" style="cursor: pointer;">Previous</span>
+                                    <span id="previous" (click)="previousClick()" style="cursor: pointer;">Previous</span>
 
                                 </li>
                                 <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                    <span id="next" (click)="nextapi()" style="cursor: pointer;">Next</span>
+                                    <span id="next" (click)="nextClick()" style="cursor: pointer;">Next</span>
 
                                 </li>
                                 <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                    <span id="last" (click)="lastapi()" style="cursor: pointer;">Last</span>
+                                    <span id="last" (click)="lastClick()" style="cursor: pointer;">Last</span>
 
                                 </li>
                             </ul>
@@ -392,7 +392,4 @@
 </form>
 </div>
 </div>
-
-
-
 <!-- Search Tab-->

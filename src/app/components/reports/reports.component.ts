@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
+import { ReportsService } from '@service/reports/reports.service';
 import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { DashBoardService } from '@service/dashBoard/dash-board.service';
-import { ReportsService } from '@service/reports/reports.service';
 declare var $: any;
 var moment = require('moment-timezone');
 
@@ -15,7 +16,7 @@ var moment = require('moment-timezone');
 })
 export class ReportsComponent implements OnInit {
 
-  constructor(private reportsService: ReportsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
+  constructor(private router: Router, private reportsService: ReportsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
     this.dashBoardService.validate('reports');
@@ -350,6 +351,7 @@ export class ReportsComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
+          this.router.navigate(['error']);
         });
     } else {
       this.transactionReportResultsDiv = false;
@@ -393,6 +395,7 @@ export class ReportsComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
+          this.router.navigate(['error']);
         });
     } else {
       this.transactionReportResultsDiv = false;
@@ -425,6 +428,7 @@ export class ReportsComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
+          this.router.navigate(['error']);
         });
     } else {
       this.transactionReportResultsDiv = false;
@@ -519,6 +523,7 @@ export class ReportsComponent implements OnInit {
         (error) => {
           this.searchReqExceptionresult = false;
           this.spinner.hide();
+          this.router.navigate(['error']);
         });
     }
   }
@@ -544,6 +549,7 @@ export class ReportsComponent implements OnInit {
         (error) => {
           this.searchReqExceptionresult = false;
           this.spinner.hide();
+          this.router.navigate(['error']);
         });
     }
   }
@@ -559,6 +565,7 @@ export class ReportsComponent implements OnInit {
       },
       (error) => {
         this.spinner.hide();
+        this.router.navigate(['error']);
       });
   }
   removeProperties(items) {
@@ -761,6 +768,7 @@ export class ReportsComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
+          this.router.navigate(['error']);
         }
 
       );
@@ -956,6 +964,7 @@ export class ReportsComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
+          this.router.navigate(['error']);
         }
 
       );
@@ -998,6 +1007,7 @@ export class ReportsComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
+          this.router.navigate(['error']);
         }
 
       );
@@ -1095,6 +1105,7 @@ export class ReportsComponent implements OnInit {
       },
       (error) => {
         this.spinner.hide();
+        this.router.navigate(['error']);
       });
   }
   enableincompletePage() {
@@ -1115,7 +1126,8 @@ export class ReportsComponent implements OnInit {
         this.pagination('incomplete');
       },
       (error) => {
-
+        this.spinner.hide();
+        this.router.navigate(['error']);
       }
     );
   }
@@ -1128,7 +1140,8 @@ export class ReportsComponent implements OnInit {
         this.pagination('deaccession');
       },
       (error) => {
-
+        this.spinner.hide();
+        this.router.navigate(['error']);
       }
     );
   }
@@ -1144,10 +1157,10 @@ export class ReportsComponent implements OnInit {
         this.reportType_panel = false;
         this.Deaccessiontableshow = true;
         this.pagination('deaccession');
-
       },
       (error) => {
         this.spinner.hide();
+        this.router.navigate(['error']);
       }
 
     );
@@ -1159,7 +1172,8 @@ export class ReportsComponent implements OnInit {
         this.pagination('deaccession');
       },
       (error) => {
-
+        this.spinner.hide();
+        this.router.navigate(['error']);
       }
 
     );
@@ -1171,7 +1185,8 @@ export class ReportsComponent implements OnInit {
         this.pagination('deaccession');
       },
       (error) => {
-
+        this.spinner.hide();
+        this.router.navigate(['error']);
       }
     );
   }
@@ -1182,7 +1197,8 @@ export class ReportsComponent implements OnInit {
         this.pagination('deaccession');
       },
       (error) => {
-
+        this.spinner.hide();
+        this.router.navigate(['error']);
       }
     );
   }
@@ -1193,7 +1209,8 @@ export class ReportsComponent implements OnInit {
         this.pagination('deaccession');
       },
       (error) => {
-
+        this.spinner.hide();
+        this.router.navigate(['error']);
       }
     );
   }
@@ -1209,7 +1226,8 @@ export class ReportsComponent implements OnInit {
         this.pagination('incomplete');
       },
       (error) => {
-
+        this.spinner.hide();
+        this.router.navigate(['error']);
       }
 
     );
@@ -1225,7 +1243,8 @@ export class ReportsComponent implements OnInit {
         this.pagination('incomplete');
       },
       (error) => {
-
+        this.spinner.hide();
+        this.router.navigate(['error']);
       }
     );
   }
@@ -1240,7 +1259,8 @@ export class ReportsComponent implements OnInit {
         this.pagination('incomplete');
       },
       (error) => {
-
+        this.spinner.hide();
+        this.router.navigate(['error']);
       }
     );
   }
@@ -1255,7 +1275,8 @@ export class ReportsComponent implements OnInit {
         this.pagination('incomplete');
       },
       (error) => {
-
+        this.spinner.hide();
+        this.router.navigate(['error']);
       }
     );
   }
@@ -1266,7 +1287,10 @@ export class ReportsComponent implements OnInit {
         this.incompleteShowBy = this.instVal['incompleteShowByInst'][0];
         this.instList_transactons = this.instVal['incompleteShowByInst'].map(function (x) { return { name: x }; });
       },
-      (error) => { }
+      (error) => {
+        this.spinner.hide();
+        this.router.navigate(['error']);
+      }
     );
   }
   pagination(actionName) {
@@ -1400,6 +1424,8 @@ export class ReportsComponent implements OnInit {
         document.body.removeChild(link);
       },
       (error) => {
+        this.spinner.hide();
+        this.router.navigate(['error']);
       });
   }
   setPostData(actionName, actionType) {
@@ -1599,6 +1625,7 @@ export class ReportsComponent implements OnInit {
         (error) => {
           this.searchReqExceptionresult = false;
           this.spinner.hide();
+          this.router.navigate(['error']);
         });
     }
   }
@@ -1624,6 +1651,7 @@ export class ReportsComponent implements OnInit {
         (error) => {
           this.searchReqExceptionresult = false;
           this.spinner.hide();
+          this.router.navigate(['error']);
         });
     }
   }
@@ -1649,6 +1677,7 @@ export class ReportsComponent implements OnInit {
         (error) => {
           this.searchReqExceptionresult = false;
           this.spinner.hide();
+          this.router.navigate(['error']);
         });
     }
   }
@@ -1674,6 +1703,7 @@ export class ReportsComponent implements OnInit {
         (error) => {
           this.searchReqExceptionresult = false;
           this.spinner.hide();
+          this.router.navigate(['error']);
         });
     }
   }
@@ -1766,6 +1796,7 @@ export class ReportsComponent implements OnInit {
         },
         (error) => {
           this.spinner.hide();
+          this.router.navigate(['error']);
         });
     } else {
       this.transactionReportResultsDiv = false;

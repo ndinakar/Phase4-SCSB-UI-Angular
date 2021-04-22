@@ -12,23 +12,23 @@ import { urls } from 'src/config/urls';
 })
 
 export class CollectionService {
-  prefix = urls.collection;
+  PREFIX = urls.COLLECTION;
   constructor(private httpClient: HttpClient) { }
 
   displyRecords(postData: CollectionForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/displayRecords", postData,
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/displayRecords", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   openMarcView(postData: CollectionForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/openMarcView", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/openMarcView", postData, appHeaders.httpOptions());
   }
   updateCollection(postData: CollectionForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/collectionUpdate", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/collectionUpdate", postData, appHeaders.httpOptions());
   }
   checkCrossInstitutionBorrowed(postData: CollectionForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/checkCrossInstitutionBorrowed", postData,
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/checkCrossInstitutionBorrowed", postData,
       {
         headers: appHeaders.getHeaders()
       });

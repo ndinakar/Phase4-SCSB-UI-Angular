@@ -40,6 +40,7 @@ import { UserRolesComponent } from './components/user-roles/user-roles.component
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { HttpErrorInterceptor } from './http-error.interceptor';
 import { UserLoginComponent } from './components/user-login/user-login.component';
+import { InterceptorService } from '@service/interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,6 +90,11 @@ import { UserLoginComponent } from './components/user-login/user-login.component
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
       multi: true
     }],
   bootstrap: [AppComponent]

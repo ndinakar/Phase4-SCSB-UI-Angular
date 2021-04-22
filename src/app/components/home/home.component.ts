@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   reloadStatus: boolean;
   institution: string = 'default';
   url: string = '';
-  casPrefix = urls.casPrefix;
+  casPrefix = urls.CAS_PREFIX;
   redirectForm: FormGroup;
   serviceUrl: string;
   submitted = false;
