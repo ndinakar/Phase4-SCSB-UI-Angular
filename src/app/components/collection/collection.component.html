@@ -342,7 +342,7 @@
                                                                             <select [(ngModel)]="DeliveryLocation" [disabled]="deliveryLocationDisable" class="form-control themed-input themed-select" name="DeliveryLocation" [ngModelOptions]="{standalone: true}" id="DeliveryLocation">
                                                                         <option value=""></option>
                                                                         <option *ngFor="let del of crossinstitutionVal['deliveryLocations']" [ngValue]="del.customerCode">
-                                                                            {{del.description}}-{{del.customerCode}}
+                                                                            {{del.description}}-{{del.deliveryCode}}
                                                                           </option>
                                                                     </select>
                                                                         </div>
