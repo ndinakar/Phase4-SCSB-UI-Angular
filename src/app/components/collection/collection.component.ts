@@ -653,7 +653,7 @@ export class CollectionComponent implements OnInit {
         "customerCode": null,
         "deaccessionType": deacctype,
         "deaccessionNotes": this.DeaccessionNotes,
-        "deliveryLocations": [],
+        "deliveryLocations": this.crossinstitutionVal['deliveryLocations'],
         "deliveryLocation": this.DeliveryLocation,
         "shared": false,
         "submitted": false,
