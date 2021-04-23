@@ -335,8 +335,6 @@ export class CollectionComponent implements OnInit {
   }
 
   editCgdcontrol() {
-    this.deaccessionType = '';
-    this.DeliveryLocation = '';
     this.radioSwitchDeaccession = false;
     this.radioSwitchEditCGD = true;
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
@@ -500,7 +498,6 @@ export class CollectionComponent implements OnInit {
       $('#deaccessionNotesRemainingCharacters').text(2000 - len);
     }
   }
-  //save cgd start
   saveCGD(bibid, cgdold) {
     if (!this.validateInputs(cgdold)) {
       this.spinner.show();
@@ -596,8 +593,6 @@ export class CollectionComponent implements OnInit {
     }
     return this.showStatus;
   }
-
-  //save deacc start
   saveDeaccession(bibid, deacctype, itemBarcode) {
     this.statusLocation = false;
     if (this.openmarcVal['availability'] == 'Not Available' || this.openmarcVal['availability'] == 'Out') {
@@ -705,7 +700,6 @@ export class CollectionComponent implements OnInit {
       this.collectionUpdateErrorMessage = false;
     }
   }
-  //save deacc end
   validateDisplayRecords() {
     this.barerrmsg = this.collectionVal['barcodesNotFoundErrorMessage'];
     if (this.collectionVal['barcodesNotFoundErrorMessage'] == null && (this.collectionVal['searchResultRows']) != 0) {
