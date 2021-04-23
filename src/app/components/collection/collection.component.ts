@@ -335,8 +335,6 @@ export class CollectionComponent implements OnInit {
   }
 
   editCgdcontrol() {
-    this.deaccessionType = '';
-    this.DeliveryLocation = '';
     this.radioSwitchDeaccession = false;
     this.radioSwitchEditCGD = true;
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
@@ -399,8 +397,6 @@ export class CollectionComponent implements OnInit {
       (error) => {
         this.spinner.hide();
       });
-    //cross institue tend
-
     this.editCDGsection = true;
     this.Deaccessionsection = false;
   }
