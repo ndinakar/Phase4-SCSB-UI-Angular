@@ -366,7 +366,7 @@
                                                                             <input type="hidden">
                                                                             <select class="form-control themed-input themed-select" id="DeliveryLocation" name="DeliveryLocation" [(ngModel)]="DeliveryLocation" [disabled]="deliveryLocationDisable" [ngModelOptions]="{standalone: true}">
                                                                                 <option value=""></option>
-                                                                                <option *ngFor="let del of crossinstitutionVal['deliveryLocations']" [ngValue]="del.deliveryCode">
+                                                                                <option *ngFor="let del of crossinstitutionVal['deliveryLocations']" [ngValue]="del.customerCode">
                                                                                     {{del.description}}-{{del.customerCode}}
                                                                                 </option>
                                                                             </select>
