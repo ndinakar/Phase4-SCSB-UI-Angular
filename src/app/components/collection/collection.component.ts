@@ -335,6 +335,8 @@ export class CollectionComponent implements OnInit {
   }
 
   editCgdcontrol() {
+    this.DeliveryLocation = '';
+    this.DeaccessionNotes = '';
     this.radioSwitchDeaccession = false;
     this.radioSwitchEditCGD = true;
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
