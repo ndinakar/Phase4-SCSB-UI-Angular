@@ -1,9 +1,9 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from '@angular/core';
+import { appHeaders } from '@config/headers';
+import { urls } from '@config/urls';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { appHeaders } from 'src/config/headers';
-import { urls } from 'src/config/urls';
 
 @Injectable({
   providedIn: 'root'

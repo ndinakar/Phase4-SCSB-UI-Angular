@@ -3,7 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { OpenMarcService } from 'src/app/services/openMarc/open-marc.service';
+import { OpenMarcService } from '@service/openMarc/open-marc.service';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
 
 @Component({
   selector: 'app-open-marc',
@@ -11,12 +12,12 @@ import { OpenMarcService } from 'src/app/services/openMarc/open-marc.service';
   styleUrls: ['./open-marc.component.css']
 })
 export class OpenMarcComponent implements OnInit {
+  constructor(private openMarcService: OpenMarcService, private spinner: NgxSpinnerService,
+    private routeParams: ActivatedRoute, private titleService: Title, private dashBoardService: DashBoardService) { }
   bibliographicMarcForm: TreeNode[];
   errorMessageDiv = false;
   successMessageDiv = false;
   public id;
-  constructor(private openMarcService: OpenMarcService, private spinner: NgxSpinnerService, private routeParams: ActivatedRoute, private titleService: Title) { }
-
   ngOnInit(): void {
     this.spinner.show();
     this.titleService.setTitle('Marc Record');
@@ -36,8 +37,7 @@ export class OpenMarcComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        this.spinner.hide();
-      }
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 }

@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
-import { JobsService } from 'src/app/services/jobs/jobs.service';
-import { urls } from 'src/config/urls';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
+import { JobsService } from '@service/jobs/jobs.service';
+import { urls } from '@config/urls';
 @Component({
   selector: 'app-jobs',
   templateUrl: './jobs.component.html',
   styleUrls: ['./jobs.component.css']
 })
 export class JobsComponent implements OnInit {
+  constructor(private jobsService: JobsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   jobsResVal: TreeNode[];
   scheduleJobDetailsSectionDiv = false;
   scheduleJobSectionDiv = false;
@@ -28,7 +29,6 @@ export class JobsComponent implements OnInit {
   isAuthenticated = false;
   BATCH_SCHEDULE = urls.BATCH_SCHEDULE;
   url: string = this.BATCH_SCHEDULE + '/jobs/';
-  constructor(private jobsService: JobsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   ngOnInit(): void {
     this.dashBoardService.validate('search');
     this.spinner.show();
@@ -39,7 +39,7 @@ export class JobsComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        this.spinner.hide();
+        this.dashBoardService.errorNavigation();
       });
   }
   postData = {
@@ -121,7 +121,7 @@ export class JobsComponent implements OnInit {
         }
       },
       (error) => {
-        this.spinner.hide();
+        this.dashBoardService.errorNavigation();
       });
   }
   closeScheduleJob() {
@@ -140,7 +140,7 @@ export class JobsComponent implements OnInit {
         this.messageIdDiv = false;
       },
       (error) => {
-        this.spinner.hide();
+        this.dashBoardService.errorNavigation();
       });
   }
   timezone(date) {

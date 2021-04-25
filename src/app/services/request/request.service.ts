@@ -2,17 +2,15 @@ import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { RequestForm } from 'src/app/model/RequestForm';
-import { appHeaders } from 'src/config/headers';
-import { urls } from 'src/config/urls';
+import { RequestForm } from '@model/RequestForm';
+import { appHeaders } from '@config/headers';
+import { urls } from '@config/urls';
 @Injectable({
   providedIn: 'root'
 })
 export class RequestService {
-
-  PREFIX = urls.REQUESTS;
   constructor(@Inject(HttpClient) private httpClient: HttpClient) { }
-
+  PREFIX = urls.REQUESTS;
   createRequest(postData: RequestForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.PREFIX + "/createRequest", postData, appHeaders.httpOptions());
   }

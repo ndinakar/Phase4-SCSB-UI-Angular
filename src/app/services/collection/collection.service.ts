@@ -1,20 +1,18 @@
 import { HttpClient } from "@angular/common/http";
-import { error } from "@angular/compiler/src/util";
 import { Injectable } from '@angular/core';
+import { appHeaders } from '@config/headers';
+import { urls } from '@config/urls';
+import { CollectionForm } from '@model/CollectionForm';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { CollectionForm } from 'src/app/model/CollectionForm';
-import { appHeaders } from 'src/config/headers';
-import { urls } from 'src/config/urls';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CollectionService {
-  PREFIX = urls.COLLECTION;
   constructor(private httpClient: HttpClient) { }
-
+  PREFIX = urls.COLLECTION;
   displyRecords(postData: CollectionForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.PREFIX + "/displayRecords", postData,
       {

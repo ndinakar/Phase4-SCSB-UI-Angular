@@ -1,15 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { appHeaders } from '@config/headers';
+import { urls } from '@config/urls';
+import { RolesForm } from '@model/RolesFrom';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { RolesForm } from 'src/app/model/RolesFrom';
-import { appHeaders } from 'src/config/headers';
-import { urls } from 'src/config/urls';
 @Injectable({
   providedIn: 'root'
 })
 export class RolesService {
-
   constructor(private httpClient: HttpClient) { }
   PREFIX = urls.ROLES;
   searchRoles(postData: RolesForm): Observable<TreeNode[]> {

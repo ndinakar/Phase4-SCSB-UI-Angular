@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
 
 @Component({
   selector: 'app-footer',
@@ -16,8 +16,7 @@ export class FooterComponent implements OnInit {
         this.versionNumber = res['versionNumber'];
       },
       (error) => {
-
-      }
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 }

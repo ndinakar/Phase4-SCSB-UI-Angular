@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
-import { RolesService } from 'src/app/services/roles/roles.service';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
+import { RolesService } from '@service/roles/roles.service';
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
-
   constructor(private rolesService: RolesService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
-
   ngOnInit(): void {
     this.dashBoardService.validate('roles');
     this.spinner.hide();
@@ -22,7 +20,6 @@ export class RolesComponent implements OnInit {
   rolesPanel = true;
   showResults = false;
   createRoleSectionDiv = false;
-
   successDiv = false;
   errorMessageDiv = false;
   rolesSearchResultsDiv = false;
@@ -40,41 +37,33 @@ export class RolesComponent implements OnInit {
   editPermissionNamesErrorMessageDiv = false;
   successMessageDeleteRoleDiv = false;
   errorMessageDeleteRoleDiv = false;
-
   lastbutton = true;
   firstbutton = true;
   previousbutton = true;
   nextbutton = true;
-
   showentries = 10;
   pageNumber = 0;
   roleName: string;
   permissionName: string;
   permissionNameValue: string;
   permissionNamesList: string[];
-  //Edit
   editPermissionNameId: string[];
   editpermissionNameId: string[];
   editRoleDescription: string;
   editRoleName: string;
-  //Delete
   deleteRoleNameId: string;
   deleteRoleDescriptionId: string;
   deletePermissionNameId: string[];
-
   roleNameForDelete: string;
   roleDescriptionForDelete: string;
   permissionNamesForDelete: string;
-
   roleId: number;
-  //New Role
   roleNameId: string;
   roleDescriptionId: string;
   permissionNameId: string;
   newRoleName: string;
   newRoleDescription: string;
   newRolePermissionNames: string;
-
   numOfRecordsId: 10;
 
   postData = {
@@ -130,9 +119,8 @@ export class RolesComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-        this.spinner.hide();
-      }
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
   resetFields() {
     this.roleName = "";
@@ -287,7 +275,7 @@ export class RolesComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
-          this.spinner.hide();
+          this.dashBoardService.errorNavigation();
         });
     }
   }
@@ -309,6 +297,9 @@ export class RolesComponent implements OnInit {
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   lastCall() {
@@ -319,6 +310,9 @@ export class RolesComponent implements OnInit {
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   previousCall() {
@@ -329,6 +323,9 @@ export class RolesComponent implements OnInit {
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   nextCall() {
@@ -339,6 +336,9 @@ export class RolesComponent implements OnInit {
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   pageSizeChange(size) {
@@ -348,6 +348,9 @@ export class RolesComponent implements OnInit {
         this.rolesVal = res;
         this.successDiv = false;
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   pagination() {

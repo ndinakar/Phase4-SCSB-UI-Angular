@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
-import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
+import { RolesPermissionsService } from '@service/rolesPermissions/roles-permissions.service';
 @Component({
   selector: 'app-maindashboard',
   templateUrl: './dashboard.component.html',

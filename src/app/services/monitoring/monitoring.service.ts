@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TreeNode } from 'primeng/api';
+import { appHeaders } from '@config/headers';
+import { urls } from '@config/urls';
 import { Observable } from 'rxjs';
-import { ReportsForm } from 'src/app/model/ReportsForm';
-import { appHeaders } from 'src/config/headers';
-import { urls } from 'src/config/urls';
 
 @Injectable({
   providedIn: 'root'

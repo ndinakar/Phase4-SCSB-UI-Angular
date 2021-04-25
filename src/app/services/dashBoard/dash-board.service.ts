@@ -14,7 +14,7 @@ enum CONSTANTS {
   TIME_EDT = 'EDT',
   TIME_EST = 'EST',
   SPLIT_BY = '-',
-  ERROR = 'error',
+  ERROR = 'error-page',
   HOME = 'home'
 }
 @Injectable({

@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
+import { RequestService } from '@service/request/request.service';
+import { RolesPermissionsService } from '@service/rolesPermissions/roles-permissions.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { isEmpty } from 'rxjs/operators';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
-import { RequestService } from 'src/app/services/request/request.service';
-import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
-
 
 declare var $: any;
 
@@ -17,6 +15,7 @@ declare var $: any;
   styleUrls: ['./request.component.css']
 })
 export class RequestComponent implements OnInit {
+  constructor(private rolesService: RolesPermissionsService, private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   institutions: any = [];
   requestTypes: any = [];
   status_fields = true;
@@ -58,7 +57,6 @@ export class RequestComponent implements OnInit {
   articleTitleErrorMessage = false;
   patronEmailIdErrorMessage = false;
   EmailMandatoryErrorMessage = false;
-
   StartPage: string;
   EndPage: string;
   VolumeNumber: string;
@@ -66,7 +64,6 @@ export class RequestComponent implements OnInit {
   ArticleAuthor: string;
   ChapterTitle: string;
   createsubmit = false;
-
   searchReqVal: TreeNode[];
   searchPatronBarcode: string;
   searchItemBarcode: string;
@@ -79,7 +76,6 @@ export class RequestComponent implements OnInit {
   noteActive = false;
   searchreqResultVal: TreeNode[];
   searchRecCount: string;
-
   requestNotesData: string;
   resubmitReqConfirmItemBarcode: string;
   requestId: string;
@@ -89,9 +85,7 @@ export class RequestComponent implements OnInit {
   previousValue = 0;
   lastValue = 0;
   showentries = 10;
-
   barcode_id: string;
-
   resubmitResponse: TreeNode[];
   resubmitResponseMessage: string;
   createResponse: TreeNode[];
@@ -100,8 +94,6 @@ export class RequestComponent implements OnInit {
   createRequestError: boolean;
   errorMessage: string;
   interval: any;
-
-  constructor(private rolesService: RolesPermissionsService, private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
     this.dashBoardService.validate('request');
@@ -209,10 +201,8 @@ export class RequestComponent implements OnInit {
         this.disableRequestingInstitution = this.requestVal['disableRequestingInstitution'];
       },
       (error) => {
-        this.spinner.hide();
-      }
-
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   initialloadroute() {
@@ -239,7 +229,7 @@ export class RequestComponent implements OnInit {
         this.populateItemDetails(this.itemBarcodeId);
       },
       (error) => {
-        this.spinner.hide();
+        this.dashBoardService.errorNavigation();
       }
     );
   }
@@ -263,10 +253,8 @@ export class RequestComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        this.spinner.hide();
-      }
-
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   loadCreateRequestnew() {
@@ -398,9 +386,8 @@ export class RequestComponent implements OnInit {
         }
       },
       (error) => {
-
-      }
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   populateDeliveryLocations(insituval) {
@@ -465,13 +452,10 @@ export class RequestComponent implements OnInit {
         this.deliveryLocVal = Object.keys(del).map(function (data) {
           return [data, del[data]];
         });
-
       },
       (error) => {
-
-      }
-    );
-
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   reqTpeEDD(val) {
@@ -598,9 +582,8 @@ export class RequestComponent implements OnInit {
             this.spinner.hide();
           },
           (error) => {
-            this.spinner.hide();
-            //Called when error
-          })
+            this.dashBoardService.errorNavigation();
+          });
       }
       //with edd end
       this.spinner.hide();
@@ -681,9 +664,8 @@ export class RequestComponent implements OnInit {
             this.spinner.hide();
           },
           (error) => {
-            this.spinner.hide();
-            //Called when error
-          })
+            this.dashBoardService.errorNavigation();
+          });
       }
       //without edd end
       this.spinner.hide();
@@ -816,10 +798,8 @@ export class RequestComponent implements OnInit {
         this.deliveryLocVal = [];
       },
       (error) => {
-
-      }
-
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
   goToSearchRequest(patronBarcode) {
     this.spinner.show();
@@ -901,14 +881,11 @@ export class RequestComponent implements OnInit {
             this.spinner.hide();
           },
           (error) => {
-            this.spinner.hide();
-            //Called when error
-          })
-        //search end
-
+            this.dashBoardService.errorNavigation();
+          });
       },
       (error) => {
-        this.spinner.hide();
+        this.dashBoardService.errorNavigation();
       });
   }
 
@@ -994,10 +971,9 @@ export class RequestComponent implements OnInit {
             this.spinner.hide();
           },
           (error) => {
-            this.spinner.hide();
-          })
+            this.dashBoardService.errorNavigation();
+          });
       } else if ((this.searchItemBarcode == undefined || this.searchItemBarcode == '') && (this.searchItemBarcode == undefined || this.searchItemBarcode == '')) {
-
         this.patronBarcodeSearchError = true;
         this.itemBarcodeSearchError = true;
         this.spinner.hide();
@@ -1010,7 +986,6 @@ export class RequestComponent implements OnInit {
         this.spinner.hide();
       }
     } else {
-      //search api call start
       this.patronBarcodeSearchError = false;
       this.itemBarcodeSearchError = false;
       this.postData = {
@@ -1066,7 +1041,6 @@ export class RequestComponent implements OnInit {
         "disableSearchInstitution": false,
         "searchInstitutionHdn": null
       }
-
       this.requestService.searchRequests(this.postData).subscribe(
         (res) => {
           this.searchReqresultFirst = true;
@@ -1087,11 +1061,8 @@ export class RequestComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
-          this.spinner.hide();
-          //Called when error
-        })
-      //search api call end
-
+          this.dashBoardService.errorNavigation();
+        });
     }
   }
 
@@ -1130,8 +1101,7 @@ export class RequestComponent implements OnInit {
             }
           },
           (error) => {
-            this.spinner.hide();
-            //Called when error
+            this.dashBoardService.errorNavigation();
           });
       }
     }
@@ -1242,10 +1212,8 @@ export class RequestComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        this.spinner.hide();
-        //Called when error
-      })
-
+        this.dashBoardService.errorNavigation();
+      });
   }
 
 
@@ -1316,9 +1284,8 @@ export class RequestComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        this.spinner.hide();
-        //Called when error
-      })
+        this.dashBoardService.errorNavigation();
+      });
 
   }
   firstCall() {
@@ -1382,8 +1349,8 @@ export class RequestComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-        //Called when error
-      })
+        this.dashBoardService.errorNavigation();
+      });
 
   }
   previousCall() {
@@ -1447,8 +1414,8 @@ export class RequestComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-        //Called when error
-      })
+        this.dashBoardService.errorNavigation();
+      });
   }
   nextCall() {
     this.showentries = this.searchreqResultVal['pageSize'];
@@ -1511,8 +1478,8 @@ export class RequestComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-        //Called when error
-      })
+        this.dashBoardService.errorNavigation();
+      });
   }
   lastCall() {
     this.showentries = this.searchreqResultVal['pageSize'];
@@ -1575,8 +1542,8 @@ export class RequestComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-        //Called when error
-      })
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   onPageSizeChange(value) {
@@ -1640,8 +1607,8 @@ export class RequestComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-        //Called when error
-      })
+        this.dashBoardService.errorNavigation();
+      });
   }
   pagination() {
     if (this.searchreqResultVal['pageNumber'] == 0 && (this.searchreqResultVal['totalPageCount'] - 1 > 0)) {
