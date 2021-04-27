@@ -39,9 +39,17 @@
                                                               </option>
                                                         </select>
                                                 </div>
-
                                             </div>
-                                            <div class="col-md-3 col-sm-3 col-lg-3">
+                                            <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
+                                                <label class="fontcolor-dark margin-btm-10">Storage Location</label>
+                                                <div class="select-holder">
+                                                    <select class="themed-input themed-select" id="institutionList" name="institutionList" [ngModelOptions]="{standalone: true}" [(ngModel)]="institutionList" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;">
+                                                            <option value="RECAP">RECAP</option>
+                                                            <option value="HD">HD</option>
+                                                        </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-lg-3" style="width: 15% !important">
                                                 <div class="input-group-btn search-panel padding-right-10">
                                                     <button class="btn themed-button themed-button-search" id="searchRequestsButton" name="searchRequestsButton" type="button" (click)="searchRequests()">Search</button>
                                                 </div>
@@ -75,7 +83,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10">
-                                        <div class="row">RI - Requesting Institution, OI - Owning Institution, DL - Delivery Location</div>
+                                        <div class="row">RI - Requesting Institution, OI - Owning Institution, DL - Delivery Location, SL - Storage Location</div>
                                     </div>
                                     <div class="col-sm-12 col-md-12 col-lg-3 text-right">
                                         <h4>Search Results Found: <span>{{searchRequestVal['totalRecordsCount']}}</span></h4>
@@ -91,6 +99,7 @@
                                                     <th style="text-align: center">File Name</th>
                                                     <th style="text-align: center">Patron Barcode</th>
                                                     <th style="text-align: center">OI/RI</th>
+                                                    <th style="text-align: center">SL</th>
                                                     <th style="text-align: center">DL</th>
                                                     <th style="text-align: center">Request Created By</th>
                                                     <th style="text-align: center">Patron Email Address</th>
@@ -105,9 +114,10 @@
                                                     <td>{{ item.bulkRequestName }}</td>
                                                     <td>{{ item.fileName }}</td>
                                                     <td>{{ item.patronBarcode }}</td>
-                                                    <td>{{item.requestingInstitution}}</td>
+                                                    <td>{{ item.requestingInstitution}}</td>
+                                                    <td>{{ item.imsLocation }}</td>
                                                     <td>{{ item.deliveryLocation }}</td>
-                                                    <td>{{item.createdBy}}</td>
+                                                    <td>{{ item.createdBy}}</td>
                                                     <td>{{ item.emailAddress }}</td>
                                                     <td>{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}</td>
                                                     <td> <span>{{item.status}}</span><br>

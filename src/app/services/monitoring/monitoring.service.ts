@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 })
 export class MonitoringService {
   constructor(private httpClient: HttpClient) { }
-  prefix = urls.MONITORING;
+  PREFIX = urls.MONITORING;
 
   pullData(): Observable<any> {
-    return this.httpClient.get<any>(this.prefix + "/properties",
+    return this.httpClient.get<any>(this.PREFIX + "/properties",
       {
         headers: appHeaders.getHeaders()
       });

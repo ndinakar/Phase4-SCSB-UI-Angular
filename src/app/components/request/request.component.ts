@@ -94,7 +94,9 @@ export class RequestComponent implements OnInit {
   createRequestError: boolean;
   errorMessage: string;
   interval: any;
-
+  storageLocationSearch: string;
+  storageLocation: string;
+  disableStorageLocation = false;
   ngOnInit(): void {
     this.dashBoardService.validate('request');
     this.rolesRes = this.rolesService.getRes();
@@ -371,6 +373,7 @@ export class RequestComponent implements OnInit {
           this.itemBarcodeNoPermissionErrorMessage = false;
           this.itemTitleId = this.itembarcodeVal['itemTitle'];
           this.itemOwningInstitutionId = this.itembarcodeVal['itemOwningInstitution'];
+          this.storageLocation = 'RECAP';
         }
         this.requestTypes = [];
         for (var j = 0; j < this.itembarcodeVal['requestTypes'].length; j++) {

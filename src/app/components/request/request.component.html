@@ -50,8 +50,17 @@
                                                 </div>
                                                 <input id="searchInstitutionHdn" type="hidden">
                                             </div>
-
-                                            <div class="col-md-3 col-sm-3 col-lg-3">
+                                            <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
+                                                <label class="fontcolor-dark margin-btm-10">Storage Location</label>
+                                                <div class="select-holder">
+                                                    <select class="themed-input themed-select" id="storageLocation" name="storageLocation" [ngModelOptions]="{standalone: true}" [(ngModel)]="storageLocationSearch" style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;" [disabled]="disableStorageLocation">
+                                                        <option value="RECAP">RECAP</option>
+                                                        <option value="HD">HD</option>
+                                                    </select>
+                                                </div>
+                                                <input id="searchInstitutionHdn" type="hidden">
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-lg-3" style="width: 15% !important">
                                                 <div class="input-group-btn search-panel padding-right-10">
                                                     <button class="btn themed-button themed-button-search" id="searchRequestsButton" name="searchRequestsButton" type="button" (click)="searchRequests()">Search</button>
                                                 </div>
@@ -104,6 +113,7 @@
                                                     <th title="'Request Institution'">RI</th>
                                                     <th>Item Barcode</th>
                                                     <th title="'Item Owning Institution'">Item OI</th>
+                                                    <th>SL</th>
                                                     <th title="'Delivery Location'">DL</th>
                                                     <th title="'Request Type'">RT</th>
                                                     <th>Request Created By</th>
@@ -122,6 +132,7 @@
                                                     <td id="data_ri_{{i}}">{{ item.requestingInstitution }}</td>
                                                     <td><a id="data_br_{{i}}" target="_blank" routerLink="/openMarcRecord" [queryParams]="{bibId: item['bibId']}">{{ item.barcode }}</a></td>
                                                     <td id="data_oi_{{i}}">{{ item.owningInstitution }}</td>
+                                                    <td id="data_il_{{i}}">{{ item.imsLocation }}</td>
                                                     <td id="data_dl_{{i}}">{{ item.deliveryLocation }}</td>
                                                     <td id="data_rt_{{i}}">{{ item.requestType }}</td>
                                                     <td id="data_rcb_{{i}}">{{ item.requestCreatedBy }}</td>
@@ -292,7 +303,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-sm-6 text-right margin-top-15"><label class="fontcolor-dark" for="storageLocation">Storage Location</label></div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <input class="form-control themed-input" id="storageLocation" name="storageLocation" type="text" tabindex="-1" [(ngModel)]="storageLocation" [disabled]="createsubmit" readonly="readonly">
+                                                            <input id="storageLocation" type="hidden">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4"></div>
