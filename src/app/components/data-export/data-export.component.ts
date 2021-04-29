@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
+import { DataExportService } from '@service/dataExport/data-export.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
-import { DataExportService } from '../../services/dataExport/data-export.service';
-import { DashboardComponent } from '../dashboard/dashboard.component';
 declare var $: any;
 @Component({
   selector: 'app-data-export',
@@ -85,11 +83,9 @@ export class DataExportComponent implements OnInit {
         }
 
       },
-      error => {
-        this.spinner.hide();
-        this.router.navigate(['error']);
-      }
-    );
+      (error) => {
+        this.dashBoardService.errorNavigation();
+      });
   }
   enabledDataExport() {
     this.result = [];
@@ -126,15 +122,13 @@ export class DataExportComponent implements OnInit {
           if (this.resValExport['message'] != null) {
             this.successMessageDiv = true;
             this.errorMessageDiv = false;
-            //this.resetFields();
           } else {
             this.successMessageDiv = false;
             this.errorMessageDiv = true;
-            //this.resetFields();
           }
         },
         (error) => {
-          this.spinner.hide();
+          this.dashBoardService.errorNavigation();
         });
     } else { }
   }

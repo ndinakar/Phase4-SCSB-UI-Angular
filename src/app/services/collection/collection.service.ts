@@ -1,34 +1,32 @@
 import { HttpClient } from "@angular/common/http";
-import { error } from "@angular/compiler/src/util";
 import { Injectable } from '@angular/core';
+import { appHeaders } from '@config/headers';
+import { urls } from '@config/urls';
+import { CollectionForm } from '@model/CollectionForm';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { CollectionForm } from 'src/app/model/CollectionForm';
-import { appHeaders } from 'src/config/headers';
-import { urls } from 'src/config/urls';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CollectionService {
-  prefix = urls.collection;
   constructor(private httpClient: HttpClient) { }
-
+  PREFIX = urls.COLLECTION;
   displyRecords(postData: CollectionForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/displayRecords", postData,
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/displayRecords", postData,
       {
         headers: appHeaders.getHeaders()
       });
   }
   openMarcView(postData: CollectionForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/openMarcView", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/openMarcView", postData, appHeaders.httpOptions());
   }
   updateCollection(postData: CollectionForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/collectionUpdate", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/collectionUpdate", postData, appHeaders.httpOptions());
   }
   checkCrossInstitutionBorrowed(postData: CollectionForm): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/checkCrossInstitutionBorrowed", postData,
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/checkCrossInstitutionBorrowed", postData,
       {
         headers: appHeaders.getHeaders()
       });

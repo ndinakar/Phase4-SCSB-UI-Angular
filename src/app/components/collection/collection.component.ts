@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CollectionService } from '@service/collection/collection.service';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { CollectionService } from 'src/app/services/collection/collection.service';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
-
 
 declare var $: any;
 
@@ -14,6 +14,8 @@ declare var $: any;
   styleUrls: ['./collection.component.css']
 })
 export class CollectionComponent implements OnInit {
+  constructor(private router: Router, private formBuilder: FormBuilder, private collectionService: CollectionService,
+    private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   deliveryLocationDisable = false;
   showStatus = false;
   showStar = false;
@@ -46,7 +48,6 @@ export class CollectionComponent implements OnInit {
   collectionmsg: string;
   deaccessionType: string;
   DeliveryLocation: string;
-
   newdeaccessionType: string;
   newDeliveryLocation: string;
   newdeaccessionnote: string;
@@ -62,7 +63,6 @@ export class CollectionComponent implements OnInit {
   errorMessage: string;
   radioSwitchEditCGD: boolean;
   radioSwitchDeaccession: boolean;
-  constructor(private formBuilder: FormBuilder, private collectionService: CollectionService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
     this.dashBoardService.validate('collection');
@@ -185,7 +185,7 @@ export class CollectionComponent implements OnInit {
           this.validateDisplayRecords();
         },
         (error) => {
-          this.spinner.hide();
+          this.dashBoardService.errorNavigation();
         }
 
       );
@@ -321,11 +321,11 @@ export class CollectionComponent implements OnInit {
             this.spinner.hide();
           },
           (error) => {
-            this.spinner.hide();
+            this.dashBoardService.errorNavigation();
           });
       },
       (error) => {
-        this.spinner.hide();
+        this.dashBoardService.errorNavigation();
       }
 
     );
@@ -335,8 +335,8 @@ export class CollectionComponent implements OnInit {
   }
 
   editCgdcontrol() {
-    this.deaccessionType = '';
     this.DeliveryLocation = '';
+    this.DeaccessionNotes = '';
     this.radioSwitchDeaccession = false;
     this.radioSwitchEditCGD = true;
     this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
@@ -397,10 +397,8 @@ export class CollectionComponent implements OnInit {
         this.validateResponse();
       },
       (error) => {
-        this.spinner.hide();
+        this.dashBoardService.errorNavigation();
       });
-    //cross institue tend
-
     this.editCDGsection = true;
     this.Deaccessionsection = false;
   }
@@ -479,7 +477,7 @@ export class CollectionComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        this.spinner.hide();
+        this.dashBoardService.errorNavigation();
       });
   }
 
@@ -502,7 +500,6 @@ export class CollectionComponent implements OnInit {
       $('#deaccessionNotesRemainingCharacters').text(2000 - len);
     }
   }
-  //save cgd start
   saveCGD(bibid, cgdold) {
     if (!this.validateInputs(cgdold)) {
       this.spinner.show();
@@ -567,7 +564,7 @@ export class CollectionComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
-          this.spinner.hide();
+          this.dashBoardService.errorNavigation();
         }
       );
     }
@@ -598,8 +595,6 @@ export class CollectionComponent implements OnInit {
     }
     return this.showStatus;
   }
-
-  //save deacc start
   saveDeaccession(bibid, deacctype, itemBarcode) {
     this.statusLocation = false;
     if (this.openmarcVal['availability'] == 'Not Available' || this.openmarcVal['availability'] == 'Out') {
@@ -677,7 +672,7 @@ export class CollectionComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
-          this.spinner.hide();
+          this.dashBoardService.errorNavigation();
         });
 
     } else if (this.DeaccessionNotes == undefined || this.DeaccessionNotes == '') {
@@ -707,7 +702,6 @@ export class CollectionComponent implements OnInit {
       this.collectionUpdateErrorMessage = false;
     }
   }
-  //save deacc end
   validateDisplayRecords() {
     this.barerrmsg = this.collectionVal['barcodesNotFoundErrorMessage'];
     if (this.collectionVal['barcodesNotFoundErrorMessage'] == null && (this.collectionVal['searchResultRows']) != 0) {

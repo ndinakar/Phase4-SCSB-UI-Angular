@@ -2,36 +2,35 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { UserRoleFormData } from 'src/app/model/UserRoleFormData';
-import { appHeaders } from 'src/config/headers';
-import { urls } from 'src/config/urls';
+import { UserRoleFormData } from '@model/UserRoleFormData';
+import { appHeaders } from '@config/headers';
+import { urls } from '@config/urls';
 @Injectable({
   providedIn: 'root'
 })
 export class UserRolesService {
-
   constructor(private httpClient: HttpClient) { }
-  prefix = urls.userRoles;
+  PREFIX = urls.USER_ROLES;
   searchRoles(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/searchUsers", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/searchUsers", postData, appHeaders.httpOptions());
   }
   previousCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/previous", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/previous", postData, appHeaders.httpOptions());
   }
   nextCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/next", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/next", postData, appHeaders.httpOptions());
   }
   firstCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/first", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/first", postData, appHeaders.httpOptions());
   }
   lastCall(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/last", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/last", postData, appHeaders.httpOptions());
   }
   pageSize(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/searchUsers", postData, appHeaders.httpOptions());
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/searchUsers", postData, appHeaders.httpOptions());
   }
   userRoles(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.prefix + "/userRoles",
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/userRoles",
       appHeaders.httpOptions());
   }
   editUser(userId, networkLoginId): Observable<TreeNode[]> {
@@ -40,7 +39,7 @@ export class UserRolesService {
       .set('userId', userId)
       .set('networkLoginId', networkLoginId);
     const options = { params: parames, headers: headers, withCredentials: true };
-    return this.httpClient.get<TreeNode[]>(this.prefix + "/editUser", options);
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/editUser", options);
   }
   saveEditUser(userId, roleIds, networkLoginId, userDescription, institutionId, userEmailId): Observable<TreeNode[]> {
     let headers = appHeaders.getHeaders();
@@ -52,11 +51,11 @@ export class UserRolesService {
       .set('userEmailId', userEmailId)
       .set('roleIds', roleIds);
     const options = { params: parames, headers: headers, withCredentials: true };
-    return this.httpClient.get<TreeNode[]>(this.prefix + "/saveEditUserDetails", options);
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/saveEditUserDetails", options);
   }
 
   createUser(postData: UserRoleFormData): Observable<TreeNode[]> {
-    return this.httpClient.post<TreeNode[]>(this.prefix + "/createUser", postData,
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/createUser", postData,
       appHeaders.httpOptions());
   }
   delete(userId, networkLoginId, pageNumber, totalPageCount, pageSize): Observable<TreeNode[]> {
@@ -68,6 +67,6 @@ export class UserRolesService {
       .set('totalPageCount', totalPageCount)
       .set('pageSize', pageSize);
     const options = { params: parames, headers: headers, withCredentials: true };
-    return this.httpClient.get<TreeNode[]>(this.prefix + "/delete", options);
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/delete", options);
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { urls } from 'src/config/urls';
+import { urls } from '@config/urls';
 import { environment } from 'src/environments/environment';
 
 @Component({

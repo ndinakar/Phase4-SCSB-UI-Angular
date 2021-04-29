@@ -3,13 +3,13 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
+import { ReportsService } from '@service/reports/reports.service';
+import { RolesPermissionsService } from '@service/rolesPermissions/roles-permissions.service';
+import { SearchService } from '@service/search/search.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
-import { ReportsService } from 'src/app/services/reports/reports.service';
-import { RolesPermissionsService } from 'src/app/services/rolesPermissions/roles-permissions.service';
-import { SearchService } from 'src/app/services/search/search.service';
 declare var $: any;
 
 @Component({
@@ -32,6 +32,12 @@ declare var $: any;
   ]
 })
 export class SearchComponent implements OnInit {
+  constructor(private rolesService: RolesPermissionsService, private reportsService: ReportsService, private searchService: SearchService,
+    private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
+    private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
+
+  @ViewChild('dt') dt: Table;
+  public data: Object[];
   fieldValuseStatus = false;
   toggleCheck = true;
   count: number = 4;
@@ -42,7 +48,6 @@ export class SearchComponent implements OnInit {
   searchVal: TreeNode[];
   selectedNodes1: any[];
   selectedNodes2: any[];
-
   cols: any[];
   cols1: any[];
   exportColumns: any[];
@@ -124,7 +129,7 @@ export class SearchComponent implements OnInit {
     { id: 'CustomerCode', name: "Customer Code" },
     { id: 'CallNumber_search', name: "Call Number" },
     { id: 'Barcode', name: "Barcode" },
-    { id: 'ImsLocation', name: "IMS Location Code" }
+    { id: 'ImsLocation', name: "Storage Location" }
   ];
   validateCols = [
     { field: 'title', header: 'Title' },
@@ -132,6 +137,7 @@ export class SearchComponent implements OnInit {
     { field: 'publisher', header: 'Publisher' },
     { field: 'publisherDate', header: 'Publisher Date' },
     { field: 'owningInstitution', header: 'OI' },
+    { field: 'imsLocation', header: 'SL' },
     { field: 'customerCode', header: 'CC' },
     { field: 'collectionGroupDesignation', header: 'CGD' },
     { field: 'useRestriction', header: 'Use Restriction' },
@@ -146,14 +152,6 @@ export class SearchComponent implements OnInit {
     { field: 'useRestriction', header: 'Use Restriction' },
     { field: 'barcode', header: 'Barcode' },
   ];
-
-  @ViewChild('dt') dt: Table;
-  constructor(private rolesService: RolesPermissionsService, private reportsService: ReportsService, private searchService: SearchService,
-    private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
-    private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
-
-  public data: Object[];
-
   ngOnInit(): void {
     this.dashBoardService.validate('search');
     this.rolesRes = this.rolesService.getRes();
@@ -183,7 +181,6 @@ export class SearchComponent implements OnInit {
     });
   }
   checkedItem(item) {
-    ``
     if (this.owningInstitutionInst) {
       if (this.owningInstitutionInst.indexOf(item) != -1) {
         return true;
@@ -197,7 +194,6 @@ export class SearchComponent implements OnInit {
       this.owningInstitutionInst.splice(this.owningInstitutionInst.indexOf(item), 1);
     }
   }
-  //show entries api start
   onPageSizeChange(value) {
     this.spinner.show();
     this.showentries = value;
@@ -219,12 +215,10 @@ export class SearchComponent implements OnInit {
       this.pagination();
     },
       (error) => {
-        //Called when error
-      }
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
-  //show entries api end
   searchRecord() {
     this.dashBoardService.validate('search');
     this.clicked = true;
@@ -262,17 +256,13 @@ export class SearchComponent implements OnInit {
           this.searchVal['pageNumber'] = 0;
           this.pagination();
         }
-
       },
       (error) => {
-        this.spinner.hide();
-        //Called when error
-      })
-
+        this.dashBoardService.errorNavigation();
+      });
   }
 
-  //next api start
-  nextapi() {
+  nextClick() {
     this.spinner.show();
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -290,20 +280,19 @@ export class SearchComponent implements OnInit {
           items.id = i + 1;
         });
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
     this.mappingResults();
   }
-  //next api end
-
-  //previous api start
-  previousapi() {
+  previousClick() {
     this.spinner.show();
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
     this.useRestrictions = [];
-
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
     this.showresultdiv = true;
@@ -315,13 +304,13 @@ export class SearchComponent implements OnInit {
           items.id = i + 1;
         });
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
     this.mappingResults();
   }
-  //previous api end
-
-  //first api start
-  firstapi() {
+  firstClick() {
     this.spinner.show();
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -340,12 +329,14 @@ export class SearchComponent implements OnInit {
         });
         this.searchVal['pageNumber'] = 0;
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
     this.mappingResults();
   }
-  //first api end
-  //last api start
-  lastapi() {
+
+  lastClick() {
     this.spinner.show();
     this.owningInstitutions = [];
     this.collectionGroupDesignations = [];
@@ -365,12 +356,10 @@ export class SearchComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-        this.spinner.hide();
+        this.dashBoardService.errorNavigation();
       });
     this.mappingResults();
   }
-  //last api end
-
 
   onRowSelect(event) {
     this.clicked = false;

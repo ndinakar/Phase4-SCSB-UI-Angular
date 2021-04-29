@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from '@service/admin/admin.service';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
 import { TreeNode } from 'primeng/api';
-import { AdminService } from 'src/app/services/admin/admin.service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+  constructor(private adminService: AdminService, private dashBoardService: DashBoardService) { }
   AdminPanelDiv = true;
   IMSLocationDiv = true;
   enableOnBoardDiv: boolean = false;
@@ -20,10 +22,7 @@ export class AdminComponent implements OnInit {
   onBoardStatusDiv = false;
   onBoardIMSStatusDiv = false;
   fileToUpload: File = null;
-  constructor(private adminService: AdminService) { }
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
   handleFileInput(files: FileList) {
     this.fileToUpload = null;
     this.choosenFile = '';
@@ -41,7 +40,9 @@ export class AdminComponent implements OnInit {
           this.uploadRes = res;
           this.onBoardStatusDiv = true;
           this.choosenFile = '';
-        }, error => {
+        },
+        (error) => {
+          this.dashBoardService.errorNavigation();
         });
     }
   }
@@ -55,7 +56,9 @@ export class AdminComponent implements OnInit {
           this.resIMS = res;
           this.onBoardIMSStatusDiv = true;
           this.choosenFile = '';
-        }, (error) => {
+        },
+        (error) => {
+          this.dashBoardService.errorNavigation();
         });
     }
   }

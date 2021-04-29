@@ -26,7 +26,7 @@ const routes: Routes = [
     component: HomeComponent
   },
   { path: 'logout', component: HomeComponent },
-  { path: 'error', component: ErrorPageComponent },
+  { path: 'error-page', component: ErrorPageComponent },
   {
     path: 'openMarcRecord', component: OpenMarcComponent
   },

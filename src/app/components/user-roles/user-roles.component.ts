@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
-import { UserRolesService } from 'src/app/services/userRoles/user-roles.service';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
+import { UserRolesService } from '@service/userRoles/user-roles.service';
 @Component({
   selector: 'app-user-roles',
   templateUrl: './user-roles.component.html',
@@ -45,13 +45,11 @@ export class UserRolesComponent implements OnInit {
   firstbutton = true;
   previousbutton = true;
   nextbutton = true;
-
   searchResultContainerDiv = false;
   pageNumber: number;
   institutionId: number;
   institutionIdErrMsgDiv = false;
   roleIdErrMsgDiv = false;
-  //edit User
   editEmailId: string;
   edituserDescription = "";
   editnetworkLoginId: string;
@@ -61,38 +59,33 @@ export class UserRolesComponent implements OnInit {
   editerrormsgDiv = false;
   editinstitutionIdErrMsgDiv = false;
   editroleIdErrMsgDiv = false;
-  //delete User
   deleteNetworkLoginId: string;
   deleteInstitutionId: string;
   deletedRoleId: string[];
   deleteUserDescription: string;
   deleteEmailId: string;
   deleteErrorMsgDiv = false;
-
   numOfRecordsId = 10;
-  //create User
   emailId: string;
   userDescription = "";
   rolesOption: number[];
-  //institutionId : string;
   networkLoginId: string;
   selectedForCreate: number[];
   editUserId: number;
   userId: number;
   searchBarDiv = true;
-
   userDescriptionErrMsgDiv = false;
   edituserDescriptionErrMsgDiv = false;
   editEmailIdErrMsgDiv = false;
   emailIdErrMsgDiv = false;
   showUserSearchView = true;
+
   postData = {
     "userId": null,
     "institutionId": null,
     "editUserId": 0,
     "roleId": null,
     "editRoleId": null,
-
     "pageNumber": 0,
     "pageSize": 10,
     "totalPageCount": 0,
@@ -100,7 +93,6 @@ export class UserRolesComponent implements OnInit {
     "afterDelPageNumber": 0,
     "afterDelPageSize": 10,
     "afterDelTotalPageCount": 0,
-
     "searchNetworkId": null,
     "networkLoginId": null,
     "roleName": null,
@@ -120,7 +112,6 @@ export class UserRolesComponent implements OnInit {
     "userEmailId": null,
     "emailId": null,
     "editEmailId": null,
-
     "allowCreateEdit": null,
     "isCreatedRequest": null,
     "showPagination": false,
@@ -138,16 +129,13 @@ export class UserRolesComponent implements OnInit {
     "deletedSuccessMsg": false,
     "deleteErrorMsg": false,
     "showUserSearchView": true,
-
     "roles": [],
     "institutions": [],
     "showSelectedForCreate": [],
     "selectedForCreate": [],
     "editSelectedForCreate": [],
     "userRoleFormList": [],
-
     "showEditDeleteIcon": true,
-
     "createdBy": null,
     "lastUpdatedBy": null
   }
@@ -177,8 +165,8 @@ export class UserRolesComponent implements OnInit {
         this.editinstitutionId = this.userResponse['editInstitutionId'];
       },
       (erro) => {
-      }
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
   deleteUserRole(userId, networkLoginId, roleName) {
     this.dashBoardService.validate('userRoles');
@@ -238,9 +226,8 @@ export class UserRolesComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        this.spinner.hide();
-      }
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
   showEntriesChange(pageSize) {
     this.numOfRecordsId = pageSize;
@@ -318,7 +305,7 @@ export class UserRolesComponent implements OnInit {
           this.spinner.hide();
         },
         (error) => {
-          this.spinner.hide();
+          this.dashBoardService.errorNavigation();
         });
     }
   }
@@ -390,7 +377,7 @@ export class UserRolesComponent implements OnInit {
           }
         },
         (error) => {
-          this.spinner.hide();
+          this.dashBoardService.errorNavigation();
         });
     }
   }
@@ -420,9 +407,8 @@ export class UserRolesComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        this.spinner.hide();
-      }
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
   userRoles() {
     this.userRolesService.userRoles().subscribe(
@@ -441,7 +427,7 @@ export class UserRolesComponent implements OnInit {
         this.deleteUserDiv = false;
       },
       (error) => {
-        this.spinner.hide();
+        this.dashBoardService.errorNavigation();
       });
   }
   lastCall() {
@@ -449,6 +435,9 @@ export class UserRolesComponent implements OnInit {
       (res) => {
         this.userRoleFormVal = res;
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   previousCall() {
@@ -456,6 +445,9 @@ export class UserRolesComponent implements OnInit {
       (res) => {
         this.userRoleFormVal = res;
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   nextCall() {
@@ -463,6 +455,9 @@ export class UserRolesComponent implements OnInit {
       (res) => {
         this.userRoleFormVal = res;
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   firstCall() {
@@ -470,6 +465,9 @@ export class UserRolesComponent implements OnInit {
       (res) => {
         this.userRoleFormVal = res;
         this.pagination();
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   toggleUserInstitutionValidation() {

@@ -1,35 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { appHeaders } from 'src/config/headers';
-import { urls } from 'src/config/urls';
+import { appHeaders } from '@config/headers';
+import { urls } from '@config/urls';
+import 'rxjs/add/observable/throw';
 var moment = require('moment-timezone');
-
 enum CONSTANTS {
   TIMEZONE = 'America/New_York',
   TIME_DIFF = '04:00',
   TIME_EDT = 'EDT',
   TIME_EST = 'EST',
-  SPLIT_BY = '-'
+  SPLIT_BY = '-',
+  ERROR = 'error-page',
+  HOME = 'home'
 }
-
 @Injectable({
   providedIn: 'root'
 })
 export class DashBoardService {
+  constructor(private router: Router, private httpClient: HttpClient,
+    private spinner: NgxSpinnerService) { }
   res: Object;
   isAuthenticated = false;
-  constructor(private router: Router, private httpClient: HttpClient, private cookieService: CookieService) { }
-  prefix = urls.dashBoard;
+  PREFIX = urls.DASHBOARD;
   checkPermission(prefix: string): Observable<boolean> {
     return this.httpClient.get<boolean>(prefix + "/checkPermission",
       appHeaders.httpOptions());
   }
   getVersionNumber(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.prefix + "/getVersionNumberService",
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/getVersionNumberService",
       {
         headers: appHeaders.getHeaders()
       });
@@ -43,7 +45,7 @@ export class DashBoardService {
       appHeaders.httpOptions());
   }
   getEmail(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.prefix + "/getEmail",
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/getEmail",
       {
         headers: appHeaders.getHeaders()
       });
@@ -56,11 +58,11 @@ export class DashBoardService {
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          this.router.navigate(['home']);
+          this.router.navigate([CONSTANTS.HOME]);
         }
       },
-      error => {
-        this.router.navigate(['home']);
+      (error) => {
+        this.router.navigate([CONSTANTS.HOME]);
       }
     );
   }
@@ -69,11 +71,11 @@ export class DashBoardService {
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          this.router.navigate(['home']);
+          this.router.navigate([CONSTANTS.HOME]);
         }
       },
-      error => {
-        this.router.navigate(['home']);
+      (error) => {
+        this.router.navigate([CONSTANTS.HOME]);
       }
     );
   }
@@ -82,15 +84,18 @@ export class DashBoardService {
       response => {
         this.isAuthenticated = response;
         if (this.isAuthenticated == false) {
-          this.router.navigate(['home']);
+          this.router.navigate([CONSTANTS.HOME]);
         }
       },
-      error => {
-        this.router.navigate(['home']);
+      (error) => {
+        this.router.navigate([CONSTANTS.HOME]);
       }
     );
   }
-
+  errorNavigation() {
+    this.spinner.hide();
+    this.router.navigate([CONSTANTS.ERROR]);
+  }
   setTimeZone(date) {
     if (date) {
       var zone = CONSTANTS.TIMEZONE;

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { BulkRequestService } from '@service/bulkRequest/bulk-request.service';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
 
-import { BulkRequestService } from 'src/app/services/bulkRequest/bulk-request.service';
-import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 declare var $: any;
 
 @Component({
@@ -155,13 +155,10 @@ export class BulkrequestComponent implements OnInit {
         this.deliveryLocation = '';
         this.patronEmailId = '';
         this.requestNotesId = '';
-
       },
       (error) => {
-
-      }
-
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   loadSearchRequest() {
@@ -278,11 +275,8 @@ export class BulkrequestComponent implements OnInit {
 
       },
       (error) => {
-
-      }
-
-    );
-
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   createBulkRequest() {
@@ -309,7 +303,7 @@ export class BulkrequestComponent implements OnInit {
           }
         },
         (error) => {
-          this.spinner.hide();
+          this.dashBoardService.errorNavigation();
         });
     }
   }
@@ -344,10 +338,6 @@ export class BulkrequestComponent implements OnInit {
     if (this.patronEmailIdErrorMessage == true) {
       this.statusInputs = false;
     }
-    // if (this.patronEmailId == undefined || this.patronEmailId == '' || this.patronEmailIdErrorMessage == true) {
-    //   this.EmailMandatoryErrorMessage = true;
-    //   this.statusInputs = false;
-    // } else { this.EmailMandatoryErrorMessage = false; }
     if (this.deliveryLocation == undefined || this.deliveryLocation == '') {
       this.deliveryLocationErrorMessage = true;
       this.statusInputs = false;
@@ -430,9 +420,8 @@ export class BulkrequestComponent implements OnInit {
         }
       },
       (error) => {
-      }
-
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   reqNotemodal(notes) {
@@ -489,10 +478,8 @@ export class BulkrequestComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-
-      }
-
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   previousCall() {
@@ -545,10 +532,8 @@ export class BulkrequestComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-
-      }
-
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   nextCall() {
@@ -601,10 +586,8 @@ export class BulkrequestComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-
-      }
-
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   lastCall() {
@@ -657,10 +640,8 @@ export class BulkrequestComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-
-      }
-
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
 
@@ -714,10 +695,8 @@ export class BulkrequestComponent implements OnInit {
         this.pagination();
       },
       (error) => {
-
-      }
-
-    );
+        this.dashBoardService.errorNavigation();
+      });
   }
 
   pagination() {
@@ -760,6 +739,7 @@ export class BulkrequestComponent implements OnInit {
         document.body.removeChild(link);
       },
       (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   toggleBulkRequestIdSearch() {

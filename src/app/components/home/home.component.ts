@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
-import { LoginService } from 'src/app/services/login/login.service';
-import { urls } from 'src/config/urls';
+import { LoginService } from '@service/login/login.service';
+import { urls } from '@config/urls';
 import { environment } from 'src/environments/environment';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,19 +13,17 @@ import { environment } from 'src/environments/environment';
 
 
 export class HomeComponent implements OnInit {
+  constructor(private loginService: LoginService, private cookieService: CookieService, private dashBoardService: DashBoardService) { }
   reloadStatus: boolean;
   institution: string = 'default';
   url: string = '';
-  casPrefix = urls.casPrefix;
+  casPrefix = urls.CAS_PREFIX;
   redirectForm: FormGroup;
   serviceUrl: string;
   submitted = false;
   Institutions: any = [];
   institutionErrorMessageDiv = false;
   validate: boolean;
-  constructor(private loginService: LoginService, private cookieService: CookieService) {
-
-  }
   ngAfterViewInit() {
     // @ts-ignore
     twttr.widgets.load();
@@ -38,6 +37,9 @@ export class HomeComponent implements OnInit {
     this.loginService.getInstitutions().subscribe(
       (res) => {
         this.Institutions = res;
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
       });
   }
   changeInst() {
