@@ -129,7 +129,7 @@ export class SearchComponent implements OnInit {
     { id: 'CustomerCode', name: "Customer Code" },
     { id: 'CallNumber_search', name: "Call Number" },
     { id: 'Barcode', name: "Barcode" },
-    { id: 'ImsLocation', name: "IMS Location Code" }
+    { id: 'ImsLocation', name: "Storage Location" }
   ];
   validateCols = [
     { field: 'title', header: 'Title' },
