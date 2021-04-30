@@ -63,7 +63,7 @@ export class CollectionComponent implements OnInit {
   errorMessage: string;
   radioSwitchEditCGD: boolean;
   radioSwitchDeaccession: boolean;
-
+  cgdAndDeaccessionDiv: boolean = false;
   ngOnInit(): void {
     this.dashBoardService.validate('collection');
     this.collectionForm = this.formBuilder.group({
@@ -116,7 +116,8 @@ export class CollectionComponent implements OnInit {
     "message": null,
     "collectionAction": null,
     "allowEdit": false,
-    "username": null
+    "username": null,
+    "allowCGDandDeaccession": null
   }
 
   clearsearch() {
@@ -176,7 +177,8 @@ export class CollectionComponent implements OnInit {
         "message": null,
         "collectionAction": null,
         "allowEdit": false,
-        "username": null
+        "username": null,
+        "allowCGDandDeaccession": null
       }
       this.collectionService.displyRecords(this.postData).subscribe(
         (res) => {
@@ -251,11 +253,17 @@ export class CollectionComponent implements OnInit {
       "message": null,
       "collectionAction": null,
       "allowEdit": false,
-      "username": null
+      "username": null,
+      "allowCGDandDeaccession": null
     }
     this.collectionService.openMarcView(this.postData).subscribe(
       (res) => {
         this.openmarcVal = res;
+        if(this.openmarcVal['allowCGDandDeaccession'] == true) 
+          this.cgdAndDeaccessionDiv = true;
+        else
+          this.cgdAndDeaccessionDiv = false;
+
         this.CGDselect = this.openmarcVal['collectionGroupDesignation'];
         this.deaccessionType = this.openmarcVal['deaccessionType'];
         this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
@@ -311,7 +319,8 @@ export class CollectionComponent implements OnInit {
           "message": null,
           "collectionAction": 'Update CGD',
           "allowEdit": false,
-          "username": null
+          "username": null,
+          "allowCGDandDeaccession": null
         }
         this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
           (res) => {
@@ -387,7 +396,8 @@ export class CollectionComponent implements OnInit {
       "message": null,
       "collectionAction": 'Update CGD',
       "allowEdit": false,
-      "username": null
+      "username": null,
+      "allowCGDandDeaccession": null
     }
     this.spinner.show();
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
@@ -461,7 +471,8 @@ export class CollectionComponent implements OnInit {
       "message": null,
       "collectionAction": 'Deaccession',
       "allowEdit": false,
-      "username": null
+      "username": null,
+      "allowCGDandDeaccession": null
     }
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
       (res) => {
@@ -547,7 +558,8 @@ export class CollectionComponent implements OnInit {
         "message": null,
         "collectionAction": "Update CGD",
         "allowEdit": false,
-        "username": null
+        "username": null,
+        "allowCGDandDeaccession": null
       }
 
       this.collectionService.updateCollection(this.postData).subscribe(
@@ -657,7 +669,8 @@ export class CollectionComponent implements OnInit {
         "message": null,
         "collectionAction": "Deaccession",
         "allowEdit": false,
-        "username": null
+        "username": null,
+        "allowCGDandDeaccession": null
       }
       this.collectionService.updateCollection(this.postData).subscribe(
         (res) => {

@@ -45,4 +45,5 @@ export class CollectionForm{
     ignoredBarcodesErrorMessage: string;
     searchResultRows: SearchResultRow[] ;
     showModal: boolean;
+    allowCGDandDeaccession: boolean;
 }

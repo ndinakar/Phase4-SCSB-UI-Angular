@@ -631,7 +631,6 @@ export class SearchComponent implements OnInit {
     }
   }
   validateColumns() {
-
     if (this.rolesRes['isBarcodeRestricted'] == true) {
       for (let order of this.validateCols) {
         if (order.field == 'barcode') {
