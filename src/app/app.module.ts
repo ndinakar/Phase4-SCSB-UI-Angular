@@ -38,7 +38,6 @@ import { RolesComponent } from './components/roles/roles.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
-import { HttpErrorInterceptor } from './http-error.interceptor';
 import { UserLoginComponent } from './components/user-login/user-login.component';
 import { InterceptorService } from '@service/interceptor.service';
 @NgModule({
@@ -87,11 +86,6 @@ import { InterceptorService } from '@service/interceptor.service';
     ReactiveFormsModule,
   ],
   providers: [CookieService, AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptor,
-      multi: true
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,

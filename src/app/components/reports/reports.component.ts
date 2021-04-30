@@ -318,6 +318,7 @@ export class ReportsComponent implements OnInit {
   }
   transactionReprtCount() {
     if (!this.validateTransactionDateRange()) {
+      this.spinner.show();
       this.postDataTransaction = {
         "totalRecordsCount": "0",
         "pageNumber": 0,
@@ -356,6 +357,7 @@ export class ReportsComponent implements OnInit {
   }
   transactionReport(requestInstCodesList, owningnInstCodesList, cgdTypeList, totalCount) {
     if (!this.validateTransactionDateRange()) {
+      this.spinner.show();
       this.postDataTransaction = {
         "totalRecordsCount": totalCount,
         "pageNumber": 0,
@@ -399,6 +401,7 @@ export class ReportsComponent implements OnInit {
   }
   transactionReportExport(requestInstCodesList, owningnInstCodesList, cgdTypeList, totalCount) {
     if (!this.validateTransactionDateRange()) {
+      this.spinner.show();
       this.postDataTransaction = {
         "totalRecordsCount": totalCount,
         "pageNumber": 0,
@@ -416,6 +419,7 @@ export class ReportsComponent implements OnInit {
       }
       this.reportsService.getTransactionReport(this.postDataTransaction).subscribe(
         (res) => {
+          this.itemList = [];
           this.spinner.hide();
           this.transactionReportRecordsExport = res;
           var fileNmae = 'ExportTransactionRecords' + '_' +
@@ -547,10 +551,10 @@ export class ReportsComponent implements OnInit {
     }
   }
   exportExceptionRecords() {
-    this.spinner.show();
     this.reportsService.exportExceptionReports(this.incompleteShowBy, this.dateFromException, this.dateToException).subscribe(
       (res) => {
         this.spinner.hide();
+        this.itemList= [];
         var fileNmae = 'ExportRecords' + '_' +
           new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
         this.searchreqExceptionResultValExport = res;
@@ -1724,6 +1728,7 @@ export class ReportsComponent implements OnInit {
   }
   paginationPullReports(pageNumber) {
     if (!this.validateTransactionDateRange()) {
+      this.spinner.show();
       this.postDataTransaction = {
         "totalRecordsCount": this.totalCount,
         "pageNumber": pageNumber,
@@ -1746,7 +1751,6 @@ export class ReportsComponent implements OnInit {
           if (this.transactionReportRecords['message']) {
             this.transactionPage();
           } else {
-            this.spinner.hide();
             this.paginationTransactionReport();
             this.reportType_panel = false;
             this.isTransactionChecked = false;

@@ -125,6 +125,7 @@ export class RequestComponent implements OnInit {
     "deliveryLocationInRequest": null,
     "itemTitle": null,
     "itemOwningInstitution": null,
+    "storageLocation": null,
     "patronEmailAddress": null,
     "requestingInstitution": null,
     "requestType": null,
@@ -252,6 +253,7 @@ export class RequestComponent implements OnInit {
         this.searchInstitutionList = this.searchReqVal['institution'];
         this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
         this.searchBar = true;
+        this.storageLocationSearch = 'RECAP';
         this.spinner.hide();
       },
       (error) => {
@@ -307,6 +309,7 @@ export class RequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": this.itemOwningInstitutionId,
+      "storageLocation": null,
       "patronEmailAddress": null,
       "requestingInstitution": this.requestingInstitutionId,
       "requestType": null,
@@ -373,7 +376,7 @@ export class RequestComponent implements OnInit {
           this.itemBarcodeNoPermissionErrorMessage = false;
           this.itemTitleId = this.itembarcodeVal['itemTitle'];
           this.itemOwningInstitutionId = this.itembarcodeVal['itemOwningInstitution'];
-          this.storageLocation = 'RECAP';
+          this.storageLocation = this.itembarcodeVal['storageLocation'];
         }
         this.requestTypes = [];
         for (var j = 0; j < this.itembarcodeVal['requestTypes'].length; j++) {
@@ -405,6 +408,7 @@ export class RequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": null,
       "patronEmailAddress": null,
       "requestingInstitution": insituval,
       "requestType": null,
@@ -527,6 +531,7 @@ export class RequestComponent implements OnInit {
           "deliveryLocationInRequest": this.deliveryLocationId,
           "itemTitle": this.itemTitleId,
           "itemOwningInstitution": this.itemOwningInstitutionId,
+          "storageLocation": this.storageLocation,
           "patronEmailAddress": this.patronEmailId,
           "requestingInstitution": this.requestingInstitutionId,
           "requestType": this.requestTypeId,
@@ -609,6 +614,7 @@ export class RequestComponent implements OnInit {
           "deliveryLocationInRequest": this.deliveryLocationId,
           "itemTitle": this.itemTitleId,
           "itemOwningInstitution": this.itemOwningInstitutionId,
+          "storageLocation": this.storageLocation,
           "patronEmailAddress": this.patronEmailId,
           "requestingInstitution": this.requestingInstitutionId,
           "requestType": this.requestTypeId,
@@ -822,6 +828,7 @@ export class RequestComponent implements OnInit {
           "deliveryLocationInRequest": null,
           "itemTitle": null,
           "itemOwningInstitution": null,
+          "storageLocation": null,
           "patronEmailAddress": null,
           "requestingInstitution": this.searchInstitutionList,
           "requestType": null,
@@ -911,6 +918,7 @@ export class RequestComponent implements OnInit {
           "deliveryLocationInRequest": null,
           "itemTitle": null,
           "itemOwningInstitution": null,
+          "storageLocation": this.storageLocationSearch,
           "patronEmailAddress": null,
           "requestingInstitution": null,
           "requestType": null,
@@ -1001,7 +1009,8 @@ export class RequestComponent implements OnInit {
         "itemBarcodeInRequest": null,
         "deliveryLocationInRequest": null,
         "itemTitle": null,
-        "itemOwningInstitution": null,
+        "itemOwningInstitution": this.storageLocationSearch,
+        "storageLocation": null,
         "patronEmailAddress": null,
         "requestingInstitution": this.searchInstitutionList,
         "requestType": null,
@@ -1162,6 +1171,7 @@ export class RequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": null,
       "patronEmailAddress": null,
       "requestingInstitution": null,
       "requestType": null,
@@ -1233,6 +1243,7 @@ export class RequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": null,
       "patronEmailAddress": null,
       "requestingInstitution": null,
       "requestType": null,
@@ -1304,6 +1315,7 @@ export class RequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": this.storageLocationSearch,
       "patronEmailAddress": null,
       "requestingInstitution": null,
       "requestType": null,
@@ -1369,6 +1381,7 @@ export class RequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": this.storageLocationSearch,
       "patronEmailAddress": null,
       "requestingInstitution": null,
       "requestType": null,
@@ -1433,6 +1446,7 @@ export class RequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": this.storageLocationSearch,
       "patronEmailAddress": null,
       "requestingInstitution": null,
       "requestType": null,
@@ -1497,6 +1511,7 @@ export class RequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": this.storageLocationSearch,
       "patronEmailAddress": null,
       "requestingInstitution": null,
       "requestType": null,
@@ -1562,6 +1577,7 @@ export class RequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": this.storageLocationSearch,
       "patronEmailAddress": null,
       "requestingInstitution": null,
       "requestType": null,

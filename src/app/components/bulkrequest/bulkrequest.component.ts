@@ -75,6 +75,7 @@ export class BulkrequestComponent implements OnInit {
   fileName: string;
   dataDecode: string;
   file: File = null;
+  storageLocation: string;
   constructor(private bulkrequestService: BulkRequestService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
@@ -91,6 +92,7 @@ export class BulkrequestComponent implements OnInit {
     "deliveryLocationInRequest": null,
     "itemTitle": null,
     "itemOwningInstitution": null,
+    "storageLocation": null,
     "patronEmailAddress": null,
     "requestingInstitution": null,
     "requestType": null,
@@ -165,6 +167,7 @@ export class BulkrequestComponent implements OnInit {
     this.dashBoardService.validate('bulkRequest');
     this.createReqsection = false;
     this.searchReqsection = true;
+    this.storageLocation = 'RECAP';
   }
   loadCreateRequest() {
     this.institutions = [];
@@ -232,6 +235,7 @@ export class BulkrequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": null,
       "patronEmailAddress": null,
       "requestingInstitution": institution,
       "requestType": null,
@@ -373,6 +377,7 @@ export class BulkrequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": this.storageLocation,
       "patronEmailAddress": null,
       "requestingInstitution": null,
       "requestType": null,
@@ -438,9 +443,10 @@ export class BulkrequestComponent implements OnInit {
       "deliveryLocation": null,
       "deliveryLocationInRequest": null,
       "itemTitle": null,
-      "itemOwningInstitution": "PUL",
+      "itemOwningInstitution": null,
+      "storageLocation": this.storageLocation,
       "patronEmailAddress": null,
-      "requestingInstitution": "PUL",
+      "requestingInstitution": null,
       "requestType": null,
       "requestNotes": null,
       "message": null,
@@ -493,6 +499,7 @@ export class BulkrequestComponent implements OnInit {
       "deliveryLocationInRequest": null,
       "itemTitle": null,
       "itemOwningInstitution": null,
+      "storageLocation": this.storageLocation,
       "patronEmailAddress": null,
       "requestingInstitution": null,
       "requestType": null,
@@ -546,9 +553,10 @@ export class BulkrequestComponent implements OnInit {
       "deliveryLocation": null,
       "deliveryLocationInRequest": null,
       "itemTitle": null,
-      "itemOwningInstitution": "PUL",
+      "itemOwningInstitution": null,
+      "storageLocation": this.storageLocation,
       "patronEmailAddress": null,
-      "requestingInstitution": "PUL",
+      "requestingInstitution": null,
       "requestType": null,
       "requestNotes": null,
       "message": null,
@@ -600,9 +608,10 @@ export class BulkrequestComponent implements OnInit {
       "deliveryLocation": null,
       "deliveryLocationInRequest": null,
       "itemTitle": null,
-      "itemOwningInstitution": "PUL",
+      "itemOwningInstitution": null,
+      "storageLocation": this.storageLocation,
       "patronEmailAddress": null,
-      "requestingInstitution": "PUL",
+      "requestingInstitution": null,
       "requestType": null,
       "requestNotes": null,
       "message": null,
@@ -655,9 +664,10 @@ export class BulkrequestComponent implements OnInit {
       "deliveryLocation": null,
       "deliveryLocationInRequest": null,
       "itemTitle": null,
-      "itemOwningInstitution": "PUL",
+      "itemOwningInstitution": null,
+      "storageLocation": this.storageLocation,
       "patronEmailAddress": null,
-      "requestingInstitution": "PUL",
+      "requestingInstitution": null,
       "requestType": null,
       "requestNotes": null,
       "message": null,

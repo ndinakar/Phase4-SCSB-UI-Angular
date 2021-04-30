@@ -9,6 +9,7 @@ export class BulkRequestForm {
     deliveryLocationInRequest : string;
     itemTitle : string;
     itemOwningInstitution : string;
+    storageLocation: string;
     patronEmailAddress : string;
     requestingInstitution : string;
     requestType : string;
