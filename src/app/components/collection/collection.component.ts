@@ -117,7 +117,7 @@ export class CollectionComponent implements OnInit {
     "collectionAction": null,
     "allowEdit": false,
     "username": null,
-    "isCGDupdateandDeaccessionRestricted": null
+    "allowCGDandDeaccession": null
   }
 
   clearsearch() {
@@ -178,7 +178,7 @@ export class CollectionComponent implements OnInit {
         "collectionAction": null,
         "allowEdit": false,
         "username": null,
-        "isCGDupdateandDeaccessionRestricted": null
+        "allowCGDandDeaccession": null
       }
       this.collectionService.displyRecords(this.postData).subscribe(
         (res) => {
@@ -254,12 +254,14 @@ export class CollectionComponent implements OnInit {
       "collectionAction": null,
       "allowEdit": false,
       "username": null,
-      "isCGDupdateandDeaccessionRestricted": null
+      "allowCGDandDeaccession": null
     }
     this.collectionService.openMarcView(this.postData).subscribe(
       (res) => {
         this.openmarcVal = res;
-        if(this.openmarcVal['isCGDupdateandDeaccessionRestricted'] == true) 
+        console.log(this.openmarcVal);
+        console.log(this.openmarcVal['allowCGDandDeaccession']);
+        if(this.openmarcVal['allowCGDandDeaccession'] == true) 
           this.cgdAndDeaccessionDiv = true;
         else
           this.cgdAndDeaccessionDiv = false;
@@ -320,7 +322,7 @@ export class CollectionComponent implements OnInit {
           "collectionAction": 'Update CGD',
           "allowEdit": false,
           "username": null,
-          "isCGDupdateandDeaccessionRestricted": null
+          "allowCGDandDeaccession": null
         }
         this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
           (res) => {
@@ -397,7 +399,7 @@ export class CollectionComponent implements OnInit {
       "collectionAction": 'Update CGD',
       "allowEdit": false,
       "username": null,
-      "isCGDupdateandDeaccessionRestricted": null
+      "allowCGDandDeaccession": null
     }
     this.spinner.show();
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
@@ -472,7 +474,7 @@ export class CollectionComponent implements OnInit {
       "collectionAction": 'Deaccession',
       "allowEdit": false,
       "username": null,
-      "isCGDupdateandDeaccessionRestricted": null
+      "allowCGDandDeaccession": null
     }
     this.collectionService.checkCrossInstitutionBorrowed(this.postData).subscribe(
       (res) => {
@@ -559,7 +561,7 @@ export class CollectionComponent implements OnInit {
         "collectionAction": "Update CGD",
         "allowEdit": false,
         "username": null,
-        "isCGDupdateandDeaccessionRestricted": null
+        "allowCGDandDeaccession": null
       }
 
       this.collectionService.updateCollection(this.postData).subscribe(
@@ -670,7 +672,7 @@ export class CollectionComponent implements OnInit {
         "collectionAction": "Deaccession",
         "allowEdit": false,
         "username": null,
-        "isCGDupdateandDeaccessionRestricted": null
+        "allowCGDandDeaccession": null
       }
       this.collectionService.updateCollection(this.postData).subscribe(
         (res) => {

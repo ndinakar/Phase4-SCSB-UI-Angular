@@ -45,5 +45,5 @@ export class CollectionForm{
     ignoredBarcodesErrorMessage: string;
     searchResultRows: SearchResultRow[] ;
     showModal: boolean;
-    isCGDupdateandDeaccessionRestricted: boolean;
+    allowCGDandDeaccession: boolean;
 }
