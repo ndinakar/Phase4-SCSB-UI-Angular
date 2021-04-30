@@ -259,8 +259,6 @@ export class CollectionComponent implements OnInit {
     this.collectionService.openMarcView(this.postData).subscribe(
       (res) => {
         this.openmarcVal = res;
-        console.log(this.openmarcVal);
-        console.log(this.openmarcVal['allowCGDandDeaccession']);
         if(this.openmarcVal['allowCGDandDeaccession'] == true) 
           this.cgdAndDeaccessionDiv = true;
         else
