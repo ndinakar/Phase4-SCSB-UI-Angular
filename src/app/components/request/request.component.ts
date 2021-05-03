@@ -172,6 +172,12 @@ export class RequestComponent implements OnInit {
     "searchInstitutionHdn": null
   }
   initialload() {
+    this.itemBarcodeErrorMessage = false;
+    this.itemBarcodeNotFoundErrorMessage = false;
+    this.itemBarcodeNotAvailableErrorMessage = false;
+    this.itemBarcodeNoPermissionErrorMessage = false;
+    this.requestTypeId = 'RETRIEVAL';
+    this.eddshow = false;
     this.requestTypes = [];
     this.institutions = [];
     this.deliveryLocVal = [];
