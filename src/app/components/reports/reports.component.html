@@ -1035,7 +1035,8 @@
                                                 <td class="center-text" id="data_ld_{{i}}">
                                                     {{ item.lastUpdatedDate |  date:'yyyy-MM-dd HH:mm:ss':timezone(item.lastUpdatedDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}
                                                 </td>
-                                                <td class="center-text" id="data_rn_{{i}}">{{item.requestNotes}}</td>
+                                                <td class="center-text" id="data_rn_{{i}}" width="20%">
+                                                    {{item.requestNotes}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
