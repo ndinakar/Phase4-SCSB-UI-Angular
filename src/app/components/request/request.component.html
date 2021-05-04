@@ -337,6 +337,8 @@
                                                     <span id="itemBarcodeNotFoundErrorMessage"
                                                         *ngIf="itemBarcodeNotFoundErrorMessage"
                                                         style="color: red;">{{itembarcodeVal['errorMessage']}}</span>
+                                                    <span id="itemBarcodeNotAvailableFrozenItemsErrorMessage" *ngIf="itemBarcodeNotAvailableFrozenItemsErrorMessage"
+                                                            style="color: red;">{{itembarcodeVal['notAvailableFrozenItemsErrorMessage']}}</span>
                                                     <span id="itemBarcodeNotAvailableErrorMessage"
                                                         *ngIf="itemBarcodeNotAvailableErrorMessage"
                                                         style="color: red;">{{itembarcodeVal['notAvailableErrorMessage']}}</span>

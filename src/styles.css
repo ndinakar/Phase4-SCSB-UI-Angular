@@ -2156,3 +2156,15 @@ tr.shown td.details-control {
 .ng-placeholder {
     margin-top: 8px !important;
 }
+
+.bg-red {
+    background-color: red;    
+}
+
+.color-white {
+    color: white;
+}
+
+.bold {
+    font-weight: bold;
+}
