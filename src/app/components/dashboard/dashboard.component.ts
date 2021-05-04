@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DashBoardService } from '@service/dashBoard/dash-board.service';
 import { RolesPermissionsService } from '@service/rolesPermissions/roles-permissions.service';
 @Component({
   selector: 'app-maindashboard',
@@ -9,10 +10,14 @@ import { RolesPermissionsService } from '@service/rolesPermissions/roles-permiss
 export class DashboardComponent implements OnInit {
   res: Object;
   isAuthenticated = false;
-  constructor(private router: Router, private rolesService: RolesPermissionsService) { }
+  frozenInstitutionMessages: string[];
+  constructor(private router: Router, private rolesService: RolesPermissionsService, private dashboardService: DashBoardService) { }
 
   ngOnInit(): void {
     this.res = this.rolesService.getRes();
+    this.dashboardService.getFrozenInstitutionMessages().subscribe(data => {
+      this.frozenInstitutionMessages = data;
+    });
   }
   reload() {
     let currentUrl = this.router.url;
