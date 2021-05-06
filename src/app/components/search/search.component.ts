@@ -104,7 +104,7 @@ export class SearchComponent implements OnInit {
       "InLibraryUse",
       "SupervisedUse"
     ],
-    "storageLocations": [],
+    "imsDepositoryCodes": [],
     "searchResultRows": [],
     "catalogingStatus": "Complete",
     "pageNumber": 0,
@@ -606,7 +606,7 @@ export class SearchComponent implements OnInit {
       "availability": this.availability,
       "materialTypes": this.materialTypes,
       "useRestrictions": this.useRestrictions,
-      "storageLocations": this.storageLocations,
+      "imsDepositoryCodes": this.storageLocations,
       "searchResultRows": [],
       "catalogingStatus": "Complete",
       "pageNumber": this.pageNumber,
