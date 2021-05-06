@@ -8,6 +8,7 @@ export class SearchRecordRequest {
     availability: string[];
     materialTypes: string[];
     useRestrictions: string[];
+    imsDepositoryCodes: string[];
     searchResultRows: SearchResultRow[];
     totalPageCount: number;
     totalBibRecordsCount: string;

@@ -40,10 +40,16 @@ export class SearchComponent implements OnInit {
   public data: Object[];
   fieldValuseStatus = false;
   toggleCheck = true;
-  count: number = 4;
+  count: number;
+  institutionsCount: number;
+  storageLocationsCount: number;
+  countST: number;
   instList: any[];
   owningInstitutionInst: any[];
+  storageLocationsList: any[];
   instVal: string[];
+  storageLocationVal: string[];
+  storageLocations: any = [];
   fieldValue: string;
   searchVal: TreeNode[];
   selectedNodes1: any[];
@@ -98,6 +104,7 @@ export class SearchComponent implements OnInit {
       "InLibraryUse",
       "SupervisedUse"
     ],
+    "imsDepositoryCodes": [],
     "searchResultRows": [],
     "catalogingStatus": "Complete",
     "pageNumber": 0,
@@ -128,8 +135,7 @@ export class SearchComponent implements OnInit {
     { id: 'Notes', name: "Notes" },
     { id: 'CustomerCode', name: "Customer Code" },
     { id: 'CallNumber_search', name: "Call Number" },
-    { id: 'Barcode', name: "Barcode" },
-    { id: 'ImsLocation', name: "Storage Location" }
+    { id: 'Barcode', name: "Barcode" }
   ];
   validateCols = [
     { field: 'title', header: 'Title' },
@@ -192,6 +198,20 @@ export class SearchComponent implements OnInit {
       this.owningInstitutionInst.push(item);
     } else {
       this.owningInstitutionInst.splice(this.owningInstitutionInst.indexOf(item), 1);
+    }
+  }
+  checkedItemStorageLocation(item) {
+    if (this.storageLocationsList) {
+      if (this.storageLocationsList.indexOf(item) != -1) {
+        return true;
+      }
+    }
+  }
+  onChangeStorageLocation(test, item) {
+    if (test) {
+      this.storageLocationsList.push(item);
+    } else {
+      this.storageLocationsList.splice(this.storageLocationsList.indexOf(item), 1);
     }
   }
   onPageSizeChange(value) {
@@ -376,6 +396,7 @@ export class SearchComponent implements OnInit {
     var searchallvalue = this.searchForm.value;
     if (this.checked === true) {
       this.owningInstitutionInst = [];
+      this.storageLocationsList = [];
       this.checked = false;
       this.searchForm = this.formBuilder.group({
         fieldValue: [searchallvalue.fieldValue],
@@ -397,7 +418,8 @@ export class SearchComponent implements OnInit {
       this.checked = true;
       this.reportsService.getInstitutions().subscribe(
         (res) => {
-          this.owningInstitutionInst = res['incompleteShowByInst'];
+          this.owningInstitutionInst = res['institutionList'];
+          this.storageLocationsList = res['storageLocationsList'];
         });
       this.searchForm = this.formBuilder.group({
         fieldValue: [searchallvalue.fieldValue],
@@ -423,14 +445,15 @@ export class SearchComponent implements OnInit {
     $("#clearSearchText").hide();
     this.reportsService.getInstitutions().subscribe(
       (res) => {
-        this.owningInstitutionInst = res['incompleteShowByInst'];
+        this.owningInstitutionInst = res['institutionList'];
+        this.storageLocationsList = res['storageLocationsList'];
       });
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],
-      owningInstitutionNYPL: [true],
-      owningInstitutionCUL: [true],
-      owningInstitutionPUL: [true],
+      // owningInstitutionNYPL: [true],
+      // owningInstitutionCUL: [true],
+      // owningInstitutionPUL: [true],
       Monograph: [true],
       Serial: [true],
       others: [true],
@@ -471,18 +494,27 @@ export class SearchComponent implements OnInit {
       this.toggleCheck = !this.toggleCheck;
       this.reportsService.getInstitutions().subscribe(
         (res) => {
-          this.instVal = res['incompleteShowByInst'];
+          this.storageLocationVal = res['storageLocationsList'];
+          this.instVal = res['institutionList'];
+          this.count = this.instVal.length;
+          this.countST = this.storageLocationVal.length;
+          this.institutionsCount = this.count;
+          this.storageLocationsCount = this.countST;
           this.reportsService.getInstitutions().subscribe(
             (res) => {
-              this.owningInstitutionInst = res['incompleteShowByInst'];
+              this.owningInstitutionInst = res['institutionList'];
+              this.storageLocationsList = res['storageLocationsList'];
+            },
+            (error) =>{
+              this.dashBoardService.errorNavigation();
             });
-        }
-      );
+        });
     }
   }
 
   validateInputs(searchfullrec) {
     this.owningInstitutions = this.owningInstitutionInst;
+    this.storageLocations = this.storageLocationsList;
     if (searchfullrec.shared == true) {
       this.collectionGroupDesignations.push('Shared')
     }
@@ -574,6 +606,7 @@ export class SearchComponent implements OnInit {
       "availability": this.availability,
       "materialTypes": this.materialTypes,
       "useRestrictions": this.useRestrictions,
+      "imsDepositoryCodes": this.storageLocations,
       "searchResultRows": [],
       "catalogingStatus": "Complete",
       "pageNumber": this.pageNumber,
@@ -625,7 +658,18 @@ export class SearchComponent implements OnInit {
       this.searchForm.markAsDirty();
     } else {
       this.count = this.count + 1;
-      if (this.count == 4) {
+      if (this.count == this.institutionsCount) {
+        this.searchForm.markAsPristine();
+      }
+    }
+  }
+  enableResetSearchStorageLocation(val) {
+    if (!val) {
+      this.countST = this.countST - 1;
+      this.searchForm.markAsDirty();
+    } else {
+      this.countST = this.countST + 1;
+      if (this.countST == this.storageLocationsCount) {
         this.searchForm.markAsPristine();
       }
     }
