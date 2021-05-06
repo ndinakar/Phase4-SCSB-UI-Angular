@@ -108,4 +108,9 @@ export class DashBoardService {
       }
     }
   }
+
+  getFrozenInstitutionMessages(): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.PREFIX + "/getFrozenInstitutions", { headers: appHeaders.getHeaders() });
+  }
+
 }
