@@ -287,6 +287,7 @@ export class RequestComponent implements OnInit {
     this.Issue = '';
     this.ArticleAuthor = '';
     this.ChapterTitle = '';
+    this.storageLocation = '';
     this.initialload();
     if (this.interval) {
       clearInterval(this.interval);
