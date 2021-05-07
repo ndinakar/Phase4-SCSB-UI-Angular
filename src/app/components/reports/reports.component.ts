@@ -1258,8 +1258,10 @@ export class ReportsComponent implements OnInit {
     this.reportsService.getInstitutions().subscribe(
       (res) => {
         this.instVal = res;
-        this.incompleteShowBy = this.instVal['incompleteShowByInst'][0];
-        this.instList_transactons = this.instVal['incompleteShowByInst'].map(function (x) { return { name: x }; });
+        this.incompleteShowBy = this.instVal['institutionList'][0];
+        this.instList_transactons = this.instVal['institutionList'].map(function (x) { return { name: x }; });
+        console.log(this.incompleteShowBy);
+        console.log(this.instList_transactons);
       },
       (error) => {
         this.dashBoardService.errorNavigation();

@@ -721,8 +721,7 @@
                                                             id="incompleteShowBy " name="incompleteShowBy " style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;
                                                                     " [ngModelOptions]="{standalone: true} "
                                                             [(ngModel)]="incompleteShowBy ">
-                                                            <option
-                                                                *ngFor="let inst of instVal[ 'incompleteShowByInst'] "
+                                                            <option *ngFor="let inst of instVal[ 'institutionList'] "
                                                                 [ngValue]="inst ">
                                                                 {{inst}}
                                                             </option>
@@ -891,7 +890,7 @@
                                                         name="incompleteShowBy " style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;
                                                                     " [ngModelOptions]="{standalone: true} "
                                                         [(ngModel)]="incompleteShowBy ">
-                                                        <option *ngFor="let inst of instVal[ 'incompleteShowByInst'] "
+                                                        <option *ngFor="let inst of instVal[ 'institutionList'] "
                                                             [ngValue]="inst ">
                                                             {{inst}}
                                                         </option>
@@ -1091,7 +1090,7 @@
                                                 </div>
                                                 <div class="">
                                                     <ng-select id="borrowingInstitutionList"
-                                                        [items]="instVal['incompleteShowByInst']" [multiple]="true"
+                                                        [items]="instVal['institutionList']" [multiple]="true"
                                                         bindLabel="name" [selectableGroup]="true"
                                                         [selectableGroupAsModel]="false" [closeOnSelect]="false"
                                                         bindValue="id" [ngModelOptions]="{standalone: true}"
@@ -1119,7 +1118,7 @@
                                                 </div>
                                                 <div class="">
                                                     <ng-select id="owningInstitutionList"
-                                                        [items]="instVal['incompleteShowByInst']" [multiple]="true"
+                                                        [items]="instVal['institutionList']" [multiple]="true"
                                                         bindLabel="name" [selectableGroup]="true"
                                                         [selectableGroupAsModel]="false" [closeOnSelect]="false"
                                                         bindValue="id" [ngModelOptions]="{standalone: true}"
@@ -1232,7 +1231,7 @@
                                             <thead class="tablesorter-headerRow ">
                                                 <tr>
                                                     <th class="b_inst"
-                                                        [attr.colspan]="instVal['incompleteShowByInst'].length + 1">
+                                                        [attr.colspan]="instVal['institutionList'].length + 1">
                                                         Borrowing Institution</th>
                                                 </tr>
                                                 <tr>
@@ -1242,7 +1241,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="b_inst"
-                                                        [attr.colspan]="instVal['incompleteShowByInst'].length + 1">
+                                                        [attr.colspan]="instVal['institutionList'].length + 1">
                                                         Physical Requests</th>
                                                 </tr>
                                             </thead>
