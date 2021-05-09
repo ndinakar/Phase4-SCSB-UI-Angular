@@ -21,11 +21,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.url = environment.homeUrl + this.LOGOUT + this.cookieService.get('CSRF-TOKEN');
     this.rolesRes = this.rolesService.getRes();
-    this.tempUserName = this.cookieService.get('userName');
     if (this.tempUserName) {
-      localStorage.setItem("userName", this.tempUserName);
       localStorage.setItem("userDesc", this.rolesRes['userDesc']);
-      this.userName = localStorage.getItem("userName");
       this.userDesc = localStorage.getItem("userDesc");
     }
   }
