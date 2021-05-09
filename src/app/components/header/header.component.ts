@@ -3,7 +3,9 @@ import { CookieService } from 'ngx-cookie-service';
 import { urls } from '@config/urls';
 import { environment } from 'src/environments/environment';
 import { RolesPermissionsService } from '@service/rolesPermissions/roles-permissions.service';
-
+enum CONSTANTS {
+  USER_DESC = 'userDesc'
+}
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -17,13 +19,12 @@ export class HeaderComponent implements OnInit {
   url: string = '';
   rolesRes: Object;
   constructor(private cookieService: CookieService,private rolesService: RolesPermissionsService) { }
-
   ngOnInit(): void {
     this.url = environment.homeUrl + this.LOGOUT + this.cookieService.get('CSRF-TOKEN');
     this.rolesRes = this.rolesService.getRes();
-    if (this.tempUserName) {
-      localStorage.setItem("userDesc", this.rolesRes['userDesc']);
-      this.userDesc = localStorage.getItem("userDesc");
+    if (this.rolesRes[CONSTANTS.USER_DESC]) {
+      localStorage.setItem(CONSTANTS.USER_DESC, this.rolesRes[CONSTANTS.USER_DESC]);
+      this.userDesc = localStorage.getItem(CONSTANTS.USER_DESC);
     }
   }
 }
