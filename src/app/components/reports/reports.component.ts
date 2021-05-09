@@ -1260,8 +1260,6 @@ export class ReportsComponent implements OnInit {
         this.instVal = res;
         this.incompleteShowBy = this.instVal['institutionList'][0];
         this.instList_transactons = this.instVal['institutionList'].map(function (x) { return { name: x }; });
-        console.log(this.incompleteShowBy);
-        console.log(this.instList_transactons);
       },
       (error) => {
         this.dashBoardService.errorNavigation();
