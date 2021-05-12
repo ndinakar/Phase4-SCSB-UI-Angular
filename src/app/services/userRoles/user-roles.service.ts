@@ -69,4 +69,7 @@ export class UserRolesService {
     const options = { params: parames, headers: headers, withCredentials: true };
     return this.httpClient.get<TreeNode[]>(this.PREFIX + "/delete", options);
   }
+  exportUsers(postData: UserRoleFormData): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/exportUsers", postData, appHeaders.httpOptions());
+  }
 }

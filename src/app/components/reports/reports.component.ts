@@ -419,7 +419,7 @@ export class ReportsComponent implements OnInit {
       }
       this.reportsService.getTransactionReport(this.postDataTransaction).subscribe(
         (res) => {
-          this.itemList = [];
+          this.itemListTransaction = [];
           this.spinner.hide();
           this.transactionReportRecordsExport = res;
           var fileNmae = 'ExportTransactionRecords' + '_' +
@@ -565,6 +565,7 @@ export class ReportsComponent implements OnInit {
       });
   }
   removeProperties(items) {
+    this.itemList = [];
     for (var i = 0; i < items.length; i++) {
       var item = {};
       item['patronBarcode'] = items[i].patronBarcode;
@@ -586,6 +587,7 @@ export class ReportsComponent implements OnInit {
     return this.itemList;
   }
   removePropertiesTrnsaction(items) {
+      this.itemListTransaction = [];
     for (var i = 0; i < items.length; i++) {
       var item = {};
       item['requestingInst'] = items[i].requestingInst;

@@ -901,11 +901,16 @@ export class RequestComponent implements OnInit {
 
         this.requestService.goToSearchRequest(this.postData).subscribe(
           (res) => {
+            this.searchreqResultVal = res;
+            if (this.searchreqResultVal['message'] != null) {
+              this.searchReqresultFirst = true;
+              this.messageNoSearchRecords = true;
+              this.searchReqresult = false;
+            } else {
             this.searchReqresultFirst = true;
             this.searchBar = true;
             this.create_request = false;
             this.searchReqresult = true;
-            this.searchreqResultVal = res;
             var refreshStatus = this.refreshRequestStatus();
             if (refreshStatus) {
               this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
@@ -913,6 +918,7 @@ export class RequestComponent implements OnInit {
             this.searchInstitutionList = this.searchreqResultVal['institution'];
             this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
             this.pagination();
+          }
             this.spinner.hide();
           },
           (error) => {

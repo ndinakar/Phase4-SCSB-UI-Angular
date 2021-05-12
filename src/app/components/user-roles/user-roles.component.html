@@ -1,37 +1,46 @@
 <!-- User Roles Tab-->
-<div class="tab-pane active" id="userRolesContentId" name="userRolesContentName" role="tabpanel" th:fragment="content" xmlns:th="http://www.thymeleaf.org">
-    <div id="userRolesFormDivId" name="userRolesFormDivName" th:fragment="userRole-form" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
-        <form class="form-horizontal" id="userRole-form" name="userRole-form" th:action="@{/userRoles}" th:object="${userRoleForm}" method="post">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+<div class="tab-pane active" id="userRolesContentId" name="userRolesContentName" role="tabpanel">
+    <div id="userRolesFormDivId" name="userRolesFormDivName">
+        <form class="form-horizontal" id="userRole-form" name="userRole-form">
+            <input type="hidden">
             <fieldset>
-                <input id="editUserIdHidden" type="text" th:field="${userRoleForm.userId}" hidden="hidden">
+                <input id="editUserIdHidden" type="text" hidden="hidden">
                 <div class="tab-pane" id="recapusers" role="tabpanel" *ngIf="UserPanel">
-                    <div id="users-searchview" *ngIf="showUserSearchView" th:if="*{showUserSearchView}">
+                    <div id="users-searchview" *ngIf="showUserSearchView">
                         <div class="row margin-btm-10">
                             <div class="col-sm-7 margin-top-05">Provide one or more data to search. Empty search would
                                 return all data.
                             </div>
-                            <div class="col-sm-5 text-right userscreaterequestlink"><a id="createRequest" (click)="enableCreateUser()" style="cursor: pointer !important;"><span class="glyphicon glyphicon-plus-sign"></span> Create User</a></div>
+                            <div class="col-sm-5 text-right userscreaterequestlink"><a id="createRequest"
+                                    (click)="enableCreateUser()" style="cursor: pointer !important;"><span
+                                        class="glyphicon glyphicon-plus-sign"></span> Create User</a></div>
                         </div>
                         <div class="search-bar" *ngIf="searchBarDiv">
                             <div class="row margin-0">
                                 <div class="col-xs-12 padding-0">
                                     <div class="buscador-principal">
-
                                         <div class="row">
                                             <div class="col-lg-4 .col-md-4 .col-sm-3">
                                                 <label class="fontcolor-dark margin-btm-10">Network Login Id</label>
-                                                <input class="form-control themed-input" id="searchNetworkId" name="searchNetworkId" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchNetworkId" placeholder>
+                                                <input class="form-control themed-input" id="searchNetworkId"
+                                                    name="searchNetworkId" type="text"
+                                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="searchNetworkId"
+                                                    placeholder>
                                             </div>
                                             <div class="col-lg-4 .col-md-4 .col-sm-3">
                                                 <label class="fontcolor-dark margin-btm-10">User Email Address</label>
-                                                <input class="form-control themed-input" id="userEmailId" name="userEmailId" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="userEmailId" placeholder>
+                                                <input class="form-control themed-input" id="userEmailId"
+                                                    name="userEmailId" type="text" [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="userEmailId" placeholder>
                                             </div>
                                             <div class="col-lg-3 col-lg-offset-1 .col-md-4 .col-sm-6">
-                                                <button class="btn themed-button themed-button-search" id="searchButton" type="button" (click)="searchUserRoles()">
+                                                <button class="btn themed-button themed-button-search" id="searchButton"
+                                                    type="button" (click)="searchUserRoles()">
                                                     Search
                                                 </button>
-                                                <button class="btn themed-button themed-button-cancel margin-left-10" id="resetSearch" name="clearSearch" type="reset" style="margin-left: 12px;" (click)="resetFields()">Clear Search
+                                                <button class="btn themed-button themed-button-cancel margin-left-10"
+                                                    id="resetSearch" name="clearSearch" type="reset"
+                                                    style="margin-left: 12px;" (click)="resetFields()">Clear Search
                                                 </button>
                                             </div>
                                         </div>
@@ -43,7 +52,9 @@
                         <div class="search-results-container" *ngIf="searchResultContainerDiv" style="margin-top: 0px;">
                             <div class="row margin-btm-10" id="errorMessageResults" *ngIf="errorMessageDiv">
                                 <div class="col-sm-12">
-                                    <div class="bg-danger text-danger padding-10"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span th:text="*{message}"></span></div>
+                                    <div class="bg-danger text-danger padding-10"><span
+                                            class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span
+                                            th:text="*{message}"></span></div>
                                 </div>
                             </div>
                             <div>
@@ -51,15 +62,18 @@
                                 <div class="User-Roles-Permission" *ngIf="searchResultsDiv">
                                     <div class="col-xs-12">
                                         <div id="request-result-table">
-                                            <div class="row margin-btm-10" id="errorMessageforSearch" *ngIf="errorMessageforSearchDiv">
+                                            <div class="row margin-btm-10" id="errorMessageforSearch"
+                                                *ngIf="errorMessageforSearchDiv">
                                                 <div class="col-sm-12 text-left" style="margin-top: 20px;">
-                                                    <div class="alert alert-danger" role="alert"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['message']}}</span>
+                                                    <div class="alert alert-danger" role="alert"><span
+                                                            class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['message']}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row" id="deletedSuccessMsg" *ngIf="deletedSuccessMsgDiv">
                                                 <div class="text-left">
-                                                    <div class="alert alert-success" role="alert"><span class="margin-right-05 glyphicon glyphicon-ok-sign"></span><span>{{userRoleFormVal['message']}}</span>
+                                                    <div class="alert alert-success" role="alert"><span
+                                                            class="margin-right-05 glyphicon glyphicon-ok-sign"></span><span>{{userRoleFormVal['message']}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -69,7 +83,12 @@
                                                 <div class="col-sm-3 col-md-2 col-lg-2 show-entries-section">
                                                     <div class="showEntriesOption" id="showEntries">
                                                         <span class="show-title margin-right-05">Show Entries</span>
-                                                        <select class="themed-input" id="numOfRecordsId" name="numOfRecordsName" [ngModelOptions]="{standalone: true}" [(ngModel)]="numOfRecordsId" (change)="showEntriesChange(numOfRecordsId);" style="margin-left: 5px;">
+                                                        <select class="themed-input" id="numOfRecordsId"
+                                                            name="numOfRecordsName"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="numOfRecordsId"
+                                                            (change)="showEntriesChange(numOfRecordsId);"
+                                                            style="margin-left: 5px;">
                                                             <option value="10" selected>10</option>
                                                             <option value="25">25</option>
                                                             <option value="50">50</option>
@@ -80,12 +99,18 @@
                                                 </div>
                                                 <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"></div>
                                             </div>
-                                            <input id="pageNumber" name="pageNumber" type="text" th:field="${userRoleForm.pageNumber}" hidden="hidden">
-                                            <input id="totalPageCount" name="totalPageCount" type="text" th:field="${userRoleForm.totalPageCount}" hidden="hidden">
-                                            <input id="totalRecordsCount" name="totalRecordsCount" type="text" th:field="${userRoleForm.totalRecordsCount}" hidden="hidden">
-                                            <button id="pageSizeChangeButtonId" name="action" type="submit" value="pageSizeChange" hidden="hidden"></button>
+                                            <input id="pageNumber" name="pageNumber" type="text"
+                                                th:field="${userRoleForm.pageNumber}" hidden="hidden">
+                                            <input id="totalPageCount" name="totalPageCount" type="text"
+                                                th:field="${userRoleForm.totalPageCount}" hidden="hidden">
+                                            <input id="totalRecordsCount" name="totalRecordsCount" type="text"
+                                                th:field="${userRoleForm.totalRecordsCount}" hidden="hidden">
+                                            <button id="pageSizeChangeButtonId" name="action" type="submit"
+                                                value="pageSizeChange" hidden="hidden"></button>
                                             <div *ngIf="totalRecordsCountDiv">
-                                                <h4 class="pull-right" data-th-if="${userRoleForm.showResults}" style="margin-top: -20px;">Total Results Found:<span id="totalResults">{{userRoleFormVal['totalRecordsCount']}}</span>
+                                                <h4 class="pull-right" data-th-if="${userRoleForm.showResults}"
+                                                    style="margin-top: -20px;">Total Results Found:<span
+                                                        id="totalResults">{{userRoleFormVal['totalRecordsCount']}}</span>
                                                 </h4>
                                             </div>
                                             <div data-th-if="${userRoleForm.showResults}" *ngIf="searchRowResultsDiv">
@@ -100,7 +125,8 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr id="rowData_results_{{i}}" *ngFor="let userRolesList of userRoleFormVal['userRoleFormList']; let i=index">
+                                                        <tr id="rowData_results_{{i}}"
+                                                            *ngFor="let userRolesList of userRoleFormVal['userRoleFormList']; let i=index">
                                                             <td id="colData_nlid_{{i}}">
                                                                 <span>{{userRolesList['networkLoginId']}}</span>
                                                             </td>
@@ -114,37 +140,58 @@
                                                                 <span>{{userRolesList['roleName']}}</span>
                                                             </td>
                                                             <td class="text-center" id="colData_editDelete_{{i}}">
-                                                                <a id="userDataEdit_{{i}}" *ngIf="userRolesList['showEditDeleteIcon']">
-                                                                    <span class="glyphicon glyphicon-pencil" title="Edit User" (click)="editUser(userRolesList['userId'],userRolesList['networkLoginId'],userRolesList['roleName'])" style="cursor: pointer;"></span></a>
-                                                                <a id="userDataDelete_{{i}}" *ngIf="userRolesList['showEditDeleteIcon']">
-                                                                    <span class="glyphicon glyphicon-trash" title="Delete User" (click)="deleteUserRole(userRolesList['userId'],userRolesList['networkLoginId'],userRolesList['roleName'])" style="cursor: pointer;margin-left: 5px;"></span></a>
+                                                                <a id="userDataEdit_{{i}}"
+                                                                    *ngIf="userRolesList['showEditDeleteIcon']">
+                                                                    <span class="glyphicon glyphicon-pencil"
+                                                                        title="Edit User"
+                                                                        (click)="editUser(userRolesList['userId'],userRolesList['networkLoginId'],userRolesList['roleName'])"
+                                                                        style="cursor: pointer;"></span></a>
+                                                                <a id="userDataDelete_{{i}}"
+                                                                    *ngIf="userRolesList['showEditDeleteIcon']">
+                                                                    <span class="glyphicon glyphicon-trash"
+                                                                        title="Delete User"
+                                                                        (click)="deleteUserRole(userRolesList['userId'],userRolesList['networkLoginId'],userRolesList['roleName'])"
+                                                                        style="cursor: pointer;margin-left: 5px;"></span></a>
                                                             </td>
 
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="col-md-12" id="userRolePaginationDivId" name="userRolePaginationDivName" data-th-if="${userRoleForm.showResults}" *ngIf="userRolePaginationDiv" style="margin-bottom: -20px;">
+                                            <div class="col-md-12" id="userRolePaginationDivId"
+                                                name="userRolePaginationDivName"
+                                                data-th-if="${userRoleForm.showResults}" *ngIf="userRolePaginationDiv"
+                                                style="margin-bottom: -20px;">
                                                 <div class="pull-right">
                                                     <div id="userRolePaginationId" name="userRolePaginationName">
                                                         <ul class="pagination">
                                                             <li [ngClass]="(firstbutton==true)?'disabled':''">
-                                                                <span id="btn_first" (click)="firstCall()" style="cursor: pointer;">First</span>
+                                                                <span id="btn_first" (click)="firstCall()"
+                                                                    style="cursor: pointer;">First</span>
                                                             </li>
                                                             <li [ngClass]="(previousbutton==true)?'disabled':''">
-                                                                <span id="btn_pre" (click)="previousCall()" style="cursor: pointer;">Previous</span>
+                                                                <span id="btn_pre" (click)="previousCall()"
+                                                                    style="cursor: pointer;">Previous</span>
                                                             </li>
                                                             <li [ngClass]="(nextbutton==true)?'disabled':''">
-                                                                <span id="btn_next" (click)="nextCall()" style="cursor: pointer;">Next</span>
+                                                                <span id="btn_next" (click)="nextCall()"
+                                                                    style="cursor: pointer;">Next</span>
                                                             </li>
                                                             <li [ngClass]="(lastbutton==true)?'disabled':''">
-                                                                <span id="btn_last" (click)="lastCall()" style="cursor: pointer;">Last</span>
+                                                                <span id="btn_last" (click)="lastCall()"
+                                                                    style="cursor: pointer;">Last</span>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
-
+                                        </div>
+                                        <div style="margin-top: 20px;">
+                                            <button class="btn btn-primary pull-right" id="export" name="action"
+                                                type="button" (click)="exportUsers()" value="export"
+                                                style="margin-top: 17px;margin-right: 25px;">Export
+                                                Report to CSV
+                                            </button>
                                         </div>
                                     </div>
 
@@ -160,25 +207,30 @@
                                 <h3 class="margin-0">Create User</h3>
                             </div>
                             <div class="col-sm-6 text-right usersbacklink">
-                                <a class id="backLink" (click)="goBack($event)" style="cursor: pointer !important;"><span class="glyphicon glyphicon-menu-left"></span>
+                                <a class id="backLink" (click)="goBack($event)"
+                                    style="cursor: pointer !important;"><span
+                                        class="glyphicon glyphicon-menu-left"></span>
                                     Go Back</a>
                             </div>
                         </div>
                         <div class="row margin-btm-10" id="successMsg" *ngIf="createSuccussMessageDiv">
                             <div class="col-sm-12 text-left">
-                                <div class="alert alert-success" role="alert"><span class="margin-right-05 glyphicon glyphicon-ok-sign"></span><span>{{userRoleFormVal['message']}}</span>
+                                <div class="alert alert-success" role="alert"><span
+                                        class="margin-right-05 glyphicon glyphicon-ok-sign"></span><span>{{userRoleFormVal['message']}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row margin-btm-10" id="failureMsg" *ngIf="createErrorMessageDiv">
                             <div class="col-sm-12 text-left">
-                                <div class="alert alert-danger" role="alert"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['errorMessage']}}</span>
+                                <div class="alert alert-danger" role="alert"><span
+                                        class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['errorMessage']}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row margin-btm-10" id="emailIdfailureMsg" *ngIf="createEmailMessageDiv">
                             <div class="col-sm-12 text-left">
-                                <div class="alert alert-danger" role="alert"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['errorMessageForEmail']}}</span>
+                                <div class="alert alert-danger" role="alert"><span
+                                        class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['errorMessageForEmail']}}</span>
                                 </div>
                             </div>
                         </div>
@@ -191,41 +243,59 @@
                                 <div class="col-md-8 col-sm-6 fontcolor-dark">
                                     <div class="form-group">
                                         <div class="col-md-3 text-right col-sm-4">
-                                            <label class="margin-top-10">Network Login id <span class="error-color">*</span></label>
+                                            <label class="margin-top-10">Network Login id <span
+                                                    class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
-                                            <input class="form-control themed-input" id="networkLoginId" name="networkLoginId" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="networkLoginId" placeholder>
+                                            <input class="form-control themed-input" id="networkLoginId"
+                                                name="networkLoginId" type="text" [ngModelOptions]="{standalone: true}"
+                                                [(ngModel)]="networkLoginId" placeholder>
                                             <span *ngIf="networkLoginIdErrMsg" style="color: red;">Please
                                                 provide Network Login id </span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-3 text-right col-sm-4">
-                                            <label class="margin-top-10">Institution<span class="error-color">*</span></label>
+                                            <label class="margin-top-10">Institution<span
+                                                    class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
                                             <div class="select-holder">
-                                                <select class="form-control themed-input themed-select" id="institutionId" name="institutionId" [(ngModel)]="institutionId" [ngModelOptions]="{standalone: true}">
-                                                    <option *ngFor="let institutionValues of userRolesVal['institutions']" [ngValue]="institutionValues[0]">{{institutionValues[1]}}
+                                                <select class="form-control themed-input themed-select"
+                                                    id="institutionId" name="institutionId" [(ngModel)]="institutionId"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                    <option
+                                                        *ngFor="let institutionValues of userRolesVal['institutions']"
+                                                        [ngValue]="institutionValues[0]">{{institutionValues[1]}}
                                                     </option>
                                                 </select>
-                                                <span id="institutionIdErrMsg" *ngIf="institutionIdErrMsgDiv" style="color: red;">Please select
+                                                <span id="institutionIdErrMsg" *ngIf="institutionIdErrMsgDiv"
+                                                    style="color: red;">Please select
                                                     institution </span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-3 col-sm-4 text-right">
-                                            <label class="margin-top-10" name="addRole" for="roleId">Add Role <span class="error-color">*</span></label>
+                                            <label class="margin-top-10" name="addRole" for="roleId">Add Role <span
+                                                    class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
                                             <div class="">
-                                                <ng-select id="rolesOption" [items]="userRoleListVal" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="rolesOption" placeholder="Select One or More">
-                                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                                        <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected"> {{item.name}}
+                                                <ng-select id="rolesOption" [items]="userRoleListVal" [multiple]="true"
+                                                    bindLabel="name" [selectableGroup]="true"
+                                                    [selectableGroupAsModel]="false" [closeOnSelect]="false"
+                                                    bindValue="id" [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="rolesOption" placeholder="Select One or More">
+                                                    <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                        let-index="index">
+                                                        <input id="item-{{index}}" type="checkbox"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [ngModel]="item$.selected"> {{item.name}}
                                                     </ng-template>
                                                 </ng-select>
-                                                <span id="roleIdErrMsg" *ngIf="roleIdErrMsgDiv" style="color: red;">Please select
+                                                <span id="roleIdErrMsg" *ngIf="roleIdErrMsgDiv"
+                                                    style="color: red;">Please select
                                                     roles </span>
                                             </div>
 
@@ -233,11 +303,15 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-3 text-right col-sm-4">
-                                            <label class="margin-top-10" for="userDescription">User Name <span class="error-color">*</span></label>
+                                            <label class="margin-top-10" for="userDescription">User Name <span
+                                                    class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
-                                            <input class="form-control themed-input" id="userDescription" name="userDescription" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="userDescription" placeholder maxlength="45">
-                                            <span id="userDescriptionErrMsg" *ngIf="userDescriptionErrMsgDiv" style="color: red;">Please
+                                            <input class="form-control themed-input" id="userDescription"
+                                                name="userDescription" type="text" [ngModelOptions]="{standalone: true}"
+                                                [(ngModel)]="userDescription" placeholder maxlength="45">
+                                            <span id="userDescriptionErrMsg" *ngIf="userDescriptionErrMsgDiv"
+                                                style="color: red;">Please
                                                 provide User Name </span>
                                             <p>Remaining Characters : <span id="remainingCharacters">{{45 -
                                                     userDescription.length}}</span></p>
@@ -245,10 +319,13 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-3 text-right col-sm-4">
-                                            <label class="margin-top-10" for="emailId">Email Id<span class="error-color"> </span></label>
+                                            <label class="margin-top-10" for="emailId">Email Id<span
+                                                    class="error-color"> </span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
-                                            <input class="form-control themed-input" id="emailId" name="emailId" type="email" [ngModelOptions]="{standalone: true}" [(ngModel)]="emailId" placeholder>
+                                            <input class="form-control themed-input" id="emailId" name="emailId"
+                                                type="email" [ngModelOptions]="{standalone: true}" [(ngModel)]="emailId"
+                                                placeholder>
                                             <span id="emailIdErrMsg" *ngIf="emailIdErrMsgDiv" style="color: red;">Please
                                                 provide
                                                 valid email address </span>
@@ -261,7 +338,9 @@
                                 </div>
                                 <div class="col-sm-6 col-md-6 col-lg-6 text-center" style="margin-top: -10px;">
                                     <div class="margin-btm-10 users-createrequest-button">
-                                        <button class="pull-right btn btn-default themed-button btn-primary text-center" id="createButton" type="button" (click)="createUser(emailId,userDescription,institutionId,networkLoginId)">Create
+                                        <button class="pull-right btn btn-default themed-button btn-primary text-center"
+                                            id="createButton" type="button"
+                                            (click)="createUser(emailId,userDescription,institutionId,networkLoginId)">Create
                                             User
                                         </button>
                                     </div>
@@ -280,18 +359,23 @@
                                 <h3 class="margin-0">Edit User</h3>
                             </div>
                             <div class="col-sm-6 text-right usersbacklink">
-                                <a class id="editbackLink" (click)="goBack($event)" style="cursor: pointer !important;"><span class="glyphicon glyphicon-menu-left"></span> Go Back</a>
+                                <a class id="editbackLink" (click)="goBack($event)"
+                                    style="cursor: pointer !important;"><span
+                                        class="glyphicon glyphicon-menu-left"></span> Go Back</a>
                             </div>
                         </div>
                         <div class="row margin-btm-10" id="editSuccessMsgId" *ngIf="editsuccessMsgDiv">
                             <div class="col-sm-12 text-left">
-                                <div class="alert alert-success" role="alert"><span class="margin-right-05 glyphicon glyphicon-ok-sign"></span><span>{{userRoleFormVal['message']}}</span>
+                                <div class="alert alert-success" role="alert"><span
+                                        class="margin-right-05 glyphicon glyphicon-ok-sign"></span><span>{{userRoleFormVal['message']}}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row margin-btm-10" id="editerrormsgeId" data-th-if="${userRoleForm.showEditError}" *ngIf="editerrormsgDiv">
+                        <div class="row margin-btm-10" id="editerrormsgeId" data-th-if="${userRoleForm.showEditError}"
+                            *ngIf="editerrormsgDiv">
                             <div class="col-sm-12 text-left">
-                                <div class="alert alert-danger" role="alert"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['errorMessage']}}</span>
+                                <div class="alert alert-danger" role="alert"><span
+                                        class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['errorMessage']}}</span>
                                 </div>
                             </div>
                         </div>
@@ -300,45 +384,68 @@
                         </div>
                         <div class="row buscador-principal">
 
-                            <form class="form-horizontal" id="editusers-createrequest" method="post" th:object="${userRoleForm}">
+                            <form class="form-horizontal" id="editusers-createrequest" method="post"
+                                th:object="${userRoleForm}">
                                 <div class="col-md-8 col-sm-6 fontcolor-dark">
                                     <div class="form-group">
-                                        <input id="editUserId" type="text" hidden="hidden" [ngModelOptions]="{standalone: true}" [(ngModel)]="editUserId">
+                                        <input id="editUserId" type="text" hidden="hidden"
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="editUserId">
                                         <div class="col-md-3 text-right col-sm-4">
-                                            <label class="margin-top-10" for="networkLoginId">Network Login id <span class="error-color">*</span></label>
+                                            <label class="margin-top-10" for="networkLoginId">Network Login id <span
+                                                    class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
-                                            <input class="form-control themed-input" id="editnetworkLoginId" name="editnetworkLoginId" type="text" readonly="readonly" [ngModelOptions]="{standalone: true}" [(ngModel)]="editnetworkLoginId" placeholder>
-                                            <span *ngIf="editnetworkLoginIdErrMsgDiv" style="color: red;display: none">Please
+                                            <input class="form-control themed-input" id="editnetworkLoginId"
+                                                name="editnetworkLoginId" type="text" readonly="readonly"
+                                                [ngModelOptions]="{standalone: true}" [(ngModel)]="editnetworkLoginId"
+                                                placeholder>
+                                            <span *ngIf="editnetworkLoginIdErrMsgDiv"
+                                                style="color: red;display: none">Please
                                                 provide Network Login id </span>
                                         </div>
                                     </div>
                                     <div class="form-group" id>
                                         <div class="col-md-3 text-right col-sm-4">
-                                            <label class="margin-top-10" for="institutionId">Institution<span class="error-color">*</span></label>
+                                            <label class="margin-top-10" for="institutionId">Institution<span
+                                                    class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
                                             <div class="select-holder">
-                                                <select class="form-control themed-input themed-select" id="editinstitutionId" name="editinstitutionId" [ngModelOptions]="{standalone: true}" [(ngModel)]="editinstitutionId">
-                                                    <option *ngFor="let institutionValues of userResponse['institutions']" [ngValue]="institutionValues[0]">{{institutionValues[1]}}
+                                                <select class="form-control themed-input themed-select"
+                                                    id="editinstitutionId" name="editinstitutionId"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="editinstitutionId">
+                                                    <option
+                                                        *ngFor="let institutionValues of userResponse['institutions']"
+                                                        [ngValue]="institutionValues[0]">{{institutionValues[1]}}
                                                     </option>
                                                 </select>
-                                                <span id="editinstitutionIdErrMsg" *ngIf="editinstitutionIdErrMsgDiv" style="color: red;">Please select Institution </span>
+                                                <span id="editinstitutionIdErrMsg" *ngIf="editinstitutionIdErrMsgDiv"
+                                                    style="color: red;">Please select Institution </span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-3 col-sm-4 text-right">
-                                            <label class="margin-top-10" for="roleId" naem="addRole">Add Role <span class="error-color">*</span></label>
+                                            <label class="margin-top-10" for="roleId" naem="addRole">Add Role <span
+                                                    class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
                                             <div class name="editRoleIds">
-                                                <ng-select id="editroleId" [items]="userRoleListVal" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="editroleId" placeholder="Select One or More">
-                                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                                        <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected"> {{item.name}}
+                                                <ng-select id="editroleId" [items]="userRoleListVal" [multiple]="true"
+                                                    bindLabel="name" [selectableGroup]="true"
+                                                    [selectableGroupAsModel]="false" [closeOnSelect]="false"
+                                                    bindValue="id" [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="editroleId" placeholder="Select One or More">
+                                                    <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                        let-index="index">
+                                                        <input id="item-{{index}}" type="checkbox"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [ngModel]="item$.selected"> {{item.name}}
                                                     </ng-template>
                                                 </ng-select>
-                                                <span id="editroleIdErrMsg" *ngIf="editroleIdErrMsgDiv" style="color: red;">Please
+                                                <span id="editroleIdErrMsg" *ngIf="editroleIdErrMsgDiv"
+                                                    style="color: red;">Please
                                                     select roles</span>
                                             </div>
 
@@ -346,23 +453,34 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-3 text-right col-sm-4">
-                                            <label class="margin-top-10" for="userDescription">User Name <span class="error-color">*</span></label>
+                                            <label class="margin-top-10" for="userDescription">User Name <span
+                                                    class="error-color">*</span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
-                                            <input class="form-control themed-input" id="edituserDescription" name="edituserDescription" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="edituserDescription" placeholder maxlength="45">
-                                            <span id="edituserDescriptionErrMsg" *ngIf="edituserDescriptionErrMsgDiv" style="color: red;">Please
+                                            <input class="form-control themed-input" id="edituserDescription"
+                                                name="edituserDescription" type="text"
+                                                [ngModelOptions]="{standalone: true}" [(ngModel)]="edituserDescription"
+                                                placeholder maxlength="45">
+                                            <span id="edituserDescriptionErrMsg" *ngIf="edituserDescriptionErrMsgDiv"
+                                                style="color: red;">Please
                                                 provide user description </span>
-                                            <p id="editTextCharactersRemaining">Characters Remaining : <span id="editCharactersRemaining">{{ 45 -
+                                            <p id="editTextCharactersRemaining">Characters Remaining : <span
+                                                    id="editCharactersRemaining">{{ 45 -
                                                     edituserDescription.length}}</span></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-3 text-right col-sm-4">
-                                            <label class="margin-top-10" for="editEmailId">Email Id<span class="error-color"> </span></label>
+                                            <label class="margin-top-10" for="editEmailId">Email Id<span
+                                                    class="error-color"> </span></label>
                                         </div>
                                         <div class="col-sm- col-sm-6">
-                                            <input class="form-control themed-input" id="editEmailId" name="editEmailId" type="email" [ngModelOptions]="{standalone: true}" [(ngModel)]="editEmailId" placeholder onblur="validateEditEmailAddress()">
-                                            <span id="editEmailIdErrMsg" *ngIf="editEmailIdErrMsgDiv" style="color: red;">Please provide
+                                            <input class="form-control themed-input" id="editEmailId" name="editEmailId"
+                                                type="email" [ngModelOptions]="{standalone: true}"
+                                                [(ngModel)]="editEmailId" placeholder
+                                                onblur="validateEditEmailAddress()">
+                                            <span id="editEmailIdErrMsg" *ngIf="editEmailIdErrMsgDiv"
+                                                style="color: red;">Please provide
                                                 valid email address </span>
                                             <p style="margin-bottom: 20px;margin-top: 10px;">Fields marked with
                                                 asterisk(
@@ -373,7 +491,10 @@
                                 </div>
                                 <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: -10px;">
                                     <div class="margin-btm-10 users-createrequest-button">
-                                        <button class="pull-right btn btn-default themed-button btn-primary text-center col-md-2 col-md-offset-5" id="editcreateButton" type="button" (click)="saveEditUser(editnetworkLoginId, edituserDescription, editinstitutionId, editEmailId)">Edit
+                                        <button
+                                            class="pull-right btn btn-default themed-button btn-primary text-center col-md-2 col-md-offset-5"
+                                            id="editcreateButton" type="button"
+                                            (click)="saveEditUser(editnetworkLoginId, edituserDescription, editinstitutionId, editEmailId)">Edit
                                             User
                                         </button>
                                     </div>
@@ -390,17 +511,22 @@
                             <h3 class="margin-0">Delete User</h3>
                         </div>
                         <div class="col-sm-6 text-right usersbacklink">
-                            <a class id="deletebackLink" (click)="goBack($event)" style="cursor: pointer !important;"><span class="glyphicon glyphicon-menu-left"></span>
+                            <a class id="deletebackLink" (click)="goBack($event)"
+                                style="cursor: pointer !important;"><span class="glyphicon glyphicon-menu-left"></span>
                                 Go Back</a>
                         </div>
                     </div>
-                    <input id="afterDelPageNumber" name="afterDelPageNumber" type="text" th:field="${userRoleForm.afterDelPageNumber}" hidden="hidden">
-                    <input id="afterDelTotalPageCount" name="afterDelTotalPageCount" type="text" th:field="${userRoleForm.afterDelTotalPageCount}" hidden="hidden">
-                    <input id="afterDelPageSize" name="afterDelPageSize" type="text" th:field="${userRoleForm.afterDelPageSize}" hidden="hidden">
+                    <input id="afterDelPageNumber" name="afterDelPageNumber" type="text"
+                        th:field="${userRoleForm.afterDelPageNumber}" hidden="hidden">
+                    <input id="afterDelTotalPageCount" name="afterDelTotalPageCount" type="text"
+                        th:field="${userRoleForm.afterDelTotalPageCount}" hidden="hidden">
+                    <input id="afterDelPageSize" name="afterDelPageSize" type="text"
+                        th:field="${userRoleForm.afterDelPageSize}" hidden="hidden">
                     <div class="row margin-btm-10" id="deleteErrorMsg" *ngIf="deleteErrorMsgDiv">
                         <div class="col-sm-12 text-left">
 
-                            <div class="alert alert-danger" role="alert"><span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['errorMessage']}}</span>
+                            <div class="alert alert-danger" role="alert"><span
+                                    class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span>{{userRoleFormVal['errorMessage']}}</span>
                             </div>
                         </div>
                     </div>
@@ -410,26 +536,35 @@
                     <div class="row buscador-principal">
                         <div class="col-md-8 col-sm-6"></div>
                         <div class="col-md-8 col-sm-6 fontcolor-dark">
-                            <form class="form-horizontal" id="deleteUsersForm" method="post" th:object="${userRoleForm}">
+                            <form class="form-horizontal" id="deleteUsersForm" method="post"
+                                th:object="${userRoleForm}">
                                 <div class="form-group">
                                     <input type="text" th:field="${userRoleForm.networkLoginId}" hidden="hidden">
                                     <div class="col-md-3 text-right col-sm-4">
-                                        <label class="margin-top-10" for="deleteNetworkLoginId">Network Login id <span class="error-color">*</span></label>
+                                        <label class="margin-top-10" for="deleteNetworkLoginId">Network Login id <span
+                                                class="error-color">*</span></label>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
-                                        <input class="form-control themed-input" id="deleteNetworkLoginId" name="deleteNetworkLoginId" type="text" readonly="readonly" [ngModelOptions]="{standalone: true}" [(ngModel)]="deleteNetworkLoginId" placeholder>
+                                        <input class="form-control themed-input" id="deleteNetworkLoginId"
+                                            name="deleteNetworkLoginId" type="text" readonly="readonly"
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="deleteNetworkLoginId"
+                                            placeholder>
                                         <span id="deleteNetworkLoginIdErrMsg" style="color: red;display: none">Please
                                             provide Network Login id </span>
                                     </div>
                                 </div>
                                 <div class="form-group" id>
                                     <div class="col-md-3 text-right col-sm-4">
-                                        <label class="margin-top-10" for="deleteInstitutionId">Institution<span class="error-color">*</span></label>
+                                        <label class="margin-top-10" for="deleteInstitutionId">Institution<span
+                                                class="error-color">*</span></label>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div class="select-holder">
-                                            <select class="form-control themed-input themed-select" id="deleteInstitutionId" name="deleteInstitutionId" disabled="disabled" [ngModelOptions]="{standalone: true}" [(ngModel)]="deleteInstitutionId">
-                                                <option *ngFor="let institutionValues of userResponse['institutions']" [ngValue]="institutionValues[0]">{{institutionValues[1]}}</option>
+                                            <select class="form-control themed-input themed-select"
+                                                id="deleteInstitutionId" name="deleteInstitutionId" disabled="disabled"
+                                                [ngModelOptions]="{standalone: true}" [(ngModel)]="deleteInstitutionId">
+                                                <option *ngFor="let institutionValues of userResponse['institutions']"
+                                                    [ngValue]="institutionValues[0]">{{institutionValues[1]}}</option>
                                             </select>
                                             <span id="deleteInstitutionIdErrMsg" style="color: red;display: none">Please
                                                 provide Network Login id </span>
@@ -438,13 +573,21 @@
                                 </div>
                                 <div class="form-group" id="DeleteRole">
                                     <div class="col-md-3 col-sm-4 text-right">
-                                        <label class="margin-top-10" for="deletedRoleId">Delete Role <span class="error-color">*</span></label>
+                                        <label class="margin-top-10" for="deletedRoleId">Delete Role <span
+                                                class="error-color">*</span></label>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div class="">
-                                            <ng-select id="deletedRoleId" [items]="userRoleListVal" [multiple]="true" bindLabel="name" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id" [ngModelOptions]="{standalone: true}" [(ngModel)]="deletedRoleId" placeholder="Select One or More" disabled>
-                                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                                    <input id="item-{{index}}" type="checkbox" [ngModelOptions]="{standalone: true}" [ngModel]="item$.selected"> {{item.name}}
+                                            <ng-select id="deletedRoleId" [items]="userRoleListVal" [multiple]="true"
+                                                bindLabel="name" [selectableGroup]="true"
+                                                [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id"
+                                                [ngModelOptions]="{standalone: true}" [(ngModel)]="deletedRoleId"
+                                                placeholder="Select One or More" disabled>
+                                                <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                    let-index="index">
+                                                    <input id="item-{{index}}" type="checkbox"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        [ngModel]="item$.selected"> {{item.name}}
                                                 </ng-template>
                                             </ng-select>
                                         </div>
@@ -453,18 +596,25 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-3 text-right col-sm-4">
-                                        <label class="margin-top-10" for="deleteUserDescription">User Name <span class="error-color">*</span></label>
+                                        <label class="margin-top-10" for="deleteUserDescription">User Name <span
+                                                class="error-color">*</span></label>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
-                                        <input class="form-control themed-input" id="deleteUserDescription" name="deleteUserDescription" type="text" readonly="readonly" [ngModelOptions]="{standalone: true}" [(ngModel)]="deleteUserDescription" placeholder>
+                                        <input class="form-control themed-input" id="deleteUserDescription"
+                                            name="deleteUserDescription" type="text" readonly="readonly"
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="deleteUserDescription"
+                                            placeholder>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-3 text-right col-sm-4">
-                                        <label class="margin-top-10" for="deleteEmailId">Email Id<span class="error-color"></span></label>
+                                        <label class="margin-top-10" for="deleteEmailId">Email Id<span
+                                                class="error-color"></span></label>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
-                                        <input class="form-control themed-input" id="deleteEmailId" name="deleteEmailId" type="text" readonly="readonly" [ngModelOptions]="{standalone: true}" [(ngModel)]="deleteEmailId" placeholder>
+                                        <input class="form-control themed-input" id="deleteEmailId" name="deleteEmailId"
+                                            type="text" readonly="readonly" [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="deleteEmailId" placeholder>
                                     </div>
                                 </div>
 
@@ -472,7 +622,9 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-md-push-3 col-sm-pus-5 text-center">
                                         <div class="margin-btm-10 users-createrequest-button">
-                                            <button class="btn btn-default themed-button btn-primary" id="deleteUserButton" type="button" (click)="deleteUser(deleteNetworkLoginId)">Delete User
+                                            <button class="btn btn-default themed-button btn-primary"
+                                                id="deleteUserButton" type="button"
+                                                (click)="deleteUser(deleteNetworkLoginId)">Delete User
                                             </button>
                                         </div>
                                     </div>
