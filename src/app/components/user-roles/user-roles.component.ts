@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
+import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 import { DashBoardService } from '@service/dashBoard/dash-board.service';
 import { UserRolesService } from '@service/userRoles/user-roles.service';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-user-roles',
   templateUrl: './user-roles.component.html',
@@ -37,6 +39,7 @@ export class UserRolesComponent implements OnInit {
   totalRecordsCountDiv = false;
   userRolePaginationDiv = false;
   userRoleFormVal: TreeNode[];
+  exportUsersRes: TreeNode[];
   userRolesVal: TreeNode[];
   userRoleListVal: TreeNode[];
   userResponse: TreeNode[];
@@ -79,7 +82,18 @@ export class UserRolesComponent implements OnInit {
   editEmailIdErrMsgDiv = false;
   emailIdErrMsgDiv = false;
   showUserSearchView = true;
-
+  usersList: any = [];
+  csvOptionsTransaction = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: 'Export Users',
+    useBom: true,
+    noDownload: false,
+    headers: ["Network Login Id", "User Name", "Institution", "Associated Roles"]
+  };
   postData = {
     "userId": null,
     "institutionId": null,
@@ -244,10 +258,6 @@ export class UserRolesComponent implements OnInit {
     this.institutionIdErrMsgDiv = false;
     this.networkLoginIdErrMsg = false;
     var statusCreateRole = true;
-    // if (this.emailId == '' || this.emailId == null || this.emailId == undefined) {
-    //   this.emailIdErrMsgDiv = true;
-    //   statusCreateRole = false;
-    // }
     if (this.userDescription == null || this.userDescription == '' || this.userDescription == undefined) {
       this.userDescriptionErrMsgDiv = true
       statusCreateRole = false;
@@ -264,10 +274,6 @@ export class UserRolesComponent implements OnInit {
       this.roleIdErrMsgDiv = true
       statusCreateRole = false;
     }
-    // if (!(this.validateEmailAddress(this.emailId))) {
-    //   statusCreateRole = false;
-    //   this.emailIdErrMsgDiv = true;
-    // }
     return statusCreateRole;
   }
   createUser(emailId, userDescription, institutionId, networkLoginId) {
@@ -325,10 +331,6 @@ export class UserRolesComponent implements OnInit {
     this.editnetworkLoginIdErrMsgDiv = false;
     this.editnetworkLoginIdErrMsgDiv = false;
     var statusCreateRole = true;
-    // if (this.editEmailId == '' || this.editEmailId == null || this.editEmailId == undefined) {
-    //   this.editEmailIdErrMsgDiv = true;
-    //   statusCreateRole = false;
-    // }
     if (this.edituserDescription == null || this.edituserDescription == '' || this.edituserDescription == undefined) {
       this.edituserDescriptionErrMsgDiv = true
       statusCreateRole = false;
@@ -345,10 +347,6 @@ export class UserRolesComponent implements OnInit {
       this.editroleIdErrMsgDiv = true;
       statusCreateRole = false;
     }
-    // if (!(this.validateEmailAddress(this.editEmailId))) {
-    //   statusCreateRole = false;
-    //   this.editEmailIdErrMsgDiv = true;
-    // }
     return statusCreateRole;
   }
   saveEditUser(networkLoginId, userDescription, institutionId, userEmailId) {
@@ -419,8 +417,6 @@ export class UserRolesComponent implements OnInit {
         this.editinstitutionId = null;
         this.editsuccessMsgDiv = false;
         this.createSuccussMessageDiv = false;
-        //this.UserPanel = false;
-        //this.searchBarDiv =false;
         this.createUserDiv = true;
         this.errorMessageDiv = false;
         this.showUserSearchView = false;
@@ -608,6 +604,38 @@ export class UserRolesComponent implements OnInit {
       this.searchNetworkId = "";
     }
   }
+
+  exportUsers() {
+    this.dashBoardService.validate('userRoles');
+    this.deletedSuccessMsgDiv = false;
+    this.deleteErrorMsgDiv = false;
+    this.spinner.show();
+    this.userRolesService.exportUsers(this.setPostData('searchUsers')).subscribe(
+      (res) => {
+        this.exportUsersRes = res;
+        this.usersList = [];
+          this.spinner.hide();
+          var fileNmae = 'ExportUsersReport' + '_' +
+            new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
+          new AngularCsv(this.removePropertiesUsers(this.exportUsersRes['userRoleFormList']), fileNmae, this.csvOptionsTransaction);
+       
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
+      });
+    }
+    removePropertiesUsers(items) {
+        this.usersList = [];
+      for (var i = 0; i < items.length; i++) {
+        var item = {};
+        item['networkLoginId'] = items[i].networkLoginId;
+        item['userDescription'] = items[i].userDescription;
+        item['institutionName'] = items[i].institutionName;
+        item['roleName'] = items[i].roleName;
+        this.usersList.push(item);
+      }
+      return this.usersList;
+    }
   goBack($event) {
     $event.stopPropagation();
     $event.preventDefault();
