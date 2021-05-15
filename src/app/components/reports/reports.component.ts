@@ -1708,7 +1708,7 @@ export class ReportsComponent implements OnInit {
   }
   pullReportsEDD(reqType, index_req, index_owning) {
     this.showentriesTransaction = 10;
-    this.pullReportsData(reqType, index_req, index_owning, '')
+    this.pullReportsData(reqType, index_req, index_owning, 'Shared')
   }
   transactionfirstCall() {
     this.transactionReport(this.requestInstCodesList, this.owningnInstCodesList, this.cgdTypeList, this.totalCount);
@@ -1779,7 +1779,7 @@ export class ReportsComponent implements OnInit {
     var cgdTypeList: string[] = [];
     this.requestInstCodesList = requestInstCodesList;
     this.owningnInstCodesList = owningnInstCodesList;
-    this.cgdTypeList = cgdTypeList;
+    this.cgdTypeList = cgdType;
     this.totalCount = totalCount;
     this.transactionReport(this.requestInstCodesList, this.owningnInstCodesList, this.cgdTypeList, this.totalCount);
   }
