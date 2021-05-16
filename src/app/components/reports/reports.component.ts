@@ -152,6 +152,7 @@ export class ReportsComponent implements OnInit {
   transactionReportDiv = false;
   transactionReportResultsDiv = false;
   typeOptions: any;
+  typeOptionsPrevious: any;
   owningInstitutionList: any;
   borrowingInstitutionList: any;
   instList_transactons: any;
@@ -318,6 +319,7 @@ export class ReportsComponent implements OnInit {
   }
   transactionReprtCount() {
     if (!this.validateTransactionDateRange()) {
+      this.typeOptionsPrevious = this.typeOptions;
       this.spinner.show();
       this.postDataTransaction = {
         "totalRecordsCount": "0",
@@ -1703,10 +1705,12 @@ export class ReportsComponent implements OnInit {
   }
 
   pullReports(reqType, index_req, index_owning, cgdType) {
+    this.typeOptions = ['RETRIEVAL','RECALL'];
     this.showentriesTransaction = 10;
     this.pullReportsData(reqType, index_req, index_owning, cgdType)
   }
   pullReportsEDD(reqType, index_req, index_owning) {
+    this.typeOptions = ['EDD'];
     this.showentriesTransaction = 10;
     this.pullReportsData(reqType, index_req, index_owning, '')
   }
@@ -1779,7 +1783,7 @@ export class ReportsComponent implements OnInit {
     var cgdTypeList: string[] = [];
     this.requestInstCodesList = requestInstCodesList;
     this.owningnInstCodesList = owningnInstCodesList;
-    this.cgdTypeList = cgdTypeList;
+    this.cgdTypeList = cgdType;
     this.totalCount = totalCount;
     this.transactionReport(this.requestInstCodesList, this.owningnInstCodesList, this.cgdTypeList, this.totalCount);
   }
@@ -1788,6 +1792,7 @@ export class ReportsComponent implements OnInit {
     $event.stopPropagation();
     $event.preventDefault();
     this.transactionPage();
+    this.typeOptions = this.typeOptionsPrevious;
   }
   transactionPage() {
     this.Transactiontableshow = false;
