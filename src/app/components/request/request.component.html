@@ -78,7 +78,8 @@
                                                         [(ngModel)]="storageLocationSearch"
                                                         style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;"
                                                         [disabled]="disableStorageLocation">
-                                                        <option value="RECAP" selected="selected">RECAP</option>
+                                                        <option value="" selected="selected"></option>
+                                                        <option value="RECAP">RECAP</option>
                                                         <option value="HD">HD</option>
                                                     </select>
                                                 </div>
@@ -337,8 +338,9 @@
                                                     <span id="itemBarcodeNotFoundErrorMessage"
                                                         *ngIf="itemBarcodeNotFoundErrorMessage"
                                                         style="color: red;">{{itembarcodeVal['errorMessage']}}</span>
-                                                    <span id="itemBarcodeNotAvailableFrozenItemsErrorMessage" *ngIf="itemBarcodeNotAvailableFrozenItemsErrorMessage"
-                                                            style="color: red;">{{itembarcodeVal['notAvailableFrozenItemsErrorMessage']}}</span>
+                                                    <span id="itemBarcodeNotAvailableFrozenItemsErrorMessage"
+                                                        *ngIf="itemBarcodeNotAvailableFrozenItemsErrorMessage"
+                                                        style="color: red;">{{itembarcodeVal['notAvailableFrozenItemsErrorMessage']}}</span>
                                                     <span id="itemBarcodeNotAvailableErrorMessage"
                                                         *ngIf="itemBarcodeNotAvailableErrorMessage"
                                                         style="color: red;">{{itembarcodeVal['notAvailableErrorMessage']}}</span>
