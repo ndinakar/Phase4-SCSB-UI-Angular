@@ -844,6 +844,7 @@ export class RequestComponent implements OnInit {
     this.searchPatronBarcode = patronBarcode;
     this.requestStatus = '';
     this.storageLocation = '';
+    this.storageLocationSearch = '';
     this.requestService.loadSearchRequest().subscribe(
       (res) => {
         this.searchReqVal = res;
@@ -915,6 +916,7 @@ export class RequestComponent implements OnInit {
             this.searchBar = true;
             this.create_request = false;
             this.searchReqresult = true;
+            this.searchRecCount = this.searchreqResultVal['totalRecordsCount'];
             var refreshStatus = this.refreshRequestStatus();
             if (refreshStatus) {
               this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
