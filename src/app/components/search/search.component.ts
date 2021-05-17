@@ -451,9 +451,6 @@ export class SearchComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],
-      // owningInstitutionNYPL: [true],
-      // owningInstitutionCUL: [true],
-      // owningInstitutionPUL: [true],
       Monograph: [true],
       Serial: [true],
       others: [true],

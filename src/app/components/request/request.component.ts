@@ -261,7 +261,7 @@ export class RequestComponent implements OnInit {
         this.searchInstitutionList = this.searchReqVal['institution'];
         this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
         this.searchBar = true;
-        this.storageLocationSearch = 'RECAP';
+        this.storageLocationSearch = '';
         this.spinner.hide();
       },
       (error) => {
@@ -380,6 +380,7 @@ export class RequestComponent implements OnInit {
           this.itemBarcodeNoPermissionErrorMessage = false;
           this.itemTitleId = this.itembarcodeVal['itemTitle'];
           this.itemOwningInstitutionId = this.itembarcodeVal['itemOwningInstitution'];
+          this.storageLocation = this.itembarcodeVal['storageLocation'];
         } else if (this.itembarcodeVal['notAvailableErrorMessage'] != null) {
           this.itemBarcodeNotAvailableErrorMessage = true;
           this.itemBarcodeNotAvailableFrozenItemsErrorMessage = false;
@@ -387,6 +388,7 @@ export class RequestComponent implements OnInit {
           this.itemBarcodeNoPermissionErrorMessage = false;
           this.itemTitleId = this.itembarcodeVal['itemTitle'];
           this.itemOwningInstitutionId = this.itembarcodeVal['itemOwningInstitution'];
+          this.storageLocation = this.itembarcodeVal['storageLocation'];
         } else if (this.itembarcodeVal['noPermissionErrorMessage'] != null) {
           this.itemBarcodeNoPermissionErrorMessage = true;
           this.itemBarcodeNotFoundErrorMessage = false;
@@ -394,6 +396,7 @@ export class RequestComponent implements OnInit {
           this.itemBarcodeNotAvailableFrozenItemsErrorMessage = false;
           this.itemTitleId = this.itembarcodeVal['itemTitle'];
           this.itemOwningInstitutionId = this.itembarcodeVal['itemOwningInstitution'];
+          this.storageLocation = this.itembarcodeVal['storageLocation'];
         } else {
           this.itemBarcodeNotFoundErrorMessage = false;
           this.itemBarcodeNotAvailableErrorMessage = false;
@@ -805,6 +808,7 @@ export class RequestComponent implements OnInit {
     this.deliveryLocVal = [];
     this.eddshow = false;
     this.createsubmit = false;
+    this.storageLocation = '';
     this.initialload();
   }
   loadCreateRequestForSamePatron(patronId, reqInstId) {
@@ -814,7 +818,7 @@ export class RequestComponent implements OnInit {
       (res) => {
         this.requestVal = res;
         this.requestTypeId = this.requestVal['requestType'];
-
+        this.storageLocation = '';
         this.itemBarcodeId = '';
         this.requestingInstitutionId = reqInstId;
         this.itemTitleId = '';
@@ -839,6 +843,7 @@ export class RequestComponent implements OnInit {
     this.spinner.show();
     this.searchPatronBarcode = patronBarcode;
     this.requestStatus = '';
+    this.storageLocation = '';
     this.requestService.loadSearchRequest().subscribe(
       (res) => {
         this.searchReqVal = res;
@@ -853,7 +858,7 @@ export class RequestComponent implements OnInit {
           "deliveryLocationInRequest": null,
           "itemTitle": null,
           "itemOwningInstitution": null,
-          "storageLocation": null,
+          "storageLocation": this.storageLocation,
           "patronEmailAddress": null,
           "requestingInstitution": this.searchInstitutionList,
           "requestType": null,
@@ -898,7 +903,6 @@ export class RequestComponent implements OnInit {
           "disableSearchInstitution": false,
           "searchInstitutionHdn": null
         }
-
         this.requestService.goToSearchRequest(this.postData).subscribe(
           (res) => {
             this.searchreqResultVal = res;
