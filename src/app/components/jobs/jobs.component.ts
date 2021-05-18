@@ -4,13 +4,16 @@ import { TreeNode } from 'primeng/api';
 import { DashBoardService } from '@service/dashBoard/dash-board.service';
 import { JobsService } from '@service/jobs/jobs.service';
 import { urls } from '@config/urls';
+import { LoginService } from '@service/login/login.service';
 @Component({
   selector: 'app-jobs',
   templateUrl: './jobs.component.html',
   styleUrls: ['./jobs.component.css']
 })
 export class JobsComponent implements OnInit {
-  constructor(private jobsService: JobsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
+  constructor(private jobsService: JobsService,
+    private spinner: NgxSpinnerService,
+    private dashBoardService: DashBoardService) { }
   jobsResVal: TreeNode[];
   scheduleJobDetailsSectionDiv = false;
   scheduleJobSectionDiv = false;
@@ -25,12 +28,21 @@ export class JobsComponent implements OnInit {
   jobNameId: string;
   jobId: number;
   jobInstanceId: number;
+  jobParameter: string;
   res: Object;
   isAuthenticated = false;
+  institutions: string[];
   BATCH_SCHEDULE = urls.BATCH_SCHEDULE;
   url: string = this.BATCH_SCHEDULE + '/jobs/';
   ngOnInit(): void {
     this.dashBoardService.validate('search');
+    this.jobsService.getInstitutions().subscribe(
+      (res) => {
+        this.institutions = res;
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
+      });
     this.spinner.show();
     this.jobsService.displayJobs().subscribe(
       (res) => {
@@ -47,6 +59,7 @@ export class JobsComponent implements OnInit {
     "jobName": null,
     "jobDescription": null,
     "cronExpression": null,
+    "jobParameter": null,
     "scheduleType": null,
     "message": null,
     "errorMessage": null,
@@ -63,6 +76,8 @@ export class JobsComponent implements OnInit {
     this.jobDescriptionId = jobDescription;
     this.jobNameId = name;
     this.jobId = id;
+    this.jobParameter = null;
+    this.getJobParameters(name);
   }
   Reschedule(id, name, cronExpression, jobDescription) {
     this.scheduleJobDetailsSectionDiv = false;
@@ -75,6 +90,8 @@ export class JobsComponent implements OnInit {
     this.jobDescriptionId = jobDescription;
     this.jobNameId = name;
     this.jobId = id;
+    this.jobParameter = null;
+    this.getJobParameters(name);
   }
   Unschedule(id, name, cronExpression, jobDescription) {
     this.scheduleJobDetailsSectionDiv = false;
@@ -87,6 +104,8 @@ export class JobsComponent implements OnInit {
     this.jobDescriptionId = jobDescription;
     this.jobNameId = name;
     this.jobId = id;
+    this.jobParameter = null;
+    this.getJobParameters(name);
   }
 
   invokeScheduleJob(scheduleType) {
@@ -97,6 +116,7 @@ export class JobsComponent implements OnInit {
       "jobName": this.jobNameId,
       "jobDescription": this.jobDescriptionId,
       "cronExpression": this.cronExpressionId,
+      "jobParameter": this.jobParameter,
       "scheduleType": scheduleType,
       "message": null,
       "errorMessage": null,
@@ -124,11 +144,12 @@ export class JobsComponent implements OnInit {
         this.dashBoardService.errorNavigation();
       });
   }
-  closeScheduleJob() {
+  closeScheduleJob() {    
     this.dashBoardService.validate('search');
     this.spinner.show();
     this.jobsService.displayJobs().subscribe(
       (res) => {
+        this.jobParameter = null;
         this.jobsResVal = res;
         this.spinner.hide();
         this.scheduleJobDetailsSectionDiv = true;
@@ -140,6 +161,38 @@ export class JobsComponent implements OnInit {
         this.messageIdDiv = false;
       },
       (error) => {
+        this.jobParameter = null;
+        this.dashBoardService.errorNavigation();
+      });
+  }
+  getJobParameters(jobName) {
+    this.dashBoardService.validate('search');
+    this.spinner.show();
+    this.postData = {
+      "jobId": null,
+      "jobName": jobName,
+      "jobDescription": null,
+      "cronExpression": null,
+      "jobParameter": null,
+      "scheduleType": null,
+      "message": null,
+      "errorMessage": null,
+      "jobEntities": null
+    }
+
+    this.jobsService.getJobParameters(this.postData).subscribe(
+      (res) => {        
+        this.spinner.hide();
+        if (res['message'] != null) {
+          this.jobParameter = res['jobParameter'];          
+        } else if (res['errorMessage'] != null) {
+          this.jobParameter = null;         
+        } else {
+          this.jobParameter = null;
+        }
+      },
+      (error) => {
+        this.jobParameter = null; 
         this.dashBoardService.errorNavigation();
       });
   }

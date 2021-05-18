@@ -100,7 +100,7 @@
                                                 <div class="form-group ">
                                                     <div class="col-sm-3 col-sm-4 text-right margin-top-15 "><label class="fontcolor-dark " for="jobNameId ">Job Name</label></div>
                                                     <div class="col-sm- col-sm-6 ">
-                                                        <input class="form-control themed-input " id="jobNameId " name="roleName " type="text " [ngModelOptions]="{standalone: true}" [(ngModel)]="jobNameId" [readonly]="true">
+                                                        <input class="form-control themed-input " id="jobNameId " name="jobName" type="text " [ngModelOptions]="{standalone: true}" [(ngModel)]="jobNameId" [readonly]="true">
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,7 +110,7 @@
                                                 <div class="form-group ">
                                                     <div class="col-sm-3 col-sm-4 text-right margin-top-15 "><label class="fontcolor-dark " for="jobDescriptionId ">Job Description</label></div>
                                                     <div class="col-sm- col-sm-6 ">
-                                                        <input class="form-control themed-input " id="jobDescriptionId " name="roleName " type="text " [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDescriptionId" [readonly]="true">
+                                                        <input class="form-control themed-input " id="jobDescriptionId " name="jobDescription" type="text " [ngModelOptions]="{standalone: true}" [(ngModel)]="jobDescriptionId" [readonly]="true">
                                                     </div>
                                                 </div>
                                             </div>
@@ -120,7 +120,28 @@
                                                 <div class="form-group ">
                                                     <div class="col-sm-3 col-sm-4 text-right margin-top-15 "><label class="fontcolor-dark " for="cronExpressionId ">Cron Expression</label></div>
                                                     <div class="col-sm- col-sm-6 ">
-                                                        <input class="form-control themed-input " id="cronExpressionId " name="roleName " type="text " [ngModelOptions]="{standalone: true}" [(ngModel)]="cronExpressionId" [readonly]="status_readOnly">
+                                                        <input class="form-control themed-input " id="cronExpressionId " name="cronExpression" type="text " [ngModelOptions]="{standalone: true}" [(ngModel)]="cronExpressionId" [readonly]="status_readOnly">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="jobParameter">
+                                            <div class="col-md-8 col-sm-6">
+                                                <div class="form-group">
+                                                    <div class="col-sm-3 col-sm-4 text-right margin-top-15"><label class="fontcolor-dark" for="institutionId">Institution</label></div>
+                                                    <div class="col-sm- col-sm-6">
+                                                        <div class="select-holder">
+                                                            <select class="form-control themed-input themed-select"
+                                                                id="institutionId"
+                                                                name="institutionName"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [(ngModel)]="jobParameter"
+                                                                [disabled]="status_readOnly">
+                                                                <option *ngFor="let inst of institutions" [value]="inst">
+                                                                    {{inst}}
+                                                                </option>                                                               
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
