@@ -24,4 +24,10 @@ export class JobsService {
   scheduleJobs(postData: ScheduleJobsForm): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.PREFIX + "/jobs", postData, this.httpOptions());
   }
+  getJobParameters(postData: ScheduleJobsForm): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/job-parameters", postData, this.httpOptions());
+  }
+  getInstitutions(): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.PREFIX + "/get-institutions", this.httpOptions());
+  }
 }
