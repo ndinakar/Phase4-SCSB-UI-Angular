@@ -288,6 +288,7 @@ export class RequestComponent implements OnInit {
     this.ArticleAuthor = '';
     this.ChapterTitle = '';
     this.storageLocation = '';
+    this.searchItemBarcode = '';
     this.initialload();
     if (this.interval) {
       clearInterval(this.interval);
@@ -843,8 +844,8 @@ export class RequestComponent implements OnInit {
     this.spinner.show();
     this.searchPatronBarcode = patronBarcode;
     this.requestStatus = '';
-    this.storageLocation = '';
     this.storageLocationSearch = '';
+    this.searchItemBarcode = '';
     this.requestService.loadSearchRequest().subscribe(
       (res) => {
         this.searchReqVal = res;
@@ -859,7 +860,7 @@ export class RequestComponent implements OnInit {
           "deliveryLocationInRequest": null,
           "itemTitle": null,
           "itemOwningInstitution": null,
-          "storageLocation": this.storageLocation,
+          "storageLocation": this.storageLocationSearch,
           "patronEmailAddress": null,
           "requestingInstitution": this.searchInstitutionList,
           "requestType": null,
@@ -912,6 +913,7 @@ export class RequestComponent implements OnInit {
               this.messageNoSearchRecords = true;
               this.searchReqresult = false;
             } else {
+            this.storageLocation = '';
             this.searchReqresultFirst = true;
             this.searchBar = true;
             this.create_request = false;
