@@ -1,14 +1,17 @@
 <!-- Logging Tab Start -->
 <!DOCTYPE html>
 <html>
+
 <body>
-<div id="loggingContentId" name="loggingContentName">
-    <div class="tab-hyp">
-        <meta http-equiv="X-Frame-Options" content="sameorigin">
-        <a href="{{loggingURL}}" target="_blank">Logging </a>
+    <div id="loggingContentId" name="loggingContentName" class="ml-bg">
+        <div class="tab-hyp">
+            <meta http-equiv="X-Frame-Options" content="sameorigin">
+            <a href="{{loggingURL}}" target="_blank">Logging </a>
+        </div>
+        <iframe name="iFrame" [src]="sanitizer.bypassSecurityTrustResourceUrl(loggingURL)" scrolling="Yes"
+            height="650px" width="100%" style="border: none;"></iframe>
     </div>
-    <iframe name="iFrame" [src]="sanitizer.bypassSecurityTrustResourceUrl(loggingURL)" scrolling="Yes" height="650px" width="100%" style="border: none;"></iframe>
-</div>
 </body>
+
 </html>
 <!-- Schedule Jobs Tab End -->

@@ -2380,3 +2380,6 @@ tr.shown td.details-control {
 .disabled {
   pointer-events: none;
 }
+.ml-bg {
+  background-color: white;
+}
