@@ -556,7 +556,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.exportExceptionReports(this.incompleteShowBy, this.dateFromException, this.dateToException).subscribe(
       (res) => {
         this.spinner.hide();
-        this.itemList= [];
+        this.itemList = [];
         var fileNmae = 'ExportRecords' + '_' +
           new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
         this.searchreqExceptionResultValExport = res;
@@ -589,7 +589,7 @@ export class ReportsComponent implements OnInit {
     return this.itemList;
   }
   removePropertiesTrnsaction(items) {
-      this.itemListTransaction = [];
+    this.itemListTransaction = [];
     for (var i = 0; i < items.length; i++) {
       var item = {};
       item['requestingInst'] = items[i].requestingInst;
@@ -1705,14 +1705,14 @@ export class ReportsComponent implements OnInit {
   }
 
   pullReports(reqType, index_req, index_owning, cgdType) {
-    this.typeOptions = ['RETRIEVAL','RECALL'];
+    this.typeOptions = ['RETRIEVAL', 'RECALL'];
     this.showentriesTransaction = 10;
     this.pullReportsData(reqType, index_req, index_owning, cgdType)
   }
-  pullReportsEDD(reqType, index_req, index_owning) {
+  pullReportsEDD(reqType, index_req, index_owning, cgdType) {
     this.typeOptions = ['EDD'];
     this.showentriesTransaction = 10;
-    this.pullReportsData(reqType, index_req, index_owning, '')
+    this.pullReportsData(reqType, index_req, index_owning, cgdType)
   }
   transactionfirstCall() {
     this.transactionReport(this.requestInstCodesList, this.owningnInstCodesList, this.cgdTypeList, this.totalCount);
@@ -1837,7 +1837,7 @@ export class ReportsComponent implements OnInit {
         if (reqType == 'Physical' && this.transactionReportVal['transactionReportList'][i].requestType != 'EDD') {
           count = this.transactionReportVal['transactionReportList'][i].cgd == CGD ? count + this.transactionReportVal['transactionReportList'][i].count : count;
         } else if (reqType != 'Physical' && this.transactionReportVal['transactionReportList'][i].requestType == 'EDD') {
-          count = count + this.transactionReportVal['transactionReportList'][i].count;
+          count = this.transactionReportVal['transactionReportList'][i].cgd == CGD ? count + this.transactionReportVal['transactionReportList'][i].count : count;
         }
       }
     }
