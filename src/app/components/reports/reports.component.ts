@@ -45,6 +45,17 @@ export class ReportsComponent implements OnInit {
     noDownload: false,
     headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use", "Item Barcode", "Date and Time of Request", "CGD Status", "Current Status"]
   };
+  csvOptionsTransactionCount = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: 'Export Summary Report',
+    useBom: true,
+    noDownload: false,
+    headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use","CGD Status", "COUNT"]
+  };
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
   accessionErrorMessageDiv = false;
@@ -186,6 +197,7 @@ export class ReportsComponent implements OnInit {
   totalCount: any;
   showentriesTransaction: number = 10;
   itemListTransaction: any = [];
+  itemListTransactionCount: any = [];
 
   TYPE_LIST_USE = [
     'Retrieval',
@@ -401,6 +413,9 @@ export class ReportsComponent implements OnInit {
       this.transactionReportResultsDiv = false;
     }
   }
+  exportTransactionFullReport(){
+    console.log("Full Export TransactionReport");
+  }
   transactionReportExport(requestInstCodesList, owningnInstCodesList, cgdTypeList, totalCount) {
     if (!this.validateTransactionDateRange()) {
       this.spinner.show();
@@ -434,6 +449,13 @@ export class ReportsComponent implements OnInit {
     } else {
       this.transactionReportResultsDiv = false;
     }
+  }
+  exportTransactionCount(){
+    this.itemListTransactionCount = [];
+    this.spinner.hide();
+    var fileNmae = 'ExportTransactionRecords' + '_' +
+      new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
+    new AngularCsv(this.removePropertiesTrnsactionCount(this.transactionReportVal['transactionReportList']), fileNmae, this.csvOptionsTransactionCount);
   }
   validateTransactionDateRange() {
     this.statusRequest = false;
@@ -604,6 +626,20 @@ export class ReportsComponent implements OnInit {
       this.itemListTransaction.push(item);
     }
     return this.itemListTransaction;
+  }
+  removePropertiesTrnsactionCount(items) {
+    this.itemListTransactionCount = [];
+    for (var i = 0; i < items.length; i++) {
+      var item = {};
+      item['requestingInst'] = items[i].requestingInst;
+      item['owningInst'] = items[i].owningInst;
+      item['requestType'] = items[i].requestType;
+      item['cgd'] = items[i].cgd;
+      item['count'] = items[i].count;
+
+      this.itemListTransactionCount.push(item);
+    }
+    return this.itemListTransactionCount;
   }
   toTimeZone(time) {
     var format = 'YYYY-MM-DD HH:mm:ss';
