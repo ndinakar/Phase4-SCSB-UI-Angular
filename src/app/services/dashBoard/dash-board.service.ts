@@ -27,7 +27,7 @@ export class DashBoardService {
   isAuthenticated = false;
   PREFIX = urls.DASHBOARD;
   checkPermission(prefix: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(prefix + "/checkPermission",
+    return this.httpClient.get<boolean>( 'http://localhost:9091' +  prefix + "/checkPermission",
       appHeaders.httpOptions());
   }
   getVersionNumber(): Observable<TreeNode[]> {
@@ -37,11 +37,11 @@ export class DashBoardService {
       });
   }
   checkPermission_Monitoring(prefix: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(prefix + "/monitoring",
+    return this.httpClient.get<boolean>( 'http://localhost:9091' +  prefix + "/monitoring",
       appHeaders.httpOptions());
   }
   checkPermission_Loggig(prefix: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(prefix + "/logging",
+    return this.httpClient.get<boolean>( 'http://localhost:9091' +  prefix + "/logging",
       appHeaders.httpOptions());
   }
   getEmail(): Observable<TreeNode[]> {

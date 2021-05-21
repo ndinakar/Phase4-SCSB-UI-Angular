@@ -53,6 +53,7 @@ tr:nth-child(even) {
 }
 .td_tr_border{
     border: 1px solid;
-    border-collapse: separate;
 }
-table#acessionDeaccessionTable { border-collapse: separate; }
+#acessionDeaccessionTable tr{
+    border:1px solid;
+}
