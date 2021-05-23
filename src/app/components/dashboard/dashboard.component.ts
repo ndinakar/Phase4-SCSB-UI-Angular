@@ -9,7 +9,6 @@ import { RolesPermissionsService } from '@service/rolesPermissions/roles-permiss
 })
 export class DashboardComponent implements OnInit {
   res: Object;
-  isAuthenticated = false;
   frozenInstitutionMessages: string[];
   constructor(private router: Router, private rolesService: RolesPermissionsService, private dashboardService: DashBoardService) { }
 

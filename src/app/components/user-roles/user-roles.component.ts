@@ -15,7 +15,6 @@ export class UserRolesComponent implements OnInit {
   constructor(private userRolesService: UserRolesService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
-    this.dashBoardService.validate('userRoles');
     this.spinner.hide();
   }
   networkLoginIdErrMsg: boolean;
@@ -157,7 +156,6 @@ export class UserRolesComponent implements OnInit {
     this.userRoles();
   }
   editUser(userId, networkLoginId, roleName) {
-    this.dashBoardService.validate('userRoles');
     this.editusersDiv = true;
     this.createUserDiv = false;
     this.showSearchResultsDiv = false;
@@ -183,7 +181,6 @@ export class UserRolesComponent implements OnInit {
       });
   }
   deleteUserRole(userId, networkLoginId, roleName) {
-    this.dashBoardService.validate('userRoles');
     this.spinner.show();
     this.editusersDiv = false;
     this.createUserDiv = false;
@@ -208,7 +205,6 @@ export class UserRolesComponent implements OnInit {
       });
   }
   searchUserRoles() {
-    this.dashBoardService.validate('userRoles');
     this.deletedSuccessMsgDiv = false;
     this.deleteErrorMsgDiv = false;
     this.spinner.show();
@@ -277,7 +273,6 @@ export class UserRolesComponent implements OnInit {
     return statusCreateRole;
   }
   createUser(emailId, userDescription, institutionId, networkLoginId) {
-    this.dashBoardService.validate('userRoles');
     if (this.validateCreateUser()) {
       this.spinner.show();
       this.emailId = emailId;
@@ -350,7 +345,6 @@ export class UserRolesComponent implements OnInit {
     return statusCreateRole;
   }
   saveEditUser(networkLoginId, userDescription, institutionId, userEmailId) {
-    this.dashBoardService.validate('userRoles');
     if (this.validateUpdateUser()) {
       this.spinner.show();
       this.userRolesService.saveEditUser(this.userId, this.editroleId, networkLoginId, userDescription, institutionId, userEmailId).subscribe(
@@ -380,7 +374,6 @@ export class UserRolesComponent implements OnInit {
     }
   }
   deleteUser(networkLoginId) {
-    this.dashBoardService.validate('userRoles');
     this.spinner.show();
     this.userRolesService.delete(this.userId, networkLoginId, this.userRoleFormVal['pageNumber'], this.userRoleFormVal['totalPageCount'], this.userRoleFormVal['pageSize']).subscribe(
       (res) => {
@@ -606,7 +599,6 @@ export class UserRolesComponent implements OnInit {
   }
 
   exportUsers() {
-    this.dashBoardService.validate('userRoles');
     this.deletedSuccessMsgDiv = false;
     this.deleteErrorMsgDiv = false;
     this.spinner.show();

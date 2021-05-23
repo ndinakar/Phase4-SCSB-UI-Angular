@@ -35,7 +35,6 @@ export class JobsComponent implements OnInit {
   BATCH_SCHEDULE = urls.BATCH_SCHEDULE;
   url: string = this.BATCH_SCHEDULE + '/jobs/';
   ngOnInit(): void {
-    this.dashBoardService.validate('search');
     this.jobsService.getInstitutions().subscribe(
       (res) => {
         this.institutions = res;
@@ -109,7 +108,6 @@ export class JobsComponent implements OnInit {
   }
 
   invokeScheduleJob(scheduleType) {
-    this.dashBoardService.validate('search');
     this.spinner.show();
     this.postData = {
       "jobId": this.jobId,
@@ -145,7 +143,6 @@ export class JobsComponent implements OnInit {
       });
   }
   closeScheduleJob() {    
-    this.dashBoardService.validate('search');
     this.spinner.show();
     this.jobsService.displayJobs().subscribe(
       (res) => {
@@ -166,7 +163,6 @@ export class JobsComponent implements OnInit {
       });
   }
   getJobParameters(jobName) {
-    this.dashBoardService.validate('search');
     this.spinner.show();
     this.postData = {
       "jobId": null,

@@ -159,7 +159,6 @@ export class SearchComponent implements OnInit {
     { field: 'barcode', header: 'Barcode' },
   ];
   ngOnInit(): void {
-    this.dashBoardService.validate('search');
     this.rolesRes = this.rolesService.getRes();
     if (this.rolesRes['isBarcodeRestricted'] == true) {
       this.validateColumns();
@@ -240,7 +239,6 @@ export class SearchComponent implements OnInit {
   }
 
   searchRecord() {
-    this.dashBoardService.validate('search');
     this.clicked = true;
     this.selectedNodes1 = [];
     this.selectedNodes2 = [];

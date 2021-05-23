@@ -99,7 +99,6 @@ export class RequestComponent implements OnInit {
   storageLocation: string;
   disableStorageLocation = false;
   ngOnInit(): void {
-    this.dashBoardService.validate('request');
     this.rolesRes = this.rolesService.getRes();
     this.router.paramMap.subscribe(params => {
       this.barcode_id = params.get('barcode');
@@ -246,7 +245,6 @@ export class RequestComponent implements OnInit {
   }
 
   loadSearchRequest() {
-    this.dashBoardService.validate('request');
     this.spinner.show();
     this.searchInstitutionList = '';
     this.requestStatus = '';
@@ -539,7 +537,6 @@ export class RequestComponent implements OnInit {
     }
   }
   createRequest() {
-    this.dashBoardService.validate('request');
     if (this.eddshow) {
       if (this.validateInputs_edd()) {
         this.itemBarcodeErrorMessage = false;
@@ -940,7 +937,6 @@ export class RequestComponent implements OnInit {
   }
 
   searchRequests() {
-    this.dashBoardService.validate('request');
     this.spinner.show();
     if (this.requestStatus == '' || this.requestStatus == undefined) {
       if (this.searchItemBarcode || this.searchPatronBarcode) {

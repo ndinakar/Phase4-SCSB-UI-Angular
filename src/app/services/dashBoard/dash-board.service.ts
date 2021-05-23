@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { appHeaders } from '@config/headers';
 import { urls } from '@config/urls';
 import 'rxjs/add/observable/throw';
+import { CookieService } from 'ngx-cookie-service';
 var moment = require('moment-timezone');
 enum CONSTANTS {
   TIMEZONE = 'America/New_York',
@@ -22,7 +23,7 @@ enum CONSTANTS {
 })
 export class DashBoardService {
   constructor(private router: Router, private httpClient: HttpClient,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService, private cookieService: CookieService) { }
   res: Object;
   isAuthenticated = false;
   PREFIX = urls.DASHBOARD;
@@ -95,6 +96,11 @@ export class DashBoardService {
   errorNavigation() {
     this.spinner.hide();
     this.router.navigate([CONSTANTS.ERROR]);
+  }
+  validateUser(response) {
+    if (response.headers.get('user_authenticated') == 'FALSE') {
+      this.router.navigate([CONSTANTS.HOME]);
+    }
   }
   setTimeZone(date) {
     if (date) {

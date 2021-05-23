@@ -17,7 +17,6 @@ var moment = require('moment-timezone');
 export class ReportsComponent implements OnInit {
   constructor(private router: Router, private reportsService: ReportsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   ngOnInit(): void {
-    this.dashBoardService.validate('reports');
     this.spinner.hide();
     this.ReportShowBy = 'Partners';
     this.getInstitutions();
@@ -646,7 +645,6 @@ export class ReportsComponent implements OnInit {
     return moment.utc(time).tz("America/New_York").format(format);
   }
   submitRequest() {
-    this.dashBoardService.validate('reports');
     this.requestToDateErrorText = false;
     this.showByErrorText = false;
     this.requestFromDateErrorText = false;
@@ -825,7 +823,6 @@ export class ReportsComponent implements OnInit {
     return (parseFloat(this.start) > parseFloat(this.end));
   }
   submitAccession() {
-    this.dashBoardService.validate('reports');
     this.accessionErrorText = false;
     this.deaccessionErrorText = false;
     this.accessionFromToError = false;
@@ -1000,7 +997,6 @@ export class ReportsComponent implements OnInit {
     }
   }
   incompleteRecords() {
-    this.dashBoardService.validate('reports');
     this.incompleteResultsPage = false;
     this.incompleteErrorText = false;
     this.statusRequest = false;
@@ -1104,7 +1100,6 @@ export class ReportsComponent implements OnInit {
     this.transactionReportDiv = false;
   }
   enableCGDPage() {
-    this.dashBoardService.validate('reports');
     this.spinner.show();
     this.resetFields();
     this.reportsService.collectionGroupDesignation().subscribe(
