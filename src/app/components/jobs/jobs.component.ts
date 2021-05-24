@@ -35,6 +35,7 @@ export class JobsComponent implements OnInit {
   BATCH_SCHEDULE = urls.BATCH_SCHEDULE;
   url: string = this.BATCH_SCHEDULE + '/jobs/';
   ngOnInit(): void {
+    this.dashBoardService.setApiPath('jobs');
     this.jobsService.getInstitutions().subscribe(
       (res) => {
         this.institutions = res;

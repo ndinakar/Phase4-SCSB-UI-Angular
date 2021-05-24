@@ -15,6 +15,7 @@ export class UserRolesComponent implements OnInit {
   constructor(private userRolesService: UserRolesService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
+    this.dashBoardService.setApiPath('userRoles');
     this.spinner.hide();
   }
   networkLoginIdErrMsg: boolean;

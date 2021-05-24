@@ -99,6 +99,7 @@ export class RequestComponent implements OnInit {
   storageLocation: string;
   disableStorageLocation = false;
   ngOnInit(): void {
+    this.dashBoardService.setApiPath('request');
     this.rolesRes = this.rolesService.getRes();
     this.router.paramMap.subscribe(params => {
       this.barcode_id = params.get('barcode');

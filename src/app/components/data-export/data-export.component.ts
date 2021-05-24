@@ -46,6 +46,7 @@ export class DataExportComponent implements OnInit {
   constructor(private router: Router, private dataExportService: DataExportService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   res: any[];
   ngOnInit(): void {
+    this.dashBoardService.setApiPath('dataExport');
     this.result = [];
     this.dataExportService.getDescriptions().subscribe(
       (res) => {

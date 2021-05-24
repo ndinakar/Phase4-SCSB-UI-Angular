@@ -159,6 +159,7 @@ export class SearchComponent implements OnInit {
     { field: 'barcode', header: 'Barcode' },
   ];
   ngOnInit(): void {
+    this.dashBoardService.setApiPath('search');
     this.rolesRes = this.rolesService.getRes();
     if (this.rolesRes['isBarcodeRestricted'] == true) {
       this.validateColumns();

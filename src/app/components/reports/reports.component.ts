@@ -17,6 +17,7 @@ var moment = require('moment-timezone');
 export class ReportsComponent implements OnInit {
   constructor(private router: Router, private reportsService: ReportsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   ngOnInit(): void {
+    this.dashBoardService.setApiPath('reports');
     this.spinner.hide();
     this.ReportShowBy = 'Partners';
     this.getInstitutions();

@@ -16,6 +16,7 @@ export class MonitoringComponent implements OnInit {
   dockerURL: string;
   awsURL: string;
   ngOnInit(): void {
+    this.dashBoardService.setApiPath('monitoring');
     this.monitoring.pullData().subscribe(
       (res) => {
         this.data = res;

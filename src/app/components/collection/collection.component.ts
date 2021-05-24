@@ -65,6 +65,7 @@ export class CollectionComponent implements OnInit {
   radioSwitchDeaccession: boolean;
   cgdAndDeaccessionDiv: boolean = false;
   ngOnInit(): void {
+    this.dashBoardService.setApiPath('collection');
     this.collectionForm = this.formBuilder.group({
       barcodeFieldName: ['']
     });

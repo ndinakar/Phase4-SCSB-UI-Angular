@@ -79,6 +79,7 @@ export class BulkrequestComponent implements OnInit {
   constructor(private bulkrequestService: BulkRequestService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
+    this.dashBoardService.setApiPath('bulkRequest');
     this.initialload();
   }
 

@@ -11,6 +11,7 @@ import { RolesService } from '@service/roles/roles.service';
 export class RolesComponent implements OnInit {
   constructor(private rolesService: RolesService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   ngOnInit(): void {
+    this.dashBoardService.setApiPath('roles');
     this.spinner.hide();
   }
   rolesVal: TreeNode[];
