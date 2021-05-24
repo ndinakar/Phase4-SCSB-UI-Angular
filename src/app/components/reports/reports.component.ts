@@ -180,6 +180,7 @@ export class ReportsComponent implements OnInit {
   transactionToDateErrorText = false;
   transactionFromToError = false;
   transactionReportVal: TreeNode[];
+  transactionReportFullExportVal: TreeNode[];
   transactionReportRecords: TreeNode[];
   transactionReportRecordsExport: TreeNode[];
   dateFromTransaction: string;
@@ -414,7 +415,42 @@ export class ReportsComponent implements OnInit {
     }
   }
   exportTransactionFullReport(){
-    console.log("Full Export TransactionReport");
+    if (!this.validateTransactionDateRange()) {
+      this.typeOptionsPrevious = this.typeOptions;
+      this.spinner.show();
+      this.postDataTransaction = {
+        "totalRecordsCount": "0",
+        "pageNumber": 0,
+        "pageSize": 10,
+        "totalPageCount": 0,
+        "message": null,
+        "transactionReportList": null,
+        "owningInsts": this.owningInstitutionList,
+        "requestingInsts": this.borrowingInstitutionList,
+        "typeOfUses": this.typeOptions,
+        "fromDate": this.dateFromTransaction,
+        "toDate": this.dateToTransaction,
+        "trasactionCallType": 'FUll EXPORT',
+        "cgdType": null
+      }
+      this.reportsService.getTransactionReportCount(this.postDataTransaction).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.transactionReportFullExportVal = res;
+          this.itemListTransaction = [];
+          this.spinner.hide();
+          this.transactionReportRecordsExport = res;
+          var fileNmae = 'FullExportTransactionRecords' + '_' +
+            new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
+          new AngularCsv(this.removePropertiesTrnsaction(this.transactionReportFullExportVal['transactionReportList']), fileNmae, this.csvOptionsTransaction);
+        
+        },
+        (error) => {
+          this.dashBoardService.errorNavigation();
+        });
+    } else {
+      this.transactionReportResultsDiv = false;
+    }
   }
   transactionReportExport(requestInstCodesList, owningnInstCodesList, cgdTypeList, totalCount) {
     if (!this.validateTransactionDateRange()) {
