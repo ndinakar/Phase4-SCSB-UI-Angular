@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { appHeaders } from '@config/headers';
 import { urls } from '@config/urls';
 import 'rxjs/add/observable/throw';
+import { CookieService } from 'ngx-cookie-service';
 var moment = require('moment-timezone');
 enum CONSTANTS {
   TIMEZONE = 'America/New_York',
@@ -15,17 +16,21 @@ enum CONSTANTS {
   TIME_EST = 'EST',
   SPLIT_BY = '-',
   ERROR = 'error-page',
-  HOME = 'home'
+  HOME = 'home',
+  USER_AUTHENTICATED = 'user_authenticated',
+  FALSE = 'FALSE'
 }
 @Injectable({
   providedIn: 'root'
 })
 export class DashBoardService {
   constructor(private router: Router, private httpClient: HttpClient,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService, private cookieService: CookieService) { }
   res: Object;
   isAuthenticated = false;
   PREFIX = urls.DASHBOARD;
+  API_PATH : string ='search';
+
   checkPermission(prefix: string): Observable<boolean> {
     return this.httpClient.get<boolean>(prefix + "/checkPermission",
       appHeaders.httpOptions());
@@ -95,6 +100,17 @@ export class DashBoardService {
   errorNavigation() {
     this.spinner.hide();
     this.router.navigate([CONSTANTS.ERROR]);
+  }
+  validateUser(response) {
+    if (response.headers.get(CONSTANTS.USER_AUTHENTICATED) == CONSTANTS.FALSE) {
+      this.router.navigate([CONSTANTS.HOME]);
+    }
+  }
+  refreshHeaders() {
+    return this.API_PATH;
+  }
+  setApiPath(path){
+    this.API_PATH = path;
   }
   setTimeZone(date) {
     if (date) {

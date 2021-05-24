@@ -5,11 +5,12 @@
                 <div class="col-sm-4">
                     <div class="row recap-logo-outerwrapper margin-btm-10">
                         <div class="recap-logo-container">
-                            <a href="http://recap.princeton.edu/"><img class="recap-logo" src="../../../assets/images/recap-logo.png" alt="ReCAP"></a>
+                            <a href="http://recap.princeton.edu/"><img class="recap-logo"
+                                    src="../../../assets/images/recap-logo.png" alt="ReCAP"></a>
                             <h3>The Research Collections And <br>Preservation Consortium</h3>
                         </div>
                     </div>
-                    <div class="twitter-block row">
+                    <div class="twitter-block row" style="height: 375px;">
                         <div class="col-sm-12">
                             <a class="twitter-timeline" data-height="350" href="https://twitter.com/recaplib">Tweets by
                                 recaplib</a>
@@ -21,7 +22,8 @@
                 <div class="col-sm-6 col-md-7 col-lg-6">
                     <!-- Login Section-->
                     <div class="login-wrapper">
-                        <form class="form-horizontal" id="home_login" ngNoForm [action]="url" style="padding-bottom: 30px;">
+                        <form class="form-horizontal" id="home_login" ngNoForm [action]="url"
+                            style="padding-bottom: 30px;">
                             <h2 class="heading">Login</h2>
                             <div class="form-group">
                                 <div class="col-md-3 text-right">
@@ -29,15 +31,20 @@
                                 </div>
                                 <div class="col-md-9">
                                     <div class="select-holder">
-                                        <select class="form-control themed-input themed-select" id="institution" name="institution" [ngClass]="(validate==false)?'select-inst-box':''" [ngModelOptions]="{standalone: true}" [(ngModel)]="institution" (change)="changeInst()">
+                                        <select class="form-control themed-input themed-select" id="institution"
+                                            name="institution" [ngClass]="(validate==false)?'select-inst-box':''"
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="institution"
+                                            (change)="changeInst()">
                                             <option value="default" selected="selected">Select One</option>
-                                            <option *ngFor="let inst of Institutions | keyvalue: returnZero" [value]="inst.key">
+                                            <option *ngFor="let inst of Institutions | keyvalue: returnZero"
+                                                [value]="inst.key">
                                                 {{inst.value}}
                                             </option>
                                         </select>
                                     </div>
                                     <div class="invalid-feedback" style="color:red">
-                                        <span id="institutionErrorMessage" *ngIf="institutionErrorMessageDiv" style="color: red;">This Field is required</span>
+                                        <span id="institutionErrorMessage" *ngIf="institutionErrorMessageDiv"
+                                            style="color: red;">This Field is required</span>
                                     </div>
                                 </div>
                             </div>
@@ -45,9 +52,11 @@
                                 <div class="col-md-3 text-right"></div>
                                 <div class="col-md-9">
                                     <div class="login-form-button-wrapper  margin-btm-10">
-                                        <button class="btn btn-default themed-button" id="submitBtn" type="submit" [disabled]="!validate">
+                                        <button class="btn btn-default themed-button" id="submitBtn" type="submit"
+                                            [disabled]="!validate">
                                             Submit </button>
-                                        <div id="emailBtn" data-target="#emailModal" data-toggle="modal" style="padding-left: 200px;margin-top: -35px;">
+                                        <div id="emailBtn" data-target="#emailModal" data-toggle="modal"
+                                            style="padding-left: 200px;margin-top: -35px;">
                                             <a name="touch_us" style="cursor: pointer;">Get in touch with us</a>
                                         </div>
                                     </div>
@@ -59,18 +68,21 @@
                                             <!-- Modal content-->
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <button class="close" data-dismiss="modal" type="button">&times;</button>
+                                                    <button class="close" data-dismiss="modal"
+                                                        type="button">&times;</button>
                                                     <h4 class="modal-title">Email</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div *ngFor="let lst of getinTouch">
 
-                                                        <p>{{lst.for}} : <a href="{{lst.url}}" target="_top"><span>{{lst.name}}</span></a></p>
+                                                        <p>{{lst.for}} : <a href="{{lst.url}}"
+                                                                target="_top"><span>{{lst.name}}</span></a></p>
 
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-default" id="emailCloseButton" data-dismiss="modal" type="button">Close</button>
+                                                    <button class="btn btn-default" id="emailCloseButton"
+                                                        data-dismiss="modal" type="button">Close</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,14 +105,20 @@
                     <h3 class="text-center margin-btm-20">Members of ReCAP</h3>
                     <div class="row">
                         <div class="col-sm-5 margin-top-10 padding-right-50">
-                            <a href="http://www.columbia.edu/"><img class="member-columbia-univ-logo" src="../../../assets/images/member-logo/columbia-logo.png" alt="columbia university"></a>
+                            <a href="http://www.columbia.edu/"><img class="member-columbia-univ-logo"
+                                    src="../../../assets/images/member-logo/columbia-logo.png"
+                                    alt="columbia university"></a>
                         </div>
                         <div class="col-sm-4 margin-top-10 padding-right-50 padding-left-50">
-                            <a href="http://www.princeton.edu/main/"><img class="member-princeton-univ-logo" src="../../../assets/images/member-logo/princeton-logo.png" alt="princeton university"></a>
+                            <a href="http://www.princeton.edu/main/"><img class="member-princeton-univ-logo"
+                                    src="../../../assets/images/member-logo/princeton-logo.png"
+                                    alt="princeton university"></a>
                         </div>
 
                         <div class="col-sm-3 padding-left-50">
-                            <a href="https://www.nypl.org/"><img class="member-ny-public-logo" src="../../../assets/images/member-logo/nypl-logo.png" alt="Newyork Public Libraray"></a>
+                            <a href="https://www.nypl.org/"><img class="member-ny-public-logo"
+                                    src="../../../assets/images/member-logo/nypl-logo.png"
+                                    alt="Newyork Public Libraray"></a>
                         </div>
                     </div>
                 </div>
@@ -108,13 +126,17 @@
                     <h3 class="margin-btm-0">ReCAP</h3>
                     <ul class="border-style-left">
                         <li><a name="home" href="https://recap.princeton.edu/" target="_blank">Home</a></li>
-                        <li><a name="facility" href="https://recap.princeton.edu/facility-storage" target="_blank">Facility &amp;
+                        <li><a name="facility" href="https://recap.princeton.edu/facility-storage"
+                                target="_blank">Facility &amp;
                                 Storage</a></li>
-                        <li><a name="0perations" href="https://recap.princeton.edu/operations-statistics" target="_blank">Operations &amp;
+                        <li><a name="0perations" href="https://recap.princeton.edu/operations-statistics"
+                                target="_blank">Operations &amp;
                                 Statistics</a></li>
-                        <li><a name="collections" href="https://recap.princeton.edu/collections-services" target="_blank">Collections &amp;
+                        <li><a name="collections" href="https://recap.princeton.edu/collections-services"
+                                target="_blank">Collections &amp;
                                 Services</a></li>
-                        <li><a name="information" href="https://recap.princeton.edu/information-publications" target="_blank">Information
+                        <li><a name="information" href="https://recap.princeton.edu/information-publications"
+                                target="_blank">Information
                                 &amp; Publications</a></li>
                     </ul>
                 </div>
@@ -125,9 +147,9 @@
 
 <footer id="footerForLoginPage" style="position:relative;bottom:0;width:100%;height:60px;top:20px;padding-top:15px;">
     <div class="text-center container-fluid">
-        <p><span class="text-center">Created and maintained by HTC Global Services. E-mail: <a style="color:inherit;" th:href target="_top"><span th:inline="text"> contact@htcinc.com</span></a>
+        <p><span class="text-center">Created and maintained by HTC Global Services. E-mail: <a style="color:inherit;"
+                    th:href target="_top"><span th:inline="text"> contact@htcinc.com</span></a>
             </span>
         </p>
     </div>
 </footer>
-

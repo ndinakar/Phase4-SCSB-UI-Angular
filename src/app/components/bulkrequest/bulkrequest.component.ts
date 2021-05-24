@@ -79,7 +79,7 @@ export class BulkrequestComponent implements OnInit {
   constructor(private bulkrequestService: BulkRequestService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
-    this.dashBoardService.validate('bulkRequest');
+    this.dashBoardService.setApiPath('bulkRequest');
     this.initialload();
   }
 
@@ -164,7 +164,6 @@ export class BulkrequestComponent implements OnInit {
   }
 
   loadSearchRequest() {
-    this.dashBoardService.validate('bulkRequest');
     this.createReqsection = false;
     this.searchReqsection = true;
     this.storageLocation = 'RECAP';
@@ -284,7 +283,6 @@ export class BulkrequestComponent implements OnInit {
   }
 
   createBulkRequest() {
-    this.dashBoardService.validate('bulkRequest');
     if (this.validateInputs()) {
       this.BulkRequestNameErrorMessage = false;
       this.requestingInstitutionErrorMessage = false;
@@ -312,7 +310,6 @@ export class BulkrequestComponent implements OnInit {
     }
   }
   goToSearchRequest() {
-    this.dashBoardService.validate('bulkRequest');
     this.loadSearchRequest();
     this.createReqsection = false;
     this.searchReqsection = true;
@@ -367,7 +364,6 @@ export class BulkrequestComponent implements OnInit {
 
   //**********************search Request start*******************
   searchRequests() {
-    this.dashBoardService.validate('bulkRequest');
     this.postData = {
       "requestId": null,
       "patronBarcode": null,

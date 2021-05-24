@@ -159,7 +159,7 @@ export class SearchComponent implements OnInit {
     { field: 'barcode', header: 'Barcode' },
   ];
   ngOnInit(): void {
-    this.dashBoardService.validate('search');
+    this.dashBoardService.setApiPath('search');
     this.rolesRes = this.rolesService.getRes();
     if (this.rolesRes['isBarcodeRestricted'] == true) {
       this.validateColumns();
@@ -240,7 +240,6 @@ export class SearchComponent implements OnInit {
   }
 
   searchRecord() {
-    this.dashBoardService.validate('search');
     this.clicked = true;
     this.selectedNodes1 = [];
     this.selectedNodes2 = [];
@@ -370,10 +369,18 @@ export class SearchComponent implements OnInit {
       (res) => {
         this.spinner.hide();
         this.searchVal = res;
-        this.searchVal['searchResultRows'].forEach((items, i) => {
-          items.id = i + 1;
-        });
-        this.pagination();
+        if (this.searchVal['errorMessage'] != null) {
+          this.showresultdiv = true;
+          this.errorMessage_Div = true;
+          this.searchResultsDiv = false;
+          this.paginationBtmDiv = false;
+          this.searchVal['pageNumber'] = 0;
+        } else {
+          this.searchVal['searchResultRows'].forEach((items, i) => {
+            items.id = i + 1;
+          });
+          this.pagination();
+        }
       },
       (error) => {
         this.dashBoardService.errorNavigation();
@@ -502,7 +509,7 @@ export class SearchComponent implements OnInit {
               this.owningInstitutionInst = res['institutionList'];
               this.storageLocationsList = res['storageLocationsList'];
             },
-            (error) =>{
+            (error) => {
               this.dashBoardService.errorNavigation();
             });
         });
@@ -573,6 +580,11 @@ export class SearchComponent implements OnInit {
       this.previousbutton = false;
       this.nextbutton = false;
       this.lastbutton = false;
+    } else if (this.searchVal['pageNumber'] == 0 && this.searchVal['totalPageCount'] == 0) {
+      this.firstbutton = true;
+      this.previousbutton = true;
+      this.nextbutton = true;
+      this.lastbutton = true;
     }
   }
   mappingResults() {

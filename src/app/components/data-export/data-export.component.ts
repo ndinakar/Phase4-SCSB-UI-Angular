@@ -46,7 +46,7 @@ export class DataExportComponent implements OnInit {
   constructor(private router: Router, private dataExportService: DataExportService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   res: any[];
   ngOnInit(): void {
-    this.dashBoardService.validate('dataExport');
+    this.dashBoardService.setApiPath('dataExport');
     this.result = [];
     this.dataExportService.getDescriptions().subscribe(
       (res) => {
@@ -111,7 +111,6 @@ export class DataExportComponent implements OnInit {
     });
   }
   startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType) {
-    this.dashBoardService.validate('dataExport');
     if (this.validateMandatoryInputs(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType)) {
       this.spinner.show();
       this.dataExportService.startDataDump(collectionGroupIds, date, emailToAddress, fetchType, imsDepositoryCodes, institutionCodes, outputFormat, requestingInstitutionCode, transmissionType, localStorage.getItem("userName")).subscribe(

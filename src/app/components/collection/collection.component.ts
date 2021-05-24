@@ -65,7 +65,7 @@ export class CollectionComponent implements OnInit {
   radioSwitchDeaccession: boolean;
   cgdAndDeaccessionDiv: boolean = false;
   ngOnInit(): void {
-    this.dashBoardService.validate('collection');
+    this.dashBoardService.setApiPath('collection');
     this.collectionForm = this.formBuilder.group({
       barcodeFieldName: ['']
     });
@@ -125,7 +125,6 @@ export class CollectionComponent implements OnInit {
     this.showresultdiv = false;
   }
   displayRecords() {
-    this.dashBoardService.validate('collection');
     this.spinner.show();
     this.barerrmsg = '';
     this.showresultdiv = true;
@@ -201,7 +200,6 @@ export class CollectionComponent implements OnInit {
   }
 
   openMarcView(bibid, barcode, itemId) {
-    this.dashBoardService.validate('collection');
     this.spinner.show();
     this.radioSwitchDeaccession = false;
     this.CGDselect = '';

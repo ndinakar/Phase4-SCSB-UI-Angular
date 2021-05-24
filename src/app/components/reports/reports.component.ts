@@ -17,7 +17,7 @@ var moment = require('moment-timezone');
 export class ReportsComponent implements OnInit {
   constructor(private router: Router, private reportsService: ReportsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   ngOnInit(): void {
-    this.dashBoardService.validate('reports');
+    this.dashBoardService.setApiPath('reports');
     this.spinner.hide();
     this.ReportShowBy = 'Partners';
     this.getInstitutions();
@@ -44,6 +44,17 @@ export class ReportsComponent implements OnInit {
     useBom: true,
     noDownload: false,
     headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use", "Item Barcode", "Date and Time of Request", "CGD Status", "Current Status"]
+  };
+  csvOptionsTransactionCount = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: 'Export Summary Report',
+    useBom: true,
+    noDownload: false,
+    headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use","CGD Status", "COUNT"]
   };
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
@@ -186,6 +197,7 @@ export class ReportsComponent implements OnInit {
   totalCount: any;
   showentriesTransaction: number = 10;
   itemListTransaction: any = [];
+  itemListTransactionCount: any = [];
 
   TYPE_LIST_USE = [
     'Retrieval',
@@ -401,6 +413,9 @@ export class ReportsComponent implements OnInit {
       this.transactionReportResultsDiv = false;
     }
   }
+  exportTransactionFullReport(){
+    console.log("Full Export TransactionReport");
+  }
   transactionReportExport(requestInstCodesList, owningnInstCodesList, cgdTypeList, totalCount) {
     if (!this.validateTransactionDateRange()) {
       this.spinner.show();
@@ -434,6 +449,13 @@ export class ReportsComponent implements OnInit {
     } else {
       this.transactionReportResultsDiv = false;
     }
+  }
+  exportTransactionCount(){
+    this.itemListTransactionCount = [];
+    this.spinner.hide();
+    var fileNmae = 'ExportTransactionRecords' + '_' +
+      new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
+    new AngularCsv(this.removePropertiesTrnsactionCount(this.transactionReportVal['transactionReportList']), fileNmae, this.csvOptionsTransactionCount);
   }
   validateTransactionDateRange() {
     this.statusRequest = false;
@@ -556,7 +578,7 @@ export class ReportsComponent implements OnInit {
     this.reportsService.exportExceptionReports(this.incompleteShowBy, this.dateFromException, this.dateToException).subscribe(
       (res) => {
         this.spinner.hide();
-        this.itemList= [];
+        this.itemList = [];
         var fileNmae = 'ExportRecords' + '_' +
           new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
         this.searchreqExceptionResultValExport = res;
@@ -589,7 +611,7 @@ export class ReportsComponent implements OnInit {
     return this.itemList;
   }
   removePropertiesTrnsaction(items) {
-      this.itemListTransaction = [];
+    this.itemListTransaction = [];
     for (var i = 0; i < items.length; i++) {
       var item = {};
       item['requestingInst'] = items[i].requestingInst;
@@ -605,12 +627,25 @@ export class ReportsComponent implements OnInit {
     }
     return this.itemListTransaction;
   }
+  removePropertiesTrnsactionCount(items) {
+    this.itemListTransactionCount = [];
+    for (var i = 0; i < items.length; i++) {
+      var item = {};
+      item['requestingInst'] = items[i].requestingInst;
+      item['owningInst'] = items[i].owningInst;
+      item['requestType'] = items[i].requestType;
+      item['cgd'] = items[i].cgd;
+      item['count'] = items[i].count;
+
+      this.itemListTransactionCount.push(item);
+    }
+    return this.itemListTransactionCount;
+  }
   toTimeZone(time) {
     var format = 'YYYY-MM-DD HH:mm:ss';
     return moment.utc(time).tz("America/New_York").format(format);
   }
   submitRequest() {
-    this.dashBoardService.validate('reports');
     this.requestToDateErrorText = false;
     this.showByErrorText = false;
     this.requestFromDateErrorText = false;
@@ -789,7 +824,6 @@ export class ReportsComponent implements OnInit {
     return (parseFloat(this.start) > parseFloat(this.end));
   }
   submitAccession() {
-    this.dashBoardService.validate('reports');
     this.accessionErrorText = false;
     this.deaccessionErrorText = false;
     this.accessionFromToError = false;
@@ -964,7 +998,6 @@ export class ReportsComponent implements OnInit {
     }
   }
   incompleteRecords() {
-    this.dashBoardService.validate('reports');
     this.incompleteResultsPage = false;
     this.incompleteErrorText = false;
     this.statusRequest = false;
@@ -1068,7 +1101,6 @@ export class ReportsComponent implements OnInit {
     this.transactionReportDiv = false;
   }
   enableCGDPage() {
-    this.dashBoardService.validate('reports');
     this.spinner.show();
     this.resetFields();
     this.reportsService.collectionGroupDesignation().subscribe(
@@ -1705,14 +1737,14 @@ export class ReportsComponent implements OnInit {
   }
 
   pullReports(reqType, index_req, index_owning, cgdType) {
-    this.typeOptions = ['RETRIEVAL','RECALL'];
+    this.typeOptions = ['RETRIEVAL', 'RECALL'];
     this.showentriesTransaction = 10;
     this.pullReportsData(reqType, index_req, index_owning, cgdType)
   }
-  pullReportsEDD(reqType, index_req, index_owning) {
+  pullReportsEDD(reqType, index_req, index_owning, cgdType) {
     this.typeOptions = ['EDD'];
     this.showentriesTransaction = 10;
-    this.pullReportsData(reqType, index_req, index_owning, '')
+    this.pullReportsData(reqType, index_req, index_owning, cgdType)
   }
   transactionfirstCall() {
     this.transactionReport(this.requestInstCodesList, this.owningnInstCodesList, this.cgdTypeList, this.totalCount);
@@ -1837,7 +1869,7 @@ export class ReportsComponent implements OnInit {
         if (reqType == 'Physical' && this.transactionReportVal['transactionReportList'][i].requestType != 'EDD') {
           count = this.transactionReportVal['transactionReportList'][i].cgd == CGD ? count + this.transactionReportVal['transactionReportList'][i].count : count;
         } else if (reqType != 'Physical' && this.transactionReportVal['transactionReportList'][i].requestType == 'EDD') {
-          count = count + this.transactionReportVal['transactionReportList'][i].count;
+          count = this.transactionReportVal['transactionReportList'][i].cgd == CGD ? count + this.transactionReportVal['transactionReportList'][i].count : count;
         }
       }
     }

@@ -1,19 +1,35 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
+import { DashBoardService } from './dashBoard/dash-board.service';
+
+enum CONSTANTS {
+    API_PATH = 'api_path'
+}
+
 @Injectable({
     providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
-    constructor() { }
+    constructor(private dashBoardService: DashBoardService) { }
     handleError(error: HttpErrorResponse) {
         return throwError(error);
     }
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
-        return next.handle(req)
+            let PATH = this.dashBoardService.refreshHeaders();
+        const authReq = req.clone({
+            headers: req.headers
+                .set(CONSTANTS.API_PATH, PATH)
+        });
+        return next.handle(authReq)
             .pipe(
+                tap(evt => {
+                    if (evt instanceof HttpResponse) {
+                        this.dashBoardService.validateUser(evt);
+                    }
+                }),
                 catchError(this.handleError)
             )
     };

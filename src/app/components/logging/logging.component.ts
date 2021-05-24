@@ -15,7 +15,7 @@ export class LoggingComponent implements OnInit {
   loggingURL: string;
   embedLogURL: string;
   ngOnInit(): void {
-    this.dashBoardService.validate_logging('monitoring');
+    this.dashBoardService.setApiPath('monitoring');
     this.monitoring.pullData().subscribe(
       (res) => {
         this.data = res;

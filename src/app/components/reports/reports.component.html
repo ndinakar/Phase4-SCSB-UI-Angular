@@ -55,7 +55,7 @@
                                                 <input id="TransactionReportRadio" name="ReportTypeoption" type="radio"
                                                     value="TransactionReport" (click)="enableTransactionReportPage()"
                                                     [checked]="isTransactionChecked">
-                                                Transactions Report
+                                                Transactions
                                             </label>
 
                                         </div>
@@ -1222,88 +1222,121 @@
                             </div>
                             <div *ngIf="transactionReportResultsIfRecordsDiv">
                                 <h4>Report Results</h4>
-                                <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
-                                <div class="sum_tra">Summary report of Transactions</div>
                                 <div id="Accession_Deaccession-tableview ">
                                     <div class="table-wrapper ">
                                         <table class="table table-striped text-center margin-btm-0 "
-                                            id="acessionDeaccessionTable " style="border-collapse: unset;">
+                                            id="acessionDeaccessionTable " style="border: 1px solid;">
                                             <thead class="tablesorter-headerRow ">
                                                 <tr>
-                                                    <th class="b_inst"
-                                                        [attr.colspan]="instVal['institutionList'].length + 1">
+                                                    <th  rowspan = "3" width="3%" class="inst_row" style="border: 1px solid;"></th>
+                                                    <th  rowspan = "3" width="3%" class="inst_row" style="border: 1px solid;"></th>
+                                                    <th  rowspan = "3" width="9%" class="inst_row" style="border: 1px solid;">CGD</th>
+                                                    <th colspan="8" class="b_inst" style="border: 1px solid;">
                                                         Borrowing Institution</th>
                                                 </tr>
                                                 <tr>
-                                                    <th class="b_inst" width="15%">Owning Institution</th>
-                                                    <th class="inst_row" *ngFor="let inst_h of instList_transactons">
+                                                    <th class="inst_row td_tr_border" width="40%" colspan="4">
+                                                        Retrieval/Recall</th>
+                                                    <th class="inst_row td_tr_border" width="35%" colspan="4">EDD</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="inst_row td_tr_border"
+                                                        *ngFor="let inst_h of instList_transactons">
+                                                        {{inst_h.name}}</th>
+                                                    <th class="inst_row td_tr_border"
+                                                        *ngFor="let inst_h of instList_transactons">
                                                         {{inst_h.name}}</th>
                                                 </tr>
-                                                <tr>
-                                                    <th class="b_inst"
-                                                        [attr.colspan]="instVal['institutionList'].length + 1">
-                                                        Physical Requests</th>
-                                                </tr>
                                             </thead>
-                                            <tbody *ngFor="let inst of instList_transactons; let i = index">
-                                                <tr>
-                                                    <td class="inst_row" id="inst_{{inst.name}}">{{inst.name}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="inst_col_td1">Committed</td>
-                                                    <td id="committed_{{inst.name}}_j"
-                                                        *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a
-                                                                (click)="pullReports('Physical',i,j,'Committed')">{{findCount('Physical',j,i,'Committed')}}</a></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="inst_col_td1">Shared</td>
-                                                    <td id="sahred{{inst.name}}_j"
-                                                        *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a
-                                                                (click)="pullReports('Physical',i,j,'Shared')">{{findCount('Physical',j,i,'Shared')}}</a></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="inst_col_td1">Open</td>
-                                                    <td id="open_{{inst.name}}_j"
-                                                        *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a
-                                                                (click)="pullReports('Physical',i,j,'Open')">{{findCount('Physical',j,i,'Open')}}</a></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="inst_col_td1">Uncommittable</td>
-                                                    <td id="uncommit_{{inst.name}}_j"
-                                                        *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a
-                                                                (click)="pullReports('Physical',i,j,'Uncommittable')">{{findCount('Physical',j,i,'Uncommittable')}}</a></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="inst_col_td1">Private</td>
-                                                    <td id="private_{{inst.name}}_j"
-                                                        *ngFor="let inst of instList_transactons;let j=index">
-                                                        <span class="cnt_dec_a"><a
-                                                                (click)="pullReports('Physical',i,j,'Private')">{{findCount('Physical',j,i,'Private')}}</a></span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
                                             <tbody>
-                                                <tr>
-                                                    <td class="sum_tra">EDD</td>
-                                                </tr>
-                                                <tr *ngFor="let inst of instList_transactons;let i =index">
-                                                    <td class="inst_row">{{inst.name}}</td>
-                                                    <td *ngFor="let inst of instList_transactons; let j = index">
-                                                        <span class="cnt_dec_a"><a
-                                                                (click)="pullReportsEDD('EDD',i,j)">{{findCount('EDD',j,i,'')}}</a></span>
+                                                <td rowspan="24" class="b_inst td_tr_border"
+                                                    style="white-space: nowrap;"><span class="rotate"> Owning
+                                                        Institution</span></td>
+                                                <ng-container *ngFor="let inst of instList_transactons; let i = index">
+                                                    <td rowspan="6" class="inst_row" id="inst_{{inst.name}}" style="border: 1px solid;">
+                                                        <span class="rotate"> {{inst.name}}</span>
                                                     </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td class="inst_col_td1 td_tr_border">Committed</td>
+                                                        <td class="td_tr_border" id="committed_{{inst.name}}_j"
+                                                            *ngFor="let inst of instList_transactons;let j=index">
+                                                            <span class="cnt_dec_a"><a
+                                                                    (click)="pullReports('Physical',i,j,'Committed')">{{findCount('Physical',j,i,'Committed')}}</a></span>
+                                                        </td>
+                                                        <td class="td_tr_border" id="committed_{{inst.name}}_j"
+                                                            *ngFor="let inst of instList_transactons;let j=index">
+                                                            <span class="cnt_dec_a"><a
+                                                                    (click)="pullReportsEDD('EDD',i,j,'Committed')">{{findCount('EDD',j,i,'Committed')}}</a></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="inst_col_td1 td_tr_border">Shared</td>
+                                                        <td class="td_tr_border" id="sahred{{inst.name}}_j"
+                                                            *ngFor="let inst of instList_transactons;let j=index">
+                                                            <span class="cnt_dec_a"><a
+                                                                    (click)="pullReports('Physical',i,j,'Shared')">{{findCount('Physical',j,i,'Shared')}}</a></span>
+                                                        </td>
+                                                        <td class="td_tr_border" id="sahred{{inst.name}}_j"
+                                                            *ngFor="let inst of instList_transactons;let j=index">
+                                                            <span class="cnt_dec_a"><a
+                                                                    (click)="pullReportsEDD('EDD',i,j,'Shared')">{{findCount('EDD',j,i,'Shared')}}</a></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="inst_col_td1 td_tr_border">Open</td>
+                                                        <td class="td_tr_border" id="open_{{inst.name}}_j"
+                                                            *ngFor="let inst of instList_transactons;let j=index">
+                                                            <span class="cnt_dec_a"><a
+                                                                    (click)="pullReports('Physical',i,j,'Open')">{{findCount('Physical',j,i,'Open')}}</a></span>
+                                                        </td>
+                                                        <td class="td_tr_border" id="open_{{inst.name}}_j"
+                                                            *ngFor="let inst of instList_transactons;let j=index">
+                                                            <span class="cnt_dec_a"><a
+                                                                    (click)="pullReportsEDD('EDD',i,j,'Open')">{{findCount('EDD',j,i,'Open')}}</a></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="inst_col_td1 td_tr_border">Uncommittable</td>
+                                                        <td class="td_tr_border" id="uncommit_{{inst.name}}_j"
+                                                            *ngFor="let inst of instList_transactons;let j=index">
+                                                            <span class="cnt_dec_a"><a
+                                                                    (click)="pullReports('Physical',i,j,'Uncommittable')">{{findCount('Physical',j,i,'Uncommittable')}}</a></span>
+                                                        </td>
+                                                        <td class="td_tr_border" id="uncommit_{{inst.name}}_j"
+                                                            *ngFor="let inst of instList_transactons;let j=index">
+                                                            <span class="cnt_dec_a"><a
+                                                                    (click)="pullReportsEDD('EDD',i,j,'Uncommittable')">{{findCount('EDD',j,i,'Uncommittable')}}</a></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="inst_col_td1 td_tr_border">Private</td>
+                                                        <td class="td_tr_border" id="private_{{inst.name}}_j"
+                                                            *ngFor="let inst of instList_transactons;let j=index">
+                                                            <span class="cnt_dec_a"><a
+                                                                    (click)="pullReports('Physical',i,j,'Private')">{{findCount('Physical',j,i,'Private')}}</a></span>
+                                                        </td>
+                                                        <td class="td_tr_border" id="private_{{inst.name}}_j"
+                                                            *ngFor="let inst of instList_transactons;let j=index">
+                                                            <span class="cnt_dec_a"><a
+                                                                    (click)="pullReportsEDD('EDD',i,j,'Private')">{{findCount('EDD',j,i,'Private')}}</a></span>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
+                                <div style="margin-top: 20px;">
+                                    <button class="btn btn-primary pull-right" id="export" name="action" type="button"
+                                        (click)="exportTransactionFullReport()" value="export"
+                                        style="margin-right: 10px;">Export
+                                        full detailed results(csv)
+                                    </button>
+                                    <button class="btn btn-primary pull-right" id="export" name="action" type="button"
+                                        (click)="exportTransactionCount()" value="export"
+                                        style="margin-right: 10px;">Export
+                                        summary report(csv)
+                                    </button>
                                 </div>
                             </div>
                         </div>
