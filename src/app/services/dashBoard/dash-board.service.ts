@@ -16,7 +16,9 @@ enum CONSTANTS {
   TIME_EST = 'EST',
   SPLIT_BY = '-',
   ERROR = 'error-page',
-  HOME = 'home'
+  HOME = 'home',
+  USER_AUTHENTICATED = 'user_authenticated',
+  FALSE = 'FALSE'
 }
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,8 @@ export class DashBoardService {
   res: Object;
   isAuthenticated = false;
   PREFIX = urls.DASHBOARD;
+  API_PATH : string ='search';
+
   checkPermission(prefix: string): Observable<boolean> {
     return this.httpClient.get<boolean>(prefix + "/checkPermission",
       appHeaders.httpOptions());
@@ -98,9 +102,15 @@ export class DashBoardService {
     this.router.navigate([CONSTANTS.ERROR]);
   }
   validateUser(response) {
-    if (response.headers.get('user_authenticated') == 'FALSE') {
+    if (response.headers.get(CONSTANTS.USER_AUTHENTICATED) == CONSTANTS.FALSE) {
       this.router.navigate([CONSTANTS.HOME]);
     }
+  }
+  refreshHeaders() {
+    return this.API_PATH;
+  }
+  setApiPath(path){
+    this.API_PATH = path;
   }
   setTimeZone(date) {
     if (date) {

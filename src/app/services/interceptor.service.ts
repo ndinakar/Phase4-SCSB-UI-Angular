@@ -18,9 +18,10 @@ export class InterceptorService implements HttpInterceptor {
     }
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
+            let PATH = this.dashBoardService.refreshHeaders();
         const authReq = req.clone({
             headers: req.headers
-                .set(CONSTANTS.API_PATH, 'search')
+                .set(CONSTANTS.API_PATH, PATH)
         });
         return next.handle(authReq)
             .pipe(
