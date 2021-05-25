@@ -43,13 +43,18 @@ export class SearchComponent implements OnInit {
   count: number;
   institutionsCount: number;
   storageLocationsCount: number;
+  cgdCount: number;
   countST: number;
+  countCGD : number;
   instList: any[];
   owningInstitutionInst: any[];
   storageLocationsList: any[];
+  cgdTypeList: any[];
   instVal: string[];
   storageLocationVal: string[];
+  cgdVal: string[];
   storageLocations: any = [];
+  cgdCodes: any[];
   fieldValue: string;
   searchVal: TreeNode[];
   selectedNodes1: any[];
@@ -191,6 +196,20 @@ export class SearchComponent implements OnInit {
       if (this.owningInstitutionInst.indexOf(item) != -1) {
         return true;
       }
+    }
+  }
+  checkedItemCGD(item){
+    if (this.cgdTypeList) {
+      if (this.cgdTypeList.indexOf(item) != -1) {
+        return true;
+      }
+    }
+  }
+  onChangeCGD(test,item){
+    if (test) {
+      this.cgdTypeList.push(item);
+    } else {
+      this.cgdTypeList.splice(this.cgdTypeList.indexOf(item), 1);
     }
   }
   onChange(test, item) {
@@ -404,6 +423,7 @@ export class SearchComponent implements OnInit {
     if (this.checked === true) {
       this.owningInstitutionInst = [];
       this.storageLocationsList = [];
+      this.cgdTypeList = [];
       this.checked = false;
       this.searchForm = this.formBuilder.group({
         fieldValue: [searchallvalue.fieldValue],
@@ -427,6 +447,7 @@ export class SearchComponent implements OnInit {
         (res) => {
           this.owningInstitutionInst = res['institutionList'];
           this.storageLocationsList = res['storageLocationsList'];
+          this.cgdTypeList = res['cgdCodesList'];
         });
       this.searchForm = this.formBuilder.group({
         fieldValue: [searchallvalue.fieldValue],
@@ -454,6 +475,7 @@ export class SearchComponent implements OnInit {
       (res) => {
         this.owningInstitutionInst = res['institutionList'];
         this.storageLocationsList = res['storageLocationsList'];
+        this.cgdTypeList = res['cgdCodesList'];
       });
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
@@ -500,14 +522,18 @@ export class SearchComponent implements OnInit {
         (res) => {
           this.storageLocationVal = res['storageLocationsList'];
           this.instVal = res['institutionList'];
+          this.cgdVal = res['cgdCodesList'];
           this.count = this.instVal.length;
           this.countST = this.storageLocationVal.length;
+          this.countCGD = this.cgdVal.length;
           this.institutionsCount = this.count;
           this.storageLocationsCount = this.countST;
+          this.cgdCount = this.countCGD;
           this.reportsService.getInstitutions().subscribe(
             (res) => {
               this.owningInstitutionInst = res['institutionList'];
               this.storageLocationsList = res['storageLocationsList'];
+              this.cgdTypeList = res['cgdCodesList'];
             },
             (error) => {
               this.dashBoardService.errorNavigation();
@@ -519,16 +545,8 @@ export class SearchComponent implements OnInit {
   validateInputs(searchfullrec) {
     this.owningInstitutions = this.owningInstitutionInst;
     this.storageLocations = this.storageLocationsList;
-    if (searchfullrec.shared == true) {
-      this.collectionGroupDesignations.push('Shared')
-    }
-    if (searchfullrec.private == true) {
-      this.collectionGroupDesignations.push('Private')
-    }
-    if (searchfullrec.open == true) {
-      this.collectionGroupDesignations.push('Open')
-    }
-
+    this.cgdCodes = this.cgdTypeList;
+    
     if (searchfullrec.Available == true) {
       this.availability.push('Available')
     }
@@ -611,7 +629,7 @@ export class SearchComponent implements OnInit {
       "fieldValue": searchfullrec.fieldValue,
       "fieldName": searchfullrec.fieldName,
       "owningInstitutions": this.owningInstitutions,
-      "collectionGroupDesignations": this.collectionGroupDesignations,
+      "collectionGroupDesignations": this.cgdCodes,
       "availability": this.availability,
       "materialTypes": this.materialTypes,
       "useRestrictions": this.useRestrictions,
