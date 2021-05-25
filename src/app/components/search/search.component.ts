@@ -546,17 +546,7 @@ export class SearchComponent implements OnInit {
     this.owningInstitutions = this.owningInstitutionInst;
     this.storageLocations = this.storageLocationsList;
     this.cgdCodes = this.cgdTypeList;
-
-    // if (searchfullrec.shared == true) {
-    //   this.collectionGroupDesignations.push('Shared')
-    // }
-    // if (searchfullrec.private == true) {
-    //   this.collectionGroupDesignations.push('Private')
-    // }
-    // if (searchfullrec.open == true) {
-    //   this.collectionGroupDesignations.push('Open')
-    // }
-
+    
     if (searchfullrec.Available == true) {
       this.availability.push('Available')
     }
