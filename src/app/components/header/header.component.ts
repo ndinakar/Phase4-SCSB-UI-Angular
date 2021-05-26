@@ -4,7 +4,8 @@ import { urls } from '@config/urls';
 import { environment } from 'src/environments/environment';
 import { RolesPermissionsService } from '@service/rolesPermissions/roles-permissions.service';
 enum CONSTANTS {
-  USER_DESC = 'userDesc'
+  USER_DESC = 'userDesc',
+  CSRF_TOKEN = 'CSRF-TOKEN'
 }
 @Component({
   selector: 'app-header',
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit {
   rolesRes: Object;
   constructor(private cookieService: CookieService,private rolesService: RolesPermissionsService) { }
   ngOnInit(): void {
-    this.url = environment.homeUrl + this.LOGOUT + this.cookieService.get('CSRF-TOKEN');
+    this.url = environment.homeUrl + this.LOGOUT + this.cookieService.get(CONSTANTS.CSRF_TOKEN);
     this.rolesRes = this.rolesService.getRes();
     if (this.rolesRes[CONSTANTS.USER_DESC]) {
       localStorage.setItem(CONSTANTS.USER_DESC, this.rolesRes[CONSTANTS.USER_DESC]);

@@ -18,7 +18,13 @@ enum CONSTANTS {
   ERROR = 'error-page',
   HOME = 'home',
   USER_AUTHENTICATED = 'user_authenticated',
-  FALSE = 'FALSE'
+  FALSE = 'FALSE',
+  FROZEN_INSTITUTIONS = '/getFrozenInstitutions',
+  SEARCH = 'search',
+  CHECK_PERMISSION = '/checkPermission',
+  LOGOUT = '/logout',
+  EMAIL = '/getEmail',
+  VERSION_NUMBER = '/getVersionNumberService'
 }
 @Injectable({
   providedIn: 'root'
@@ -29,73 +35,26 @@ export class DashBoardService {
   res: Object;
   isAuthenticated = false;
   PREFIX = urls.DASHBOARD;
-  API_PATH : string ='search';
+  API_PATH : string =CONSTANTS.SEARCH;
 
   checkPermission(prefix: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(prefix + "/checkPermission",
+    return this.httpClient.get<boolean>(prefix + CONSTANTS.CHECK_PERMISSION,
       appHeaders.httpOptions());
   }
   getVersionNumber(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/getVersionNumberService",
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + CONSTANTS.VERSION_NUMBER,
       {
         headers: appHeaders.getHeaders()
       });
   }
-  checkPermission_Monitoring(prefix: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(prefix + "/monitoring",
-      appHeaders.httpOptions());
-  }
-  checkPermission_Loggig(prefix: string): Observable<boolean> {
-    return this.httpClient.get<boolean>(prefix + "/logging",
-      appHeaders.httpOptions());
-  }
   getEmail(): Observable<TreeNode[]> {
-    return this.httpClient.get<TreeNode[]>(this.PREFIX + "/getEmail",
+    return this.httpClient.get<TreeNode[]>(this.PREFIX + CONSTANTS.EMAIL,
       {
         headers: appHeaders.getHeaders()
       });
   }
   logout(): void {
-    this.httpClient.get<any>("/logout", appHeaders.httpOptions());
-  }
-  validate_monitoring(prefix: string) {
-    this.checkPermission_Monitoring('/' + prefix).subscribe(
-      response => {
-        this.isAuthenticated = response;
-        if (this.isAuthenticated == false) {
-          this.router.navigate([CONSTANTS.HOME]);
-        }
-      },
-      (error) => {
-        this.router.navigate([CONSTANTS.HOME]);
-      }
-    );
-  }
-  validate_logging(prefix: string) {
-    this.checkPermission_Loggig('/' + prefix).subscribe(
-      response => {
-        this.isAuthenticated = response;
-        if (this.isAuthenticated == false) {
-          this.router.navigate([CONSTANTS.HOME]);
-        }
-      },
-      (error) => {
-        this.router.navigate([CONSTANTS.HOME]);
-      }
-    );
-  }
-  validate(prefix) {
-    this.checkPermission('/' + prefix).subscribe(
-      response => {
-        this.isAuthenticated = response;
-        if (this.isAuthenticated == false) {
-          this.router.navigate([CONSTANTS.HOME]);
-        }
-      },
-      (error) => {
-        this.router.navigate([CONSTANTS.HOME]);
-      }
-    );
+    this.httpClient.get<any>(CONSTANTS.LOGOUT, appHeaders.httpOptions());
   }
   errorNavigation() {
     this.spinner.hide();
@@ -126,7 +85,7 @@ export class DashBoardService {
   }
 
   getFrozenInstitutionMessages(): Observable<string[]> {
-    return this.httpClient.get<string[]>(this.PREFIX + "/getFrozenInstitutions", { headers: appHeaders.getHeaders() });
+    return this.httpClient.get<string[]>(this.PREFIX + CONSTANTS.FROZEN_INSTITUTIONS, { headers: appHeaders.getHeaders() });
   }
 
 }
