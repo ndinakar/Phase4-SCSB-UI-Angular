@@ -62,6 +62,7 @@ export class DashBoardService {
   }
   validateUser(response) {
     if (response.headers.get(CONSTANTS.USER_AUTHENTICATED) == CONSTANTS.FALSE) {
+      this.spinner.hide();
       this.router.navigate([CONSTANTS.HOME]);
     }
   }

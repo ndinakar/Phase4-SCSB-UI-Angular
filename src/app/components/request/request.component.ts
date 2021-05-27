@@ -1340,6 +1340,7 @@ export class RequestComponent implements OnInit {
 
   }
   firstCall() {
+    this.spinner.show();
     this.showentries = this.searchreqResultVal['pageSize'];
     this.postData = {
       "requestId": null,
@@ -1397,6 +1398,7 @@ export class RequestComponent implements OnInit {
     }
     this.requestService.firstCall(this.postData).subscribe(
       (res) => {
+        this.spinner.hide();
         this.searchreqResultVal = res;
         this.pagination();
       },
@@ -1406,6 +1408,7 @@ export class RequestComponent implements OnInit {
 
   }
   previousCall() {
+    this.spinner.show();
     this.showentries = this.searchreqResultVal['pageSize'];
     this.postData = {
       "requestId": null,
@@ -1463,6 +1466,7 @@ export class RequestComponent implements OnInit {
     }
     this.requestService.previousCall(this.postData).subscribe(
       (res) => {
+        this.spinner.hide();
         this.searchreqResultVal = res;
         this.pagination();
       },
@@ -1471,6 +1475,7 @@ export class RequestComponent implements OnInit {
       });
   }
   nextCall() {
+    this.spinner.show();
     this.showentries = this.searchreqResultVal['pageSize'];
     this.postData = {
       "requestId": null,
@@ -1528,6 +1533,7 @@ export class RequestComponent implements OnInit {
     }
     this.requestService.nextCall(this.postData).subscribe(
       (res) => {
+        this.spinner.hide();
         this.searchreqResultVal = res;
         this.pagination();
       },
@@ -1536,6 +1542,7 @@ export class RequestComponent implements OnInit {
       });
   }
   lastCall() {
+    this.spinner.show();
     this.showentries = this.searchreqResultVal['pageSize'];
     this.postData = {
       "requestId": null,
@@ -1593,6 +1600,7 @@ export class RequestComponent implements OnInit {
     }
     this.requestService.lastCall(this.postData).subscribe(
       (res) => {
+        this.spinner.hide();
         this.searchreqResultVal = res;
         this.pagination();
       },
@@ -1602,6 +1610,7 @@ export class RequestComponent implements OnInit {
   }
 
   onPageSizeChange(value) {
+    this.spinner.show();
     this.showentries = value;
     this.postData = {
       "requestId": null,
@@ -1659,6 +1668,7 @@ export class RequestComponent implements OnInit {
     }
     this.requestService.onRequestPageSizeChange(this.postData).subscribe(
       (res) => {
+        this.spinner.hide();
         this.searchreqResultVal = res;
         this.pagination();
       },
