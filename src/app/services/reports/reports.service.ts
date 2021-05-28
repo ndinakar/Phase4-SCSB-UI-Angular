@@ -139,4 +139,10 @@ export class ReportsService {
         headers: appHeaders.getHeaders()
       });
   }
+  submitCollcetionReport(postData): Observable<TreeNode[]> {
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/submitCollcetionReport", postData,
+      {
+        headers: appHeaders.getHeaders()
+      });
+  }
 }
