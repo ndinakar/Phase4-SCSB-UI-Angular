@@ -139,4 +139,14 @@ export class ReportsService {
         headers: appHeaders.getHeaders()
       });
   }
+  submitCollcetionReport(postData,from,to): Observable<TreeNode[]> {
+    let headers = appHeaders.getHeaders_formData();
+    let parames = new HttpParams()
+      .set('fromDate', from)
+      .set('toDate', to)
+    const options = {
+      params: parames, headers: headers
+    };
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/submitCollcetionReport", postData,options);
+  }
 }
