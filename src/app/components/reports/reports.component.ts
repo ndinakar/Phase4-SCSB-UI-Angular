@@ -345,8 +345,6 @@ export class ReportsComponent implements OnInit {
     "errorMessage": "",
     "from":"",
     "to":"",
-    "fromDate": null,
-    "toDate": null,
     "exportEnabled": false
 }
   postDataTransaction = {
@@ -605,12 +603,10 @@ export class ReportsComponent implements OnInit {
         "errorMessage": "",
         "from":"",
         "to":"",
-        "fromDate": this.toDate(this.RequestExceptionDateRangefrom),
-        "toDate": this.toDate(this.RequestExceptionDateRangeto),
         "exportEnabled": this.isExport
       }
       this.spinner.show();
-      this.reportsService.submitCollcetionReport(this.postDataSC).subscribe(
+      this.reportsService.submitCollcetionReport(this.postDataSC,this.dateFromException,this.dateToException).subscribe(
         (res) => {
           this.spinner.hide();
           this.submitCollectionResultVal = res;
@@ -1203,11 +1199,23 @@ export class ReportsComponent implements OnInit {
     this.submitExceptionsReportDiv = false;
   }
   enableSubmitCollection(){
+    this.spinner.hide();
+    this.resetFields();
+    this.accesionPage = false;
+    this.cgdPage = false;
+    this.incompletePage = false;
+    this.requestToDateErrorText = false;
+    this.showByErrorText = false;
+    this.requestFromDateErrorText = false;
+    this.requestFromToError = false;
+    this.requestResultsPage = false;
+    this.requestExceptionReportDiv = false;
+    this.transactionReportDiv = false;
+    this.submitExceptionsReportDiv = false;
     this.transactionReportDiv = false;
     this.requestPage = false;
     this.requestExceptionReportDiv = false;
     this.isSubmitCollection = true;
-    this.submitCollectionDiv = true;
     this.submitExceptionsReportDiv = true;
   }
   enableRequestPage() {
