@@ -158,6 +158,7 @@ export class SearchComponent implements OnInit {
   validateCols1 = [
     { field: 'callNumber', header: 'Call Number' },
     { field: 'chronologyAndEnum', header: 'Chronology & Enum' },
+    { field: 'imsLocation', header: 'SL' },
     { field: 'customerCode', header: 'CC' },
     { field: 'collectionGroupDesignation', header: 'CGD' },
     { field: 'useRestriction', header: 'Use Restriction' },
