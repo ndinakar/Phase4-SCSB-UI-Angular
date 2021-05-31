@@ -1217,6 +1217,9 @@ export class ReportsComponent implements OnInit {
     this.requestExceptionReportDiv = false;
     this.isSubmitCollection = true;
     this.submitExceptionsReportDiv = true;
+    this.submitCollectionDiv = false;
+    this.submotCollectionEntriesDiv = false;
+    this.submotCollectionResultsDiv = false;
   }
   enableRequestPage() {
     this.spinner.hide();
@@ -1233,6 +1236,9 @@ export class ReportsComponent implements OnInit {
     this.requestExceptionReportDiv = false;
     this.transactionReportDiv = false;
     this.submitExceptionsReportDiv = false;
+    this.submitCollectionDiv = false;
+    this.submotCollectionEntriesDiv = false;
+    this.submotCollectionResultsDiv = false;
   }
   enableAccessionPage() {
     this.spinner.hide();
@@ -1249,6 +1255,9 @@ export class ReportsComponent implements OnInit {
     this.requestExceptionReportDiv = false;
     this.transactionReportDiv = false;
     this.submitExceptionsReportDiv = false;
+    this.submitCollectionDiv = false;
+    this.submotCollectionEntriesDiv = false;
+    this.submotCollectionResultsDiv = false;
   }
   enableCGDPage() {
     this.spinner.show();
@@ -1275,6 +1284,9 @@ export class ReportsComponent implements OnInit {
           this.incompletePage = false;
           this.requestExceptionReportDiv = false;
           this.submitExceptionsReportDiv = false;
+          this.submitCollectionDiv = false;
+          this.submotCollectionEntriesDiv = false;
+          this.submotCollectionResultsDiv = false;
         }
       },
       (error) => {
@@ -1289,6 +1301,9 @@ export class ReportsComponent implements OnInit {
     this.accesionPage = false;
     this.cgdPage = false;
     this.incompletePage = true;
+    this.submitCollectionDiv = false;
+    this.submotCollectionEntriesDiv = false;
+    this.submotCollectionResultsDiv = false;
     this.resetFields();
     this.getInstitutions();
   }
