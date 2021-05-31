@@ -411,7 +411,7 @@
                             col.field == 'title' &&
                             rowData.availability == 'Not Available'
                           " style="width: 20px; height: 25px; margin-bottom: 3px" />
-                                                <img class="status" src="../../../../assets/images/mixed.png" alt="Out"
+                                                <img class="status" src="../../../../assets/images/mixed.png" alt="Partial"
                                                     *ngIf="
                             col.field == 'title' &&
                             rowData.availability == 'MixedStatus'
@@ -420,9 +420,11 @@
                                                     [queryParams]="{ bibId: rowData['bibId'] }"
                                                     *ngIf="col.field == 'title'"
                                                     style="cursor: pointer">&nbsp;&nbsp;{{ rowData[col.field] }}</a><span
-                                                    *ngIf="col.field != 'title'">{{
+                                                    *ngIf="col.field != 'title' && col.field != 'imsLocation'">{{
                           rowData[col.field]
-                        }}</span>
+                        }}</span><span *ngIf="col.field == 'imsLocation' && rowData.searchItemResultRows == ''">{{
+                            rowData[col.field]
+                          }}</span><span *ngIf="col.field == 'imsLocation' && rowData.searchItemResultRows != ''"></span>
                                             </td>
                                         </tr>
                                     </ng-template>
