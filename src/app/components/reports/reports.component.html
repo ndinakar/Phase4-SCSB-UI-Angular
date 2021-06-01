@@ -62,7 +62,7 @@
                                                 <input id="submitCollection" name="ReportTypeoption" type="radio"
                                                     value="submitCollection" (click)="enableSubmitCollection()"
                                                     [checked]="isSubmitCollection">
-                                                Submit Collecction Exceptions
+                                                Submit Collection Exceptions
                                             </label>
                                         </div>
                                     </div>
@@ -590,6 +590,26 @@
                                                                 <span>{{PrivateRes.privateCgdCount | number}}</span>
                                                             </td>
                                                         </tr>
+                                                        <tr class="border-style-top-white results ">
+                                                            <td class="v-middle-data gray-dark fontcolor-white large-font results "
+                                                                style="font-family:sans-serif; ">
+                                                                Committed
+                                                            </td>
+                                                            <td class="results "
+                                                                *ngFor=" let CommittedRes of reportstVal[ 'reportsInstitutionFormList'] ">
+                                                                <span>{{CommittedRes.committedCgdCount | number}}</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="border-style-top-white results ">
+                                                            <td class="v-middle-data gray-dark fontcolor-white large-font results "
+                                                                style="font-family:sans-serif; ">
+                                                                Uncommittable
+                                                            </td>
+                                                            <td class="results "
+                                                                *ngFor=" let UncommittableRes of reportstVal[ 'reportsInstitutionFormList'] ">
+                                                                <span>{{UncommittableRes.uncommittableCgdCount | number}}</span>
+                                                            </td>
+                                                        </tr>
                                                         <tr
                                                             class="bgcolored large-font fontcolor-dark border-style-top-white results ">
                                                             <td class="v-middle-data gray-dark fontcolor-white results "
@@ -1076,7 +1096,7 @@
                             <div style="margin-top: 20px;">
                                 <button class="btn btn-primary pull-right" id="export" name="action" type="button"
                                     (click)="exportExceptionRecords()" value="export" style="margin-right: 10px;">Export
-                                    Report to CSV
+                                    Report to csv
                                 </button>
                             </div>
                         </div>
@@ -1446,7 +1466,7 @@
                         <button class="btn btn-primary pull-right" id="export" name="action" type="button"
                             (click)="transactionReportsExport()" value="export" style="margin-right: 10px;">Export
                             Report to
-                            CSV
+                            csv
                         </button>
                     </div>
                     <div class="search-results-container" *ngIf="submitExceptionsReportDiv">
@@ -1620,7 +1640,7 @@
                                     <button class="btn btn-primary pull-right" id="export" name="action" type="button"
                                         (click)="exportSubmitCollectionReport()" value="export"
                                         style="margin-right: 20px;margin-top: 10px;cursor: pointer;" >Export
-                                        Report to CSV
+                                        Report to csv
                                     </button>
                                 </div>
                             </div>

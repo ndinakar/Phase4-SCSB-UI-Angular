@@ -83,6 +83,8 @@ export class UserRolesComponent implements OnInit {
   emailIdErrMsgDiv = false;
   showUserSearchView = true;
   usersList: any = [];
+  clickable = false;
+  exportResultsDiv = false;
   csvOptionsTransaction = {
     fieldSeparator: ',',
     quoteStrings: '"',
@@ -220,6 +222,8 @@ export class UserRolesComponent implements OnInit {
           this.searchRowResultsDiv = false;
           this.totalRecordsCountDiv = false;
           this.userRolePaginationDiv = false;
+          this.clickable = true;
+          this.exportResultsDiv = false;
         } else {
           this.pagination();
           this.searchResultContainerDiv = true;
@@ -233,6 +237,8 @@ export class UserRolesComponent implements OnInit {
           this.searchRowResultsDiv = true;
           this.totalRecordsCountDiv = true;
           this.userRolePaginationDiv = true;
+          this.clickable = false;
+          this.exportResultsDiv = true;
         }
         this.spinner.hide();
       },
