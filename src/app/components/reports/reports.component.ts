@@ -54,7 +54,7 @@ export class ReportsComponent implements OnInit {
     title: 'Export Summary Report',
     useBom: true,
     noDownload: false,
-    headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use","CGD Status", "COUNT"]
+    headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use", "CGD Status", "COUNT"]
   };
   csvOptionsSC = {
     fieldSeparator: ',',
@@ -145,7 +145,7 @@ export class ReportsComponent implements OnInit {
   pageSize: number;
   totalPageCount: number = 0;
   totalPageCountSC: number = 0;
-  totalRecordsCountSC : number = 0;
+  totalRecordsCountSC: number = 0;
   incompletePageNumber: number;
   incompletePageSize = 10;
   incompleteTotalPageCount: 0;
@@ -163,6 +163,7 @@ export class ReportsComponent implements OnInit {
   requestExceptionReportDiv = false;
   searchreqExceptionResultVal: TreeNode[];
   submitCollectionResultVal: TreeNode[];
+  submitCollectionResultExportVal: TreeNode[];
   searchreqExceptionResultValExport: TreeNode[];
   ExceptionReportsResultsDiv = false;
 
@@ -219,7 +220,7 @@ export class ReportsComponent implements OnInit {
   submitExceptionsReportDiv = false;
   submotCollectionEntriesDiv = false;
   submotCollectionResultsDiv = false;
-  isExport : boolean = false;
+  isExport: boolean = false;
   TYPE_LIST_USE = [
     'Retrieval',
     'EDD',
@@ -343,10 +344,10 @@ export class ReportsComponent implements OnInit {
     "submitCollectionResultsRows": null,
     "institutionName": null,
     "errorMessage": "",
-    "from":"",
-    "to":"",
+    "from": "",
+    "to": "",
     "exportEnabled": false
-}
+  }
   postDataTransaction = {
     "totalRecordsCount": "0",
     "pageNumber": 0,
@@ -446,7 +447,7 @@ export class ReportsComponent implements OnInit {
       this.transactionReportResultsDiv = false;
     }
   }
-  exportTransactionFullReport(){
+  exportTransactionFullReport() {
     if (!this.validateTransactionDateRange()) {
       this.typeOptionsPrevious = this.typeOptions;
       this.spinner.show();
@@ -475,7 +476,7 @@ export class ReportsComponent implements OnInit {
           var fileNmae = 'FullExportTransactionRecords' + '_' +
             new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
           new AngularCsv(this.removePropertiesTrnsaction(this.transactionReportFullExportVal['transactionReportList']), fileNmae, this.csvOptionsTransaction);
-        
+
         },
         (error) => {
           this.dashBoardService.errorNavigation();
@@ -518,7 +519,7 @@ export class ReportsComponent implements OnInit {
       this.transactionReportResultsDiv = false;
     }
   }
-  exportTransactionCount(){
+  exportTransactionCount() {
     this.itemListTransactionCount = [];
     this.spinner.hide();
     var fileNmae = 'ExportTransactionRecords' + '_' +
@@ -591,50 +592,56 @@ export class ReportsComponent implements OnInit {
     }
     return this.statusRequest;
   }
-  submitCollectionReportGenerate(){
+  submitCollectionReportGenerate() {
     if (!this.validateExceptionDateRange()) {
-      this.postDataSC ={
+      this.postDataSC = {
         "pageNumber": this.pageNumber,
         "pageSize": this.showentries,
         "totalRecordsCount": this.totalRecordsCountSC,
         "totalPageCount": this.totalPageCountSC,
         "submitCollectionResultsRows": null,
-        "institutionName":this.incompleteShowBy,
+        "institutionName": this.incompleteShowBy,
         "errorMessage": "",
-        "from":"",
-        "to":"",
+        "from": "",
+        "to": "",
         "exportEnabled": this.isExport
       }
       this.spinner.show();
-      this.reportsService.submitCollcetionReport(this.postDataSC,this.dateFromException,this.dateToException).subscribe(
-        (res) => {
-          this.spinner.hide();
-          this.submitCollectionResultVal = res;
-          if (this.submitCollectionResultVal['errorMessage']) {
-            this.submitCollectionDiv = true;
-            this.submotCollectionResultsDiv = false;
-            this.submotCollectionEntriesDiv =  false;
-            this.messageNoSearchRecords = true;
-          } else {
-            if(this.isExport == false){
-            this.submitCollectionDiv = true;
-            this.submotCollectionResultsDiv = true;
-            this.submotCollectionEntriesDiv =  true;
-            this.messageNoSearchRecords = false;
-            this.paginationSC();
+      if (this.isExport == false) {
+        this.reportsService.submitCollcetionReport(this.postDataSC, this.dateFromException, this.dateToException).subscribe(
+          (res) => {
+            this.spinner.hide();
+            this.submitCollectionResultVal = res;
+            if (this.submitCollectionResultVal['errorMessage']) {
+              this.submitCollectionDiv = true;
+              this.submotCollectionResultsDiv = false;
+              this.submotCollectionEntriesDiv = false;
+              this.messageNoSearchRecords = true;
             } else {
-              this.itemListTransactionCount = [];
-              this.spinner.hide();
-              var fileNmae = 'ExportSubmitCollectionExceptionsRecords' + '_' +
-                new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
-              new AngularCsv(this.removePropertiesSC(this.submitCollectionResultVal['submitCollectionResultsRows']), fileNmae, this.csvOptionsSC);
-            
+              this.submitCollectionDiv = true;
+              this.submotCollectionResultsDiv = true;
+              this.submotCollectionEntriesDiv = true;
+              this.messageNoSearchRecords = false;
+              this.paginationSC();
             }
-          }
-        },
-        (error) => {
-          this.dashBoardService.errorNavigation();
-        });
+          },
+          (error) => {
+            this.dashBoardService.errorNavigation();
+          });
+      } else {
+        this.reportsService.submitCollcetionReport(this.postDataSC, this.dateFromException, this.dateToException).subscribe(
+          (res) => {
+            this.spinner.hide();
+            this.submitCollectionResultExportVal = res;
+            this.itemListTransactionCount = [];
+            this.spinner.hide();
+            var fileNmae = 'ExportSubmitCollectionExceptionsRecords' + '_' +
+              new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
+            new AngularCsv(this.removePropertiesSC(this.submitCollectionResultExportVal['submitCollectionResultsRows']), fileNmae, this.csvOptionsSC);
+          }, (error) => {
+            this.dashBoardService.errorNavigation();
+          });
+      }
     }
   }
   removePropertiesSC(items) {
@@ -1198,7 +1205,7 @@ export class ReportsComponent implements OnInit {
     this.transactionReportDiv = true;
     this.submitExceptionsReportDiv = false;
   }
-  enableSubmitCollection(){
+  enableSubmitCollection() {
     this.spinner.hide();
     this.resetFields();
     this.accesionPage = false;
@@ -2071,44 +2078,44 @@ export class ReportsComponent implements OnInit {
   timezone(date) {
     return this.dashBoardService.setTimeZone(date);
   }
-  firstCallSC(){
+  firstCallSC() {
     this.isExport = false;
     this.pageNumber = 0;
     this.pageSize = this.showentries;
     this.submitCollectionReportGenerate();
   }
-  previousCallSC(){
+  previousCallSC() {
     this.isExport = false;
-    this.pageNumber = this.submitCollectionResultVal['pageNumber']-1;
+    this.pageNumber = this.submitCollectionResultVal['pageNumber'] - 1;
     this.submitCollectionCall();
   }
-  nextCallSC(){
+  nextCallSC() {
     this.isExport = false;
-    this.pageNumber = this.submitCollectionResultVal['pageNumber']+1;
+    this.pageNumber = this.submitCollectionResultVal['pageNumber'] + 1;
     this.submitCollectionCall();
   }
-  lastCallSC(){
+  lastCallSC() {
     this.isExport = false;
-    this.pageNumber = this.submitCollectionResultVal['totalPageCount']-1;
+    this.pageNumber = this.submitCollectionResultVal['totalPageCount'] - 1;
     this.submitCollectionCall();
   }
-  scPageSizeChange(size){
+  scPageSizeChange(size) {
     this.isExport = false;
-    this.pageNumber =0;
+    this.pageNumber = 0;
     this.submitCollectionCall();;
   }
-  submitCollectionGenerate(){
+  submitCollectionGenerate() {
     this.isExport = false;
-    this.pageNumber =0;
+    this.pageNumber = 0;
     this.showentries = 10;
     this.submitCollectionReportGenerate();
   }
 
-  exportSubmitCollectionReport(){
+  exportSubmitCollectionReport() {
     this.isExport = true;
     this.submitCollectionCall();
   }
-  submitCollectionCall(){
+  submitCollectionCall() {
     this.totalPageCountSC = this.submitCollectionResultVal['totalPageCount'];
     this.totalRecordsCountSC = this.submitCollectionResultVal['totalRecordsCount'];
     this.submitCollectionReportGenerate();

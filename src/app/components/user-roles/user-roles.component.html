@@ -186,11 +186,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div style="margin-top: 20px;">
+                                        <div style="margin-top: 20px;" *ngIf="exportResultsDiv">
                                             <button class="btn btn-primary pull-right" id="export" name="action"
-                                                type="button" (click)="exportUsers()" value="export"
+                                                type="button" [disabled]="clickable" (click)="exportUsers()" value="export"
                                                 style="margin-top: 17px;margin-right: 25px;">Export
-                                                Report to CSV
+                                                Report to csv
                                             </button>
                                         </div>
                                     </div>
