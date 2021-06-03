@@ -1427,7 +1427,7 @@
                                             <td id="colData_di_de_{{i}} "><span
                                                     id="ownInstDeacc_{{i}} ">{{records.requestType}}</span></td>
                                             <td id="colData_ib_de_{{i}} "><span>{{records.itemBarcode}}</span></td>
-                                            <td id="colData_cgd_de_{{i}} "><span>{{records.createdDate}}</span></td>
+                                            <td id="colData_cgd_de_{{i}} "><span>{{records.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(records.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}</span></td>
                                             <td id="colData_dn_de_{{i}} "><span>{{records.cgd}}</span></td>
                                             <td id="colData_dcb_de_{{i}} "><span>{{records.requestStatus}}</span></td>
                                         </tr>
@@ -1592,6 +1592,7 @@
                                                 <th>Customer Code</th>
                                                 <th>Owning Institution</th>
                                                 <th>Report Type</th>
+                                                <th>Submit Date</th>
                                                 <th width="30%">Message</th>
                                             </tr>
                                         </thead>
@@ -1604,6 +1605,8 @@
                                                 <td class="center-text" id="data_oi_{{i}}">{{ item.owningInstitution }}
                                                 </td>
                                                 <td class="center-text" id="data_dl_{{i}}">{{ item.reportType }}
+                                                </td>
+                                                <td class="center-text" id="data_dl_{{i}}">{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}
                                                 </td>
                                                 <td class="center-text" id="data_rt_{{i}}">{{ item.message }}</td>
                                             </tr>
