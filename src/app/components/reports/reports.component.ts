@@ -65,7 +65,7 @@ export class ReportsComponent implements OnInit {
     title: 'Export Submit Collection Reports',
     useBom: true,
     noDownload: false,
-    headers: ["Item Barcode", "Customer Code", "Owning Institution", "Report Type", "Message"]
+    headers: ["Item Barcode", "Customer Code", "Owning Institution", "Report Type","Submit Date", "Message"]
   };
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
@@ -652,6 +652,7 @@ export class ReportsComponent implements OnInit {
       item['customerCode'] = items[i].customerCode;
       item['owningInstitution'] = items[i].owningInstitution;
       item['reportType'] = items[i].reportType;
+      item['createdDate'] = items[i].createdDate;
       item['message'] = items[i].message;
       this.itemListTransactionCount.push(item);
     }
