@@ -22,7 +22,7 @@
                                             <input class="form-control" id="fieldValue" name="fieldValue" type="search"
                                                 (keyup)="clearFieldvalue()" formControlName="fieldValue"
                                                 placeholder="Type Text Here....." />
-                                            <span class="add-clear-x form-control-feedback glyphicon glyphicon-remove"
+                                            <span *ngIf="clearSearchTextCross" class="add-clear-x form-control-feedback glyphicon glyphicon-remove"
                                                 id="clearSearchText" style="
                           color: rgb(12, 12, 12);
                           cursor: pointer;

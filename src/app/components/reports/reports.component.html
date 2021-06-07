@@ -1413,6 +1413,8 @@
                                             <th style="font-family:sans-serif; ">Requesting Institution</th>
                                             <th style="font-family:sans-serif; ">Owning Institution</th>
                                             <th style="font-family:sans-serif; ">RT/Type of Use</th>
+                                            <th style="font-family:sans-serif; ">Call Number</th>
+                                            <th style="font-family:sans-serif; ">Storage Location</th>
                                             <th style="font-family:sans-serif; ">Item Barcode</th>
                                             <th style="font-family:sans-serif; ">Date and Time of Request</th>
                                             <th style="font-family:sans-serif; ">CGD Status</th>
@@ -1426,6 +1428,8 @@
                                             <td id="colData_dd_de_{{i}} "><span>{{records.owningInst}}</span></td>
                                             <td id="colData_di_de_{{i}} "><span
                                                     id="ownInstDeacc_{{i}} ">{{records.requestType}}</span></td>
+                                            <td id="colData_ib_de_{{i}} "><span>{{records.callNumber}}</span></td>
+                                            <td id="colData_ib_de_{{i}} "><span>{{records.imsLocation}}</span></td>
                                             <td id="colData_ib_de_{{i}} "><span>{{records.itemBarcode}}</span></td>
                                             <td id="colData_cgd_de_{{i}} "><span>{{records.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(records.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}</span></td>
                                             <td id="colData_dn_de_{{i}} "><span>{{records.cgd}}</span></td>

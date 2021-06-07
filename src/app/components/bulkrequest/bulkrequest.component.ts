@@ -370,7 +370,7 @@ export class BulkrequestComponent implements OnInit {
     if (this.searchRequestVal != null && this.searchRequestVal != undefined) {
       let searchResults = this.searchRequestVal['bulkSearchResultRows'];
       searchResults.forEach((item, index) => {
-        if (item.status == 'PROCESSING ...' || item.status == 'PENDING') {
+        if (item.status == 'IN_PROCESS') {
           statusJson.status.push(item.requestId + '-' + index);
         }
       });
@@ -440,7 +440,7 @@ export class BulkrequestComponent implements OnInit {
           this.pagination();
           var refreshStatus = this.refreshRequestStatus();
           if (refreshStatus) {
-            this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
+            this.interval = setInterval(this.refreshRequestStatus.bind(this), 50000);
           }
         }
       },
