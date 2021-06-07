@@ -76,6 +76,7 @@ export class BulkrequestComponent implements OnInit {
   dataDecode: string;
   file: File = null;
   storageLocation: string;
+  interval: any;
   constructor(private bulkrequestService: BulkRequestService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
 
   ngOnInit(): void {
@@ -361,8 +362,26 @@ export class BulkrequestComponent implements OnInit {
     this.patronBarcodeErrorMessage = false;
     this.EmailMandatoryErrorMessage = false;
   }
+  refreshRequestStatus(): boolean {
+    let refreshStatus = false;
+    let statusJson = {
+      "status": []
+    };
+    if (this.searchRequestVal != null && this.searchRequestVal != undefined) {
+      let searchResults = this.searchRequestVal['bulkSearchResultRows'];
+      searchResults.forEach((item, index) => {
+        if (item.status == 'IN_PROCESS') {
+          statusJson.status.push(item.requestId + '-' + index);
+        }
+      });
 
-  //**********************search Request start*******************
+      if (statusJson.status.length > 0) {
+        refreshStatus = true;
+        this.searchRequests();
+      }
+    }
+    return refreshStatus;
+  }
   searchRequests() {
     this.postData = {
       "requestId": null,
@@ -410,14 +429,19 @@ export class BulkrequestComponent implements OnInit {
     this.bulkrequestService.searchRequest(this.postData).subscribe(
       (res) => {
         this.searchRequestVal = res;
-        this.results_container = true;
-        this.results_container_table = true;
-        this.errorResponse = false;
-        this.pagination();
-        if (this.searchRequestVal['message'] != null) {
+        if (this.searchRequestVal['message'] != null || this.searchRequestVal['totalRecordsCount'] == 0) {
           this.errorResponse = true;
           this.results_container = false;
           this.results_container_table = false;
+        } else {
+          this.results_container = true;
+          this.results_container_table = true;
+          this.errorResponse = false;
+          this.pagination();
+          var refreshStatus = this.refreshRequestStatus();
+          if (refreshStatus) {
+            this.interval = setInterval(this.refreshRequestStatus.bind(this), 50000);
+          }
         }
       },
       (error) => {

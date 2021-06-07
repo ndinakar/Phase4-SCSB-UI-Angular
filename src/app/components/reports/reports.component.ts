@@ -43,7 +43,7 @@ export class ReportsComponent implements OnInit {
     title: 'Export Transaction Reports',
     useBom: true,
     noDownload: false,
-    headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use", "Item Barcode", "Date and Time of Request", "CGD Status", "Current Status"]
+    headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use","Call Number","Storage Location", "Item Barcode", "Date and Time of Request", "CGD Status", "Current Status"]
   };
   csvOptionsTransactionCount = {
     fieldSeparator: ',',
@@ -751,7 +751,8 @@ export class ReportsComponent implements OnInit {
       item['requestingInst'] = items[i].requestingInst;
       item['owningInst'] = items[i].owningInst;
       item['requestType'] = items[i].requestType;
-
+      item['callNumber'] = items[i].requestType;
+      item['imsLocation'] = items[i].requestType;
       item['itemBarcode'] = items[i].itemBarcode;
       item['createdDate'] = this.toTimeZone(items[i].createdDate);
       item['cgd'] = items[i].cgd;

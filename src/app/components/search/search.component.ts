@@ -34,10 +34,11 @@ declare var $: any;
 export class SearchComponent implements OnInit {
   constructor(private rolesService: RolesPermissionsService, private reportsService: ReportsService, private searchService: SearchService,
     private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
-    private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
+    private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) {     }
 
   @ViewChild('dt') dt: Table;
   public data: Object[];
+  clearSearchTextCross = false;
   fieldValuseStatus = false;
   toggleCheck = true;
   count: number;
@@ -165,6 +166,7 @@ export class SearchComponent implements OnInit {
     { field: 'barcode', header: 'Barcode' },
   ];
   ngOnInit(): void {
+    $("#clearSearchText").hide();
     this.dashBoardService.setApiPath('search');
     this.rolesRes = this.rolesService.getRes();
     if (this.rolesRes['isBarcodeRestricted'] == true) {
@@ -172,7 +174,6 @@ export class SearchComponent implements OnInit {
     }
     this.selectedNodes1 = [];
     this.selectedNodes2 = [];
-    $("#clearSearchText").hide();
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],
@@ -472,6 +473,7 @@ export class SearchComponent implements OnInit {
     this.showresultdiv = false;
     this.checked = true;
     $("#clearSearchText").hide();
+    this.clearSearchTextCross = false;
     this.reportsService.getInstitutions().subscribe(
       (res) => {
         this.owningInstitutionInst = res['institutionList'];
@@ -657,9 +659,11 @@ export class SearchComponent implements OnInit {
     if ($("#fieldValue").val().length > 0) {
       this.fieldValuseStatus = false;
       $("#clearSearchText").show();
+      this.clearSearchTextCross = true;
       $("#resetSearch").prop('disabled', false);
     } else {
       $("#clearSearchText").hide();
+      this.clearSearchTextCross = false;
       $("#resetSearch").prop('disabled', true);
     }
   }
@@ -668,6 +672,7 @@ export class SearchComponent implements OnInit {
     $("#fieldValue").val('');
     this.searchForm.value.fieldValue = '';
     $("#clearSearchText").hide();
+    this.clearSearchTextCross = false;
     $("#resetSearch").prop('disabled', true);
   }
   checkFieldValue() {
