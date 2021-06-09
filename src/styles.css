@@ -667,7 +667,6 @@ header .container-fluid {
 
 .header-info .logout-login span,
 .header-info .settings span {
-  background-image: url("images/site-icons.png");
   background-position: -5px -5px;
   padding: 12px;
   float: left;

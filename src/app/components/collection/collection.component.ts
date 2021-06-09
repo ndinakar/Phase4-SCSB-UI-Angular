@@ -606,6 +606,7 @@ export class CollectionComponent implements OnInit {
     return this.showStatus;
   }
   saveDeaccession(bibid, deacctype, itemBarcode) {
+    this.spinner.show();
     this.statusLocation = false;
     if (this.openmarcVal['availability'] == 'Not Available' || this.openmarcVal['availability'] == 'Out') {
       this.locationErrorMessage = false;
@@ -617,10 +618,7 @@ export class CollectionComponent implements OnInit {
       this.locationErrorMessage = true;
       this.statusLocation = false;
     }
-
-    this.spinner.show();
     if (this.deaccessionType != '' && this.DeaccessionNotes != '' && this.deaccessionType != undefined && this.DeaccessionNotes != undefined && this.statusLocation) {
-
       this.locationErrorMessage = false;
       this.deaccessionNotesErrorMessage = false;
       this.postData = {
@@ -672,6 +670,7 @@ export class CollectionComponent implements OnInit {
       }
       this.collectionService.updateCollection(this.postData).subscribe(
         (res) => {
+          this.spinner.hide();
           this.crossinstitutionVal = res;
           this.newdeaccessionType = this.crossinstitutionVal['deaccessionType'];
           this.newDeliveryLocation = this.crossinstitutionVal['deliveryLocation'];
