@@ -67,6 +67,17 @@ export class ReportsComponent implements OnInit {
     noDownload: false,
     headers: ["Item Barcode", "Customer Code", "Owning Institution", "Report Type","Submit Date", "Message"]
   };
+  csvOptionsAccession = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: 'Export Accession Exception Reports',
+    useBom: true,
+    noDownload: false,
+    headers: ["Item Barcode", "Customer Code","Accession Date", "Message"]
+  };
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
   accessionErrorMessageDiv = false;
@@ -164,14 +175,14 @@ export class ReportsComponent implements OnInit {
   searchreqExceptionResultVal: TreeNode[];
   submitCollectionResultVal: TreeNode[];
   submitCollectionResultExportVal: TreeNode[];
+  accessionExceptionResultVal: TreeNode[];
+  accessionExceptionResultExportVal: TreeNode[];
   searchreqExceptionResultValExport: TreeNode[];
   ExceptionReportsResultsDiv = false;
-
   firstbuttonException = false;
   previousbuttonException = false;
   nextbuttonException = false;
   lastbuttonException = false;
-
   itemList: any = [];
   //Transaction Report
   TransactionReportRadio: string;
@@ -187,6 +198,7 @@ export class ReportsComponent implements OnInit {
   transactionReportButtonDiv = false;
   isTransactionChecked = false;
   isSubmitCollection = false;
+  isAccession = false;
   borrowingErrorText = false;
   owningErrorText = false;
   useErrorText = false;
@@ -221,6 +233,11 @@ export class ReportsComponent implements OnInit {
   submotCollectionEntriesDiv = false;
   submotCollectionResultsDiv = false;
   isExport: boolean = false;
+  accessionReportsDiv = false;
+  accesssionReportshowDiv = false;
+  accessionEntriesDiv =false;
+  accessionDiv =false;
+
   TYPE_LIST_USE = [
     'Retrieval',
     'EDD',
@@ -637,21 +654,71 @@ export class ReportsComponent implements OnInit {
             this.spinner.hide();
             var fileNmae = 'ExportSubmitCollectionExceptionsRecords' + '_' +
               new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
-            new AngularCsv(this.removePropertiesSC(this.submitCollectionResultExportVal['submitCollectionResultsRows']), fileNmae, this.csvOptionsSC);
+            new AngularCsv(this.removePropertiesAccession(this.submitCollectionResultExportVal['submitCollectionResultsRows']), fileNmae, this.csvOptionsSC);
           }, (error) => {
             this.dashBoardService.errorNavigation();
           });
       }
     }
   }
-  removePropertiesSC(items) {
+  accessionExceptionReportGenerate(){
+    if (!this.validateExceptionDateRange()) {
+      this.postDataSC = {
+        "pageNumber": this.pageNumber,
+        "pageSize": this.showentries,
+        "totalRecordsCount": this.totalRecordsCountSC,
+        "totalPageCount": this.totalPageCountSC,
+        "submitCollectionResultsRows": null,
+        "institutionName": this.incompleteShowBy,
+        "errorMessage": "",
+        "from": "",
+        "to": "",
+        "exportEnabled": this.isExport
+      }
+      this.spinner.show();
+      if (this.isExport == false) {
+        this.reportsService.accessionExceptionReport(this.postDataSC, this.dateFromException, this.dateToException).subscribe(
+          (res) => {
+            this.spinner.hide();
+            this.accessionExceptionResultVal = res;
+            if (this.accessionExceptionResultVal['errorMessage']) {
+              this.accessionDiv = true;
+              this.accesssionReportshowDiv = false;
+              this.accessionEntriesDiv = false;
+              this.messageNoSearchRecords = true;
+            } else {
+              this.accessionDiv = true;
+              this.accesssionReportshowDiv = true;
+              this.accessionEntriesDiv = true;
+              this.messageNoSearchRecords = false;
+              this.paginationAC();
+            }
+          },
+          (error) => {
+            this.dashBoardService.errorNavigation();
+          });
+      } else {
+        this.reportsService.accessionExceptionReport(this.postDataSC, this.dateFromException, this.dateToException).subscribe(
+          (res) => {
+            this.spinner.hide();
+            this.accessionExceptionResultExportVal = res;
+            this.itemListTransactionCount = [];
+            this.spinner.hide();
+            var fileNmae = 'ExportAccessionExceptionsRecords' + '_' +
+              new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
+            new AngularCsv(this.removePropertiesAccession(this.accessionExceptionResultExportVal['submitCollectionResultsRows']), fileNmae, this.csvOptionsAccession);
+          }, (error) => {
+            this.dashBoardService.errorNavigation();
+          });
+      }
+    }
+  }
+  removePropertiesAccession(items) {
     this.itemListTransactionCount = [];
     for (var i = 0; i < items.length; i++) {
       var item = {};
       item['itemBarcode'] = items[i].itemBarcode;
       item['customerCode'] = items[i].customerCode;
-      item['owningInstitution'] = items[i].owningInstitution;
-      item['reportType'] = items[i].reportType;
       item['createdDate'] = items[i].createdDate;
       item['message'] = items[i].message;
       this.itemListTransactionCount.push(item);
@@ -1188,6 +1255,7 @@ export class ReportsComponent implements OnInit {
     this.transactionReportDiv = false;
     this.requestExceptionReportDiv = true;
     this.submitExceptionsReportDiv = false;
+    this.accessionReportsDiv = false;
   }
   enableTransactionReportPage() {
     this.spinner.hide();
@@ -1206,8 +1274,32 @@ export class ReportsComponent implements OnInit {
     this.requestExceptionReportDiv = false;
     this.transactionReportDiv = true;
     this.submitExceptionsReportDiv = false;
+    this.accessionReportsDiv = false;
   }
   enableSubmitCollection() {
+    this.spinner.hide();
+    this.resetFields();
+    this.accesionPage = false;
+    this.cgdPage = false;
+    this.incompletePage = false;
+    this.requestToDateErrorText = false;
+    this.showByErrorText = false;
+    this.requestFromDateErrorText = false;
+    this.requestFromToError = false;
+    this.requestResultsPage = false;
+    this.requestExceptionReportDiv = false;
+    this.transactionReportDiv = false;
+    this.transactionReportDiv = false;
+    this.requestPage = false;
+    this.requestExceptionReportDiv = false;
+    this.isSubmitCollection = true;
+    this.submitExceptionsReportDiv = true;
+    this.submitCollectionDiv = false;
+    this.submotCollectionEntriesDiv = false;
+    this.submotCollectionResultsDiv = false;
+    this.accessionReportsDiv = false;
+  }
+  enableAccession(){
     this.spinner.hide();
     this.resetFields();
     this.accesionPage = false;
@@ -1224,11 +1316,14 @@ export class ReportsComponent implements OnInit {
     this.transactionReportDiv = false;
     this.requestPage = false;
     this.requestExceptionReportDiv = false;
-    this.isSubmitCollection = true;
-    this.submitExceptionsReportDiv = true;
+    this.isSubmitCollection = false;
+    this.isAccession = false;
     this.submitCollectionDiv = false;
     this.submotCollectionEntriesDiv = false;
     this.submotCollectionResultsDiv = false;
+    this.accessionReportsDiv = true;
+    this.accessionDiv = false;
+    this.isAccession =true;
   }
   enableRequestPage() {
     this.spinner.hide();
@@ -1248,6 +1343,7 @@ export class ReportsComponent implements OnInit {
     this.submitCollectionDiv = false;
     this.submotCollectionEntriesDiv = false;
     this.submotCollectionResultsDiv = false;
+    this.accessionReportsDiv = false;
   }
   enableAccessionPage() {
     this.spinner.hide();
@@ -1267,6 +1363,7 @@ export class ReportsComponent implements OnInit {
     this.submitCollectionDiv = false;
     this.submotCollectionEntriesDiv = false;
     this.submotCollectionResultsDiv = false;
+    this.accessionReportsDiv = false;
   }
   enableCGDPage() {
     this.spinner.show();
@@ -1284,6 +1381,7 @@ export class ReportsComponent implements OnInit {
           this.incompletePage = false;
           this.requestExceptionReportDiv = false;
           this.submitExceptionsReportDiv = false;
+          this.accessionReportsDiv = false;
         } else {
           this.requestPage = false;
           this.accesionPage = false;
@@ -1296,6 +1394,7 @@ export class ReportsComponent implements OnInit {
           this.submitCollectionDiv = false;
           this.submotCollectionEntriesDiv = false;
           this.submotCollectionResultsDiv = false;
+          this.accessionReportsDiv = false;
         }
       },
       (error) => {
@@ -1306,6 +1405,7 @@ export class ReportsComponent implements OnInit {
     this.spinner.hide();
     this.requestExceptionReportDiv = false;
     this.submitExceptionsReportDiv = false
+    this.accessionReportsDiv = false;
     this.requestPage = false;
     this.accesionPage = false;
     this.cgdPage = false;
@@ -1543,6 +1643,7 @@ export class ReportsComponent implements OnInit {
     this.deaccessionInformation();
   }
   resetFields() {
+    this.incompleteShowBy = this.instVal[ 'institutionList'][0];
     this.AccessionDeaccessionDateRangefrom = '';
     this.AccessionDeaccessionDateRangeto = '';
     this.RequestDateRangefrom = '';
@@ -1936,6 +2037,30 @@ export class ReportsComponent implements OnInit {
       this.lastbuttonException = false;
     }
   }
+  paginationAC() {
+    if (this.accessionExceptionResultVal['pageNumber'] == 0 && (this.accessionExceptionResultVal['totalPageCount'] - 1 > 0)) {
+      this.firstbuttonException = true;
+      this.previousbuttonException = true;
+      this.nextbuttonException = false;
+      this.lastbuttonException = false;
+    } else if (this.accessionExceptionResultVal['pageNumber'] == 0 && (this.accessionExceptionResultVal['pageNumber'] == this.accessionExceptionResultVal['totalPageCount'] - 1)) {
+      this.firstbuttonException = true;
+      this.previousbuttonException = true;
+      this.nextbuttonException = true;
+      this.lastbuttonException = true;
+    }
+    else if ((this.accessionExceptionResultVal['pageNumber'] == this.accessionExceptionResultVal['totalPageCount'] - 1) && this.accessionExceptionResultVal['totalPageCount'] - 1 > 0) {
+      this.firstbuttonException = false;
+      this.previousbuttonException = false;
+      this.nextbuttonException = true;
+      this.lastbuttonException = true;
+    } else if ((this.accessionExceptionResultVal['pageNumber'] < this.accessionExceptionResultVal['totalPageCount'] - 1) && (this.accessionExceptionResultVal['pageNumber'] != 0)) {
+      this.firstbuttonException = false;
+      this.previousbuttonException = false;
+      this.nextbuttonException = false;
+      this.lastbuttonException = false;
+    }
+  }
   pullReports(reqType, index_req, index_owning, cgdType) {
     this.typeOptions = ['RETRIEVAL', 'RECALL'];
     this.showentriesTransaction = 10;
@@ -2101,10 +2226,16 @@ export class ReportsComponent implements OnInit {
     this.pageNumber = this.submitCollectionResultVal['totalPageCount'] - 1;
     this.submitCollectionCall();
   }
+
   scPageSizeChange(size) {
     this.isExport = false;
     this.pageNumber = 0;
-    this.submitCollectionCall();;
+    this.submitCollectionCall();
+  }
+  acPageSizeChange(size) {
+    this.isExport = false;
+    this.pageNumber = 0;
+    this.accessionExceptionCall();
   }
   submitCollectionGenerate() {
     this.isExport = false;
@@ -2112,14 +2243,50 @@ export class ReportsComponent implements OnInit {
     this.showentries = 10;
     this.submitCollectionReportGenerate();
   }
+  accessionExceptionsGenerate(){
+    this.isExport = false;
+    this.pageNumber = 0;
+    this.showentries = 10;
+    this.accessionExceptionReportGenerate();
+  }
 
   exportSubmitCollectionReport() {
     this.isExport = true;
     this.submitCollectionCall();
   }
+  exportAccessionReport(){
+    this.isExport = true;
+    this.accessionExceptionCall();
+  }
   submitCollectionCall() {
     this.totalPageCountSC = this.submitCollectionResultVal['totalPageCount'];
     this.totalRecordsCountSC = this.submitCollectionResultVal['totalRecordsCount'];
     this.submitCollectionReportGenerate();
+  }
+  accessionExceptionCall() {
+    this.totalPageCountSC = this.accessionExceptionResultVal['totalPageCount'];
+    this.totalRecordsCountSC = this.accessionExceptionResultVal['totalRecordsCount'];
+    this.accessionExceptionReportGenerate();
+  }
+  firstCallAC() {
+    this.isExport = false;
+    this.pageNumber = 0;
+    this.pageSize = this.showentries;
+    this.accessionExceptionReportGenerate();
+  }
+  previousCallAC() {
+    this.isExport = false;
+    this.pageNumber = this.accessionExceptionResultVal['pageNumber'] - 1;
+    this.accessionExceptionCall();
+  }
+  nextCallAC() {
+    this.isExport = false;
+    this.pageNumber = this.accessionExceptionResultVal['pageNumber'] + 1;
+    this.accessionExceptionCall();
+  }
+  lastCallAC() {
+    this.isExport = false;
+    this.pageNumber = this.accessionExceptionResultVal['totalPageCount'] - 1;
+    this.accessionExceptionCall();
   }
 }

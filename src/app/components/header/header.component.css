@@ -1,8 +1,9 @@
 .scsb-cls{
-    color: #29588C !important;
+    color: #2E5391 !important;
     font-weight: 500;
     font-size: 37px;
-    font-family: 'roboto-condensed';
+    font-family: 'sans-serif';
+    top: 6px;
 }
 .clr-bl{
     color: #29588C;
