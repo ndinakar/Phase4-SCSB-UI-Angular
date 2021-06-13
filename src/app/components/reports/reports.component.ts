@@ -227,6 +227,8 @@ export class ReportsComponent implements OnInit {
   showentriesTransaction: number = 10;
   itemListTransaction: any = [];
   itemListTransactionCount: any = [];
+  itemListAccession: any = [];
+  itemListSC: any = [];
   //Submit COllection
   submitCollectionDiv = false;
   submitExceptionsReportDiv = false;
@@ -650,11 +652,11 @@ export class ReportsComponent implements OnInit {
           (res) => {
             this.spinner.hide();
             this.submitCollectionResultExportVal = res;
-            this.itemListTransactionCount = [];
+            this.itemListSC = [];
             this.spinner.hide();
             var fileNmae = 'ExportSubmitCollectionExceptionsRecords' + '_' +
               new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
-            new AngularCsv(this.removePropertiesAccession(this.submitCollectionResultExportVal['submitCollectionResultsRows']), fileNmae, this.csvOptionsSC);
+            new AngularCsv(this.removePropertiesSC(this.submitCollectionResultExportVal['submitCollectionResultsRows']), fileNmae, this.csvOptionsSC);
           }, (error) => {
             this.dashBoardService.errorNavigation();
           });
@@ -702,7 +704,7 @@ export class ReportsComponent implements OnInit {
           (res) => {
             this.spinner.hide();
             this.accessionExceptionResultExportVal = res;
-            this.itemListTransactionCount = [];
+            this.itemListAccession = [];
             this.spinner.hide();
             var fileNmae = 'ExportAccessionExceptionsRecords' + '_' +
               new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
@@ -713,17 +715,31 @@ export class ReportsComponent implements OnInit {
       }
     }
   }
+  removePropertiesSC(items) {
+    this.itemListSC = [];
+    for (var i = 0; i < items.length; i++) {
+      var item = {};
+      item['itemBarcode'] = items[i].itemBarcode;
+      item['customerCode'] = items[i].customerCode;
+      item['owningInstitution'] = items[i].owningInstitution;
+      item['reportType'] = items[i].reportType;
+      item['createdDate'] = items[i].createdDate;
+      item['message'] = items[i].message;
+      this.itemListSC.push(item);
+    }
+      return this.itemListSC;
+  }
   removePropertiesAccession(items) {
-    this.itemListTransactionCount = [];
+    this.itemListAccession = [];
     for (var i = 0; i < items.length; i++) {
       var item = {};
       item['itemBarcode'] = items[i].itemBarcode;
       item['customerCode'] = items[i].customerCode;
       item['createdDate'] = items[i].createdDate;
       item['message'] = items[i].message;
-      this.itemListTransactionCount.push(item);
+      this.itemListAccession.push(item);
     }
-    return this.itemListTransactionCount;
+    return this.itemListAccession;
   }
   submitRequestException() {
     if (!this.validateExceptionDateRange()) {
