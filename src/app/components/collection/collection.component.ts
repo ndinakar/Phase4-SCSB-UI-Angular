@@ -670,7 +670,6 @@ export class CollectionComponent implements OnInit {
       }
       this.collectionService.updateCollection(this.postData).subscribe(
         (res) => {
-          this.spinner.hide();
           this.crossinstitutionVal = res;
           this.newdeaccessionType = this.crossinstitutionVal['deaccessionType'];
           this.newDeliveryLocation = this.crossinstitutionVal['deliveryLocation'];
@@ -687,8 +686,8 @@ export class CollectionComponent implements OnInit {
 
     } else if (this.DeaccessionNotes == undefined || this.DeaccessionNotes == '') {
       this.deaccessionNotesErrorMessage = true;
+      this.spinner.hide();
     }
-    this.spinner.hide();
   }
   validateResponse() {
     this.message = this.crossinstitutionVal['message'];
