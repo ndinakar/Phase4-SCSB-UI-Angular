@@ -1782,7 +1782,7 @@
                                                 <th>Item Barcode</th>
                                                 <th>Customer Code</th>
                                                 <th>Accession Date</th>
-                                                <th width="30%">Message</th>
+                                                <th width="40%">Message</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1793,7 +1793,7 @@
                                                 </td>
                                                 <td class="center-text" id="data_dl_{{i}}">{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}
                                                 </td>
-                                                <td class="center-text" id="data_rt_{{i}}">{{ item.message }}</td>
+                                                <td class="center-text" id="data_rt_{{i}}" style="text-align: left;">{{ item.message }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
