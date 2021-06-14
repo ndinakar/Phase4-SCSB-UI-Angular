@@ -648,6 +648,7 @@ header .container {
 header .container-fluid {
   /* background: rgba(0, 0, 0, 0) url("images/headerbg.png") no-repeat scroll
     center bottom; */
+    background-color: #EEF3F2;
 }
 
 .header-info {
