@@ -36,12 +36,13 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: DashboardComponent, // this is the component with the <router-outlet> in the template
+    component: DashboardComponent,
     canActivate: [AuthGuard],
     children: [
       {
         path: 'search',
         component: SearchComponent,
+        pathMatch: 'full'
       },
       {
         path: 'collection',
