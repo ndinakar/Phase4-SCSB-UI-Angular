@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DashBoardService } from '@service/dashBoard/dash-board.service';
@@ -14,7 +14,7 @@ declare var $: any;
   templateUrl: './request.component.html',
   styleUrls: ['./request.component.css']
 })
-export class RequestComponent implements OnInit {
+export class RequestComponent implements OnInit,OnDestroy {
   constructor(private rolesService: RolesPermissionsService, private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   institutions: any = [];
   requestTypes: any = [];
@@ -98,6 +98,7 @@ export class RequestComponent implements OnInit {
   storageLocationSearch: string;
   storageLocation: string;
   disableStorageLocation = false;
+  refreshCount: number = 0;
   ngOnInit(): void {
     this.dashBoardService.setApiPath('request');
     this.rolesRes = this.rolesService.getRes();
@@ -920,7 +921,7 @@ export class RequestComponent implements OnInit {
             this.searchRecCount = this.searchreqResultVal['totalRecordsCount'];
             var refreshStatus = this.refreshRequestStatus();
             if (refreshStatus) {
-              this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
+              this.interval = setInterval(this.refreshRequestStatus.bind(this), 5000);
             }
             this.searchInstitutionList = this.searchreqResultVal['institution'];
             this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
@@ -1102,10 +1103,7 @@ export class RequestComponent implements OnInit {
           } else {
             this.messageNoSearchRecords = false;
             this.searchReqresult = true;
-            var refreshStatus = this.refreshRequestStatus();
-            if (refreshStatus) {
-              this.interval = setInterval(this.refreshRequestStatus.bind(this), 3000);
-            }
+            this.refreshRequestStatus();
           }
           this.spinner.hide();
         },
@@ -1114,9 +1112,16 @@ export class RequestComponent implements OnInit {
         });
     }
   }
-
+  refreshRequestStatusRecursive() {
+    if (this.refreshCount < 59) {
+      this.interval = setTimeout(this.refreshRequestStatus.bind(this), 3000);
+      this.refreshCount++;
+    } else {
+      this.interval = setTimeout(this.refreshRequestStatus.bind(this), 10000);
+    }
+  }
   refreshRequestStatus(): boolean {
-    let refreshStatus = false;
+    var refreshStatus = false;
     let statusJson = {
       "status": []
     };
@@ -1127,7 +1132,6 @@ export class RequestComponent implements OnInit {
           statusJson.status.push(item.requestId + '-' + index);
         }
       });
-
       if (statusJson.status.length > 0) {
         refreshStatus = true;
         this.requestService.refreshStatus(JSON.stringify(statusJson)).subscribe(
@@ -1146,12 +1150,17 @@ export class RequestComponent implements OnInit {
                   let reqNotes = changeNotes[notesKey];
                   this.searchreqResultVal['searchResultRows'][notesKey].requestNotes = reqNotes;
                 });
-              })
+              });
             }
           },
           (error) => {
             this.dashBoardService.errorNavigation();
           });
+          this.refreshRequestStatusRecursive();
+      } else {
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
       }
     }
     return refreshStatus;
@@ -1702,5 +1711,11 @@ export class RequestComponent implements OnInit {
   }
   timezone(date) {
     return this.dashBoardService.setTimeZone(date);
+  }
+  ngOnDestroy(): void {
+    this.searchreqResultVal = null;
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 }
