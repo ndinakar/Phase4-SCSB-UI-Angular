@@ -167,7 +167,7 @@ export class BulkrequestComponent implements OnInit {
   loadSearchRequest() {
     this.createReqsection = false;
     this.searchReqsection = true;
-    this.storageLocation = '';
+    this.storageLocation = 'RECAP';
   }
   loadCreateRequest() {
     this.institutions = [];
