@@ -424,7 +424,6 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 col-md-6 col-lg-6 text-center">
-                                            <!-- <button type="submit" name="action" value="editRole" class="btn btn-default themed-button btn-primary" id="editRolesubmitHdn" style="display: none;">Edit Role</button> -->
                                             <button class="pull-right btn btn-default themed-button btn-primary"
                                                 id="editRolesubmit"
                                                 (click)="saveEditedRole(roleId,editRoleName,editRoleDescription,editPermissionNameId)">Edit
@@ -512,15 +511,6 @@
                                                                 class="error-color">*</span></label></div>
                                                     <div class="col-md-8 col-sm-6">
                                                         <div class="">
-                                                            <!-- <select id="deletePermissionNameId"
-                                                        multiple="multiple"
-                                                        disabled="disabled"
-                                                        class="form-control themed-input themed-select multiSelectPermissionName"
-                                                        [ngModelOptions]="{standalone: true}" [ngModel]="deletePermissionNameId"
-                                                        name="permissionNamesForDelete">
-                                                        
-                                                    <option th:each="permission : *{permissionNameList}" th:value="${permission}" th:text="${permission}" th:selected="${rolesForm.selectedPermissionNames.contains(permission)}"></option>
-                                                </select> -->
                                                             <ng-select id="deletePermissionNameId" disabled="disabled"
                                                                 [items]="permissionNamesList" [multiple]="true"
                                                                 bindLabel="name" [selectableGroup]="true"
