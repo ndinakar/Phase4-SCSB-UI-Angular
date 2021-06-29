@@ -49,9 +49,7 @@
   left: 50%;
   top: 50%;
   margin-left: -120px;
-  /* -1 * image width / 2 */
   margin-top: -32px;
-  /* -1 * image height / 2 */
   display: block;
 }
 
@@ -482,6 +480,7 @@ select::-ms-expand {
   font-family: arial;
   margin-top: 27px;
   height: 375px;
+  /* width: 85%;      */
 }
 
 .twitter-block h3 {
@@ -1849,9 +1848,9 @@ tr.shown td.details-control {
 }
 
 @media screen and (max-width: 1280px) {
-  .recap-logo-container {
-    padding: 30px 0 25px;
-  }
+  /* .recap-logo-container {               
+    padding: 30px 0 25px;      
+  } */      /* commented */
   .content-bottom {
     margin-top: 60px !important;
   }
@@ -1890,8 +1889,15 @@ tr.shown td.details-control {
   .themed-button {
     width: 130px;
   }
+  
 }
-
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+.scsb-txt
+  {
+    font-size: 3em;
+    margin-top: 5px;
+  } /* Added */
+}
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .login-content.content-top .col-sm-12.padding-15 .col-sm-4 {
     width: 50%;
@@ -1927,6 +1933,11 @@ tr.shown td.details-control {
 }
 
 @media only screen and (max-width: 1199px) {
+  .bdr-ln
+  {
+    margin-top: 10px !important;
+  } /* Added */
+  
   #request .search-bar .buscador-principal .col-sm-4.padding-right-20 {
     padding-right: 10px;
   }
@@ -2038,6 +2049,15 @@ tr.shown td.details-control {
 }
 
 @media only screen and (max-width: 767px) {
+
+  
+  /* .scsb-txt{
+    font-size: 8em !important;
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+}   */
+/* Added */
+
   .buscador-principal {
     display: block;
   }
@@ -2267,6 +2287,9 @@ tr.shown td.details-control {
   #recapusers .search-bar .buscador-principal #userssearch button {
     margin: 1% -0.2% -2%;
   }
+
+  
+
 }
 
 @media only screen and (max-width: 590px) {
@@ -2288,13 +2311,21 @@ tr.shown td.details-control {
 }
 
 @media only screen and (max-width: 479px) {
+  
   .login-form-button-wrapper .themed-button {
     width: 100%;
     margin-bottom: 10px;
   }
+  #emailBtn
+  {
+      padding-left: 0px !important;
+      margin-top: 0px !important;
+  } /*Added */
   .recap-members-logos .row [class*="col-"] {
-    width: 100%;
-    margin-bottom: 15px;
+    /* width: 100%; */ /* Commented */
+    width: 65%;   /* Added */
+    margin-left: 17%; /* Added */
+    margin-bottom: 25px;
   }
   #search-content-tab.nav-tabs li a {
     padding: 10% 5% 0;
