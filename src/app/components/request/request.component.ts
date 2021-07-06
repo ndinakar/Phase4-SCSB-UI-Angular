@@ -489,8 +489,8 @@ export class RequestComponent implements OnInit,OnDestroy {
           return [data, del[data]];
         });
         this.requestTypes = [];
-        for (var j = 0; j < this.itembarcodeVal['requestTypes'].length; j++) {
-          this.requestTypes.push(this.itembarcodeVal['requestTypes'][j]);
+        for (var j = 0; j < res['requestTypes'].length; j++) {
+          this.requestTypes.push(res['requestTypes'][j]);
         }
       },
       (error) => {
