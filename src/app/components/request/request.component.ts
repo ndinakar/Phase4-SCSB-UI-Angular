@@ -488,6 +488,10 @@ export class RequestComponent implements OnInit,OnDestroy {
         this.deliveryLocVal = Object.keys(del).map(function (data) {
           return [data, del[data]];
         });
+        this.requestTypes = [];
+        for (var j = 0; j < this.itembarcodeVal['requestTypes'].length; j++) {
+          this.requestTypes.push(this.itembarcodeVal['requestTypes'][j]);
+        }
       },
       (error) => {
         this.dashBoardService.errorNavigation();
