@@ -364,6 +364,7 @@ export class RequestComponent implements OnInit,OnDestroy {
       "disableSearchInstitution": false,
       "searchInstitutionHdn": null
     }
+    if(!(itemBarcodeId == undefined || itemBarcodeId == null || itemBarcodeId == '')){
     this.requestService.populateItemtDetails(this.postData).subscribe(
       (res) => {
         this.itembarcodeVal = res;
@@ -423,6 +424,7 @@ export class RequestComponent implements OnInit,OnDestroy {
       (error) => {
         this.dashBoardService.errorNavigation();
       });
+    }
   }
 
   populateDeliveryLocations(insituval) {
@@ -482,6 +484,7 @@ export class RequestComponent implements OnInit,OnDestroy {
       "disableSearchInstitution": false,
       "searchInstitutionHdn": null
     }
+    if(!(insituval == undefined || insituval == null || insituval == '') && !(this.itemBarcodeId == undefined || this.itemBarcodeId == null || this.itemBarcodeId == '')){
     this.requestService.populateItemtDetails(this.postData).subscribe(
       (res) => {
         var del = res['deliveryLocation'];
@@ -496,6 +499,7 @@ export class RequestComponent implements OnInit,OnDestroy {
       (error) => {
         this.dashBoardService.errorNavigation();
       });
+    }
   }
 
   reqTpeEDD(val) {
