@@ -133,6 +133,36 @@ export class ReportsService {
         headers: appHeaders.getHeaders()
       });
   }
+  getTitleMatchCount(postData,fromDate,toDate): Observable<TreeNode[]> {
+    let headers = appHeaders.getHeaders_formData();
+    let parames = new HttpParams()
+      .set('fromDate', fromDate)
+      .set('toDate', toDate);
+    const options = {
+      params: parames, headers: headers
+    };
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/titleMatchCount", postData,options);
+  }
+  getTitleMatchReport(postData,fromDate,toDate): Observable<TreeNode[]> {
+    let headers = appHeaders.getHeaders_formData();
+    let parames = new HttpParams()
+      .set('fromDate', fromDate)
+      .set('toDate', toDate);
+    const options = {
+      params: parames, headers: headers
+    };
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/titleMatchReports", postData,options);
+  }
+  getTitleMatchReportExport(postData,fromDate,toDate): Observable<TreeNode[]> {
+    let headers = appHeaders.getHeaders_formData();
+    let parames = new HttpParams()
+      .set('fromDate', fromDate)
+      .set('toDate', toDate);
+    const options = {
+      params: parames, headers: headers
+    };
+    return this.httpClient.post<TreeNode[]>(this.PREFIX + "/titleMatchReportExport", postData,options);
+  }
   getTransactionReport(postData): Observable<TreeNode[]> {
     return this.httpClient.post<TreeNode[]>(this.PREFIX_REQUEST + "/transactionReports", postData,
       {

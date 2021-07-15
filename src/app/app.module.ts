@@ -62,7 +62,7 @@ import { InterceptorService } from '@service/interceptor.service';
     CollectionComponent,
     OpenMarcComponent,
     ErrorPageComponent,
-    UserLoginComponent
+    UserLoginComponent,
   ],
   imports: [
     LoggerModule.forRoot({ level: NgxLoggerLevel.TRACE }),

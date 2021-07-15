@@ -57,3 +57,28 @@ tr:nth-child(even) {
 #acessionDeaccessionTable tr{
     border:1px solid;
 }
+.clk-count{
+    margin-top: 20px;
+    margin-bottom: 15px;
+    text-align: right;
+    margin-right: 10px;
+}
+.rec-count{
+    font-size: 20px;
+    padding: 10px;
+}
+.txt-cntr{
+    text-align: center;
+}
+.bg-clr{
+    background: #7f807f!important;
+    color: white;
+}
+.rslt-th{
+    font-family:sans-serif; 
+    width:"16.6667%"
+}
+.scr-bdy{
+    height: 100px;
+    overflow: scroll;
+}

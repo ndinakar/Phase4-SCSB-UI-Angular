@@ -65,12 +65,19 @@
                                                 Submit Collection Exceptions
                                             </label>
                                             <label class="radio-inline report-hide-shadow" accesskey="T"
-                                            style="padding-right: 30px" tabindex="0">
-                                            <input id="accession" name="ReportTypeoption" type="radio"
-                                                value="accession" (click)="enableAccession()"
-                                                [checked]="isAccession">
-                                            Accession Exceptions
-                                        </label>
+                                                style="padding-right: 30px" tabindex="0">
+                                                <input id="accession" name="ReportTypeoption" type="radio"
+                                                    value="accession" (click)="enableAccession()"
+                                                    [checked]="isAccession">
+                                                Accession Exceptions
+                                            </label>
+                                            <label class="radio-inline report-hide-shadow" accesskey="T"
+                                                style="padding-right: 30px" tabindex="0">
+                                                <input id="titleMatch" name="ReportTypeoption" type="radio"
+                                                    value="titleMatch" (click)="enableTitleMatch()"
+                                                    [checked]="isTitleMatch">
+                                                Title Match Report
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -1438,7 +1445,9 @@
                                             <td id="colData_ib_de_{{i}} "><span>{{records.callNumber}}</span></td>
                                             <td id="colData_ib_de_{{i}} "><span>{{records.imsLocation}}</span></td>
                                             <td id="colData_ib_de_{{i}} "><span>{{records.itemBarcode}}</span></td>
-                                            <td id="colData_cgd_de_{{i}} "><span>{{records.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(records.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}</span></td>
+                                            <td id="colData_cgd_de_{{i}} ">
+                                                <span>{{records.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(records.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}</span>
+                                            </td>
                                             <td id="colData_dn_de_{{i}} "><span>{{records.cgd}}</span></td>
                                             <td id="colData_dcb_de_{{i}} "><span>{{records.requestStatus}}</span></td>
                                         </tr>
@@ -1577,8 +1586,7 @@
                                     <div class="">
                                         <span class="show-title margin-right-05">Show Entries</span>
                                         <select class="themed-input" id="numOfRecordsId" name="numOfRecordsName"
-                                            [(ngModel)]="showentries"
-                                            (change)="scPageSizeChange(showentries)"
+                                            [(ngModel)]="showentries" (change)="scPageSizeChange(showentries)"
                                             [ngModelOptions]="{standalone: true}">
                                             <option value="10" selected="selected">10</option>
                                             <option value="25">25</option>
@@ -1617,7 +1625,8 @@
                                                 </td>
                                                 <td class="center-text" id="data_dl_{{i}}">{{ item.reportType }}
                                                 </td>
-                                                <td class="center-text" id="data_dl_{{i}}">{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}
+                                                <td class="center-text" id="data_dl_{{i}}">
+                                                    {{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}
                                                 </td>
                                                 <td class="center-text" id="data_rt_{{i}}">{{ item.message }}</td>
                                             </tr>
@@ -1653,7 +1662,7 @@
                                 <div style="margin-top: 20px;">
                                     <button class="btn btn-primary pull-right" id="export" name="action" type="button"
                                         (click)="exportSubmitCollectionReport()" value="export"
-                                        style="margin-right: 20px;margin-top: 10px;cursor: pointer;" >Export
+                                        style="margin-right: 20px;margin-top: 10px;cursor: pointer;">Export
                                         Report to csv
                                     </button>
                                 </div>
@@ -1748,7 +1757,8 @@
                                 <div class="col-sm-12">
                                     <div class="bg-danger text-danger padding-10"><span
                                             class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span
-                                            name="noSearchRecords"> {{accessionExceptionResultVal['errorMessage']}}</span>
+                                            name="noSearchRecords">
+                                            {{accessionExceptionResultVal['errorMessage']}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -1757,8 +1767,7 @@
                                     <div class="">
                                         <span class="show-title margin-right-05">Show Entries</span>
                                         <select class="themed-input" id="numOfRecordsId" name="numOfRecordsName"
-                                            [(ngModel)]="showentries"
-                                            (change)="acPageSizeChange(showentries)"
+                                            [(ngModel)]="showentries" (change)="acPageSizeChange(showentries)"
                                             [ngModelOptions]="{standalone: true}">
                                             <option value="10" selected="selected">10</option>
                                             <option value="25">25</option>
@@ -1791,9 +1800,11 @@
                                                 <td class="center-text" id="data_pb_{{i}}">{{ item.itemBarcode }}</td>
                                                 <td class="center-text" id="data_br_{{i}}">{{ item.customerCode }}
                                                 </td>
-                                                <td class="center-text" id="data_dl_{{i}}">{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}
+                                                <td class="center-text" id="data_dl_{{i}}">
+                                                    {{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}
                                                 </td>
-                                                <td class="center-text" id="data_rt_{{i}}" style="text-align: left;">{{ item.message }}</td>
+                                                <td class="center-text" id="data_rt_{{i}}" style="text-align: left;">
+                                                    {{ item.message }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1827,15 +1838,335 @@
                                 <div style="margin-top: 20px;">
                                     <button class="btn btn-primary pull-right" id="export" name="action" type="button"
                                         (click)="exportAccessionReport()" value="export"
-                                        style="margin-right: 20px;margin-top: 10px;cursor: pointer;" >Export
+                                        style="margin-right: 20px;margin-top: 10px;cursor: pointer;">Export
                                         Report to csv
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="search-results-container" *ngIf="titleMatchRecordDiv">
+                        <div class="search-bar">
+                            <div class="buscador-principal">
+                                <div id="ReportRequestsection" style="margin-top: -20px;">
+                                    <div class="row" style="padding-left: 20px">
+                                        <div class="col-md-3 col-sm-3 padding-right-50"
+                                            style="margin-top:26px;width:15%;">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="ReportShowBy">Owning Institution<span
+                                                            class="error-color">*</span> </label>
+                                                </div>
+                                                <div>
+                                                    <ng-select id="owningInstitutionList"
+                                                        [items]="instVal['institutionList']" [multiple]="true"
+                                                        bindLabel="name" [selectableGroup]="true"
+                                                        [selectableGroupAsModel]="false" [closeOnSelect]="false"
+                                                        bindValue="id" [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="owningInstitutionList"
+                                                        placeholder="Select One or More">
+                                                        <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                            let-index="index">
+                                                            <input id="item-{{index}}" type="checkbox"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [ngModel]="item$.selected"> {{item}}
+                                                        </ng-template>
+                                                    </ng-select>
+                                                </div>
+                                                <p id="borrowingErrorText" *ngIf="borrowingErrorText"
+                                                    style="color: red">
+                                                    This Field is Required</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 padding-right-50"
+                                            style="margin-top:26px;width:15%;">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="ReportShowBy">CGD Status<span
+                                                            class="error-color">*</span> </label>
+                                                </div>
+                                                <div class="">
+                                                    <ng-select id="cgdlist"
+                                                        [items]="CGDList" [multiple]="true"
+                                                        bindLabel="name" [selectableGroup]="true"
+                                                        [selectableGroupAsModel]="false" [closeOnSelect]="false"
+                                                        bindValue="id" [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="cgdlist"
+                                                        placeholder="Select One or More">
+                                                        <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                            let-index="index">
+                                                            <input id="item-{{index}}" type="checkbox"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [ngModel]="item$.selected"> {{item}}
+                                                        </ng-template>
+                                                    </ng-select>
+                                                </div>
+                                                <p id="owningErrorText" *ngIf="owningErrorText" style="color: red">
+                                                    This Field is Required</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 padding-right-50"
+                                            style="margin-top:26px;width:15%;">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label>Title <span class="error-color">*</span> </label>
+                                                </div>
+                                                <div class="">
+                                                    <ng-select id="typeOptions" [items]="TYPE_LIST_TITLE"
+                                                        [multiple]="true" bindLabel="name" [selectableGroup]="true"
+                                                        [selectableGroupAsModel]="false" [closeOnSelect]="false"
+                                                        bindValue="id" [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="typeOptions" placeholder="Select One or More">
+                                                        <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                            let-index="index">
+                                                            <input id="item-{{index}}" type="checkbox"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [ngModel]="item$.selected"> {{item}}
+                                                        </ng-template>
+                                                    </ng-select>
+                                                </div>
+                                                <p id="useErrorText" *ngIf="useErrorText" style="color: red">
+                                                    This Field is Required</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-lg-2 padding-right-50">
+                                            <div class="form-group">
+                                                <label>Date Range <span class="error-color">*</span> </label><br>
+                                                <label>From</label>
+                                                <div class="input-group date" id="transactionDateRangetodatepickerfrom">
+                                                    <input class="form-control themed-input"
+                                                        id="transactionDateRangefrom" name="transactionDateRangefrom"
+                                                        type="date" placeholder="MM/DD/YYYY"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="transactionDateRangefrom">
+                                                    <span class="input-group-addon">
+                                                    </span>
+                                                </div>
+                                                <p id="transactionDateRangefromDateErrorText"
+                                                    *ngIf="transactionDateRangefromDateErrorText" style="color: red">
+                                                    This Field is Required
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-lg-2 padding-right-50"
+                                            style="margin-top: 3px;">
+                                            <div class="form-group">
+                                                <br>
+                                                <label>To</label>
+                                                <div class="input-group date" id="transactionrequesdatepickerto">
+                                                    <input class="form-control themed-input" id="transactionDateRangeto"
+                                                        name="transactionDateRangeto" type="date"
+                                                        placeholder="MM/DD/YYYY" [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="transactionDateRangeto">
+                                                    <span class="input-group-addon">
+                                                    </span>
+                                                </div>
+                                                <p id="transactionToDateErrorText" *ngIf="transactionToDateErrorText"
+                                                    style="color: red;">This Field is Required
+                                                </p>
+                                                <p id="transactionFromToError" *ngIf="transactionFromToError"
+                                                    style="color: red">To Date must be greater than or
+                                                    <br>equal to the From Date</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-3 col-sm-3" style="margin-top: 18px;">
+                                            <button class="btn themed-button themed-button-search" id="searchButton"
+                                                (click)="titleMatchRecordCount()">Generate Report
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="padding-left:5px;">Fields marked with asterisk(
+                                        <span class="error-color">*</span>) are mandatory.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 " *ngIf="titleMatchRecordDisplayDiv">
+                            <div class="row margin-btm-10" *ngIf="messageNoSearchRecordsTitle">
+                                <div class="col-sm-12" style="margin-top: 15px;">
+                                    <div class="bg-danger text-danger padding-10"><span
+                                            class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span
+                                            name="noSearchRecords"> {{titleMatchRecordResponse['message']}}</span></div>
+                                </div> 
+                            </div>
+                            <div *ngIf="titleMatchRecordResultsDisplayDiv">
+                                <h4>Report Results</h4>
+                                <div id="Accession_Deaccession-tableview ">
+                                    <div class="table-wrapper ">
+                                        <table class="table table-striped text-center margin-btm-0 "
+                                            id="acessionDeaccessionTable " style="border: 1px solid;">
+                                            <thead class="tablesorter-headerRow ">
+                                                <tr>
+                                                    <th class="inst_row td_tr_border bg-clr" width="100%" colspan="8">
+                                                        Matched Titles</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="inst_row td_tr_border" width="16.6667%">
+                                                        Owning Institution</th>
+                                                    <th class="inst_row td_tr_border" width="16.6667%"
+                                                        *ngFor="let cgd of CGDList">
+                                                        {{cgd}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor = "let inst of instList_transactons">
+                                                    <th class="td_tr_border txt-cntr">{{inst.name}}</th>
+                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Shared',inst.name,'Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Open',inst.name,'Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Private',inst.name,'Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Committed',inst.name,'Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Uncommittable',inst.name,'Matched')}}</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="clk-count">
+                                        <a class="rec-count" (click)="titleMatchReports('Matched')"><span> Preview <span>{{totalTitleMatchedCount}}</span> total matched items</span></a>
+                                    </div>
+                                    <div class="table-wrapper ">
+                                        <table class="table table-striped text-center margin-btm-0 "
+                                            id="acessionDeaccessionTable " style="border: 1px solid;">
+                                            <thead class="tablesorter-headerRow ">
+                                                <tr>
+                                                    <th class="inst_row td_tr_border bg-clr" width="100%" colspan="8">
+                                                        Not Matched Titles</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="inst_row td_tr_border" width="16.6667%">
+                                                        Owning Institution</th>
+                                                    <th class="inst_row td_tr_border" width="16.6667%"
+                                                        *ngFor="let cgd of CGDList">
+                                                        {{cgd}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor = "let inst of instList_transactons">
+                                                    <th class="td_tr_border txt-cntr">{{inst.name}}</th>
+                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Shared',inst.name,'Not Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Open',inst.name,'Not Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Private',inst.name,'Not Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Committed',inst.name,'Not Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Uncommittable',inst.name,'Not Matched')}}</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="clk-count">
+                                    <a class="rec-count" (click)="titleMatchReports('Not Matched')"><span> Preview <span>{{totalTitleNotMatchedCount}}</span> total not matched items</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reports-detail-table " id="Transaction-tableview " *ngIf="titleTableRecordsShowDiv">
+                        <button id="pageSizeChangeButtonId " name="action " type="submit " value="pageSizeChange "
+                            hidden="hidden "></button>
+                        <div class="row ">
+                            <h4 class="col-sm-9 margin-top-05 margin-btm-0 ">Report Results</h4>
+                            <div class="col-sm-3 text-right Deaccessionbacklink ">
+                                <a class=" " href="javascript: history.go(0)" (click)="goBackTitle($event)"><span
+                                        class="glyphicon glyphicon-menu-left "></span> Go Back</a>
+                            </div>
+                        </div>
+                        <div class="divider-horizontal margin-top-10 margin-btm-10 "></div>
+                        <div class="row " id="showEntriesAndNumFoundDiv " name="showEntriesAndNumFoundDiv ">
+                            <div class="col-sm-2 margin-top-05 show-entries-section "></div>
+                            <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"></div>
+                            <div class="col-sm-12 col-md-12 col-lg-3 text-right">
+                                <h4>Search Results Found: <span>{{titleCount}}</span>
+                                </h4>
+                            </div>
+                        </div>
+                        <div id="transactionInformation ">
+                            <div>
+                                <table class="table table-striped text-center margin-btm-0" id="deaccessionResultsTable"
+                                    style=" margin-top: 5px;">
+                                    <thead class="tablesorter-headerRow ">
+                                        <tr>
+                                            <th class="rslt-th">Bib Id</th>
+                                            <th class="rslt-th">SCSB Id</th>
+                                            <th class="rslt-th">Item Barcode</th>
+                                            <th class="rslt-th">LCCN</th>
+                                            <th class="rslt-th">Duplicate Code</th>
+                                            <th class="rslt-th">AccessionDate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="rowData_results_de_{{i}} "
+                                            *ngFor="let records of titleMatchRecordReportResponse['titleMatchedReports']; let i=index ">
+                                            <td id="colData_bb_de_{{i}} "><span>{{records.bibId}}</span></td>
+                                            <td id="colData_si_de_{{i}} "><span>{{records.scsbId}}</span></td>
+                                            <td id="colData_ib_de_{{i}} "><span *ngIf="records.itemBarcode != '' && records.itemBarcode != null">{{records.itemBarcode}}</span>
+                                                                          <span *ngIf="records.itemBarcodes != '' && records.itemBarcodes != null"><a (click)="dialogBox(records.itemBarcodes)">More than one Barcode</a></span>  </td>
+                                            <td id="colData_lc_de_{{i}} "><span>{{records.lccn}}</span></td>
+                                            <td id="colData_dc_de_{{i}} "><span>{{records.duplicateCode}}</span></td>
+                                            <td id="colData_cd_de_{{i}} " *ngIf="records.createdDate != '' && records.createdDate != null">
+                                                <span>{{records.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(records.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}</span>
+                                            </td>
+                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <input id="reportsPageNumber " name="reportsPageNumber " type="text "
+                                th:field="${reportsForm.pageNumber} " hidden="hidden ">
+                            <input id="reportstotalPageCount " name="reportstotalPageCount " type="text "
+                                th:field="${reportsForm.totalPageCount} " hidden="hidden ">
+                            <div class="pull-right " id="reportPaginationId " name="reportPaginationName "
+                                style="margin-top: -10px; ">
+                                <ul class="pagination " id="reportPaginationUl ">
+                                    <li [ngClass]="(firstbuttonTitleMatch==true)? 'disabled': '' ">
+                                        <span id="btn_first " (click)="titlefirstCall()"
+                                            style="cursor: pointer ">First</span>
+                                    </li>
+                                    <li [ngClass]=" (previousbuttonTitleMatch==true)? 'disabled': '' ">
+                                        <span id="btn_previous " (click)="titlepreviousCall() "
+                                            style="cursor: pointer ">Previous</span>
+                                    </li>
+                                    <li [ngClass]="(nextbuttonTitleMatch==true)? 'disabled': '' ">
+                                        <span id="btn_next " (click)="titlenextCall() "
+                                            style="cursor: pointer ">Next</span>
+
+                                    </li>
+                                    <li [ngClass]="(lastbuttonTitleMatch==true)? 'disabled': '' ">
+                                        <span id="btn_last " (click)="titlelastCall() "
+                                            style="cursor: pointer ">Last</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 70px;" *ngIf="titleMatchExportButtonDiv">
+                        <button class="btn btn-primary pull-right" id="export" name="action" type="button"
+                            (click)="titleMatchReportsExport()" value="export" style="margin-right: 10px;">Export
+                            Report to
+                            csv
+                        </button>
+                    </div>
                 </div>
             </fieldset>
         </form>
     </div>
+</div>
+<!-- Notes Modal Data-->
+<div class="modal fade create-request-details" id="barcodeModal" data-backdrop="static"
+data-keyboard="false" role="dialog" aria-labelledby="requestNotesLargeModalLabel" tabindex="-2">
+<div class="modal-dialog" role="document">
+    <div class="modal-content" id="requestNotesModalContent">
+        <div class="modal-header bg-success">
+            <button class="close" data-dismiss="modal" type="button" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <h2 class="modal-title text-center text-success" id="requestNotesModalLabel">
+                Barcodes</h2>
+        </div>
+        <div class="modal-body scr-bdy">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div *ngFor="let barcode of listBarcode">
+                        <p>{{barcode}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>

@@ -1,11 +1,12 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DashBoardService } from '@service/dashBoard/dash-board.service';
 import { ReportsService } from '@service/reports/reports.service';
 import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
+import { ModalDirective } from "ngx-bootstrap/modal";
 declare var $: any;
 var moment = require('moment-timezone');
 
@@ -77,6 +78,17 @@ export class ReportsComponent implements OnInit {
     useBom: true,
     noDownload: false,
     headers: ["Item Barcode", "Customer Code","Accession Date", "Message"]
+  };
+  csvOptionsTitleMatch = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: 'Export TitleMatch Report',
+    useBom: true,
+    noDownload: false,
+    headers: ["BibId", "SCSB Id","Item Barcode", "LCCN","Duplication Code","Accession Date"]
   };
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
@@ -165,6 +177,7 @@ export class ReportsComponent implements OnInit {
   requestType: string;
   //request Exception
   messageNoSearchRecords = false;
+  messageNoSearchRecordsTitle = false;
   searchReqExceptionresult = false;
   requestExceptionFromToError = false;
   requestExceptionFromDateErrorText = false;
@@ -192,6 +205,7 @@ export class ReportsComponent implements OnInit {
   typeOptionsPrevious: any;
   owningInstitutionList: any;
   borrowingInstitutionList: any;
+  cgdlist: any;
   instList_transactons: any;
   instList_transactons_with_id: any;
   Transactiontableshow = false;
@@ -199,6 +213,7 @@ export class ReportsComponent implements OnInit {
   isTransactionChecked = false;
   isSubmitCollection = false;
   isAccession = false;
+  isTitleMatch = false;
   borrowingErrorText = false;
   owningErrorText = false;
   useErrorText = false;
@@ -208,6 +223,9 @@ export class ReportsComponent implements OnInit {
   transactionToDateErrorText = false;
   transactionFromToError = false;
   transactionReportVal: TreeNode[];
+  titleMatchRecordResponse: TreeNode[];
+  titleMatchRecordReportResponse: TreeNode[];
+  titleMatchRecordReportResponseExport: TreeNode[];
   transactionReportFullExportVal: TreeNode[];
   transactionReportRecords: TreeNode[];
   transactionReportRecordsExport: TreeNode[];
@@ -220,9 +238,14 @@ export class ReportsComponent implements OnInit {
   previousbuttonTransaction = false;
   nextbuttonTransaction = false;
   lastbuttonTransaction = false;
+  firstbuttonTitleMatch = false;
+  previousbuttonTitleMatch = false;
+  nextbuttonTitleMatch = false;
+  lastbuttonTitleMatch = false;
   requestInstCodesList: string[];
   owningnInstCodesList: string[];
   cgdTypeList: string[];
+  CGDList: string[];
   totalCount: any;
   showentriesTransaction: number = 10;
   itemListTransaction: any = [];
@@ -239,11 +262,28 @@ export class ReportsComponent implements OnInit {
   accesssionReportshowDiv = false;
   accessionEntriesDiv =false;
   accessionDiv =false;
+  //Title Match Record
+  titleMatchRecordDiv = false;
+  titleMatchRecordDisplayDiv = false;
+  titleMatchRecordResultsDisplayDiv = false;
+  titleTableRecordsShowDiv = false;
+  titleMatchExportButtonDiv = false;
+  titleMatch : Array<String> = [];
+  totalTitleMatchedCount: number = 0;
+  totalTitleNotMatchedCount: number = 0;
+  titleCount: number =0;
+  titleTotalPageCount: number = 0;
+  listBarcode: any;
 
   TYPE_LIST_USE = [
     'Retrieval',
     'EDD',
     'Recall'
+  ];
+
+  TYPE_LIST_TITLE = [
+    'Matched',
+    'Not Matched'
   ];
 
   postData = {
@@ -316,18 +356,13 @@ export class ReportsComponent implements OnInit {
     "showNoteILBD": false,
     "showNotePartners": false,
     "showNoteRequestType": false,
-
     "showRetrievalTable": false,
     "showRecallTable": false,
     "showRequestTypeShow": false,
-
     "reportRequestType": [],
     "owningInstitutions": [],
-    //"collectionGroupDesignations": [],
     "deaccessionItemResultsRows": [],
-
     "showDeaccessionInformationTable": false,
-
     "totalRecordsCount": "0",
     "pageNumber": 0,
     "pageSize": 10,
@@ -344,7 +379,6 @@ export class ReportsComponent implements OnInit {
     "errorMessage": null,
     "showIncompletePagination": false,
     "export": false,
-
     "physicalPartnerSharedPulCount": null,
     "physicalPartnerSharedCulCount": null,
     "physicalPartnerSharedNyplCount": null,
@@ -381,6 +415,136 @@ export class ReportsComponent implements OnInit {
     "toDate": null,
     "trasactionCallType": null,
     "cgdType": null
+  }
+  postDataTitle = {
+    "totalRecordsCount": 0,
+    "pageNumber": 0,
+    "pageSize": 100,
+    "totalPageCount": 0,
+    "message": null,
+    "owningInst": null,
+    "cgd": null,
+    "titleMatch": null,
+    "fromDate": null,
+    "toDate": null,
+    "titleMatchedReports": null,
+    "titleMatchCounts": null
+  }
+  titleMatchRecordCount(){
+    if(!this.validateTitleDateRange()){
+      this.postDataTitle = {
+        "totalRecordsCount": 0,
+        "pageNumber": 0,
+        "pageSize": 100,
+        "totalPageCount": 0,
+        "message": null,
+        "owningInst": this.owningInstitutionList,
+        "cgd": this.cgdlist,
+        "titleMatch": this.typeOptions,
+        "fromDate": null,
+        "toDate": null,
+        "titleMatchedReports": null,
+        "titleMatchCounts": null
+      }
+      this.typeOptionsPrevious = this.typeOptions;
+      this.spinner.show();
+      this.reportsService.getTitleMatchCount(this.postDataTitle,this.dateFromTransaction,this.dateToTransaction).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.titleMatchRecordResponse = res;
+          if (this.titleMatchRecordResponse['message']) {
+            this.titleMatchRecordDisplayDiv = true;
+            this.messageNoSearchRecordsTitle = true;
+            this.titleMatchRecordResultsDisplayDiv = false;
+          } else {
+            this.totalTitleNotMatchedCount =  this.findTitleNotMatchedCount();
+            this.totalTitleMatchedCount = this.findTitleMatchedCount();
+            this.messageNoSearchRecordsTitle = false;
+            this.getCounts(this.titleMatchRecordResponse);
+            this.titleMatchRecordDisplayDiv = true;
+            this.titleMatchRecordResultsDisplayDiv = true;
+          }
+        },
+        (error) => {
+          this.dashBoardService.errorNavigation();
+        });
+    }
+  }
+  getCounts(titleRecords){
+
+  }
+  titleMatchReports(titleMatch){
+    this.spinner.show();
+    this.titleMatch = [];
+    this.titleMatch.push(titleMatch);
+    if(!this.validateTitleDateRange()){
+      this.postDataTitle = {
+        "totalRecordsCount": 0,
+        "pageNumber": this.pageNumber,
+        "pageSize": 100,
+        "totalPageCount": 0,
+        "message": null,
+        "owningInst": this.owningInstitutionList,
+        "cgd": this.cgdlist,
+        "titleMatch": this.titleMatch,
+        "fromDate": null,
+        "toDate": null,
+        "titleMatchedReports": null,
+        "titleMatchCounts": null
+      }
+      this.reportsService.getTitleMatchReport(this.postDataTitle,this.dateFromTransaction,this.dateToTransaction).subscribe(
+        (res) => {
+          this.titleMatchRecordReportResponse = res;
+          if (this.titleMatchRecordReportResponse['message']) {
+          } else {
+            if (titleMatch == 'Matched') {
+              this.titleCount = this.totalTitleMatchedCount;
+            } else {
+              this.titleCount = this.totalTitleNotMatchedCount;
+            }
+            this.paginationTitleMatchReport();
+            this.titleHideDivs();
+          }
+        },
+        (error) => {
+          this.dashBoardService.errorNavigation();
+        });
+    }
+    this.spinner.hide();
+  }
+  titleMatchReportsExport(){
+    this.spinner.show();
+    if(!this.validateTitleDateRange()){
+      this.postDataTitle = {
+        "totalRecordsCount": 0,
+        "pageNumber": this.pageNumber,
+        "pageSize": 100,
+        "totalPageCount": 0,
+        "message": null,
+        "owningInst": this.owningInstitutionList,
+        "cgd": this.cgdlist,
+        "titleMatch": this.titleMatch,
+        "fromDate": null,
+        "toDate": null,
+        "titleMatchedReports": null,
+        "titleMatchCounts": null
+      }
+      this.reportsService.getTitleMatchReportExport(this.postDataTitle,this.dateFromTransaction,this.dateToTransaction).subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.titleMatchRecordReportResponseExport = res;
+          this.itemListTransaction = [];
+          this.transactionReportRecordsExport = res;
+          var fileNmae = 'TitleMatchExportReport' + '_' +
+            new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
+          new AngularCsv(this.removePropertiesTitle(this.titleMatchRecordReportResponseExport['titleMatchedReports']), fileNmae, this.csvOptionsTitleMatch);
+      
+        },
+        (error) => {
+          this.dashBoardService.errorNavigation();
+        });
+    }
+    this.spinner.hide();
   }
   transactionReprtCount() {
     if (!this.validateTransactionDateRange()) {
@@ -495,7 +659,6 @@ export class ReportsComponent implements OnInit {
           var fileNmae = 'FullExportTransactionRecords' + '_' +
             new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
           new AngularCsv(this.removePropertiesTrnsaction(this.transactionReportFullExportVal['transactionReportList']), fileNmae, this.csvOptionsTransaction);
-
         },
         (error) => {
           this.dashBoardService.errorNavigation();
@@ -554,6 +717,48 @@ export class ReportsComponent implements OnInit {
       this.borrowingErrorText = false;
     }
     if (this.owningInstitutionList == '' || this.owningInstitutionList == undefined) {
+      this.owningErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.owningErrorText = false;
+    }
+    if (this.typeOptions == '' || this.typeOptions == undefined) {
+      this.useErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.useErrorText = false;
+    }
+    if (this.transactionDateRangefrom == '' || this.transactionDateRangefrom == undefined) {
+      this.transactionDateRangefromDateErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.transactionDateRangefromDateErrorText = false;
+    }
+    if (this.transactionDateRangeto == '' || this.transactionDateRangeto == undefined) {
+      this.transactionToDateErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.transactionToDateErrorText = false;
+    }
+    this.dateFromTransaction = this.toDate(this.transactionDateRangefrom);
+    this.dateToTransaction = this.toDate(this.transactionDateRangeto);
+    if (this.compareDate(this.dateFromTransaction, this.dateToTransaction)) {
+      this.statusRequest = true;
+      this.transactionFromToError = true;
+    } else {
+      this.transactionFromToError = false;
+    }
+    return this.statusRequest;
+  }
+  validateTitleDateRange() {
+    this.statusRequest = false;
+    if (this.owningInstitutionList == '' || this.owningInstitutionList == undefined) {
+      this.borrowingErrorText = true;
+      this.statusRequest = true;
+    } else {
+      this.borrowingErrorText = false;
+    }
+    if (this.cgdlist == '' || this.cgdlist == undefined) {
       this.owningErrorText = true;
       this.statusRequest = true;
     } else {
@@ -826,6 +1031,20 @@ export class ReportsComponent implements OnInit {
       this.itemList.push(item);
     }
     return this.itemList;
+  }
+  removePropertiesTitle(items) {
+    this.itemListTransaction = [];
+    for (var i = 0; i < items.length; i++) {
+      var item = {};
+      item['bibId'] = items[i].bibId;
+      item['scsbId'] = items[i].scsbId;
+      item['itemBarcode'] = items[i].itemBarcode;
+      item['lccn'] = items[i].lccn;
+      item['duplicateCode'] = items[i].duplicateCode;
+      item['createdDate'] = items[i].createdDate;
+      this.itemListTransaction.push(item);
+    }
+    return this.itemListTransaction;
   }
   removePropertiesTrnsaction(items) {
     this.itemListTransaction = [];
@@ -1272,6 +1491,7 @@ export class ReportsComponent implements OnInit {
     this.requestExceptionReportDiv = true;
     this.submitExceptionsReportDiv = false;
     this.accessionReportsDiv = false;
+    this.titleMatchRecordDiv = false;
   }
   enableTransactionReportPage() {
     this.spinner.hide();
@@ -1291,6 +1511,7 @@ export class ReportsComponent implements OnInit {
     this.transactionReportDiv = true;
     this.submitExceptionsReportDiv = false;
     this.accessionReportsDiv = false;
+    this.titleMatchRecordDiv = false;
   }
   enableSubmitCollection() {
     this.spinner.hide();
@@ -1314,6 +1535,7 @@ export class ReportsComponent implements OnInit {
     this.submotCollectionEntriesDiv = false;
     this.submotCollectionResultsDiv = false;
     this.accessionReportsDiv = false;
+    this.titleMatchRecordDiv = false;
   }
   enableAccession(){
     this.spinner.hide();
@@ -1333,13 +1555,45 @@ export class ReportsComponent implements OnInit {
     this.requestPage = false;
     this.requestExceptionReportDiv = false;
     this.isSubmitCollection = false;
-    this.isAccession = false;
     this.submitCollectionDiv = false;
     this.submotCollectionEntriesDiv = false;
     this.submotCollectionResultsDiv = false;
     this.accessionReportsDiv = true;
     this.accessionDiv = false;
     this.isAccession =true;
+    this.titleMatchRecordDiv = false;
+  }
+  enableTitleMatch(){
+    this.spinner.hide();
+    this.resetFields();
+    this.setCGDs();
+    this.accesionPage = false;
+    this.cgdPage = false;
+    this.incompletePage = false;
+    this.requestToDateErrorText = false;
+    this.showByErrorText = false;
+    this.requestFromDateErrorText = false;
+    this.requestFromToError = false;
+    this.requestResultsPage = false;
+    this.requestExceptionReportDiv = false;
+    this.transactionReportDiv = false;
+    this.submitExceptionsReportDiv = false;
+    this.transactionReportDiv = false;
+    this.requestPage = false;
+    this.requestExceptionReportDiv = false;
+    this.isSubmitCollection = false;
+    this.submitCollectionDiv = false;
+    this.submotCollectionEntriesDiv = false;
+    this.submotCollectionResultsDiv = false;
+    this.accessionReportsDiv = false;
+    this.accessionDiv = false;
+    this.isAccession =false;
+    this.isTitleMatch = true;
+    this.titleMatchRecordDiv = true;
+    this.titleMatchRecordReportResponse = null;
+    this.titleMatchRecordReportResponseExport = null;
+    this.titleMatchRecordResponse = null;
+    this.titleMatchRecordDisplayDiv = false;
   }
   enableRequestPage() {
     this.spinner.hide();
@@ -1360,6 +1614,7 @@ export class ReportsComponent implements OnInit {
     this.submotCollectionEntriesDiv = false;
     this.submotCollectionResultsDiv = false;
     this.accessionReportsDiv = false;
+    this.titleMatchRecordDiv = false; 
   }
   enableAccessionPage() {
     this.spinner.hide();
@@ -1380,6 +1635,7 @@ export class ReportsComponent implements OnInit {
     this.submotCollectionEntriesDiv = false;
     this.submotCollectionResultsDiv = false;
     this.accessionReportsDiv = false;
+    this.titleMatchRecordDiv = false;
   }
   enableCGDPage() {
     this.spinner.show();
@@ -1398,6 +1654,7 @@ export class ReportsComponent implements OnInit {
           this.requestExceptionReportDiv = false;
           this.submitExceptionsReportDiv = false;
           this.accessionReportsDiv = false;
+          this.titleMatchRecordDiv = false;
         } else {
           this.requestPage = false;
           this.accesionPage = false;
@@ -1411,6 +1668,7 @@ export class ReportsComponent implements OnInit {
           this.submotCollectionEntriesDiv = false;
           this.submotCollectionResultsDiv = false;
           this.accessionReportsDiv = false;
+          this.titleMatchRecordDiv = false;
         }
       },
       (error) => {
@@ -1432,6 +1690,16 @@ export class ReportsComponent implements OnInit {
     this.resetFields();
     this.getInstitutions();
   }
+  setCGDs() {
+    this.reportsService.getInstitutions().subscribe(
+      (res) => {
+        this.CGDList = res['cgdCodesList'];
+      },
+      (error) => {
+        this.dashBoardService.errorNavigation();
+      });
+  }
+  
   incompleteReportPageSizeChange(value) {
     this.incompletePageSize = value;
     this.reportsService.incompleteReportPageSizeChange(this.setPostData('pageSize', 'incomplete')).subscribe(
@@ -2167,6 +2435,21 @@ export class ReportsComponent implements OnInit {
     this.transactionPage();
     this.typeOptions = this.typeOptionsPrevious;
   }
+  goBackTitle($event) {
+    $event.stopPropagation();
+    $event.preventDefault();
+    this.titlePage();
+    this.typeOptions = this.typeOptionsPrevious;
+  }
+  titlePage(){
+    this.titleMatchRecordDisplayDiv = true;
+    this.titleMatchRecordResultsDisplayDiv = true;
+    this.titleTableRecordsShowDiv = false;
+    this.titleMatchRecordDiv = true;
+    this.isTitleMatch = true;
+    this.reportType_panel = true;
+    this.titleMatchExportButtonDiv = false;
+  }
   transactionPage() {
     this.Transactiontableshow = false;
     this.transactionReportButtonDiv = false;
@@ -2304,5 +2587,95 @@ export class ReportsComponent implements OnInit {
     this.isExport = false;
     this.pageNumber = this.accessionExceptionResultVal['totalPageCount'] - 1;
     this.accessionExceptionCall();
+  }
+  titleHideDivs(){
+    this.reportType_panel = false;
+    this.isTitleMatch = false;
+    this.titleTableRecordsShowDiv= true;
+    this.titleMatchExportButtonDiv = true;
+    this.titleMatchRecordDisplayDiv = false;
+    this.titleMatchRecordResultsDisplayDiv = false;
+    this.titleMatchRecordDiv = false;
+  }
+  findMatchedCount(cgd, instName, isMatched) {
+    let tempCount = '';
+    let dataCounts = this.titleMatchRecordResponse['titleMatchCounts'];
+    for (let i = 0; i < dataCounts.length; i++) {
+      if (dataCounts[i].cgd == cgd && dataCounts[i].owningInst == instName && dataCounts[i].titleMatched == isMatched) {
+        if(dataCounts[i].count == 0)
+        return tempCount;
+        else
+        return dataCounts[i].count;
+      }
+    }
+    return tempCount;
+  }
+  findTitleMatchedCount() {
+    let tempCount = 0;
+    let dataCounts = this.titleMatchRecordResponse['titleMatchCounts'];
+    for (let i = 0; i < dataCounts.length; i++) {
+      if (dataCounts[i].titleMatched == 'Matched') {
+        tempCount = tempCount + dataCounts[i].count;
+      }
+    }
+    return tempCount;
+  }
+  findTitleNotMatchedCount() {
+    let tempCount = 0;
+    let dataCounts = this.titleMatchRecordResponse['titleMatchCounts'];
+    for (let i = 0; i < dataCounts.length; i++) {
+      if (dataCounts[i].titleMatched == 'Not Matched') {
+        tempCount = tempCount + dataCounts[i].count;
+      }
+    }
+    return tempCount;
+  }
+  paginationTitleMatchReport() {
+    if (this.titleMatchRecordReportResponse['pageNumber'] == 0 && (this.titleMatchRecordReportResponse['totalPageCount'] - 1 > 0)) {
+      this.firstbuttonTitleMatch = true;
+      this.previousbuttonTitleMatch = true;
+      this.nextbuttonTitleMatch = false;
+      this.lastbuttonTitleMatch = false;
+    } else if (this.titleMatchRecordReportResponse['pageNumber'] == 0 && (this.titleMatchRecordReportResponse['pageNumber'] == this.titleMatchRecordReportResponse['totalPageCount'] - 1)) {
+      this.firstbuttonTitleMatch = true;
+      this.previousbuttonTitleMatch = true;
+      this.nextbuttonTitleMatch = true;
+      this.lastbuttonTitleMatch = true;
+    }else if ((this.titleMatchRecordReportResponse['pageNumber'] == this.titleMatchRecordReportResponse['totalPageCount'] - 1) && this.titleMatchRecordReportResponse['totalPageCount'] - 1 > 0) {
+      this.firstbuttonTitleMatch = false;
+      this.previousbuttonTitleMatch = false;
+      this.nextbuttonTitleMatch = true;
+      this.lastbuttonTitleMatch = true;
+    } else if ((this.titleMatchRecordReportResponse['pageNumber'] < this.titleMatchRecordReportResponse['totalPageCount'] - 1) && (this.titleMatchRecordReportResponse['pageNumber'] != 0)) {
+      this.firstbuttonTitleMatch = false;
+      this.previousbuttonTitleMatch = false;
+      this.nextbuttonTitleMatch = false;
+      this.lastbuttonTitleMatch = false;
+    }
+  }
+
+  titlefirstCall(){
+    this.pageNumber = 0;
+    this.titleCall();
+  }
+  titlepreviousCall(){
+    this.pageNumber = this.titleMatchRecordReportResponse['pageNumber'] - 1;
+    this.titleCall();
+  }
+  titlenextCall(){
+    this.pageNumber = this.titleMatchRecordReportResponse['pageNumber'] + 1;
+    this.titleCall();
+  }
+  titlelastCall(){
+    this.pageNumber = this.titleMatchRecordReportResponse['totalPageCount'] - 1;
+    this.titleCall();
+  }
+  titleCall() {
+    this.titleTotalPageCount = this.titleMatchRecordReportResponse['totalPageCount'];
+    this.titleMatchReports('Matched');
+  }
+  dialogBox(barcodes) {
+    this.listBarcode = barcodes;
+    $('#barcodeModal').modal({ show: true });
   }
 }
