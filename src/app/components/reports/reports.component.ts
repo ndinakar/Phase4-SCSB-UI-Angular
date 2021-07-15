@@ -1567,6 +1567,7 @@ export class ReportsComponent implements OnInit {
     this.spinner.hide();
     this.resetFields();
     this.setCGDs();
+    this.cgdlist = null;
     this.accesionPage = false;
     this.cgdPage = false;
     this.incompletePage = false;
@@ -1689,6 +1690,7 @@ export class ReportsComponent implements OnInit {
     this.submotCollectionResultsDiv = false;
     this.resetFields();
     this.getInstitutions();
+    this.titleMatchRecordDiv = false;
   }
   setCGDs() {
     this.reportsService.getInstitutions().subscribe(
