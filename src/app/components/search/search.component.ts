@@ -133,7 +133,7 @@ export class SearchComponent implements OnInit {
   searchfieldval = [
     { id: 'Author_search', name: "Author" },
     { id: 'Title_search', name: "Title" },
-    { id: 'TitleStartsWith', name: "Title Browse(first word)" },
+    { id: 'TitleStartsWith', name: "Title Browse" },
     { id: 'Publisher', name: "Publisher" },
     { id: 'PublicationPlace', name: "Publication Place" },
     { id: 'PublicationDate', name: "Publication Date" },
