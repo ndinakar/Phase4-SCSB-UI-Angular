@@ -593,7 +593,7 @@ export class CollectionComponent implements OnInit {
       this.cgdErrorMessage = true;
       this.showStatus = true;
     }
-    if (this.CGDChangeNotes == undefined || this.CGDChangeNotes == '') {
+    if (this.CGDChangeNotes == undefined || this.CGDChangeNotes == '' || !this.checkCGDNotesIsNotEmpty()) {
       if (cgdold == 'Shared') {
         this.cgdNotesErrorMessage = true;
         this.showStatus = true;
@@ -620,7 +620,7 @@ export class CollectionComponent implements OnInit {
       this.locationErrorMessage = true;
       this.statusLocation = false;
     }
-    if (this.deaccessionType != '' && this.DeaccessionNotes != '' && this.deaccessionType != undefined && this.DeaccessionNotes != undefined && this.statusLocation) {
+    if (this.deaccessionType != '' && this.DeaccessionNotes != '' && this.deaccessionType != undefined && this.DeaccessionNotes != undefined && this.statusLocation && this.checkDeaccessionNotesIsNotEmpty()) {
       this.locationErrorMessage = false;
       this.deaccessionNotesErrorMessage = false;
       this.postData = {
@@ -686,13 +686,32 @@ export class CollectionComponent implements OnInit {
           this.dashBoardService.errorNavigation();
         });
 
-    } else if (this.DeaccessionNotes == undefined || this.DeaccessionNotes == '') {
+    } else if (this.DeaccessionNotes == undefined || this.DeaccessionNotes == '' || !this.checkDeaccessionNotesIsNotEmpty()) {
       this.deaccessionNotesErrorMessage = true;
       this.spinner.hide();
     } else {
       this.spinner.hide();
     }
   }
+  checkDeaccessionNotesIsNotEmpty() {
+    const isWhitespace = (this.DeaccessionNotes).trim().length === 0;
+    if(!isWhitespace){
+      this.DeaccessionNotes = this.DeaccessionNotes.replace(/ +/g, ' ').trim();
+    } else {
+      this.DeaccessionNotes = '';
+    }
+    return !isWhitespace;
+  }
+  checkCGDNotesIsNotEmpty() {
+    const isWhitespace = (this.CGDChangeNotes).trim().length === 0;
+    if(!isWhitespace){
+      this.CGDChangeNotes = this.CGDChangeNotes.replace(/ +/g, ' ').trim();
+    } else {
+      this.CGDChangeNotes = '';
+    }
+    return !isWhitespace;
+  }
+  
   validateResponse() {
     this.message = this.crossinstitutionVal['message'];
     this.warningMessage = this.crossinstitutionVal['warningMessage'];

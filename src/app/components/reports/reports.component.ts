@@ -1053,8 +1053,8 @@ export class ReportsComponent implements OnInit {
       item['requestingInst'] = items[i].requestingInst;
       item['owningInst'] = items[i].owningInst;
       item['requestType'] = items[i].requestType;
-      item['callNumber'] = items[i].requestType;
-      item['imsLocation'] = items[i].requestType;
+      item['callNumber'] = items[i].callNumber;
+      item['imsLocation'] = items[i].imsLocation;
       item['itemBarcode'] = items[i].itemBarcode;
       item['createdDate'] = this.toTimeZone(items[i].createdDate);
       item['cgd'] = items[i].cgd;
