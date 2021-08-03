@@ -1992,7 +1992,7 @@
                             <div *ngIf="titleMatchRecordResultsDisplayDiv">
                                 <h4>Report Results</h4>
                                 <div id="Accession_Deaccession-tableview ">
-                                    <div class="table-wrapper ">
+                                    <div class="table-wrapper " *ngIf="matchedTableDiv">
                                         <table class="table table-striped text-center margin-btm-0 "
                                             id="acessionDeaccessionTable " style="border: 1px solid;">
                                             <thead class="tablesorter-headerRow ">
@@ -2020,10 +2020,10 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="clk-count">
+                                    <div class="clk-count" *ngIf="matchedTableDiv">
                                         <a class="rec-count" (click)="titleMatchReports('Matched')"><span> Preview <span>{{totalTitleMatchedCount}}</span> total matched items</span></a>
                                     </div>
-                                    <div class="table-wrapper ">
+                                    <div class="table-wrapper " *ngIf="notMatchedTableDiv">
                                         <table class="table table-striped text-center margin-btm-0 "
                                             id="acessionDeaccessionTable " style="border: 1px solid;">
                                             <thead class="tablesorter-headerRow ">
@@ -2052,7 +2052,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="clk-count">
+                                <div class="clk-count" *ngIf="notMatchedTableDiv">
                                     <a class="rec-count" (click)="titleMatchReports('Not Matched')"><span> Preview <span>{{totalTitleNotMatchedCount}}</span> total not matched items</span></a>
                                 </div>
                             </div>
@@ -2088,7 +2088,7 @@
                                             <th class="rslt-th">Item Barcode</th>
                                             <th class="rslt-th">LCCN</th>
                                             <th class="rslt-th">Duplicate Code</th>
-                                            <th class="rslt-th">AccessionDate</th>
+                                            <th class="rslt-th">Accession Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>

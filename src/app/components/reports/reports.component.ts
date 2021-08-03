@@ -274,6 +274,8 @@ export class ReportsComponent implements OnInit {
   titleCount: number =0;
   titleTotalPageCount: number = 0;
   listBarcode: any;
+  matchedTableDiv = true;
+  notMatchedTableDiv = true;
 
   TYPE_LIST_USE = [
     'Retrieval',
@@ -452,6 +454,8 @@ export class ReportsComponent implements OnInit {
         (res) => {
           this.spinner.hide();
           this.titleMatchRecordResponse = res;
+          this.matchedTableDiv = true;
+          this.notMatchedTableDiv = true;
           if (this.titleMatchRecordResponse['message']) {
             this.titleMatchRecordDisplayDiv = true;
             this.messageNoSearchRecordsTitle = true;
@@ -463,6 +467,13 @@ export class ReportsComponent implements OnInit {
             this.getCounts(this.titleMatchRecordResponse);
             this.titleMatchRecordDisplayDiv = true;
             this.titleMatchRecordResultsDisplayDiv = true;
+            if(this.typeOptions.length < 2){
+              if(this.typeOptions == 'Matched'){
+                this.notMatchedTableDiv = false;
+              } else {
+                this.matchedTableDiv = false;
+              }
+            }
           }
         },
         (error) => {
