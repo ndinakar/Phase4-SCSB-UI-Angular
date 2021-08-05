@@ -81,6 +81,7 @@ export class SearchComponent implements OnInit {
   collectionGroupDesignations: any = [];
   availability: any = [];
   materialTypes: any = [];
+  titleMatch: any = []; 
   useRestrictions: any = [];
   searchForm: FormGroup;
   errorMessage_Div = false;
@@ -107,6 +108,10 @@ export class SearchComponent implements OnInit {
       "Serial",
       "Monograph",
       "Other"
+    ],
+    "titleMatch":[
+      "Matched",
+      "Not Matched"
     ],
     "useRestrictions": [
       "NoRestrictions",
@@ -188,6 +193,8 @@ export class SearchComponent implements OnInit {
       Serial: [true],
       others: [true],
       shared: [true],
+      matched: [true],
+      notMatched: [true],
       private: [true],
       open: [true],
       Available: [true],
@@ -251,6 +258,7 @@ export class SearchComponent implements OnInit {
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
+    this.titleMatch = [];
     this.useRestrictions = [];
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
@@ -280,6 +288,7 @@ export class SearchComponent implements OnInit {
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
+    this.titleMatch = [];
     this.useRestrictions = [];
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
@@ -317,6 +326,7 @@ export class SearchComponent implements OnInit {
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
+    this.titleMatch = [];
     this.useRestrictions = [];
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
@@ -341,6 +351,7 @@ export class SearchComponent implements OnInit {
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
+    this.titleMatch = [];
     this.useRestrictions = [];
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
@@ -365,6 +376,7 @@ export class SearchComponent implements OnInit {
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
+    this.titleMatch = [];
     this.useRestrictions = [];
 
     var searchfullrec = this.searchForm.value;
@@ -391,6 +403,7 @@ export class SearchComponent implements OnInit {
     this.collectionGroupDesignations = [];
     this.availability = [];
     this.materialTypes = [];
+    this.titleMatch = [];
     this.useRestrictions = [];
     var searchfullrec = this.searchForm.value;
     this.validateInputs(searchfullrec);
@@ -442,6 +455,8 @@ export class SearchComponent implements OnInit {
         Monograph: [false],
         Serial: [false],
         others: [false],
+        matched: [false],
+        notMatched: [false],
         shared: [false],
         private: [false],
         open: [false],
@@ -466,6 +481,8 @@ export class SearchComponent implements OnInit {
         Monograph: [true],
         Serial: [true],
         others: [true],
+        matched: [true],
+        notMatched: [true],
         shared: [true],
         private: [true],
         open: [true],
@@ -495,6 +512,8 @@ export class SearchComponent implements OnInit {
       Monograph: [true],
       Serial: [true],
       others: [true],
+      matched: [true],
+      notMatched: [true],
       shared: [true],
       private: [true],
       open: [true],
@@ -572,6 +591,12 @@ export class SearchComponent implements OnInit {
     if (searchfullrec.Serial == true) {
       this.materialTypes.push('Serial')
     }
+    if (searchfullrec.matched == true) {
+      this.titleMatch.push('Matched')
+    }
+    if (searchfullrec.notMatched == true) {
+      this.titleMatch.push('Not Matched')
+    }
     if (searchfullrec.others == true) {
       this.materialTypes.push('Other')
     }
@@ -644,6 +669,7 @@ export class SearchComponent implements OnInit {
       "collectionGroupDesignations": this.cgdCodes,
       "availability": this.availability,
       "materialTypes": this.materialTypes,
+      "titleMatch": this.titleMatch,
       "useRestrictions": this.useRestrictions,
       "imsDepositoryCodes": this.storageLocations,
       "searchResultRows": [],
