@@ -481,7 +481,7 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-rowData let-columns="columns"
                                         let-rowIndex="rowIndex">
-                                        <tr id="rowData_subResults_{{ rowIndex }}">
+                                        <tr id="rowData_subResults_{{ rowIndex }}" [ngClass]="{'row-child-clr':rowData.itemMatched == true}">
                                             <td id="col_sub_{{ rowIndex }}">
                                                 <p-tableCheckbox id="colSub_checkBox_{{ rowIndex }}" [value]="rowData">
                                                 </p-tableCheckbox>
