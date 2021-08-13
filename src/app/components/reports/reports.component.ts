@@ -88,7 +88,7 @@ export class ReportsComponent implements OnInit {
     title: 'Export TitleMatch Report',
     useBom: true,
     noDownload: false,
-    headers: ["BibId", "SCSB Id","Item Barcode", "LCCN","Duplication Code","Accession Date"]
+    headers: ["BibId", "SCSB Id","Item Barcode", "LCCN","CGD","Matching Identifier","Accession Date"]
   };
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
@@ -464,7 +464,6 @@ export class ReportsComponent implements OnInit {
             this.totalTitleNotMatchedCount =  this.findTitleNotMatchedCount();
             this.totalTitleMatchedCount = this.findTitleMatchedCount();
             this.messageNoSearchRecordsTitle = false;
-            this.getCounts(this.titleMatchRecordResponse);
             this.titleMatchRecordDisplayDiv = true;
             this.titleMatchRecordResultsDisplayDiv = true;
             if(this.typeOptions.length < 2){
@@ -480,9 +479,6 @@ export class ReportsComponent implements OnInit {
           this.dashBoardService.errorNavigation();
         });
     }
-  }
-  getCounts(titleRecords){
-
   }
   titleMatchReports(titleMatch){
     this.spinner.show();
@@ -523,9 +519,9 @@ export class ReportsComponent implements OnInit {
     }
     this.spinner.hide();
   }
-  titleMatchReportsExport(){
+  titleMatchReportsExport() {
     this.spinner.show();
-    if(!this.validateTitleDateRange()){
+    if (!this.validateTitleDateRange()) {
       this.postDataTitle = {
         "totalRecordsCount": 0,
         "pageNumber": this.pageNumber,
@@ -540,7 +536,7 @@ export class ReportsComponent implements OnInit {
         "titleMatchedReports": null,
         "titleMatchCounts": null
       }
-      this.reportsService.getTitleMatchReportExport(this.postDataTitle,this.dateFromTransaction,this.dateToTransaction).subscribe(
+      this.reportsService.getTitleMatchReportExport(this.postDataTitle, this.dateFromTransaction, this.dateToTransaction).subscribe(
         (res) => {
           this.spinner.hide();
           this.titleMatchRecordReportResponseExport = res;
@@ -549,13 +545,13 @@ export class ReportsComponent implements OnInit {
           var fileNmae = 'TitleMatchExportReport' + '_' +
             new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
           new AngularCsv(this.removePropertiesTitle(this.titleMatchRecordReportResponseExport['titleMatchedReports']), fileNmae, this.csvOptionsTitleMatch);
-      
+
         },
         (error) => {
+          this.spinner.hide();
           this.dashBoardService.errorNavigation();
         });
     }
-    this.spinner.hide();
   }
   transactionReprtCount() {
     if (!this.validateTransactionDateRange()) {
@@ -1051,6 +1047,7 @@ export class ReportsComponent implements OnInit {
       item['scsbId'] = items[i].scsbId;
       item['itemBarcode'] = items[i].itemBarcode;
       item['lccn'] = items[i].lccn;
+      item['cgd'] = items[i].cgd;
       item['duplicateCode'] = items[i].duplicateCode;
       item['createdDate'] = items[i].createdDate;
       this.itemListTransaction.push(item);
