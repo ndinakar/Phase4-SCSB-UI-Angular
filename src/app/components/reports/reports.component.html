@@ -2021,7 +2021,7 @@
                                         </table>
                                     </div>
                                     <div class="clk-count" *ngIf="matchedTableDiv">
-                                        <a class="rec-count" (click)="titleMatchReports('Matched')"><span> Preview <span>{{totalTitleMatchedCount}}</span> total matched items</span></a>
+                                        <a class="rec-count" (click)="titleMatchReports('Matched')"><span style="cursor: pointer;"> Preview <span>{{totalTitleMatchedCount}}</span> total matched items</span></a>
                                     </div>
                                     <div class="table-wrapper " *ngIf="notMatchedTableDiv">
                                         <table class="table table-striped text-center margin-btm-0 "
@@ -2053,7 +2053,7 @@
                                     </div>
                                 </div>
                                 <div class="clk-count" *ngIf="notMatchedTableDiv">
-                                    <a class="rec-count" (click)="titleMatchReports('Not Matched')"><span> Preview <span>{{totalTitleNotMatchedCount}}</span> total not matched items</span></a>
+                                    <a class="rec-count" (click)="titleMatchReports('Not Matched')"><span style="cursor: pointer;"> Preview <span>{{totalTitleNotMatchedCount}}</span> total not matched items</span></a>
                                 </div>
                             </div>
                         </div>
@@ -2087,7 +2087,8 @@
                                             <th class="rslt-th">SCSB Id</th>
                                             <th class="rslt-th">Item Barcode</th>
                                             <th class="rslt-th">LCCN</th>
-                                            <th class="rslt-th">Duplicate Code</th>
+                                            <th class="rslt-th">CGD</th>
+                                            <th class="rslt-th">Matching Identifier</th>
                                             <th class="rslt-th">Accession Date</th>
                                         </tr>
                                     </thead>
@@ -2099,6 +2100,7 @@
                                             <td id="colData_ib_de_{{i}} "><span *ngIf="records.itemBarcode != '' && records.itemBarcode != null">{{records.itemBarcode}}</span>
                                                                           <span *ngIf="records.itemBarcodes != '' && records.itemBarcodes != null"><a (click)="dialogBox(records.itemBarcodes)">More than one Barcode</a></span>  </td>
                                             <td id="colData_lc_de_{{i}} "><span>{{records.lccn}}</span></td>
+                                            <td id="colData_cgd_de_{{i}} "><span>{{records.cgd}}</span></td>
                                             <td id="colData_dc_de_{{i}} "><span>{{records.duplicateCode}}</span></td>
                                             <td id="colData_cd_de_{{i}} " *ngIf="records.createdDate != '' && records.createdDate != null">
                                                 <span>{{records.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(records.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}</span>
