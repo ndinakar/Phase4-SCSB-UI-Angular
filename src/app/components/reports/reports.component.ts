@@ -6,7 +6,6 @@ import { ReportsService } from '@service/reports/reports.service';
 import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
-import { ModalDirective } from "ngx-bootstrap/modal";
 declare var $: any;
 var moment = require('moment-timezone');
 
@@ -16,7 +15,7 @@ var moment = require('moment-timezone');
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit {
-  constructor(private router: Router, private reportsService: ReportsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
+  constructor(private router: Router, private reportsService: ReportsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService,private datePipe: DatePipe) { }
   ngOnInit(): void {
     this.dashBoardService.setApiPath('reports');
     this.spinner.hide();
@@ -935,7 +934,7 @@ export class ReportsComponent implements OnInit {
       item['customerCode'] = items[i].customerCode;
       item['owningInstitution'] = items[i].owningInstitution;
       item['reportType'] = items[i].reportType;
-      item['createdDate'] = items[i].createdDate;
+      item['createdDate'] = this.toTimeZone(items[i].createdDate);
       item['message'] = items[i].message;
       this.itemListSC.push(item);
     }
@@ -1031,8 +1030,8 @@ export class ReportsComponent implements OnInit {
 
       item['requestCreatedBy'] = items[i].requestCreatedBy;
       item['patronEmailId'] = items[i].patronEmailId;
-      item['createdDate'] = this.toTimeZone(items[i].createdDate);
-      item['lastUpdatedDate'] = this.toTimeZone(items[i].lastUpdatedDate);
+      item['createdDate'] = this.convertDateToEDT(items[i].createdDate);
+      item['lastUpdatedDate'] = this.convertDateToEDT(items[i].lastUpdatedDate);
 
       item['requestNotes'] = items[i].requestNotes;
       this.itemList.push(item);
@@ -1049,10 +1048,13 @@ export class ReportsComponent implements OnInit {
       item['lccn'] = items[i].lccn;
       item['cgd'] = items[i].cgd;
       item['duplicateCode'] = items[i].duplicateCode;
-      item['createdDate'] = items[i].createdDate;
+      item['createdDate'] = this.convertDateToEDT(items[i].createdDate);
       this.itemListTransaction.push(item);
     }
     return this.itemListTransaction;
+  }
+  convertDateToEDT(date) {
+    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss', this.timezone(date));
   }
   removePropertiesTrnsaction(items) {
     this.itemListTransaction = [];
@@ -1064,7 +1066,7 @@ export class ReportsComponent implements OnInit {
       item['callNumber'] = items[i].callNumber;
       item['imsLocation'] = items[i].imsLocation;
       item['itemBarcode'] = items[i].itemBarcode;
-      item['createdDate'] = this.toTimeZone(items[i].createdDate);
+      item['createdDate'] = this.convertDateToEDT(items[i].createdDate);
       item['cgd'] = items[i].cgd;
       item['requestStatus'] = items[i].requestStatus;
 
