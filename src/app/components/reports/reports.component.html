@@ -2083,29 +2083,56 @@
                                     style=" margin-top: 5px;">
                                     <thead class="tablesorter-headerRow ">
                                         <tr>
+                                            <th class="rslt-th"></th>
                                             <th class="rslt-th">Bib Id</th>
                                             <th class="rslt-th">SCSB Id</th>
-                                            <th class="rslt-th">Item Barcode</th>
+                                            <th class="rslt-th">ISBN</th>
+                                            <th class="rslt-th">OCLC</th>
                                             <th class="rslt-th">LCCN</th>
-                                            <th class="rslt-th">CGD</th>
+                                            <th class="rslt-th">ISSN</th>
+                                            <th class="rslt-th" style="width: 13%;">Title</th>
                                             <th class="rslt-th">Matching Identifier</th>
-                                            <th class="rslt-th">Accession Date</th>
+                                            <th class="rslt-th">Anomaly Flag</th>
+                                            <th class="rslt-th">Match Score</th>
+                                            <th class="rslt-th">Match Score Translated</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr id="rowData_results_de_{{i}} "
-                                            *ngFor="let records of titleMatchRecordReportResponse['titleMatchedReports']; let i=index ">
-                                            <td id="colData_bb_de_{{i}} "><span>{{records.bibId}}</span></td>
+                                        <ng-container *ngFor="let records of titleMatchRecordReportResponse['titleMatchedReports']; let i=index ">
+                                        <tr id="rowData_results_de_{{i}} " (click)="records.expanded = !records.expanded">
+                                            <td><i [ngClass]="
+                                                records.expanded
+                                                  ? 'pi pi-chevron-down'
+                                                  : 'pi pi-chevron-right'"></i></td>
+                                            <td id="colData_bb_de_{{i}} "><span> {{records.bibId}}</span></td>
                                             <td id="colData_si_de_{{i}} "><span>{{records.scsbId}}</span></td>
-                                            <td id="colData_ib_de_{{i}} "><span *ngIf="records.itemBarcode != '' && records.itemBarcode != null">{{records.itemBarcode}}</span>
-                                                                          <span *ngIf="records.itemBarcodes != '' && records.itemBarcodes != null"><a (click)="dialogBox(records.itemBarcodes)">More than one Barcode</a></span>  </td>
-                                            <td id="colData_lc_de_{{i}} "><span>{{records.lccn}}</span></td>
-                                            <td id="colData_cgd_de_{{i}} "><span>{{records.cgd}}</span></td>
-                                            <td id="colData_dc_de_{{i}} "><span>{{records.duplicateCode}}</span></td>
-                                            <td id="colData_cd_de_{{i}} " *ngIf="records.createdDate != '' && records.createdDate != null">
-                                                <span>{{records.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(records.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}</span>
-                                            </td>
+                                            <td id="colData_lc_ris_{{i}} "><span>{{records.isbn}}</span></td>
+                                            <td id="colData_lc_ro_{{i}} "><span>{{records.oclc}}</span></td>
+                                            <td id="colData_lc_rl_{{i}} "><span>{{records.lccn}}</span></td>
+                                            <td id="colData_lc_ri_{{i}} "><span>{{records.issn}}</span></td>
+                                            <td id="colData_lc_rt_{{i}} "><span>{{records.title}}</span></td>
+                                            <td id="colData_dc_dc_{{i}} "><span>{{records.duplicateCode}}</span></td>
+                                            <td id="colData_bb_de_{{i}} "><span>{{records.anomalyFlag}}</span></td>
+                                            <td id="colData_si_dems_{{i}} "><span>{{records.mscore}}</span></td>
+                                            <td id="colData_si_demt_{{i}} "><span>{{records.mscoreTranslated}}</span></td>
                                          </tr>
+                                         <ng-container *ngIf="records.expanded">
+                                             <table>
+                                                 <thead class="tablesorter-headerRow ">
+                                                     <tr id="subRow_header">
+                                                         <th class="rslt-th">Item Barcode</th>
+                                                         <th class="rslt-th">CGD</th>
+                                                     </tr>
+                                                 </thead>
+                                                 <tbody>
+                                                     <tr *ngFor="let details of records.itemDetails">
+                                                         <td>{{details.itemBarcode}} </td>
+                                                         <td> {{details.cgd}} </td>
+                                                     </tr>
+                                                 </tbody>
+                                             </table>
+                                            </ng-container>
+                                        </ng-container>
                                     </tbody>
                                 </table>
                             </div>

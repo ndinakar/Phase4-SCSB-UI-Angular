@@ -82,3 +82,14 @@ tr:nth-child(even) {
     height: 100px;
     overflow: scroll;
 }
+.pi-chevron-right:before {
+    content: url("src/assets/images/show-icon.png") !important;
+    color: blue !important;
+    margin-left: -5px;
+  }
+  
+  .pi-chevron-down:before {
+    content: url("src/assets/images/hide-icon.png") !important;
+    color: blue !important;
+    margin-left: -5px;
+  }

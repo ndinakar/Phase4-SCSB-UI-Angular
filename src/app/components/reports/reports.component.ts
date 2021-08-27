@@ -87,7 +87,7 @@ export class ReportsComponent implements OnInit {
     title: 'Export TitleMatch Report',
     useBom: true,
     noDownload: false,
-    headers: ["BibId", "SCSB Id","Item Barcode", "LCCN","CGD","Matching Identifier","Accession Date"]
+    headers: ["BibId", "SCSB Id","Item Barcode","ISBN","OCLC", "LCCN","ISSN","CGD","Title","Matching Identifier","Anomaly Flag","Match Score","Match Score Translated"]
   };
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
@@ -1045,10 +1045,16 @@ export class ReportsComponent implements OnInit {
       item['bibId'] = items[i].bibId;
       item['scsbId'] = items[i].scsbId;
       item['itemBarcode'] = items[i].itemBarcode;
+      item['isbn'] = items[i].isbn;
+      item['oclc'] = items[i].oclc;
       item['lccn'] = items[i].lccn;
+      item['issn'] = items[i].issn;
       item['cgd'] = items[i].cgd;
+      item['title'] = items[i].title;
       item['duplicateCode'] = items[i].duplicateCode;
-      item['createdDate'] = this.convertDateToEDT(items[i].createdDate);
+      item['anomalyFlag'] = items[i].anomalyFlag;
+      item['mscore'] = items[i].mscore;
+      item['mscoreTranslated'] = items[i].mscoreTranslated;
       this.itemListTransaction.push(item);
     }
     return this.itemListTransaction;

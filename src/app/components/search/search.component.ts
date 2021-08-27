@@ -174,6 +174,7 @@ export class SearchComponent implements OnInit {
     { field: 'barcode', header: 'Barcode' },
   ];
   ngOnInit(): void {
+    document.getElementById("fieldValue").focus();
     $("#clearSearchText").hide();
     this.dashBoardService.setApiPath('search');
     this.rolesRes = this.rolesService.getRes();
