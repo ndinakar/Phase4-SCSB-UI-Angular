@@ -23,7 +23,7 @@
                                                 (keyup)="clearFieldvalue()"
                                                 (paste)="onPasteHandler($event.clipboardData.getData('text/plain'))"
                                                 formControlName="fieldValue"
-                                                placeholder="Type Text Here....." />
+                                                placeholder="Type Text Here....."  autofocus="autofocus"/>
                                             <span *ngIf="clearSearchTextCross" class="add-clear-x form-control-feedback glyphicon glyphicon-remove"
                                                 id="clearSearchText" style="
                           color: rgb(12, 12, 12);
