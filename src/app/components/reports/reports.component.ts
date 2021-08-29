@@ -6,6 +6,7 @@ import { ReportsService } from '@service/reports/reports.service';
 import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
+import { Table } from 'primeng/table';
 declare var $: any;
 var moment = require('moment-timezone');
 
@@ -16,6 +17,7 @@ var moment = require('moment-timezone');
 })
 export class ReportsComponent implements OnInit {
   constructor(private router: Router, private reportsService: ReportsService, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService,private datePipe: DatePipe) { }
+  @ViewChild('dt') dt: Table;
   ngOnInit(): void {
     this.dashBoardService.setApiPath('reports');
     this.spinner.hide();
@@ -84,11 +86,31 @@ export class ReportsComponent implements OnInit {
     decimalseparator: '.',
     showLabels: true,
     showTitle: true,
-    title: 'Export TitleMatch Report',
+    title: 'TitleMatch Export Report',
     useBom: true,
     noDownload: false,
     headers: ["BibId", "SCSB Id","Item Barcode","ISBN","OCLC", "LCCN","ISSN","CGD","Title","Matching Identifier","Anomaly Flag","Match Score","Match Score Translated"]
   };
+  validateCols = [
+    { field: 'bibId', header: 'Bib Id' },
+    { field: 'scsbId', header: 'SCSB Id' },
+    { field: 'itemBarcode', header: 'Item Barcode' },
+    { field: 'isbn', header: 'ISBN' },
+    { field: 'oclc', header: 'OCLC' },
+    { field: 'lccn', header: 'LCCN' },
+    { field: 'issn', header: 'ISSN' },
+    { field: 'cgd', header: 'CGD' },
+    { field: 'title', header: 'Title' },
+    { field: 'matchingIdentifier', header: 'Matching Identifier' },
+    { field: 'anomalyFlag', header: 'Anomaly Flag' },
+    { field: 'mscore', header: 'Match Score' },
+    { field: 'mscoreTranslated', header: 'Match Score Translated' },
+  ];
+  validateCols1 = [
+    { field: 'itemBarcode', header: 'Item Barcode' },
+    { field: 'cgd', header: 'CGD' }
+  ];
+
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
   accessionErrorMessageDiv = false;

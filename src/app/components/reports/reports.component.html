@@ -152,7 +152,8 @@
                                                             </p>
                                                             <p id="requestFromToError" *ngIf="requestFromToError"
                                                                 style="color: red">To Date must be greater than or
-                                                                <br>equal to the From Date</p>
+                                                                <br>equal to the From Date
+                                                            </p>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-1 col-md-3 col-sm-3" style="margin-top: 18px;">
@@ -240,7 +241,8 @@
                                                                 Subtotal</td>
                                                             <td class="results"
                                                                 *ngFor="let SubTotalCount of reportstVal['reportsInstitutionFormList']">
-                                                                <span>{{SubTotalCount.physicalPrivateCount+SubTotalCount.physicalSharedCount+SubTotalCount.physicalPartnerSharedCount | number}}</span>
+                                                                <span>{{SubTotalCount.physicalPrivateCount+SubTotalCount.physicalSharedCount+SubTotalCount.physicalPartnerSharedCount
+                                                                    | number}}</span>
                                                             </td>
                                                         </tr>
                                                         <tr class="results ">
@@ -273,7 +275,8 @@
                                                                 Subtotal</td>
                                                             <td class="results"
                                                                 *ngFor="let SubTotalEddCount of reportstVal['reportsInstitutionFormList']">
-                                                                <span>{{SubTotalEddCount.eddPrivateCount+SubTotalEddCount.eddSharedOpenCount+SubTotalEddCount.eddPartnerSharedOpenCount | number}}</span>
+                                                                <span>{{SubTotalEddCount.eddPrivateCount+SubTotalEddCount.eddSharedOpenCount+SubTotalEddCount.eddPartnerSharedOpenCount
+                                                                    | number}}</span>
                                                             </td>
                                                         </tr>
                                                         <tr class="fontcolor-dark large-font bgcolored results ">
@@ -281,7 +284,8 @@
                                                             <td class="results ">TOTAL</td>
                                                             <td class="results "
                                                                 *ngFor="let TotalCount of reportstVal['reportsInstitutionFormList']">
-                                                                <span>{{TotalCount.physicalPrivateCount+TotalCount.physicalSharedCount+TotalCount.physicalPartnerSharedCount+TotalCount.eddPrivateCount+TotalCount.eddSharedOpenCount+TotalCount.eddPartnerSharedOpenCount | number}}</span>
+                                                                <span>{{TotalCount.physicalPrivateCount+TotalCount.physicalSharedCount+TotalCount.physicalPartnerSharedCount+TotalCount.eddPrivateCount+TotalCount.eddSharedOpenCount+TotalCount.eddPartnerSharedOpenCount
+                                                                    | number}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -329,7 +333,8 @@
                                                             <td class="results ">TOTAL</td>
                                                             <td class="results "
                                                                 *ngFor="let totalCount of reportstVal['reportsInstitutionFormList']">
-                                                                <span>{{totalCount.retrievalRequestCount+totalCount.recallRequestCount+totalCount.eddRequestCount | number}}</span>
+                                                                <span>{{totalCount.retrievalRequestCount+totalCount.recallRequestCount+totalCount.eddRequestCount
+                                                                    | number}}</span>
                                                             </td>
 
                                                         </tr>
@@ -385,7 +390,8 @@
                                                             </p>
                                                             <p id="accessionFromToError " *ngIf="accessionFromToError "
                                                                 style="color: red ">To Date must be greater than or
-                                                                <br> equal to the From Date</p>
+                                                                <br> equal to the From Date
+                                                            </p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 col-sm-2 " style="margin-top: 20px; ">
@@ -582,7 +588,8 @@
                                                             </td>
                                                             <td class="results "
                                                                 *ngFor=" let OpenRes of reportstVal[ 'reportsInstitutionFormList'] ">
-                                                                <span>{{OpenRes.openCgdCount | number}}</span></td>
+                                                                <span>{{OpenRes.openCgdCount | number}}</span>
+                                                            </td>
                                                         </tr>
                                                         <tr class="border-style-top-white results ">
                                                             <td class="v-middle-data gray-dark fontcolor-white large-font results "
@@ -591,7 +598,8 @@
                                                             </td>
                                                             <td class="results "
                                                                 *ngFor=" let SharedRes of reportstVal[ 'reportsInstitutionFormList'] ">
-                                                                <span>{{SharedRes.sharedCgdCount | number}}</span></td>
+                                                                <span>{{SharedRes.sharedCgdCount | number}}</span>
+                                                            </td>
 
                                                         </tr>
                                                         <tr class="border-style-top-white results ">
@@ -621,7 +629,8 @@
                                                             </td>
                                                             <td class="results "
                                                                 *ngFor=" let UncommittableRes of reportstVal[ 'reportsInstitutionFormList'] ">
-                                                                <span>{{UncommittableRes.uncommittableCgdCount | number}}</span>
+                                                                <span>{{UncommittableRes.uncommittableCgdCount |
+                                                                    number}}</span>
                                                             </td>
                                                         </tr>
                                                         <tr
@@ -631,7 +640,8 @@
                                                             </td>
                                                             <td class="results "
                                                                 *ngFor=" let totalRes of reportstVal[ 'reportsInstitutionFormList'] ">
-                                                                <span>{{totalRes.openCgdCount+totalRes.sharedCgdCount+totalRes.privateCgdCount | number}}</span>
+                                                                <span>{{totalRes.openCgdCount+totalRes.sharedCgdCount+totalRes.privateCgdCount
+                                                                    | number}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -699,7 +709,8 @@
                                         <tr id="rowData_results_de_{{i}} "
                                             *ngFor="let deaccessionRow of deaccessionRes[ 'deaccessionItemResultsRows']; let i=index ">
                                             <td id="colData_dd_de_{{i}} ">
-                                                <span>{{deaccessionRow.deaccessionDate}}</span></td>
+                                                <span>{{deaccessionRow.deaccessionDate}}</span>
+                                            </td>
                                             <td id="colData_dt_de_{{i}} "><span>{{deaccessionRow.title}}</span></td>
                                             <td id="colData_di_de_{{i}} "><span
                                                     id="ownInstDeacc_{{i}} ">{{deaccessionRow.deaccessionOwnInst}}</span>
@@ -708,9 +719,11 @@
                                             </td>
                                             <td id="colData_cgd_de_{{i}} "><span>{{deaccessionRow.cgd}}</span></td>
                                             <td id="colData_dn_de_{{i}} ">
-                                                <span>{{deaccessionRow.deaccessionNotes}}</span></td>
+                                                <span>{{deaccessionRow.deaccessionNotes}}</span>
+                                            </td>
                                             <td id="colData_dcb_de_{{i}} ">
-                                                <span>{{deaccessionRow.deaccessionCreatedBy}}</span></td>
+                                                <span>{{deaccessionRow.deaccessionCreatedBy}}</span>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -816,7 +829,8 @@
                                 style="padding-left:30px;padding-right:30px; ">
                                 <h4>Report Results</h4>
                                 <h4 class="pull-right " style="margin-top: -20px; ">Total Records Found:
-                                    <span>{{reportstVal['incompleteTotalRecordsCount']}}</span></h4>
+                                    <span>{{reportstVal['incompleteTotalRecordsCount']}}</span>
+                                </h4>
                                 <div class="col-sm-offset-2 show-entries-section " style="margin-top: -30px; ">
                                     <div class=" ">
                                         <span class="show-title ">Show Entries</span>
@@ -980,7 +994,8 @@
                                                 </p>
                                                 <p id="requestExceptionFromToError" *ngIf="requestExceptionFromToError"
                                                     style="color: red">To Date must be greater than or
-                                                    <br>equal to the From Date</p>
+                                                    <br>equal to the From Date
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-3 col-sm-3" style="margin-top: 18px;">
@@ -1026,7 +1041,8 @@
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-3 text-right">
                                     <h4>Search Results Found:
-                                        <span>{{searchreqExceptionResultVal['totalRecordsCount']}}</span></h4>
+                                        <span>{{searchreqExceptionResultVal['totalRecordsCount']}}</span>
+                                    </h4>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 8px;" *ngIf="ExceptionReportsResultsDiv">
@@ -1069,10 +1085,14 @@
                                                 </td>
                                                 <td class="center-text" id="data_pe_{{i}}">{{ item.patronEmailId }}</td>
                                                 <td class="center-text" id="data_cd_{{i}}">
-                                                    {{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}
+                                                    {{ item.createdDate | date:'yyyy-MM-dd
+                                                    HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss':
+                                                    'UTC')}}
                                                 </td>
                                                 <td class="center-text" id="data_ld_{{i}}">
-                                                    {{ item.lastUpdatedDate |  date:'yyyy-MM-dd HH:mm:ss':timezone(item.lastUpdatedDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC')}}
+                                                    {{ item.lastUpdatedDate | date:'yyyy-MM-dd
+                                                    HH:mm:ss':timezone(item.lastUpdatedDate | date:'yyyy-MM-dd
+                                                    HH:mm:ss': 'UTC')}}
                                                 </td>
                                                 <td class="center-text" id="data_rn_{{i}}" width="20%">
                                                     {{item.requestNotes}}</td>
@@ -1237,7 +1257,8 @@
                                                 </p>
                                                 <p id="transactionFromToError" *ngIf="transactionFromToError"
                                                     style="color: red">To Date must be greater than or
-                                                    <br>equal to the From Date</p>
+                                                    <br>equal to the From Date
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-3 col-sm-3" style="margin-top: 18px;">
@@ -1446,7 +1467,9 @@
                                             <td id="colData_ib_de_{{i}} "><span>{{records.imsLocation}}</span></td>
                                             <td id="colData_ib_de_{{i}} "><span>{{records.itemBarcode}}</span></td>
                                             <td id="colData_cgd_de_{{i}} ">
-                                                <span>{{records.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(records.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}</span>
+                                                <span>{{records.createdDate | date:'yyyy-MM-dd
+                                                    HH:mm:ss':timezone(records.createdDate | date:'yyyy-MM-dd HH:mm:ss':
+                                                    'UTC') }}</span>
                                             </td>
                                             <td id="colData_dn_de_{{i}} "><span>{{records.cgd}}</span></td>
                                             <td id="colData_dcb_de_{{i}} "><span>{{records.requestStatus}}</span></td>
@@ -1556,7 +1579,8 @@
                                                 </p>
                                                 <p id="requestExceptionFromToError" *ngIf="requestExceptionFromToError"
                                                     style="color: red">To Date must be greater than or
-                                                    <br>equal to the From Date</p>
+                                                    <br>equal to the From Date
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-3 col-sm-3" style="margin-top: 18px;">
@@ -1599,7 +1623,8 @@
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-3 text-right">
                                     <h4>Search Results Found:
-                                        <span>{{submitCollectionResultVal['totalRecordsCount']}}</span></h4>
+                                        <span>{{submitCollectionResultVal['totalRecordsCount']}}</span>
+                                    </h4>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 8px;" *ngIf="submotCollectionResultsDiv">
@@ -1626,7 +1651,9 @@
                                                 <td class="center-text" id="data_dl_{{i}}">{{ item.reportType }}
                                                 </td>
                                                 <td class="center-text" id="data_dl_{{i}}">
-                                                    {{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}
+                                                    {{ item.createdDate | date:'yyyy-MM-dd
+                                                    HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss':
+                                                    'UTC') }}
                                                 </td>
                                                 <td class="center-text" id="data_rt_{{i}}">{{ item.message }}</td>
                                             </tr>
@@ -1736,7 +1763,8 @@
                                                 </p>
                                                 <p id="requestExceptionFromToError" *ngIf="requestExceptionFromToError"
                                                     style="color: red">To Date must be greater than or
-                                                    <br>equal to the From Date</p>
+                                                    <br>equal to the From Date
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-3 col-sm-3" style="margin-top: 18px;">
@@ -1780,7 +1808,8 @@
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-3 text-right">
                                     <h4>Search Results Found:
-                                        <span>{{accessionExceptionResultVal['totalRecordsCount']}}</span></h4>
+                                        <span>{{accessionExceptionResultVal['totalRecordsCount']}}</span>
+                                    </h4>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 8px;" *ngIf="accesssionReportshowDiv">
@@ -1801,7 +1830,9 @@
                                                 <td class="center-text" id="data_br_{{i}}">{{ item.customerCode }}
                                                 </td>
                                                 <td class="center-text" id="data_dl_{{i}}">
-                                                    {{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss': 'UTC') }}
+                                                    {{ item.createdDate | date:'yyyy-MM-dd
+                                                    HH:mm:ss':timezone(item.createdDate | date:'yyyy-MM-dd HH:mm:ss':
+                                                    'UTC') }}
                                                 </td>
                                                 <td class="center-text" id="data_rt_{{i}}" style="text-align: left;">
                                                     {{ item.message }}</td>
@@ -1886,13 +1917,11 @@
                                                             class="error-color">*</span> </label>
                                                 </div>
                                                 <div class="">
-                                                    <ng-select id="cgdlist"
-                                                        [items]="CGDList" [multiple]="true"
+                                                    <ng-select id="cgdlist" [items]="CGDList" [multiple]="true"
                                                         bindLabel="name" [selectableGroup]="true"
                                                         [selectableGroupAsModel]="false" [closeOnSelect]="false"
                                                         bindValue="id" [ngModelOptions]="{standalone: true}"
-                                                        [(ngModel)]="cgdlist"
-                                                        placeholder="Select One or More">
+                                                        [(ngModel)]="cgdlist" placeholder="Select One or More">
                                                         <ng-template ng-option-tmp let-item="item" let-item$="item$"
                                                             let-index="index">
                                                             <input id="item-{{index}}" type="checkbox"
@@ -1966,7 +1995,8 @@
                                                 </p>
                                                 <p id="transactionFromToError" *ngIf="transactionFromToError"
                                                     style="color: red">To Date must be greater than or
-                                                    <br>equal to the From Date</p>
+                                                    <br>equal to the From Date
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-3 col-sm-3" style="margin-top: 18px;">
@@ -1987,7 +2017,7 @@
                                     <div class="bg-danger text-danger padding-10"><span
                                             class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span
                                             name="noSearchRecords"> {{titleMatchRecordResponse['message']}}</span></div>
-                                </div> 
+                                </div>
                             </div>
                             <div *ngIf="titleMatchRecordResultsDisplayDiv">
                                 <h4>Report Results</h4>
@@ -2009,19 +2039,26 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor = "let inst of instList_transactons">
+                                                <tr *ngFor="let inst of instList_transactons">
                                                     <th class="td_tr_border txt-cntr">{{inst.name}}</th>
-                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Shared',inst.name,'Matched')}}</th>
-                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Open',inst.name,'Matched')}}</th>
-                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Private',inst.name,'Matched')}}</th>
-                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Committed',inst.name,'Matched')}}</th>
-                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Uncommittable',inst.name,'Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">
+                                                        {{findMatchedCount('Shared',inst.name,'Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">
+                                                        {{findMatchedCount('Open',inst.name,'Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">
+                                                        {{findMatchedCount('Private',inst.name,'Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">
+                                                        {{findMatchedCount('Committed',inst.name,'Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">
+                                                        {{findMatchedCount('Uncommittable',inst.name,'Matched')}}</th>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="clk-count" *ngIf="matchedTableDiv">
-                                        <a class="rec-count" (click)="titleMatchReports('Matched')"><span style="cursor: pointer;"> Preview <span>{{totalTitleMatchedCount}}</span> total matched items</span></a>
+                                        <a class="rec-count" (click)="titleMatchReports('Matched')"><span
+                                                style="cursor: pointer;"> Preview
+                                                <span>{{totalTitleMatchedCount}}</span> total matched items</span></a>
                                     </div>
                                     <div class="table-wrapper " *ngIf="notMatchedTableDiv">
                                         <table class="table table-striped text-center margin-btm-0 "
@@ -2040,20 +2077,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor = "let inst of instList_transactons">
+                                                <tr *ngFor="let inst of instList_transactons">
                                                     <th class="td_tr_border txt-cntr">{{inst.name}}</th>
-                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Shared',inst.name,'Not Matched')}}</th>
-                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Open',inst.name,'Not Matched')}}</th>
-                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Private',inst.name,'Not Matched')}}</th>
-                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Committed',inst.name,'Not Matched')}}</th>
-                                                    <th class="td_tr_border txt-cntr">{{findMatchedCount('Uncommittable',inst.name,'Not Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">
+                                                        {{findMatchedCount('Shared',inst.name,'Not Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">
+                                                        {{findMatchedCount('Open',inst.name,'Not Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">
+                                                        {{findMatchedCount('Private',inst.name,'Not Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">
+                                                        {{findMatchedCount('Committed',inst.name,'Not Matched')}}</th>
+                                                    <th class="td_tr_border txt-cntr">
+                                                        {{findMatchedCount('Uncommittable',inst.name,'Not Matched')}}
+                                                    </th>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="clk-count" *ngIf="notMatchedTableDiv">
-                                    <a class="rec-count" (click)="titleMatchReports('Not Matched')"><span style="cursor: pointer;"> Preview <span>{{totalTitleNotMatchedCount}}</span> total not matched items</span></a>
+                                    <a class="rec-count" (click)="titleMatchReports('Not Matched')"><span
+                                            style="cursor: pointer;"> Preview <span>{{totalTitleNotMatchedCount}}</span>
+                                            total not matched items</span></a>
                                 </div>
                             </div>
                         </div>
@@ -2079,62 +2124,67 @@
                         </div>
                         <div id="transactionInformation ">
                             <div>
-                                <table class="table table-striped text-center margin-btm-0" id="deaccessionResultsTable"
-                                    style=" margin-top: 5px;">
-                                    <thead class="tablesorter-headerRow ">
-                                        <tr>
-                                            <th class="rslt-th"></th>
-                                            <th class="rslt-th">Bib Id</th>
-                                            <th class="rslt-th">SCSB Id</th>
-                                            <th class="rslt-th">ISBN</th>
-                                            <th class="rslt-th">OCLC</th>
-                                            <th class="rslt-th">LCCN</th>
-                                            <th class="rslt-th">ISSN</th>
-                                            <th class="rslt-th" style="width: 13%;">Title</th>
-                                            <th class="rslt-th">Matching Identifier</th>
-                                            <th class="rslt-th">Anomaly Flag</th>
-                                            <th class="rslt-th">Match Score</th>
-                                            <th class="rslt-th">Match Score Translated</th>
+                                <p-table name="p_table" #dt [columns]="validateCols" rowExpandMode="single" [autoLayout]="true"
+                                    [value]="titleMatchRecordReportResponse['titleMatchedReports']" dataKey="bibId">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr id="headers_main">
+                                            <th style="width:3em"></th>
+                                            <th id="header_column_{{ i }}" *ngFor="let col of columns; let i = index">
+                                                {{ col.header }}
+                                            </th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <ng-container *ngFor="let records of titleMatchRecordReportResponse['titleMatchedReports']; let i=index ">
-                                        <tr id="rowData_results_de_{{i}} " (click)="records.expanded = !records.expanded">
-                                            <td><i [ngClass]="
-                                                records.expanded
-                                                  ? 'pi pi-chevron-down'
-                                                  : 'pi pi-chevron-right'"></i></td>
-                                            <td id="colData_bb_de_{{i}} "><span> {{records.bibId}}</span></td>
-                                            <td id="colData_si_de_{{i}} "><span>{{records.scsbId}}</span></td>
-                                            <td id="colData_lc_ris_{{i}} "><span>{{records.isbn}}</span></td>
-                                            <td id="colData_lc_ro_{{i}} "><span>{{records.oclc}}</span></td>
-                                            <td id="colData_lc_rl_{{i}} "><span>{{records.lccn}}</span></td>
-                                            <td id="colData_lc_ri_{{i}} "><span>{{records.issn}}</span></td>
-                                            <td id="colData_lc_rt_{{i}} "><span>{{records.title}}</span></td>
-                                            <td id="colData_dc_dc_{{i}} "><span>{{records.duplicateCode}}</span></td>
-                                            <td id="colData_bb_de_{{i}} "><span>{{records.anomalyFlag}}</span></td>
-                                            <td id="colData_si_dems_{{i}} "><span>{{records.mscore}}</span></td>
-                                            <td id="colData_si_demt_{{i}} "><span>{{records.mscoreTranslated}}</span></td>
-                                         </tr>
-                                         <ng-container *ngIf="records.expanded">
-                                             <table>
-                                                 <thead class="tablesorter-headerRow ">
-                                                     <tr id="subRow_header">
-                                                         <th class="rslt-th">Item Barcode</th>
-                                                         <th class="rslt-th">CGD</th>
-                                                     </tr>
-                                                 </thead>
-                                                 <tbody>
-                                                     <tr *ngFor="let details of records.itemDetails">
-                                                         <td>{{details.itemBarcode}} </td>
-                                                         <td> {{details.cgd}} </td>
-                                                     </tr>
-                                                 </tbody>
-                                             </table>
-                                            </ng-container>
-                                        </ng-container>
-                                    </tbody>
-                                </table>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-rowIndex="rowIndex">
+                                        <tr id="rowData_results_{{ rowIndex }}" [pSelectableRow]="rowData">
+                                            <td id="colData_main_{{ rowIndex }}" *ngIf="rowData.itemDetails == ''"></td>
+                                            <td id="colData_expand_results_{{ rowIndex }}"
+                                                *ngIf="rowData.itemDetails != ''">
+                                                <a href="#"  [pRowToggler]="rowData">
+                                                    <i id="rowExpand_main_{{ rowIndex }}" [ngClass]="
+                              expanded
+                                ? 'pi pi-chevron-down'
+                                : 'pi pi-chevron-right'
+                            "></i>
+                                                </a>
+                                            </td>
+                                            <td id="colData_column_{{ i }}" *ngFor="let col of columns; let i = index">
+                                                {{
+                                                rowData[col.field]
+                                                }}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                                        <tr>
+                                            <td name="column_len" [attr.colspan]="columns.length + 1">
+                                                <div class="p-grid ui-fluid" style="font-size: 16px; padding: 20px" [@rowExpansionTrigger]="'active'">
+                                                    <div class="p-col-12 p-md-9">
+                                                        <div class="p-grid">
+                                                            <p-table name="p_tablesub" #dt [columns]="validateCols1" rowExpandMode="single" [value]="rowData.itemDetails">
+                                                                <ng-template pTemplate="header" let-columns>
+                                        <tr id="subRow_header">
+                                            <th *ngFor="let col of columns" style="text-align: center;">
+                                                {{ col.header }}
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                        <tr id="rowData_subResults_{{ rowIndex }}">
+                                            <td id="dataResult_sub_col_{{ i }}" *ngFor="let col of columns; let i = index" style="text-align: center;">{{
+                                                rowData[col.field]
+                                                }}
+                                            </td>
+                                        </tr>
+                                
+                                    </ng-template>
+                                </p-table>
+                                </div>
+                                </div>
+                                </div>
+                                </td>
+                                </tr>
+                                </ng-template>
+                                </p-table>
                             </div>
                             <input id="reportsPageNumber " name="reportsPageNumber " type="text "
                                 th:field="${reportsForm.pageNumber} " hidden="hidden ">
@@ -2175,27 +2225,4 @@
             </fieldset>
         </form>
     </div>
-</div>
-<!-- Notes Modal Data-->
-<div class="modal fade create-request-details" id="barcodeModal" data-backdrop="static"
-data-keyboard="false" role="dialog" aria-labelledby="requestNotesLargeModalLabel" tabindex="-2">
-<div class="modal-dialog" role="document">
-    <div class="modal-content" id="requestNotesModalContent">
-        <div class="modal-header bg-success">
-            <button class="close" data-dismiss="modal" type="button" aria-label="Close"><span
-                    aria-hidden="true">&times;</span></button>
-            <h2 class="modal-title text-center text-success" id="requestNotesModalLabel">
-                Barcodes</h2>
-        </div>
-        <div class="modal-body scr-bdy">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div *ngFor="let barcode of listBarcode">
-                        <p>{{barcode}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 </div>
