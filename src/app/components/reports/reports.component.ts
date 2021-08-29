@@ -101,10 +101,10 @@ export class ReportsComponent implements OnInit {
     { field: 'issn', header: 'ISSN' },
     { field: 'cgd', header: 'CGD' },
     { field: 'title', header: 'Title' },
-    { field: 'matchingIdentifier', header: 'Matching Identifier' },
+    { field: 'duplicateCode', header: 'Matching Identifier' },
     { field: 'anomalyFlag', header: 'Anomaly Flag' },
-    { field: 'mscore', header: 'Match Score' },
-    { field: 'mscoreTranslated', header: 'Match Score Translated' },
+    { field: 'mScore', header: 'Match Score' },
+    { field: 'mScoreTranslated', header: 'Match Score Translated' },
   ];
   validateCols1 = [
     { field: 'itemBarcode', header: 'Item Barcode' },
