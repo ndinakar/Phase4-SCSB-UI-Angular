@@ -110,7 +110,8 @@ export class ReportsComponent implements OnInit {
     { field: 'itemBarcode', header: 'Item Barcode' },
     { field: 'cgd', header: 'CGD' }
   ];
-
+  cols: any[];
+  cols1: any[];
   cgdErrorMessageId: string;
   accessionErrorMessageId: string;
   accessionErrorMessageDiv = false;
@@ -538,7 +539,12 @@ export class ReportsComponent implements OnInit {
           this.dashBoardService.errorNavigation();
         });
     }
+    this.mappingResults();
     this.spinner.hide();
+  }
+  mappingResults() {
+    this.cols = this.validateCols;
+    this.cols1 = this.validateCols1;
   }
   titleMatchReportsExport() {
     this.spinner.show();
