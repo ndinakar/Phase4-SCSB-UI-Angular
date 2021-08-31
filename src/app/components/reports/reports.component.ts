@@ -102,9 +102,9 @@ export class ReportsComponent implements OnInit {
     { field: 'cgd', header: 'CGD' },
     { field: 'title', header: 'Title' },
     { field: 'duplicateCode', header: 'Matching Identifier' },
-    { field: 'anomalyFlag', header: 'Anomaly Flag' },
-    { field: 'mScore', header: 'Match Score' },
-    { field: 'mScoreTranslated', header: 'Match Score Translated' },
+    { field: 'anamolyFlag', header: 'Anomaly Flag' },
+    { field: 'matchScore', header: 'Match Score' },
+    { field: 'matchScoreTranslated', header: 'Match Score Translated' },
   ];
   validateCols1 = [
     { field: 'itemBarcode', header: 'Item Barcode' },
@@ -523,6 +523,7 @@ export class ReportsComponent implements OnInit {
       }
       this.reportsService.getTitleMatchReport(this.postDataTitle,this.dateFromTransaction,this.dateToTransaction).subscribe(
         (res) => {
+          this.mappingResults();
           this.titleMatchRecordReportResponse = res;
           if (this.titleMatchRecordReportResponse['message']) {
           } else {
@@ -539,7 +540,6 @@ export class ReportsComponent implements OnInit {
           this.dashBoardService.errorNavigation();
         });
     }
-    this.mappingResults();
     this.spinner.hide();
   }
   mappingResults() {
