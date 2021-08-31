@@ -1080,9 +1080,9 @@ export class ReportsComponent implements OnInit {
       item['cgd'] = items[i].cgd;
       item['title'] = items[i].title;
       item['duplicateCode'] = items[i].duplicateCode;
-      item['anomalyFlag'] = items[i].anomalyFlag;
-      item['mscore'] = items[i].mscore;
-      item['mscoreTranslated'] = items[i].mscoreTranslated;
+      item['anamolyFlag'] = items[i].anomalyFlag;
+      item['matchScore'] = items[i].mscore;
+      item['matchScoreTranslated'] = items[i].mscoreTranslated;
       this.itemListTransaction.push(item);
     }
     return this.itemListTransaction;
