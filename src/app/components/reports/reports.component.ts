@@ -298,6 +298,7 @@ export class ReportsComponent implements OnInit {
   listBarcode: any;
   matchedTableDiv = true;
   notMatchedTableDiv = true;
+  tempMatch: string;
 
   TYPE_LIST_USE = [
     'Retrieval',
@@ -524,7 +525,6 @@ export class ReportsComponent implements OnInit {
       }
       this.reportsService.getTitleMatchReport(this.postDataTitle,this.dateFromTransaction,this.dateToTransaction).subscribe(
         (res) => {
-          this.mappingResults();
           this.titleMatchRecordReportResponse = res;
           if (this.titleMatchRecordReportResponse['message']) {
           } else {
@@ -543,10 +543,7 @@ export class ReportsComponent implements OnInit {
     }
     this.spinner.hide();
   }
-  mappingResults() {
-    this.cols = this.validateCols;
-    this.cols1 = this.validateCols1;
-  }
+  
   titleMatchReportsExport() {
     this.spinner.show();
     if (!this.validateTitleDateRange()) {
@@ -2719,7 +2716,7 @@ export class ReportsComponent implements OnInit {
   }
   titleCall() {
     this.titleTotalPageCount = this.titleMatchRecordReportResponse['totalPageCount'];
-    this.titleMatchReports('Matched');
+    this.titleMatchReports(this.tempMatch);
   }
   dialogBox(barcodes) {
     this.listBarcode = barcodes;
@@ -2727,6 +2724,7 @@ export class ReportsComponent implements OnInit {
   }
   titleMatchReportsPreview(titleMatch) {
     this.pageNumber = 0;
+    this.tempMatch = titleMatch;
     this.titleMatchReports(titleMatch)
   }
 }
