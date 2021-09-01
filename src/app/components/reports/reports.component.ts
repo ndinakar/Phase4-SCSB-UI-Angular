@@ -502,6 +502,7 @@ export class ReportsComponent implements OnInit {
         });
     }
   }
+
   titleMatchReports(titleMatch){
     this.spinner.show();
     this.titleMatch = [];
@@ -2723,5 +2724,9 @@ export class ReportsComponent implements OnInit {
   dialogBox(barcodes) {
     this.listBarcode = barcodes;
     $('#barcodeModal').modal({ show: true });
+  }
+  titleMatchReportsPreview(titleMatch) {
+    this.pageNumber = 0;
+    this.titleMatchReports(titleMatch)
   }
 }

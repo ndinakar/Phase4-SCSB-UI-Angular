@@ -2056,7 +2056,7 @@
                                         </table>
                                     </div>
                                     <div class="clk-count" *ngIf="matchedTableDiv">
-                                        <a class="rec-count" (click)="titleMatchReports('Matched')"><span
+                                        <a class="rec-count" (click)="titleMatchReportsPreview('Matched')"><span
                                                 style="cursor: pointer;"> Preview
                                                 <span>{{totalTitleMatchedCount}}</span> total matched items</span></a>
                                     </div>
@@ -2096,7 +2096,7 @@
                                     </div>
                                 </div>
                                 <div class="clk-count" *ngIf="notMatchedTableDiv">
-                                    <a class="rec-count" (click)="titleMatchReports('Not Matched')"><span
+                                    <a class="rec-count" (click)="titleMatchReportsPreview('Not Matched')"><span
                                             style="cursor: pointer;"> Preview <span>{{totalTitleNotMatchedCount}}</span>
                                             total not matched items</span></a>
                                 </div>
