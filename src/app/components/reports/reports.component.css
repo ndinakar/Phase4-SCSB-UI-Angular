@@ -96,19 +96,32 @@ tr:nth-child(even) {
   #header_column_3 {
       width: 10%;
   }
+  #colData_column_3{
+      width: 10%;
+  }
 
   #header_column_4 {
+      width: 7%;
+  }
+  #colData_column_4 {
       width: 7%;
   }
 
   #header_column_5 {
       width: 7%;
   }
-
+  #colData_column_5 {
+      width: 7%;
+  }
   #header_column_6 {
       width: 7%;
   }
-
+  #colData_column_6 {
+      width: 7%;
+  }
   #header_column_8 {
+      width: 15%;
+  }
+  #colData_column_8 {
       width: 15%;
   }

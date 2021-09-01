@@ -2720,10 +2720,10 @@ export class ReportsComponent implements OnInit {
   titleMatchReportsPreview(titleMatch) {
     this.pageNumber = 0;
     this.tempMatch = titleMatch;
-    this.titleMatchReports(titleMatch)
-    if (titleMatch == 'Matched') {
+    this.titleMatchReports(titleMatch);
+    if (this.tempMatch == 'Matched') {
       this.titleCount = this.totalTitleMatchedCount;
-    } else {
+    } else if (this.tempMatch == 'Not Matched') {
       this.titleCount = this.totalTitleNotMatchedCount;
     }
   }
