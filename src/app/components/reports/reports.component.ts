@@ -91,7 +91,7 @@ export class ReportsComponent implements OnInit {
     noDownload: false,
     headers: ["BibId", "SCSB Id","Item Barcode","ISBN","OCLC", "LCCN","ISSN","CGD","Title","Matching Identifier","Anomaly Flag","Match Score","Match Score Translated"]
   };
-  validateCols = [
+  validateCols1 = [
     { field: 'bibId', header: 'Bib Id' },
     { field: 'scsbId', header: 'SCSB Id' },
     { field: 'itemBarcode', header: 'Item Barcode' },
@@ -106,7 +106,7 @@ export class ReportsComponent implements OnInit {
     { field: 'matchScore', header: 'Match Score' },
     { field: 'matchScoreTranslated', header: 'Match Score Translated' },
   ];
-  validateCols1 = [
+  validateCols2 = [
     { field: 'itemBarcode', header: 'Item Barcode' },
     { field: 'cgd', header: 'CGD' }
   ];
@@ -298,6 +298,7 @@ export class ReportsComponent implements OnInit {
   listBarcode: any;
   matchedTableDiv = true;
   notMatchedTableDiv = true;
+  tempMatch: string;
 
   TYPE_LIST_USE = [
     'Retrieval',
@@ -502,6 +503,7 @@ export class ReportsComponent implements OnInit {
         });
     }
   }
+
   titleMatchReports(titleMatch){
     this.spinner.show();
     this.titleMatch = [];
@@ -523,15 +525,9 @@ export class ReportsComponent implements OnInit {
       }
       this.reportsService.getTitleMatchReport(this.postDataTitle,this.dateFromTransaction,this.dateToTransaction).subscribe(
         (res) => {
-          this.mappingResults();
           this.titleMatchRecordReportResponse = res;
           if (this.titleMatchRecordReportResponse['message']) {
           } else {
-            if (titleMatch == 'Matched') {
-              this.titleCount = this.totalTitleMatchedCount;
-            } else {
-              this.titleCount = this.totalTitleNotMatchedCount;
-            }
             this.paginationTitleMatchReport();
             this.titleHideDivs();
           }
@@ -542,10 +538,7 @@ export class ReportsComponent implements OnInit {
     }
     this.spinner.hide();
   }
-  mappingResults() {
-    this.cols = this.validateCols;
-    this.cols1 = this.validateCols1;
-  }
+
   titleMatchReportsExport() {
     this.spinner.show();
     if (!this.validateTitleDateRange()) {
@@ -1080,9 +1073,9 @@ export class ReportsComponent implements OnInit {
       item['cgd'] = items[i].cgd;
       item['title'] = items[i].title;
       item['duplicateCode'] = items[i].duplicateCode;
-      item['anomalyFlag'] = items[i].anomalyFlag;
-      item['mscore'] = items[i].mscore;
-      item['mscoreTranslated'] = items[i].mscoreTranslated;
+      item['anamolyFlag'] = items[i].anamolyFlag;
+      item['matchScore'] = items[i].matchScore;
+      item['matchScoreTranslated'] = items[i].matchScoreTranslated;
       this.itemListTransaction.push(item);
     }
     return this.itemListTransaction;
@@ -2718,10 +2711,20 @@ export class ReportsComponent implements OnInit {
   }
   titleCall() {
     this.titleTotalPageCount = this.titleMatchRecordReportResponse['totalPageCount'];
-    this.titleMatchReports('Matched');
+    this.titleMatchReports(this.tempMatch);
   }
   dialogBox(barcodes) {
     this.listBarcode = barcodes;
     $('#barcodeModal').modal({ show: true });
+  }
+  titleMatchReportsPreview(titleMatch) {
+    this.pageNumber = 0;
+    this.tempMatch = titleMatch;
+    this.titleMatchReports(titleMatch);
+    if (this.tempMatch == 'Matched') {
+      this.titleCount = this.totalTitleMatchedCount;
+    } else if (this.tempMatch == 'Not Matched') {
+      this.titleCount = this.totalTitleNotMatchedCount;
+    }
   }
 }
