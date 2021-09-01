@@ -2124,7 +2124,7 @@
                         </div>
                         <div id="transactionInformation ">
                             <div>
-                                <p-table name="p_table" #dt [columns]="cols" rowExpandMode="single" [autoLayout]="true"
+                                <p-table name="p_table" #dt [columns]="validateCols1" rowExpandMode="single" [autoLayout]="true"
                                     [value]="titleMatchRecordReportResponse['titleMatchedReports']" dataKey="bibId">
                                     <ng-template pTemplate="header" let-columns>
                                         <tr id="headers_main">
@@ -2160,7 +2160,7 @@
                                                 <div class="p-grid ui-fluid" style="font-size: 16px; padding: 20px" [@rowExpansionTrigger]="'active'">
                                                     <div class="p-col-12 p-md-9">
                                                         <div class="p-grid">
-                                                            <p-table name="p_tablesub" #dt [columns]="cols1" rowExpandMode="single" [value]="rowData.itemDetails">
+                                                            <p-table name="p_tablesub" #dt [columns]="validateCols2" rowExpandMode="single" [value]="rowData.itemDetails">
                                                                 <ng-template pTemplate="header" let-columns>
                                         <tr id="subRow_header">
                                             <th *ngFor="let col of columns" style="text-align: center;">
