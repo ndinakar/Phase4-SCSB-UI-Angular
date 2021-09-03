@@ -2042,15 +2042,15 @@
                                                 <tr *ngFor="let inst of instList_transactons">
                                                     <th class="td_tr_border txt-cntr">{{inst.name}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Shared',inst.name,'Matched')}}</th>
+                                                        {{findMatchedCount('Shared',inst.name,'Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
                                                         {{findMatchedCount('Open',inst.name,'Matched')}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Private',inst.name,'Matched')}}</th>
+                                                        {{findMatchedCount('Private',inst.name,'Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Committed',inst.name,'Matched')}}</th>
+                                                        {{findMatchedCount('Committed',inst.name,'Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Uncommittable',inst.name,'Matched')}}</th>
+                                                        {{findMatchedCount('Uncommittable',inst.name,'Matched') | number}}</th>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -2058,7 +2058,7 @@
                                     <div class="clk-count" *ngIf="matchedTableDiv">
                                         <a class="rec-count" (click)="titleMatchReportsPreview('Matched')"><span
                                                 style="cursor: pointer;"> Preview
-                                                <span>{{totalTitleMatchedCount}}</span> total matched items</span></a>
+                                                <span>{{totalTitleMatchedCount | number}}</span> total matched items</span></a>
                                     </div>
                                     <div class="table-wrapper " *ngIf="notMatchedTableDiv">
                                         <table class="table table-striped text-center margin-btm-0 "
@@ -2080,15 +2080,15 @@
                                                 <tr *ngFor="let inst of instList_transactons">
                                                     <th class="td_tr_border txt-cntr">{{inst.name}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Shared',inst.name,'Not Matched')}}</th>
+                                                        {{findMatchedCount('Shared',inst.name,'Not Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Open',inst.name,'Not Matched')}}</th>
+                                                        {{findMatchedCount('Open',inst.name,'Not Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Private',inst.name,'Not Matched')}}</th>
+                                                        {{findMatchedCount('Private',inst.name,'Not Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Committed',inst.name,'Not Matched')}}</th>
+                                                        {{findMatchedCount('Committed',inst.name,'Not Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Uncommittable',inst.name,'Not Matched')}}
+                                                        {{findMatchedCount('Uncommittable',inst.name,'Not Matched') | number}}
                                                     </th>
                                                 </tr>
                                             </tbody>
@@ -2097,7 +2097,7 @@
                                 </div>
                                 <div class="clk-count" *ngIf="notMatchedTableDiv">
                                     <a class="rec-count" (click)="titleMatchReportsPreview('Not Matched')"><span
-                                            style="cursor: pointer;"> Preview <span>{{totalTitleNotMatchedCount}}</span>
+                                            style="cursor: pointer;"> Preview <span>{{totalTitleNotMatchedCount | number}}</span>
                                             total not matched items</span></a>
                                 </div>
                             </div>
@@ -2118,7 +2118,7 @@
                             <div class="col-sm-2 margin-top-05 show-entries-section "></div>
                             <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"></div>
                             <div class="col-sm-12 col-md-12 col-lg-3 text-right">
-                                <h4>Search Results Found: <span>{{titleCount}}</span>
+                                <h4>Search Results Found: <span>{{titleCount | number}}</span>
                                 </h4>
                             </div>
                         </div>
