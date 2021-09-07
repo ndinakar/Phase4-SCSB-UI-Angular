@@ -98,7 +98,9 @@ export class SearchComponent implements OnInit {
     "collectionGroupDesignations": [
       "Shared",
       "Private",
-      "Open"
+      "Open",
+      "Committed",
+      "Uncommittable"
     ],
     "availability": [
       "Available",
@@ -181,7 +183,7 @@ export class SearchComponent implements OnInit {
     if (this.rolesRes['isBarcodeRestricted'] == true) {
       this.validateColumns();
     }
-   
+    this.resetDynamicFields();
     this.selectedNodes1 = [];
     this.selectedNodes2 = [];
     this.searchForm = this.formBuilder.group({
@@ -193,11 +195,8 @@ export class SearchComponent implements OnInit {
       Monograph: [true],
       Serial: [true],
       others: [true],
-      shared: [true],
       matched: [true],
       notMatched: [true],
-      private: [true],
-      open: [true],
       Available: [true],
       notAvailable: [true],
       NoRestrictions: [true],
@@ -458,9 +457,6 @@ export class SearchComponent implements OnInit {
         others: [false],
         matched: [false],
         notMatched: [false],
-        shared: [false],
-        private: [false],
-        open: [false],
         Available: [false],
         notAvailable: [false],
         NoRestrictions: [false],
@@ -484,9 +480,6 @@ export class SearchComponent implements OnInit {
         others: [true],
         matched: [true],
         notMatched: [true],
-        shared: [true],
-        private: [true],
-        open: [true],
         Available: [true],
         notAvailable: [true],
         NoRestrictions: [true],
@@ -496,17 +489,20 @@ export class SearchComponent implements OnInit {
 
     }
   }
-  onReset() {
-    this.showresultdiv = false;
-    this.checked = true;
-    $("#clearSearchText").hide();
-    this.clearSearchTextCross = false;
+  resetDynamicFields(){
     this.reportsService.getInstitutions().subscribe(
       (res) => {
         this.owningInstitutionInst = res['institutionList'];
         this.storageLocationsList = res['storageLocationsList'];
         this.cgdTypeList = res['cgdCodesList'];
       });
+  }
+  onReset() {
+    this.showresultdiv = false;
+    this.checked = true;
+    $("#clearSearchText").hide();
+    this.clearSearchTextCross = false;
+    this.resetDynamicFields();
     this.searchForm = this.formBuilder.group({
       fieldValue: [''],
       fieldName: [''],
@@ -515,9 +511,6 @@ export class SearchComponent implements OnInit {
       others: [true],
       matched: [true],
       notMatched: [true],
-      shared: [true],
-      private: [true],
-      open: [true],
       Available: [true],
       notAvailable: [true],
       NoRestrictions: [true],
