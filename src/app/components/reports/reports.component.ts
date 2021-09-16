@@ -89,9 +89,10 @@ export class ReportsComponent implements OnInit {
     title: 'TitleMatch Export Report',
     useBom: true,
     noDownload: false,
-    headers: ["BibId", "SCSB Id","Item Barcode","ISBN","OCLC", "LCCN","ISSN","CGD","Title","Matching Identifier","Anomaly Flag","Match Score","Match Score Translated"]
+    headers: ["Owning Institution","BibId", "SCSB Id","Item Barcode","ISBN","OCLC", "LCCN","ISSN","CGD","Title","Matching Identifier","Anomaly Flag","Match Score","Match Score Translated","Publisher","Publication Date","Chronology And Enum"]
   };
   validateCols1 = [
+    { field: 'owningInstitution', header: 'Owning Institution' },
     { field: 'bibId', header: 'Bib Id' },
     { field: 'scsbId', header: 'SCSB Id' },
     { field: 'itemBarcode', header: 'Item Barcode' },
@@ -99,16 +100,19 @@ export class ReportsComponent implements OnInit {
     { field: 'oclc', header: 'OCLC' },
     { field: 'lccn', header: 'LCCN' },
     { field: 'issn', header: 'ISSN' },
-    { field: 'cgd', header: 'CGD' },
     { field: 'title', header: 'Title' },
     { field: 'duplicateCode', header: 'Matching Identifier' },
     { field: 'anamolyFlag', header: 'Anomaly Flag' },
     { field: 'matchScore', header: 'Match Score' },
     { field: 'matchScoreTranslated', header: 'Match Score Translated' },
+    { field: 'publisher', header: 'Publisher' },
+    { field: 'publicationDate', header: 'Publication Date' },
+    
   ];
   validateCols2 = [
     { field: 'itemBarcode', header: 'Item Barcode' },
-    { field: 'cgd', header: 'CGD' }
+    { field: 'cgd', header: 'CGD' },
+    { field: 'chronologyAndEnum', header: 'Chronology And Enum' }
   ];
   cols: any[];
   cols1: any[];
@@ -290,7 +294,7 @@ export class ReportsComponent implements OnInit {
   titleMatchRecordResultsDisplayDiv = false;
   titleTableRecordsShowDiv = false;
   titleMatchExportButtonDiv = false;
-  titleMatch : Array<String> = [];
+  titleMatch : string;
   totalTitleMatchedCount: number = 0;
   totalTitleNotMatchedCount: number = 0;
   titleCount: number =0;
@@ -463,7 +467,7 @@ export class ReportsComponent implements OnInit {
         "pageSize": 100,
         "totalPageCount": 0,
         "message": null,
-        "owningInst": this.owningInstitutionList,
+        "owningInst": this.incompleteShowBy,
         "cgd": this.cgdlist,
         "titleMatch": this.typeOptions,
         "fromDate": null,
@@ -489,12 +493,10 @@ export class ReportsComponent implements OnInit {
             this.messageNoSearchRecordsTitle = false;
             this.titleMatchRecordDisplayDiv = true;
             this.titleMatchRecordResultsDisplayDiv = true;
-            if(this.typeOptions.length < 2){
-              if(this.typeOptions == 'Matched'){
-                this.notMatchedTableDiv = false;
-              } else {
-                this.matchedTableDiv = false;
-              }
+            if (this.typeOptions == 'Matched') {
+              this.notMatchedTableDiv = false;
+            } else {
+              this.matchedTableDiv = false;
             }
           }
         },
@@ -506,18 +508,17 @@ export class ReportsComponent implements OnInit {
 
   titleMatchReports(titleMatch){
     this.spinner.show();
-    this.titleMatch = [];
-    this.titleMatch.push(titleMatch);
+    this.titleMatch = titleMatch;
     if(!this.validateTitleDateRange()){
       this.postDataTitle = {
-        "totalRecordsCount": 0,
+        "totalRecordsCount": this.titleCount,
         "pageNumber": this.pageNumber,
         "pageSize": 100,
         "totalPageCount": 0,
         "message": null,
-        "owningInst": this.owningInstitutionList,
+        "owningInst": this.incompleteShowBy,
         "cgd": this.cgdlist,
-        "titleMatch": this.titleMatch,
+        "titleMatch": titleMatch,
         "fromDate": null,
         "toDate": null,
         "titleMatchedReports": null,
@@ -543,12 +544,12 @@ export class ReportsComponent implements OnInit {
     this.spinner.show();
     if (!this.validateTitleDateRange()) {
       this.postDataTitle = {
-        "totalRecordsCount": 0,
+        "totalRecordsCount": this.titleCount,
         "pageNumber": this.pageNumber,
         "pageSize": 100,
         "totalPageCount": 0,
         "message": null,
-        "owningInst": this.owningInstitutionList,
+        "owningInst": this.incompleteShowBy,
         "cgd": this.cgdlist,
         "titleMatch": this.titleMatch,
         "fromDate": null,
@@ -558,14 +559,18 @@ export class ReportsComponent implements OnInit {
       }
       this.reportsService.getTitleMatchReportExport(this.postDataTitle, this.dateFromTransaction, this.dateToTransaction).subscribe(
         (res) => {
-          this.spinner.hide();
           this.titleMatchRecordReportResponseExport = res;
+          if(this.titleMatchRecordReportResponseExport['message'] != null){
+            this.spinner.hide();
+            alert(this.titleMatchRecordReportResponseExport['message']);
+          }else{
           this.itemListTransaction = [];
           this.transactionReportRecordsExport = res;
-          var fileNmae = 'TitleMatchExportReport' + '_' +
+          var fileNmae = this.incompleteShowBy + '_' + 'Title_Match'+'_'+
             new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'America/New_York');
           new AngularCsv(this.removePropertiesTitle(this.titleMatchRecordReportResponseExport['titleMatchedReports']), fileNmae, this.csvOptionsTitleMatch);
-
+          this.spinner.hide();
+          }
         },
         (error) => {
           this.spinner.hide();
@@ -779,7 +784,7 @@ export class ReportsComponent implements OnInit {
   }
   validateTitleDateRange() {
     this.statusRequest = false;
-    if (this.owningInstitutionList == '' || this.owningInstitutionList == undefined) {
+    if (this.incompleteShowBy == '' || this.incompleteShowBy == undefined) {
       this.borrowingErrorText = true;
       this.statusRequest = true;
     } else {
@@ -1063,6 +1068,7 @@ export class ReportsComponent implements OnInit {
     this.itemListTransaction = [];
     for (var i = 0; i < items.length; i++) {
       var item = {};
+      item['owningInstitution'] = items[i].owningInstitution;
       item['bibId'] = items[i].bibId;
       item['scsbId'] = items[i].scsbId;
       item['itemBarcode'] = items[i].itemBarcode;
@@ -1076,6 +1082,9 @@ export class ReportsComponent implements OnInit {
       item['anamolyFlag'] = items[i].anamolyFlag;
       item['matchScore'] = items[i].matchScore;
       item['matchScoreTranslated'] = items[i].matchScoreTranslated;
+      item['publisher'] = items[i].publisher;
+      item['publicationDate'] = items[i].publicationDate;
+      item['chronologyAndEnum'] = items[i].chronologyAndEnum;
       this.itemListTransaction.push(item);
     }
     return this.itemListTransaction;
