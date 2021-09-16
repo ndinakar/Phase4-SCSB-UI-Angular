@@ -164,7 +164,8 @@ export class SearchComponent implements OnInit {
     { field: 'collectionGroupDesignation', header: 'CGD' },
     { field: 'useRestriction', header: 'Use Restriction' },
     { field: 'barcode', header: 'Barcode' },
-    { field: 'summaryHoldings', header: 'SH' }
+    { field: 'summaryHoldings', header: 'SH' },
+    { field: 'matchingIdentifier', header: 'Matching Identifier' },
   ];
   validateCols1 = [
     { field: 'callNumber', header: 'Call Number' },
