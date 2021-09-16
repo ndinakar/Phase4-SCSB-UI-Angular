@@ -1952,7 +1952,7 @@
                                                                     " [ngModelOptions]="{standalone: true} "
                                                         [(ngModel)]="typeOptions ">
                                                         <option *ngFor="let match of TYPE_LIST_TITLE"
-                                                            [ngValue]="match ">
+                                                            [ngValue]="match">
                                                             {{match}}
                                                         </option>
                                                     </select>
@@ -2047,7 +2047,7 @@
                                                     <th class="td_tr_border txt-cntr">
                                                         {{findMatchedCount('Shared',inst.name,'Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Open',inst.name,'Matched')}}</th>
+                                                        {{findMatchedCount('Open',inst.name,'Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
                                                         {{findMatchedCount('Private',inst.name,'Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
