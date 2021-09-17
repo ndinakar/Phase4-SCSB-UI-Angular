@@ -1176,7 +1176,7 @@
                                                     <label for="ReportShowBy">Owning Institution<span
                                                             class="error-color">*</span> </label>
                                                 </div>
-                                                <!-- <div class="">
+                                                <div class="">
                                                     <ng-select id="owningInstitutionList"
                                                         [items]="instVal['institutionList']" [multiple]="true"
                                                         bindLabel="name" [selectableGroup]="true"
@@ -1191,17 +1191,6 @@
                                                                 [ngModel]="item$.selected"> {{item}}
                                                         </ng-template>
                                                     </ng-select>
-                                                </div> -->
-                                                <div class="select-holder ">
-                                                    <select class="themed-input themed-select " id="owningInstitutionList "
-                                                        name="owningInstitutionList " style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;
-                                                                    " [ngModelOptions]="{standalone: true} "
-                                                        [(ngModel)]="owningInstitutionList ">
-                                                        <option *ngFor="let inst of instVal[ 'institutionList'] "
-                                                            [ngValue]="inst ">
-                                                            {{inst}}
-                                                        </option>
-                                                    </select>
                                                 </div>
                                                 <p id="owningErrorText" *ngIf="owningErrorText" style="color: red">
                                                     This Field is Required</p>
@@ -1457,13 +1446,15 @@
                                     <thead class="tablesorter-headerRow ">
                                         <tr>
                                             <th style="font-family:sans-serif; ">Requesting Institution</th>
+                                            <th style="font-family:sans-serif; ">Delivery Location</th>
                                             <th style="font-family:sans-serif; ">Owning Institution</th>
-                                            <th style="font-family:sans-serif; ">RT/Type of Use</th>
+                                            <th style="font-family:sans-serif; ">Customer Code</th>
+                                            <th style="font-family:sans-serif; ">Type of Use</th>
                                             <th style="font-family:sans-serif; ">Call Number</th>
                                             <th style="font-family:sans-serif; ">Storage Location</th>
                                             <th style="font-family:sans-serif; ">Item Barcode</th>
-                                            <th style="font-family:sans-serif; ">Date and Time of Request</th>
-                                            <th style="font-family:sans-serif; ">CGD Status</th>
+                                            <th style="font-family:sans-serif; ">Request Date</th>
+                                            <th style="font-family:sans-serif; ">CGD</th>
                                             <th style="font-family:sans-serif; ">Current Status</th>
                                         </tr>
                                     </thead>
@@ -1471,7 +1462,9 @@
                                         <tr id="rowData_results_de_{{i}} "
                                             *ngFor="let records of transactionReportRecords['transactionReportList']; let i=index ">
                                             <td id="colData_dt_de_{{i}} "><span>{{records.requestingInst}}</span></td>
+                                            <td id="colData_dt_de_{{i}} "><span>{{records.stopCode}}</span></td>
                                             <td id="colData_dd_de_{{i}} "><span>{{records.owningInst}}</span></td>
+                                            <td id="colData_dt_de_{{i}} "><span>{{records.customerCode}}</span></td>
                                             <td id="colData_di_de_{{i}} "><span
                                                     id="ownInstDeacc_{{i}} ">{{records.requestType}}</span></td>
                                             <td id="colData_ib_de_{{i}} "><span>{{records.callNumber}}</span></td>
