@@ -45,7 +45,7 @@ export class ReportsComponent implements OnInit {
     title: 'Export Transaction Reports',
     useBom: true,
     noDownload: false,
-    headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use","Call Number","Storage Location", "Item Barcode", "Date and Time of Request", "CGD Status", "Current Status"]
+    headers: ["Requesting Institution", "Delivery Location","Owning Institution", "Customer Code","Type of Use","Call Number","Storage Location", "Item Barcode", "Request Date", "CGD", "Current Status"]
   };
   csvOptionsTransactionCount = {
     fieldSeparator: ',',
@@ -56,7 +56,7 @@ export class ReportsComponent implements OnInit {
     title: 'Export Summary Report',
     useBom: true,
     noDownload: false,
-    headers: ["Requesting Institution", "Owning Institution", "RT/Type of Use", "CGD Status", "COUNT"]
+    headers: ["Requesting Institution", "Owning Institution", "Type of Use", "CGD", "COUNT"]
   };
   csvOptionsSC = {
     fieldSeparator: ',',
@@ -1097,7 +1097,9 @@ export class ReportsComponent implements OnInit {
     for (var i = 0; i < items.length; i++) {
       var item = {};
       item['requestingInst'] = items[i].requestingInst;
+      item['stopCode'] = items[i].stopCode;
       item['owningInst'] = items[i].owningInst;
+      item['customerCode'] = items[i].customerCode;
       item['requestType'] = items[i].requestType;
       item['callNumber'] = items[i].callNumber;
       item['imsLocation'] = items[i].imsLocation;
