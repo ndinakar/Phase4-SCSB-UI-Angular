@@ -96,6 +96,7 @@ export class ReportsComponent implements OnInit {
     { field: 'bibId', header: 'Bib Id' },
     { field: 'scsbId', header: 'SCSB Id' },
     { field: 'itemBarcode', header: 'Item Barcode' },
+    { field: 'cgd', header: 'CGD' },
     { field: 'isbn', header: 'ISBN' },
     { field: 'oclc', header: 'OCLC' },
     { field: 'lccn', header: 'LCCN' },
@@ -114,6 +115,8 @@ export class ReportsComponent implements OnInit {
     { field: 'cgd', header: 'CGD' },
     { field: 'chronologyAndEnum', header: 'Chronology And Enum' }
   ];
+  messageData : string;
+  inst_name : string;
   cols: any[];
   cols1: any[];
   cgdErrorMessageId: string;
@@ -460,6 +463,7 @@ export class ReportsComponent implements OnInit {
     "titleMatchCounts": null
   }
   titleMatchRecordCount(){
+    this.inst_name = this.incompleteShowBy;
     if(!this.validateTitleDateRange()){
       this.postDataTitle = {
         "totalRecordsCount": 0,
@@ -479,7 +483,6 @@ export class ReportsComponent implements OnInit {
       this.spinner.show();
       this.reportsService.getTitleMatchCount(this.postDataTitle,this.dateFromTransaction,this.dateToTransaction).subscribe(
         (res) => {
-          this.spinner.hide();
           this.titleMatchRecordResponse = res;
           this.matchedTableDiv = true;
           this.notMatchedTableDiv = true;
@@ -499,6 +502,7 @@ export class ReportsComponent implements OnInit {
               this.matchedTableDiv = false;
             }
           }
+          this.spinner.hide();
         },
         (error) => {
           this.dashBoardService.errorNavigation();
@@ -562,7 +566,7 @@ export class ReportsComponent implements OnInit {
           this.titleMatchRecordReportResponseExport = res;
           if(this.titleMatchRecordReportResponseExport['message'] != null){
             this.spinner.hide();
-            alert(this.titleMatchRecordReportResponseExport['message']);
+            this.messageDisplay(this.titleMatchRecordReportResponseExport['message']);
           }else{
           this.itemListTransaction = [];
           this.transactionReportRecordsExport = res;
@@ -2729,6 +2733,7 @@ export class ReportsComponent implements OnInit {
     $('#barcodeModal').modal({ show: true });
   }
   titleMatchReportsPreview(titleMatch) {
+    this.spinner.show();
     this.pageNumber = 0;
     this.tempMatch = titleMatch;
     this.titleMatchReports(titleMatch);
@@ -2737,5 +2742,10 @@ export class ReportsComponent implements OnInit {
     } else if (this.tempMatch == 'Not Matched') {
       this.titleCount = this.totalTitleNotMatchedCount;
     }
+    this.spinner.hide();
+  }
+  messageDisplay(message) {
+    this.messageData = message;
+    $('#messageDisplay').modal({ show: true });
   }
 }

@@ -1326,12 +1326,12 @@
                                                         <td class="td_tr_border" id="committed_{{inst.name}}_j"
                                                             *ngFor="let inst of instList_transactons;let j=index">
                                                             <span class="cnt_dec_a"><a
-                                                                    (click)="pullReports('Physical',i,j,'Committed')">{{findCount('Physical',j,i,'Committed')}}</a></span>
+                                                                    (click)="pullReports('Physical',i,j,'Committed')">{{findCount('Physical',j,i,'Committed') | number}}</a></span>
                                                         </td>
                                                         <td class="td_tr_border" id="committed_{{inst.name}}_j"
                                                             *ngFor="let inst of instList_transactons;let j=index">
                                                             <span class="cnt_dec_a"><a
-                                                                    (click)="pullReportsEDD('EDD',i,j,'Committed')">{{findCount('EDD',j,i,'Committed')}}</a></span>
+                                                                    (click)="pullReportsEDD('EDD',i,j,'Committed')">{{findCount('EDD',j,i,'Committed') | number}}</a></span>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -1339,12 +1339,12 @@
                                                         <td class="td_tr_border" id="sahred{{inst.name}}_j"
                                                             *ngFor="let inst of instList_transactons;let j=index">
                                                             <span class="cnt_dec_a"><a
-                                                                    (click)="pullReports('Physical',i,j,'Shared')">{{findCount('Physical',j,i,'Shared')}}</a></span>
+                                                                    (click)="pullReports('Physical',i,j,'Shared')">{{findCount('Physical',j,i,'Shared') | number}}</a></span>
                                                         </td>
                                                         <td class="td_tr_border" id="sahred{{inst.name}}_j"
                                                             *ngFor="let inst of instList_transactons;let j=index">
                                                             <span class="cnt_dec_a"><a
-                                                                    (click)="pullReportsEDD('EDD',i,j,'Shared')">{{findCount('EDD',j,i,'Shared')}}</a></span>
+                                                                    (click)="pullReportsEDD('EDD',i,j,'Shared')">{{findCount('EDD',j,i,'Shared') | number}}</a></span>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -1352,12 +1352,12 @@
                                                         <td class="td_tr_border" id="open_{{inst.name}}_j"
                                                             *ngFor="let inst of instList_transactons;let j=index">
                                                             <span class="cnt_dec_a"><a
-                                                                    (click)="pullReports('Physical',i,j,'Open')">{{findCount('Physical',j,i,'Open')}}</a></span>
+                                                                    (click)="pullReports('Physical',i,j,'Open')">{{findCount('Physical',j,i,'Open') | number}}</a></span>
                                                         </td>
                                                         <td class="td_tr_border" id="open_{{inst.name}}_j"
                                                             *ngFor="let inst of instList_transactons;let j=index">
                                                             <span class="cnt_dec_a"><a
-                                                                    (click)="pullReportsEDD('EDD',i,j,'Open')">{{findCount('EDD',j,i,'Open')}}</a></span>
+                                                                    (click)="pullReportsEDD('EDD',i,j,'Open')">{{findCount('EDD',j,i,'Open') | number}}</a></span>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -1365,12 +1365,12 @@
                                                         <td class="td_tr_border" id="uncommit_{{inst.name}}_j"
                                                             *ngFor="let inst of instList_transactons;let j=index">
                                                             <span class="cnt_dec_a"><a
-                                                                    (click)="pullReports('Physical',i,j,'Uncommittable')">{{findCount('Physical',j,i,'Uncommittable')}}</a></span>
+                                                                    (click)="pullReports('Physical',i,j,'Uncommittable')">{{findCount('Physical',j,i,'Uncommittable') | number}}</a></span>
                                                         </td>
                                                         <td class="td_tr_border" id="uncommit_{{inst.name}}_j"
                                                             *ngFor="let inst of instList_transactons;let j=index">
                                                             <span class="cnt_dec_a"><a
-                                                                    (click)="pullReportsEDD('EDD',i,j,'Uncommittable')">{{findCount('EDD',j,i,'Uncommittable')}}</a></span>
+                                                                    (click)="pullReportsEDD('EDD',i,j,'Uncommittable')">{{findCount('EDD',j,i,'Uncommittable') | number}}</a></span>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -1378,12 +1378,12 @@
                                                         <td class="td_tr_border" id="private_{{inst.name}}_j"
                                                             *ngFor="let inst of instList_transactons;let j=index">
                                                             <span class="cnt_dec_a"><a
-                                                                    (click)="pullReports('Physical',i,j,'Private')">{{findCount('Physical',j,i,'Private')}}</a></span>
+                                                                    (click)="pullReports('Physical',i,j,'Private')">{{findCount('Physical',j,i,'Private') | number}}</a></span>
                                                         </td>
                                                         <td class="td_tr_border" id="private_{{inst.name}}_j"
                                                             *ngFor="let inst of instList_transactons;let j=index">
                                                             <span class="cnt_dec_a"><a
-                                                                    (click)="pullReportsEDD('EDD',i,j,'Private')">{{findCount('EDD',j,i,'Private')}}</a></span>
+                                                                    (click)="pullReportsEDD('EDD',i,j,'Private')">{{findCount('EDD',j,i,'Private') | number}}</a></span>
                                                         </td>
                                                     </tr>
                                                 </ng-container>
@@ -2035,18 +2035,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let inst of instList_transactons">
-                                                    <th class="td_tr_border txt-cntr">{{inst.name}}</th>
+                                                <tr>
+                                                    <th class="td_tr_border txt-cntr">{{this.inst_name}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Shared',inst.name,'Matched') | number}}</th>
+                                                        {{findMatchedCount('Shared',this.inst_name,'Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Open',inst.name,'Matched') | number}}</th>
+                                                        {{findMatchedCount('Open',this.inst_name,'Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Private',inst.name,'Matched') | number}}</th>
+                                                        {{findMatchedCount('Private',this.inst_name,'Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Committed',inst.name,'Matched') | number}}</th>
+                                                        {{findMatchedCount('Committed',this.inst_name,'Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Uncommittable',inst.name,'Matched') | number}}</th>
+                                                        {{findMatchedCount('Uncommittable',this.inst_name,'Matched') | number}}</th>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -2054,7 +2054,7 @@
                                     <div class="clk-count" *ngIf="matchedTableDiv">
                                         <a class="rec-count" (click)="titleMatchReportsPreview('Matched')"><span
                                                 style="cursor: pointer;"> Preview
-                                                <span>{{totalTitleMatchedCount | number}}</span> total matched items</span></a>
+                                                <span>{{totalTitleMatchedCount | number}}</span><span> </span> <span> {{this.incompleteShowBy}}</span> items (matched)</span></a>
                                     </div>
                                     <div class="table-wrapper " *ngIf="notMatchedTableDiv">
                                         <table class="table table-striped text-center margin-btm-0 "
@@ -2073,18 +2073,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let inst of instList_transactons">
-                                                    <th class="td_tr_border txt-cntr">{{inst.name}}</th>
+                                                <tr>
+                                                    <th class="td_tr_border txt-cntr">{{this.inst_name}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Shared',inst.name,'Not Matched') | number}}</th>
+                                                        {{findMatchedCount('Shared',this.inst_name,'Not Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Open',inst.name,'Not Matched') | number}}</th>
+                                                        {{findMatchedCount('Open',this.inst_name,'Not Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Private',inst.name,'Not Matched') | number}}</th>
+                                                        {{findMatchedCount('Private',this.inst_name,'Not Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Committed',inst.name,'Not Matched') | number}}</th>
+                                                        {{findMatchedCount('Committed',this.inst_name,'Not Matched') | number}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Uncommittable',inst.name,'Not Matched') | number}}
+                                                        {{findMatchedCount('Uncommittable',this.inst_name,'Not Matched') | number}}
                                                     </th>
                                                 </tr>
                                             </tbody>
@@ -2093,8 +2093,8 @@
                                 </div>
                                 <div class="clk-count" *ngIf="notMatchedTableDiv">
                                     <a class="rec-count" (click)="titleMatchReportsPreview('Not Matched')"><span
-                                            style="cursor: pointer;"> Preview <span>{{totalTitleNotMatchedCount | number}}</span>
-                                            total not matched items</span></a>
+                                            style="cursor: pointer;"> Preview <span>{{totalTitleNotMatchedCount | number}}</span><span> {{ this.incompleteShowBy}}</span> items (not matched)
+                                            </span></a>
                                 </div>
                             </div>
                         </div>
@@ -2114,7 +2114,7 @@
                             <div class="col-sm-2 margin-top-05 show-entries-section "></div>
                             <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"></div>
                             <div class="col-sm-12 col-md-12 col-lg-3 text-right">
-                                <h4>Search Results Found: <span>{{titleCount | number}}</span>
+                                <h4>Found <span>{{titleCount | number}}</span><span> </span><span> {{this.incompleteShowBy}}</span> items <span>(</span><span>{{this.titleMatch | lowercase}}</span><span>)</span>
                                 </h4>
                             </div>
                         </div>
@@ -2222,3 +2222,24 @@
         </form>
     </div>
 </div>
+<!-- MODAL FOR MESSAGE -->
+<div class="modal fade create-request-details" id="messageDisplay" data-backdrop="static"
+                    data-keyboard="false" role="dialog" aria-labelledby="requestNotesLargeModalLabel" tabindex="-2">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" id="requestNotesModalContent">
+                            <div class="modal-header bg-success">
+                                <button class="close" data-dismiss="modal" type="button" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h2 class="modal-title text-center text-success" id="requestNotesModalLabel">Message</h2>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p id="requestNotesData" style="white-space: pre-wrap;word-wrap: break-word;">
+                                            {{this.messageData}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
