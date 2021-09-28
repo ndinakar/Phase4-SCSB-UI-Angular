@@ -267,7 +267,7 @@ export class CollectionComponent implements OnInit {
         this.itemBarcodenew = this.openmarcVal['itemBarcodes'];
         this.radioSwitchEditCGD = true;
         this.spinner.hide();
-        if (this.CGDselect == 'Shared') {
+        if (this.CGDselect == 'Shared' || this.CGDselect== 'Committed') {
           this.showStar = true;
         } else {
           this.showStar = false;
