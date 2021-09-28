@@ -546,7 +546,7 @@ export class ReportsComponent implements OnInit {
   }
 
   titleMatchReportsExport() {
-    this.spinner.show();
+    
     if (!this.validateTitleDateRange()) {
       this.postDataTitle = {
         "totalRecordsCount": this.titleCount,
@@ -561,6 +561,11 @@ export class ReportsComponent implements OnInit {
         "toDate": null,
         "titleMatchedReports": null,
         "titleMatchCounts": null
+      }
+      if(this.titleCount<=100){
+        this.spinner.show();
+      } else{
+        this.messageDisplay('Title Match Report will generate in S3');
       }
       this.reportsService.getTitleMatchReportExport(this.postDataTitle, this.dateFromTransaction, this.dateToTransaction).subscribe(
         (res) => {
