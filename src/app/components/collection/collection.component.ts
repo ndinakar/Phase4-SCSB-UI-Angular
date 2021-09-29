@@ -594,7 +594,7 @@ export class CollectionComponent implements OnInit {
       this.showStatus = true;
     }
     if (this.CGDChangeNotes == undefined || this.CGDChangeNotes == '' || !this.checkCGDNotesIsNotEmpty()) {
-      if (cgdold == 'Shared') {
+      if (cgdold == 'Shared' || cgdold == 'Committed') {
         this.cgdNotesErrorMessage = true;
         this.showStatus = true;
       } else {
