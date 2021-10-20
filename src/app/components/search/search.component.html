@@ -462,7 +462,7 @@
                                                         <div class="p-grid" *ngIf="rowData.searchItemResultRows == ''">
                                                         </div>
                                                         <div class="p-grid" *ngIf="rowData.searchItemResultRows != ''">
-                                                            <p-table name="p_tablesub" #dt [columns]="cols1"
+                                                            <p-table name="p_tablesub" #dt1 [columns]="cols1"
                                                                 [paginator]="false" selectionMode="checkbox"
                                                                 (onHeaderCheckboxToggle)="
                                   onTableHeaderCheckboxToggle1($event)
@@ -550,8 +550,7 @@
                     <div style="margin-top: -20px">
                         <button class="btn btn-primary pull-right" id="export" name="action" type="button"
                             [disabled]="clicked" (click)="
-                      setFileName(); dt.exportCSV({ selectionOnly: true })
-                    " value="export" style="margin-right: 10px">
+                      searchExport();" value="export" style="margin-right: 10px">
                             Export Selected Records
                         </button>
                         <button class="btn btn-primary pull-right" id="requestButton" name="action" type="button"
