@@ -10,6 +10,7 @@ import { SearchService } from '@service/search/search.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService, TreeNode } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 declare var $: any;
 
 enum CONSTANTS {
@@ -40,6 +41,7 @@ export class SearchComponent implements OnInit {
     private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
     private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) {     }
   @ViewChild('dt') dt: Table;
+  @ViewChild('dt1') dt1: Table;
   public data: Object[];
   clearSearchTextCross = false;
   fieldValuseStatus = false;
@@ -176,6 +178,18 @@ export class SearchComponent implements OnInit {
     { field: 'useRestriction', header: 'Use Restriction' },
     { field: 'barcode', header: 'Barcode' },
   ];
+  itemListTransaction: any = [];
+  csvOptionsSearchReport = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: 'Search Export Report',
+    useBom: true,
+    noDownload: false,
+    headers: []
+  };
   ngOnInit(): void {
     document.getElementById("fieldValue").focus();
     $("#clearSearchText").hide();
@@ -519,9 +533,85 @@ export class SearchComponent implements OnInit {
       SupervisedUse: [true]
     });
   }
-  setFileName() {
+  searchExport() {
     this.dt.exportFilename = 'ExportRecords' + '_' +
       new DatePipe('en-US').transform(Date.now(), 'yyyyMMddhhmmss', 'UTC');
+      new AngularCsv(this.dataSetforExport(), this.dt.exportFilename, this.csvOptionsSearchReport);
+  }
+  
+  dataSetforExport(){
+    this.itemListTransaction = [];
+    if(this.dt.selection.length > 0){
+      this.setHeadersForTable(this.itemListTransaction);
+    for (var i = 0; i < this.dt.selection.length; i++) {
+      var item = {};
+      item['title'] = this.dt.selection[i].title;
+      item['author'] = this.dt.selection[i].author;
+      item['publisher'] = this.dt.selection[i].publisher;
+      item['publisherDate'] = this.dt.selection[i].publisherDate;
+      item['owningInstitution'] = this.dt.selection[i].owningInstitution;
+      item['imsLocation'] = this.dt.selection[i].imsLocation;
+      item['customerCode'] = this.dt.selection[i].customerCode;
+      item['collectionGroupDesignation'] = this.dt.selection[i].collectionGroupDesignation;
+      item['useRestriction'] = this.dt.selection[i].useRestriction;
+      item['barcode'] = this.dt.selection[i].barcode;
+      item['summaryHoldings'] = this.dt.selection[i].summaryHoldings;
+      item['matchingIdentifier'] = this.dt.selection[i].matchingIdentifier;
+      this.itemListTransaction.push(item);
+    }
+  }
+    if (this.dt1 != undefined) {
+      if ((this.dt1.selection != undefined || this.dt1.selection == '' || this.dt1.selection == null) && this.dt1.selection.length > 0) {
+        this.setInnerTableHeaders(this.itemListTransaction);
+      }
+    }
+    return this.itemListTransaction;
+  }
+  setHeadersForTable(items){
+    var item_newLine = {};
+    items.push(item_newLine);
+    var item = {};
+    item['title'] = "Title";
+    item['author'] = "Author";
+    item['publisher'] = "Publisher";
+    item['publisherDate'] = "Publisher Date";
+    item['owningInstitution'] = "OI";
+    item['imsLocation'] = "SL";
+    item['customerCode'] =  "CC";
+    item['collectionGroupDesignation'] = "CGD";
+    item['useRestriction'] = "Use Restriction";
+    item['barcode'] = "Barcode";
+    item['summaryHoldings'] = "SH";
+    item['matchingIdentifier'] = "Matching Identifier";
+    items.push(item);
+  }
+  setInnerTableHeaders(items): void{
+    var item_newLine = {};
+    items.push(item_newLine);
+    var item = {}
+    item['publisher'] = "Call Number";
+    item['publisherDate'] = "Chronology & Enum";
+    item['owningInstitution'] = "SL";
+    item['imsLocation'] = "CC";
+    item['customerCode'] = "CGD";
+    item['collectionGroupDesignation'] = "Use Restriction";
+    item['useRestriction'] = "Barcode";
+    items.push(item);
+    this.setDataForInnerTable(items);
+  }
+  setDataForInnerTable(items){
+    for (let i = 0; i < this.dt1.selection.length; i++) {
+      var item = {}
+    item['publisher'] = this.dt1.selection[i].callNumber;
+    item['publisherDate'] = this.dt1.selection[i].chronologyAndEnum;
+    item['owningInstitution'] = this.dt1.selection[i].imsLocation;
+    item['cc'] = this.dt1.selection[i].customerCode;
+    item['imsLocation'] = this.dt1.selection[i].collectionGroupDesignation;
+    item['customerCode'] = this.dt1.selection[i].useRestriction;
+    item['useRestriction'] = this.dt1.selection[i].barcode;
+    items.push(item);
+    }
+    console.log(this.dt1.selection);
   }
   routeToRequest() {
     var barcode1 = [];
