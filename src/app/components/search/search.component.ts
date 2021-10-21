@@ -545,18 +545,18 @@ export class SearchComponent implements OnInit {
       this.setHeadersForTable(this.itemListTransaction);
     for (var i = 0; i < this.dt.selection.length; i++) {
       var item = {};
-      item['title'] = this.dt.selection[i].title;
-      item['author'] = this.dt.selection[i].author;
-      item['publisher'] = this.dt.selection[i].publisher;
-      item['publisherDate'] = this.dt.selection[i].publisherDate;
-      item['owningInstitution'] = this.dt.selection[i].owningInstitution;
-      item['imsLocation'] = this.dt.selection[i].imsLocation;
-      item['customerCode'] = this.dt.selection[i].customerCode;
-      item['collectionGroupDesignation'] = this.dt.selection[i].collectionGroupDesignation;
-      item['useRestriction'] = this.dt.selection[i].useRestriction;
-      item['barcode'] = this.dt.selection[i].barcode;
-      item['summaryHoldings'] = this.dt.selection[i].summaryHoldings;
-      item['matchingIdentifier'] = this.dt.selection[i].matchingIdentifier;
+      item['title'] = (this.dt.selection[i].title) ? this.dt.selection[i].title : "";
+      item['author'] = (this.dt.selection[i].author) ? this.dt.selection[i].author : "";
+      item['publisher'] = (this.dt.selection[i].publisher) ? this.dt.selection[i].publisher: "";
+      item['publisherDate'] = (this.dt.selection[i].publisherDate) ? this.dt.selection[i].publisherDate : "";
+      item['owningInstitution'] = (this.dt.selection[i].owningInstitution) ? this.dt.selection[i].owningInstitution: "";
+      item['imsLocation'] = (this.dt.selection[i].imsLocation) ? this.dt.selection[i].imsLocation : "";
+      item['customerCode'] = (this.dt.selection[i].customerCode) ? this.dt.selection[i].customerCode : "";
+      item['collectionGroupDesignation'] = (this.dt.selection[i].collectionGroupDesignation) ? this.dt.selection[i].collectionGroupDesignation : "";
+      item['useRestriction'] = (this.dt.selection[i].useRestriction) ? this.dt.selection[i].useRestriction : "";
+      item['barcode'] = (this.dt.selection[i].barcode) ? this.dt.selection[i].barcode : "";
+      item['summaryHoldings'] = (this.dt.selection[i].summaryHoldings) ? this.dt.selection[i].summaryHoldings : "";
+      item['matchingIdentifier'] = (this.dt.selection[i].matchingIdentifier) ? this.dt.selection[i].matchingIdentifier : "";
       this.itemListTransaction.push(item);
     }
   }
