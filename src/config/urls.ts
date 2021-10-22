@@ -1,5 +1,5 @@
 
-var appURL = 'https' + '//' + window.location.hostname;
+var appURL = window.location.protocol + '//' + window.location.hostname;
 
 export const urls = {
     SEARCH: '/search',
