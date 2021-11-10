@@ -17,7 +17,7 @@ Download the Project , navigate inside project folder and build the project usin
 
 **npm run build:${Environment}**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+The build artifacts will be stored in the `dist/` directory. 
 
 After successful build , copy the content of `dist` to UI-Service static folder.
 
