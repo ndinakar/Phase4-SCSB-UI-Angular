@@ -537,6 +537,7 @@ export class ReportsComponent implements OnInit {
           this.exportMessage = this.titleMatchRecordReportResponse['reportMessage'];
           if (this.titleMatchRecordReportResponse['message']) {
           } else {
+            window.scroll(0, 0);
             this.paginationTitleMatchReport();
             this.titleHideDivs();
           }
