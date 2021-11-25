@@ -76,13 +76,7 @@ export class HomeComponent implements OnInit {
     "for": "NYPL users, contact",
     "url": 'mailto:ReCAPinterface@nypl.org',
     "name": 'ReCAPinterface@nypl.org'
-  },
-  {
-    "for": "Harvard users, consult the SCSB information page",
-    "url": 'https://wiki.harvard.edu/confluence/pages/viewpage.action?pageId=273094310',
-    "name": 'SCSB information page'
   }
-
 
   ];
 
