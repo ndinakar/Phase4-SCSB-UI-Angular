@@ -1,5 +1,5 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
 
 import { FooterComponent } from './footer.component';
@@ -10,7 +10,7 @@ describe('FooterComponent', () => {
   let service: DashBoardService;
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
       providers: [DashBoardService, HttpClient, HttpHandler]

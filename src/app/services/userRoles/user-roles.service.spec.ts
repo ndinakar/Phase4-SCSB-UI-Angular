@@ -1,6 +1,6 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -10,7 +10,7 @@ describe('UserRolesService', () => {
   let service: UserRolesService;
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
       providers: [UserRolesService, HttpClient, HttpHandler, Router]

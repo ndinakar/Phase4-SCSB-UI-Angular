@@ -1,5 +1,5 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { AdminComponent } from './admin.component';
 
@@ -9,7 +9,7 @@ describe('AdminComponent', () => {
   let service: AdminService;
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
       providers: [AdminService, HttpClient, HttpHandler]

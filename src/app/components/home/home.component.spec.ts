@@ -1,5 +1,5 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginService } from 'src/app/services/login/login.service';
@@ -11,7 +11,7 @@ describe('HomeComponent', () => {
   let service: LoginService;
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
       providers: [LoginService, HttpClient, HttpHandler]

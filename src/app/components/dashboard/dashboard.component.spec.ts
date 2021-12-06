@@ -1,5 +1,5 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DashBoardService } from 'src/app/services/dashBoard/dash-board.service';
@@ -17,7 +17,7 @@ describe('DashboardComponent', () => {
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
   let router: Router;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
       providers: [DashBoardService, RolesPermissionsService, HttpClient, HttpHandler, Router]

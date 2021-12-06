@@ -1,5 +1,5 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs/internal/observable/of';
 import { JobsService } from './jobs.service';
@@ -9,7 +9,7 @@ describe('JobsService', () => {
   let service: JobsService;
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
       providers: [JobsService, HttpClient, HttpHandler, Router]
