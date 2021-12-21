@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClient, HttpHandler } from "@angular/common/http";
 import { of } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { error } from '@angular/compiler/src/util';
 describe('CollectionService', () => {
   let service: CollectionService;
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
       providers: [CollectionService, HttpClient, HttpHandler]

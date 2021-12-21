@@ -1,5 +1,5 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CollectionService } from 'src/app/services/collection/collection.service';
@@ -14,7 +14,7 @@ describe('CollectionComponent', () => {
   let formBuilder: FormBuilder;
   let spinner: NgxSpinnerService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
       providers: [CollectionService, HttpClient, HttpHandler, FormBuilder]

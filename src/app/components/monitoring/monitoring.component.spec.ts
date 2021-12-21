@@ -1,5 +1,5 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import { of } from 'rxjs/internal/observable/of';
 import { MonitoringService } from 'src/app/services/monitoring/monitoring.service';
@@ -12,7 +12,7 @@ describe('MonitoringComponent', () => {
   let sanitizer: DomSanitizer;
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
       providers: [MonitoringService, HttpHandler, HttpClient]
@@ -31,7 +31,7 @@ describe('MonitoringComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('Test ngOnInit', async(() => {
+  it('Test ngOnInit', waitForAsync(() => {
     var data = [{
       label: 'desc',
       data: 'test'

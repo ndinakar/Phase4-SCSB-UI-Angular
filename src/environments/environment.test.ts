@@ -1,5 +1,5 @@
 import { urls } from 'src/config/urls';
 export const environment = {
-  production: false,
-  homeUrl: urls.APP_URL
+  production: false.valueOf,
+  homeUrl: urls.APP_URL + ':' + urls.PORT
 };
