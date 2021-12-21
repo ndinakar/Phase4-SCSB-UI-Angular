@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { OpenMarcService } from './open-marc.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
@@ -10,7 +10,7 @@ describe('OpenMarcService', () => {
   let service: OpenMarcService;
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
       providers: [OpenMarcService, HttpClient, HttpHandler, Router]
