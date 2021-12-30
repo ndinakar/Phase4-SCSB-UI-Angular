@@ -22,9 +22,10 @@
                                             <input class="form-control" id="fieldValue" name="fieldValue" type="search"
                                                 (keyup)="clearFieldvalue()"
                                                 (paste)="onPasteHandler($event.clipboardData.getData('text/plain'))"
-                                                formControlName="fieldValue"
-                                                placeholder="Type Text Here....."  autofocus="autofocus"/>
-                                            <span *ngIf="clearSearchTextCross" class="add-clear-x form-control-feedback glyphicon glyphicon-remove"
+                                                formControlName="fieldValue" placeholder="Type Text Here....."
+                                                autofocus="autofocus" />
+                                            <span *ngIf="clearSearchTextCross"
+                                                class="add-clear-x form-control-feedback glyphicon glyphicon-remove"
                                                 id="clearSearchText" style="
                           color: rgb(12, 12, 12);
                           cursor: pointer;
@@ -159,8 +160,8 @@
                                                 <div>
                                                     <label>
                                                         <input class="facetCheckBox" id="notMatched" name="notMatched"
-                                                            type="checkbox" formControlName="notMatched" [checked]="checked"
-                                                            value="Not Matched" />
+                                                            type="checkbox" formControlName="notMatched"
+                                                            [checked]="checked" value="Not Matched" />
                                                         <span class="cr"></span>
 
                                                         &nbsp;Not Matched
@@ -399,11 +400,12 @@
                                                 <p-tableHeaderCheckbox id="hdr_checkbox"></p-tableHeaderCheckbox>
                                             </th>
                                             <th id="header_column_{{ i }}" *ngFor="let col of columns; let i = index"
-                                                [pSortableColumn]="col.field">
+                                                [pSortableColumn]="col.field" pTooltip="Sort this page's results">
                                                 {{ col.header }}
                                                 <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                                                     ariaLabelDesc="Activate to sort in descending order"
-                                                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                                                    ariaLabelAsc="Activate to sort in ascending order">
+                                                </p-sortIcon>
                                             </th>
                                         </tr>
                                     </ng-template>
@@ -436,8 +438,8 @@
                             col.field == 'title' &&
                             rowData.availability == 'Not Available'
                           " style="width: 20px; height: 25px; margin-bottom: 3px" />
-                                                <img class="status" src="../../../../assets/images/mixed.png" alt="Partial"
-                                                    *ngIf="
+                                                <img class="status" src="../../../../assets/images/mixed.png"
+                                                    alt="Partial" *ngIf="
                             col.field == 'title' &&
                             rowData.availability == 'MixedStatus'
                           " style="width: 20px; height: 20px; margin-bottom: 3px" />
@@ -481,7 +483,8 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-rowData let-columns="columns"
                                         let-rowIndex="rowIndex">
-                                        <tr id="rowData_subResults_{{ rowIndex }}" [ngClass]="{'row-child-clr':rowData.itemMatched == true}">
+                                        <tr id="rowData_subResults_{{ rowIndex }}"
+                                            [ngClass]="{'row-child-clr':rowData.itemMatched == true}">
                                             <td id="col_sub_{{ rowIndex }}">
                                                 <p-tableCheckbox id="colSub_checkBox_{{ rowIndex }}" [value]="rowData">
                                                 </p-tableCheckbox>

@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from "primeng/tooltip";
 import { TreeTableModule } from 'primeng/treetable';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -83,6 +84,7 @@ import { InterceptorService } from '@service/interceptor.service';
     InputTextModule,
     ContextMenuModule,
     FormsModule,
+    TooltipModule,
     ReactiveFormsModule,
   ],
   providers: [CookieService, AuthGuard,
@@ -92,5 +94,5 @@ import { InterceptorService } from '@service/interceptor.service';
       multi: true
     }],
   bootstrap: [AppComponent]
-})
+})  
 export class AppModule { }
