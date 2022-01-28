@@ -1435,7 +1435,8 @@
                             </div>
                             <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"></div>
                             <div class="col-sm-12 col-md-12 col-lg-3 text-right">
-                                <h4>Search Results Found: <span>{{transactionReportRecords['totalRecordsCount'] | number}}</span>
+                                <h4>Search Results Found:
+                                    <span>{{transactionReportRecords['totalRecordsCount'] | number}}</span>
                                 </h4>
                             </div>
                         </div>
@@ -1889,8 +1890,8 @@
                                             style="margin-top:26px;width:15%;">
                                             <div class="form-group">
                                                 <div>
-                                                    <label for="ReportShowBy">Show By<span
-                                                            class="error-color">*</span> </label>
+                                                    <label for="ReportShowBy">Show By<span class="error-color">*</span>
+                                                    </label>
                                                 </div>
                                                 <div class="select-holder ">
                                                     <select class="themed-input themed-select " id="incompleteShowBy "
@@ -1944,8 +1945,7 @@
                                                         name="typeOptions " style="border: 1px solid #888988;color: #555555;outline: none;height: 50px;box-shadow: none;
                                                                     " [ngModelOptions]="{standalone: true} "
                                                         [(ngModel)]="typeOptions ">
-                                                        <option *ngFor="let match of TYPE_LIST_TITLE"
-                                                            [ngValue]="match">
+                                                        <option *ngFor="let match of TYPE_LIST_TITLE" [ngValue]="match">
                                                             {{match}}
                                                         </option>
                                                     </select>
@@ -2004,6 +2004,24 @@
                                     <div style="padding-left:5px;">Fields marked with asterisk(
                                         <span class="error-color">*</span>) are mandatory.
                                     </div>
+                                    <div class id="note-partners" style="padding-left:5px;margin-top:4px;">
+                                        <strong>Note:</strong>
+                                        <ul class style="list-style-type:disc;">
+                                            <li>The report shows a summary table with the number of the selected
+                                                institution's titles for each selected CGD that either have matches or
+                                                do not have matches, depending on the criteria selected.</li>
+                                            <li>When selecting "Matched" from the Title drop-down, this report provides
+                                                an institution's titles, with the selected criteria, that have matches.
+                                                Selecting the link to Preview results displays details for the titles
+                                                with matches, with the selected criteria, shown together with their
+                                                match group, by Matching Identifier.</li>
+                                            <li>When selecting "Not Matched" from the Title drop-down, this report
+                                                provides an institution's titles, with the selected criteria, that do
+                                                not have matches. Selecting the link to Preview results displays details
+                                                for the titles without matches, with the selected criteria.</li>
+                                            <li>The "Date Range" refers to accession date.</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2038,15 +2056,20 @@
                                                 <tr>
                                                     <th class="td_tr_border txt-cntr">{{this.inst_name}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Shared',this.inst_name,'Matched') | number}}</th>
+                                                        {{findMatchedCount('Shared',this.inst_name,'Matched') | number}}
+                                                    </th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Open',this.inst_name,'Matched') | number}}</th>
+                                                        {{findMatchedCount('Open',this.inst_name,'Matched') | number}}
+                                                    </th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Private',this.inst_name,'Matched') | number}}</th>
+                                                        {{findMatchedCount('Private',this.inst_name,'Matched') | number}}
+                                                    </th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Committed',this.inst_name,'Matched') | number}}</th>
+                                                        {{findMatchedCount('Committed',this.inst_name,'Matched') | number}}
+                                                    </th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Uncommittable',this.inst_name,'Matched') | number}}</th>
+                                                        {{findMatchedCount('Uncommittable',this.inst_name,'Matched') | number}}
+                                                    </th>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -2054,7 +2077,8 @@
                                     <div class="clk-count" *ngIf="matchedTableDiv">
                                         <a class="rec-count" (click)="titleMatchReportsPreview('Matched')"><span
                                                 style="cursor: pointer;"> Preview
-                                                <span>{{totalTitleMatchedCount | number}}</span><span> </span> <span> {{this.incompleteShowBy}}</span> Titles (Matched)</span></a>
+                                                <span>{{totalTitleMatchedCount | number}}</span><span> </span> <span>
+                                                    {{this.incompleteShowBy}}</span> Titles (Matched)</span></a>
                                     </div>
                                     <div class="table-wrapper " *ngIf="notMatchedTableDiv">
                                         <table class="table table-striped text-center margin-btm-0 "
@@ -2076,13 +2100,17 @@
                                                 <tr>
                                                     <th class="td_tr_border txt-cntr">{{this.inst_name}}</th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Shared',this.inst_name,'Not Matched') | number}}</th>
+                                                        {{findMatchedCount('Shared',this.inst_name,'Not Matched') | number}}
+                                                    </th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Open',this.inst_name,'Not Matched') | number}}</th>
+                                                        {{findMatchedCount('Open',this.inst_name,'Not Matched') | number}}
+                                                    </th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Private',this.inst_name,'Not Matched') | number}}</th>
+                                                        {{findMatchedCount('Private',this.inst_name,'Not Matched') | number}}
+                                                    </th>
                                                     <th class="td_tr_border txt-cntr">
-                                                        {{findMatchedCount('Committed',this.inst_name,'Not Matched') | number}}</th>
+                                                        {{findMatchedCount('Committed',this.inst_name,'Not Matched') | number}}
+                                                    </th>
                                                     <th class="td_tr_border txt-cntr">
                                                         {{findMatchedCount('Uncommittable',this.inst_name,'Not Matched') | number}}
                                                     </th>
@@ -2093,8 +2121,10 @@
                                 </div>
                                 <div class="clk-count" *ngIf="notMatchedTableDiv">
                                     <a class="rec-count" (click)="titleMatchReportsPreview('Not Matched')"><span
-                                            style="cursor: pointer;"> Preview <span>{{totalTitleNotMatchedCount | number}}</span><span> {{ this.incompleteShowBy}}</span> Titles (Not Matched)
-                                            </span></a>
+                                            style="cursor: pointer;"> Preview
+                                            <span>{{totalTitleNotMatchedCount | number}}</span><span>
+                                                {{ this.incompleteShowBy}}</span> Titles (Not Matched)
+                                        </span></a>
                                 </div>
                             </div>
                         </div>
@@ -2114,14 +2144,18 @@
                             <div class="col-sm-2 margin-top-05 show-entries-section "></div>
                             <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10"></div>
                             <div class="col-sm-12 col-md-12 col-lg-3 text-right">
-                                <h4>Found <span>{{titleCount | number}}</span><span> </span><span> {{this.incompleteShowBy}}</span> Titles <span>(</span><span>{{this.titleMatch}}</span><span>)</span>
+                                <h4>Found <span>{{titleCount | number}}</span><span> </span><span>
+                                        {{this.incompleteShowBy}}</span> Titles
+                                    <span>(</span><span>{{this.titleMatch}}</span><span>)</span>
                                 </h4>
                             </div>
                         </div>
                         <div id="transactionInformation ">
                             <div>
-                                <p-table name="p_table" #dt [columns]="validateCols1" rowExpandMode="single" [autoLayout]="true"
-                                    [value]="titleMatchRecordReportResponse['titleMatchedReports']" dataKey="bibId" sortMode="multiple" [multiSortMeta]="[{field: 'duplicateCode', order: -1}]">
+                                <p-table name="p_table" #dt [columns]="validateCols1" rowExpandMode="single"
+                                    [autoLayout]="true" [value]="titleMatchRecordReportResponse['titleMatchedReports']"
+                                    dataKey="bibId" sortMode="multiple"
+                                    [multiSortMeta]="[{field: 'duplicateCode', order: -1}]">
                                     <ng-template pTemplate="header" let-columns>
                                         <tr id="headers_main">
                                             <th style="width:3em"></th>
@@ -2130,12 +2164,14 @@
                                             </th>
                                         </tr>
                                     </ng-template>
-                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-rowIndex="rowIndex">
-                                        <tr id="rowData_results_{{ rowIndex }}" [pSelectableRow]="rowData" [ngClass]="rowData.id%2 == 0 ? 'whitebg' : 'greybg'" >
+                                    <ng-template pTemplate="body" let-rowData let-expanded="expanded"
+                                        let-columns="columns" let-rowIndex="rowIndex">
+                                        <tr id="rowData_results_{{ rowIndex }}" [pSelectableRow]="rowData"
+                                            [ngClass]="rowData.id%2 == 0 ? 'whitebg' : 'greybg'">
                                             <td id="colData_main_{{ rowIndex }}" *ngIf="rowData.itemDetails == ''"></td>
                                             <td id="colData_expand_results_{{ rowIndex }}"
                                                 *ngIf="rowData.itemDetails != ''">
-                                                <a href="#"  [pRowToggler]="rowData">
+                                                <a href="#" [pRowToggler]="rowData">
                                                     <i id="rowExpand_main_{{ rowIndex }}" [ngClass]="
                               expanded
                                 ? 'pi pi-chevron-down'
@@ -2153,10 +2189,12 @@
                                     <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
                                         <tr>
                                             <td name="column_len" [attr.colspan]="columns.length + 1">
-                                                <div class="p-grid ui-fluid" style="font-size: 16px; padding: 20px" [@rowExpansionTrigger]="'active'">
+                                                <div class="p-grid ui-fluid" style="font-size: 16px; padding: 20px"
+                                                    [@rowExpansionTrigger]="'active'">
                                                     <div class="p-col-12 p-md-9">
                                                         <div class="p-grid">
-                                                            <p-table name="p_tablesub" #dt [columns]="validateCols2" rowExpandMode="single" [value]="rowData.itemDetails">
+                                                            <p-table name="p_tablesub" #dt [columns]="validateCols2"
+                                                                rowExpandMode="single" [value]="rowData.itemDetails">
                                                                 <ng-template pTemplate="header" let-columns>
                                         <tr id="subRow_header">
                                             <th *ngFor="let col of columns" style="text-align: center;">
@@ -2164,82 +2202,81 @@
                                             </th>
                                         </tr>
                                     </ng-template>
-                                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
                                         <tr id="rowData_subResults_{{ rowIndex }}">
-                                            <td id="dataResult_sub_col_{{ i }}" *ngFor="let col of columns; let i = index" style="text-align: center;">{{
+                                            <td id="dataResult_sub_col_{{ i }}"
+                                                *ngFor="let col of columns; let i = index" style="text-align: center;">{{
                                                 rowData[col.field]
                                                 }}
                                             </td>
                                         </tr>
-                                
+
                                     </ng-template>
                                 </p-table>
-                                </div>
-                                </div>
-                                </div>
-                                </td>
-                                </tr>
-                                </ng-template>
-                                </p-table>
-                            </div>
-                            <input id="reportsPageNumber " name="reportsPageNumber " type="text "
-                                th:field="${reportsForm.pageNumber} " hidden="hidden ">
-                            <input id="reportstotalPageCount " name="reportstotalPageCount " type="text "
-                                th:field="${reportsForm.totalPageCount} " hidden="hidden ">
-                            <div class="pull-right " id="reportPaginationId " name="reportPaginationName "
-                                style="margin-top: -10px; ">
-                                <ul class="pagination " id="reportPaginationUl ">
-                                    <li [ngClass]="(firstbuttonTitleMatch==true)? 'disabled': '' ">
-                                        <span id="btn_first " (click)="titlefirstCall()"
-                                            style="cursor: pointer ">First</span>
-                                    </li>
-                                    <li [ngClass]=" (previousbuttonTitleMatch==true)? 'disabled': '' ">
-                                        <span id="btn_previous " (click)="titlepreviousCall() "
-                                            style="cursor: pointer ">Previous</span>
-                                    </li>
-                                    <li [ngClass]="(nextbuttonTitleMatch==true)? 'disabled': '' ">
-                                        <span id="btn_next " (click)="titlenextCall() "
-                                            style="cursor: pointer ">Next</span>
-
-                                    </li>
-                                    <li [ngClass]="(lastbuttonTitleMatch==true)? 'disabled': '' ">
-                                        <span id="btn_last " (click)="titlelastCall() "
-                                            style="cursor: pointer ">Last</span>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div style="margin-top: 70px;" *ngIf="titleMatchExportButtonDiv">
-                        <button class="btn btn-primary pull-right" id="export" name="action" type="button"
-                            (click)="titleMatchReportsExport()" value="export" style="margin-right: 10px;">Export
-                            Report to
-                            csv
-                        </button>
-                    </div>
+                    </td>
+                    </tr>
+                    </ng-template>
+                    </p-table>
                 </div>
-            </fieldset>
-        </form>
+                <input id="reportsPageNumber " name="reportsPageNumber " type="text "
+                    th:field="${reportsForm.pageNumber} " hidden="hidden ">
+                <input id="reportstotalPageCount " name="reportstotalPageCount " type="text "
+                    th:field="${reportsForm.totalPageCount} " hidden="hidden ">
+                <div class="pull-right " id="reportPaginationId " name="reportPaginationName "
+                    style="margin-top: -10px; ">
+                    <ul class="pagination " id="reportPaginationUl ">
+                        <li [ngClass]="(firstbuttonTitleMatch==true)? 'disabled': '' ">
+                            <span id="btn_first " (click)="titlefirstCall()" style="cursor: pointer ">First</span>
+                        </li>
+                        <li [ngClass]=" (previousbuttonTitleMatch==true)? 'disabled': '' ">
+                            <span id="btn_previous " (click)="titlepreviousCall() "
+                                style="cursor: pointer ">Previous</span>
+                        </li>
+                        <li [ngClass]="(nextbuttonTitleMatch==true)? 'disabled': '' ">
+                            <span id="btn_next " (click)="titlenextCall() " style="cursor: pointer ">Next</span>
+
+                        </li>
+                        <li [ngClass]="(lastbuttonTitleMatch==true)? 'disabled': '' ">
+                            <span id="btn_last " (click)="titlelastCall() " style="cursor: pointer ">Last</span>
+                        </li>
+                    </ul>
+                </div>
     </div>
 </div>
+<div style="margin-top: 70px;" *ngIf="titleMatchExportButtonDiv">
+    <button class="btn btn-primary pull-right" id="export" name="action" type="button"
+        (click)="titleMatchReportsExport()" value="export" style="margin-right: 10px;">Export
+        Report to
+        csv
+    </button>
+</div>
+</div>
+</fieldset>
+</form>
+</div>
+</div>
 <!-- MODAL FOR MESSAGE -->
-<div class="modal fade create-request-details" id="messageDisplay" data-backdrop="static"
-                    data-keyboard="false" role="dialog" aria-labelledby="requestNotesLargeModalLabel" tabindex="-2">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content" id="requestNotesModalContent">
-                            <div class="modal-header bg-success">
-                                <button class="close" data-dismiss="modal" type="button" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
-                                <h2 class="modal-title text-center text-success" id="requestNotesModalLabel">Message</h2>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <p id="requestNotesData" style="white-space: pre-wrap;word-wrap: break-word;">
-                                            {{this.messageData}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div class="modal fade create-request-details" id="messageDisplay" data-backdrop="static" data-keyboard="false"
+    role="dialog" aria-labelledby="requestNotesLargeModalLabel" tabindex="-2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="requestNotesModalContent">
+            <div class="modal-header bg-success">
+                <button class="close" data-dismiss="modal" type="button" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title text-center text-success" id="requestNotesModalLabel">Message</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p id="requestNotesData" style="white-space: pre-wrap;word-wrap: break-word;">
+                            {{this.messageData}}</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
