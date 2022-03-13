@@ -102,7 +102,7 @@ export class SearchRequestComponent implements OnInit,OnDestroy {
   tempBarcode: string = '';
   ngOnInit(): void {
     this.loadSearchRequest();
-    this.dashBoardService.setApiPath('search-request');
+    this.dashBoardService.setApiPath('request');
     this.rolesRes = this.rolesService.getRes();
     this.router.paramMap.subscribe(params => {
       this.barcode_id = params.get('barcode');
