@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { DashBoardService } from '@service/dashBoard/dash-board.service';
 import { RequestService } from '@service/request/request.service';
 import { RolesPermissionsService } from '@service/rolesPermissions/roles-permissions.service';
@@ -15,7 +16,7 @@ declare var $: any;
   styleUrls: ['./request.component.css']
 })
 export class RequestComponent implements OnInit,OnDestroy {
-  constructor(private rolesService: RolesPermissionsService, private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
+  constructor(private rolesService: RolesPermissionsService, private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private routerR: Router, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   institutions: any = [];
   requestTypes: any = [];
   status_fields = true;
@@ -860,103 +861,8 @@ export class RequestComponent implements OnInit,OnDestroy {
         this.dashBoardService.errorNavigation();
       });
   }
-  goToSearchRequest(patronBarcode) {
-    this.spinner.show();
-    this.searchPatronBarcode = patronBarcode;
-    this.requestStatus = '';
-    this.storageLocationSearch = '';
-    this.searchItemBarcode = '';
-    this.requestService.loadSearchRequest().subscribe(
-      (res) => {
-        this.searchReqVal = res;
-        this.postData = {
-          "requestId": null,
-          "patronBarcode": this.searchPatronBarcode,
-          "itemBarcode": this.searchItemBarcode,
-          "status": this.requestStatus,
-          "deliveryLocation": null,
-          "patronBarcodeInRequest": null,
-          "itemBarcodeInRequest": null,
-          "deliveryLocationInRequest": null,
-          "itemTitle": null,
-          "itemOwningInstitution": null,
-          "storageLocation": this.storageLocationSearch,
-          "patronEmailAddress": null,
-          "requestingInstitution": this.searchInstitutionList,
-          "requestType": null,
-          "requestNotes": null,
-          "startPage": null,
-          "endPage": null,
-          "volumeNumber": null,
-          "issue": null,
-          "articleAuthor": null,
-          "articleTitle": null,
-          "message": null,
-          "errorMessage": null,
-          "totalRecordsCount": "0",
-          "pageNumber": 0,
-          "pageSize": this.showentries,
-          "totalPageCount": 0,
-          "submitted": false,
-          "showResults": false,
-          "requestingInstitutions": [
-
-          ],
-          "requestTypes": [
-          ],
-          "deliveryLocations": [
-
-          ],
-          "searchResultRows": [
-
-          ],
-          "requestStatuses": [
-
-          ],
-          "institutionList": [
-
-          ],
-          "disableRequestingInstitution": false,
-          "onChange": false,
-          "institution": null,
-          "showRequestErrorMsg": null,
-          "requestingInstituionHidden": null,
-          "itemBarcodeHidden": null,
-          "disableSearchInstitution": false,
-          "searchInstitutionHdn": null
-        }
-        this.requestService.goToSearchRequest(this.postData).subscribe(
-          (res) => {
-            this.searchreqResultVal = res;
-            if (this.searchreqResultVal['message'] != null) {
-              this.searchReqresultFirst = true;
-              this.messageNoSearchRecords = true;
-              this.searchReqresult = false;
-            } else {
-            this.storageLocation = '';
-            this.searchReqresultFirst = true;
-            this.searchBar = true;
-            this.create_request = false;
-            this.searchReqresult = true;
-            this.messageNoSearchRecords = false;
-            this.searchRecCount = this.searchreqResultVal['totalRecordsCount'];
-            var refreshStatus = this.refreshRequestStatus();
-            if (refreshStatus) {
-              this.interval = setInterval(this.refreshRequestStatus.bind(this), 5000);
-            }
-            this.searchInstitutionList = this.searchreqResultVal['institution'];
-            this.disableSearchInstitution = this.searchReqVal['disableSearchInstitution'];
-            this.pagination();
-          }
-            this.spinner.hide();
-          },
-          (error) => {
-            this.dashBoardService.errorNavigation();
-          });
-      },
-      (error) => {
-        this.dashBoardService.errorNavigation();
-      });
+   goToSearchRequest(barcode) {
+    this.routerR.navigate(['/search-request', barcode]);
   }
 
   searchRequests() {

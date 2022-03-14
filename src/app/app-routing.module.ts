@@ -19,6 +19,7 @@ import { SearchComponent } from './components/search/search.component';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
+import { SearchRequestComponent } from '@component/search-request/search-request.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -43,6 +44,14 @@ const routes: Routes = [
         path: 'search',
         component: SearchComponent,
         pathMatch: 'full'
+      },
+      {
+        path: 'search-request',
+        component: SearchRequestComponent,
+      },
+      {
+        path: 'search-request/:barcode',
+        component: SearchRequestComponent,
       },
       {
         path: 'collection',

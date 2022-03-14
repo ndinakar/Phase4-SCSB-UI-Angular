@@ -41,6 +41,7 @@ import { UserRolesComponent } from './components/user-roles/user-roles.component
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
 import { InterceptorService } from '@service/interceptor.service';
+import { SearchRequestComponent } from '@component/search-request/search-request.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +65,7 @@ import { InterceptorService } from '@service/interceptor.service';
     OpenMarcComponent,
     ErrorPageComponent,
     UserLoginComponent,
+    SearchRequestComponent
   ],
   imports: [
     LoggerModule.forRoot({ level: NgxLoggerLevel.TRACE }),
