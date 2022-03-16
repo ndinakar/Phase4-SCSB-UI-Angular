@@ -14,7 +14,7 @@
                         <a class="tab-search" aria-controls="search" routerLink="/search"><span
                                 class="icons"></span><span>Search</span></a>
                     </li>
-                    <li class="tab-search-holder" routerLinkActive="tab-search-holder active"
+                    <li class="tab-search-holder" routerLinkActive="tab-search-request-holder active"
                     *ngIf="res['isRequestAllowed'] || res['isRequestAllAllowed'] || res['isRequestItemAllowed']" (click)="reload()">
                     <a class="tab-search" aria-controls="search" routerLink="/search-request"><span
                             class="icons"></span><span>Search Requests</span></a>
