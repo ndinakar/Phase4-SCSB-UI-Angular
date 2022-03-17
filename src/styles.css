@@ -755,6 +755,7 @@ footer {
 }
 
 .tab-search span.icons,
+.tab-search-request span.icons,
 .tab-collection span.icons,
 .tab-request span.icons,
 .tab-reports span.icons,
@@ -821,10 +822,12 @@ footer {
 }
 
 li.active .tab-search span.icons,
+li.active .tab-search-request span.icons,
 li.active .tab-collection span.icons,
 li.active .tab-request span.icons,
 li.active .tab-reports span.icons,
 li a.tab-search:hover span.icons,
+li a.tab-search-request:hover span.icons,
 li a.tab-collection:hover span.icons,
 li a.tab-request:hover span.icons,
 li a.tab-reports:hover span.icons,
@@ -897,6 +900,11 @@ li.active a.tab-search span {
   color: #5f8289;
 }
 
+li a.tab-search-request:hover span,
+li.active a.tab-search-request span {
+  color: #5f8289;
+}
+
 li a.tab-collection:hover span,
 li.active a.tab-collection span {
   color: #af96c7;
@@ -938,6 +946,7 @@ li.active a.tab-logg span {
 }
 
 .tab-search span,
+.tab-search-request span,
 .tab-collection span,
 .tab-request span,
 .tab-reports span,
@@ -951,6 +960,10 @@ li.active a.tab-logg span {
 }
 
 .nav-tabs .active.tab-search-holder {
+  border-color: #5f8289;
+}
+
+.nav-tabs .active.tab-search-request-holder {
   border-color: #5f8289;
 }
 
