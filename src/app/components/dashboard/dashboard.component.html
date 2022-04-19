@@ -12,12 +12,7 @@
                     <li class="tab-search-holder" routerLinkActive="tab-search-holder active"
                         *ngIf="res['isSearchAllowed']" (click)="reload()">
                         <a class="tab-search" aria-controls="search" routerLink="/search"><span
-                                class="icons"></span><span>Search</span></a>
-                    </li>
-                    <li class="tab-search-holder" routerLinkActive="tab-search-request-holder active"
-                    *ngIf="res['isRequestAllowed'] || res['isRequestAllAllowed'] || res['isRequestItemAllowed']" (click)="reload()">
-                    <a class="tab-search" aria-controls="search" routerLink="/search-request"><span
-                            class="icons"></span><span>Search Requests</span></a>
+                                class="icons"></span><span>Search Items</span></a>
                     </li>
                     <li class="tab-collection-holder" routerLinkActive="tab-collection-holder active"
                         *ngIf="res['isCollectionAllowed'] || res['isDeaccessionAllowed']" (click)="reload()">
@@ -29,6 +24,11 @@
                         (click)="reload()">
                         <a class="tab-request" aria-controls="request" routerLink="/request"><span
                                 class="icons"></span><span>Request</span></a>
+                    </li>
+                    <li class="tab-search-holder" routerLinkActive="tab-search-request-holder active"
+                    *ngIf="res['isRequestAllowed'] || res['isRequestAllAllowed'] || res['isRequestItemAllowed']" (click)="reload()">
+                    <a class="tab-search" aria-controls="search" routerLink="/search-request"><span
+                            class="icons"></span><span>Search Requests</span></a>
                     </li>
                     <li class="tab-request-holder" routerLinkActive="tab-request-holder active"
                         *ngIf="res['isBulkRequestAllowed']" (click)="reload()">
