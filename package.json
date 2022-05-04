@@ -1,5 +1,5 @@
 {
-  "name": "Phase4-SCSB-UI",
+  "name": "SCSB-UI",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -13,7 +13,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "aot": "ng serve --aot",
-    "sonar": "sonar-scanner  -Dsonar.sources=src/app/ -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.test.inclusions=src/app/components/**/*,**/*.spec.ts,src/app/*.ts,src/app/model -Dsonar.language=ts -Dsonar.projectName=Phase4-SCSB-UI-ANGULAR"
+    "sonar": ""
   },
   "private": true,
   "dependencies": {
