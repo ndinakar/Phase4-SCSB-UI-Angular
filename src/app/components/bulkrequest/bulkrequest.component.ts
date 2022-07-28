@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { TreeNode } from 'primeng/api';
 import { of } from 'rxjs';
@@ -21,7 +21,7 @@ export class BulkrequestComponent implements OnInit {
   uploadFile: File = null;
   data: any;
   uploadedFile: any;
-  BulkRequestForm: FormGroup;
+  BulkRequestForm: UntypedFormGroup;
   bulkrequestVal: TreeNode[];
   deliveryLocVal: any = [];
   createReqsection = true;

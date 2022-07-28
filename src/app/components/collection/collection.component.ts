@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CollectionService } from '@service/collection/collection.service';
 import { DashBoardService } from '@service/dashBoard/dash-board.service';
@@ -14,13 +14,13 @@ declare var $: any;
   styleUrls: ['./collection.component.css']
 })
 export class CollectionComponent implements OnInit {
-  constructor(private router: Router, private formBuilder: FormBuilder, private collectionService: CollectionService,
+  constructor(private router: Router, private formBuilder: UntypedFormBuilder, private collectionService: CollectionService,
     private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   deliveryLocationDisable = false;
   showStatus = false;
   showStar = false;
   statusLocation = false;
-  collectionForm: FormGroup;
+  collectionForm: UntypedFormGroup;
   collectionVal: TreeNode[];
   openmarcVal: TreeNode[];
   crossinstitutionVal: TreeNode[];

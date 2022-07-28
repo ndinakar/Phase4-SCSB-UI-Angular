@@ -204,7 +204,6 @@
             }
         }
     },
-    "defaultProject": "project",
     "cli": {
         "analytics": "af6daee1-2d08-4220-9d1e-65be2f9c425b"
     }
