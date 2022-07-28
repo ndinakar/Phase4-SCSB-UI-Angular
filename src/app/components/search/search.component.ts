@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DashBoardService } from '@service/dashBoard/dash-board.service';
 import { ReportsService } from '@service/reports/reports.service';
@@ -38,7 +38,7 @@ enum CONSTANTS {
 })
 export class SearchComponent implements OnInit {
   constructor(private rolesService: RolesPermissionsService, private reportsService: ReportsService, private searchService: SearchService,
-    private messageService: MessageService, private formBuilder: FormBuilder, private router: Router,
+    private messageService: MessageService, private formBuilder: UntypedFormBuilder, private router: Router,
     private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) {     }
   @ViewChild('dt') dt: Table;
   @ViewChild('dt1') dt1: Table;
@@ -85,7 +85,7 @@ export class SearchComponent implements OnInit {
   materialTypes: any = [];
   titleMatch: any = []; 
   useRestrictions: any = [];
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
   errorMessage_Div = false;
   searchResultsDiv = false;
   paginationBtmDiv = false;

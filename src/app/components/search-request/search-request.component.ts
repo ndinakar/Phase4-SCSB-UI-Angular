@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DashBoardService } from '@service/dashBoard/dash-board.service';
 import { RequestService } from '@service/request/request.service';
@@ -15,11 +15,11 @@ declare var $: any;
   styleUrls: ['./search-request.component.css']
 })
 export class SearchRequestComponent implements OnInit,OnDestroy {
-  constructor(private rolesService: RolesPermissionsService, private formBuilder: FormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
+  constructor(private rolesService: RolesPermissionsService, private formBuilder: UntypedFormBuilder, private requestService: RequestService, private router: ActivatedRoute, private spinner: NgxSpinnerService, private dashBoardService: DashBoardService) { }
   institutions: any = [];
   requestTypes: any = [];
   status_fields = true;
-  requestForm: FormGroup;
+  requestForm: UntypedFormGroup;
   firstbutton = true;
   previousbutton = true;
   nextbutton = false;

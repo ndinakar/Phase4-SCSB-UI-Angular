@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from '@service/login/login.service';
 import { urls } from '@config/urls';
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   institution: string = 'default';
   url: string = '';
   casPrefix = urls.CAS_PREFIX;
-  redirectForm: FormGroup;
+  redirectForm: UntypedFormGroup;
   serviceUrl: string;
   submitted = false;
   Institutions: any = [];

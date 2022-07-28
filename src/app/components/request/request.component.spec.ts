@@ -1,6 +1,6 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequestService } from 'src/app/services/request/request.service';
@@ -14,14 +14,14 @@ describe('RequestComponent', () => {
   let service: RequestService;
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
   let spinner: NgxSpinnerService;
-  let formBuilder: FormBuilder;
+  let formBuilder: UntypedFormBuilder;
   let router: ActivatedRoute;
   let roleService: RolesPermissionsService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
-      providers: [RequestService, RolesPermissionsService, HttpClient, HttpHandler, FormBuilder, {
+      providers: [RequestService, RolesPermissionsService, HttpClient, HttpHandler, UntypedFormBuilder, {
         provide: ActivatedRoute,
         useValue: {
           snapshot: {
