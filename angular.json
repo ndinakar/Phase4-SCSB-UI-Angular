@@ -189,19 +189,6 @@
                         ]
                     }
                 },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "tsconfig.app.json",
-                            "tsconfig.spec.json",
-                            "e2e/tsconfig.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                },
                 "e2e": {
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
@@ -217,7 +204,6 @@
             }
         }
     },
-    "defaultProject": "project",
     "cli": {
         "analytics": "af6daee1-2d08-4220-9d1e-65be2f9c425b"
     }

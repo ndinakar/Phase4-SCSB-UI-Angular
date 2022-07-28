@@ -1,6 +1,6 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CollectionService } from 'src/app/services/collection/collection.service';
 import { CollectionComponent } from './collection.component';
@@ -11,13 +11,13 @@ describe('CollectionComponent', () => {
   let component: CollectionComponent;
   let service: CollectionService;
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
-  let formBuilder: FormBuilder;
+  let formBuilder: UntypedFormBuilder;
   let spinner: NgxSpinnerService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
-      providers: [CollectionService, HttpClient, HttpHandler, FormBuilder]
+      providers: [CollectionService, HttpClient, HttpHandler, UntypedFormBuilder]
 
     })
       .compileComponents();

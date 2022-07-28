@@ -1,6 +1,6 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
@@ -18,14 +18,14 @@ describe('SearchComponent', () => {
   let spinner: NgxSpinnerService;
   let reportsService: ReportsService;
   let messageService: MessageService;
-  let formBuilder: FormBuilder;
+  let formBuilder: UntypedFormBuilder;
   let router: Router;
   let roleService: RolesPermissionsService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [],
-      providers: [SearchService, MessageService, RolesPermissionsService, HttpClient, HttpHandler, FormBuilder, Router]
+      providers: [SearchService, MessageService, RolesPermissionsService, HttpClient, HttpHandler, UntypedFormBuilder, Router]
 
     })
       .compileComponents();
