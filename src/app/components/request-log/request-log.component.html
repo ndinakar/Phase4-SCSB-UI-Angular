@@ -1,0 +1,290 @@
+<!-- Request Tab-->
+<div id="requestContentId" name="requestContentName">
+    <link rel="stylesheet" />
+    <script type="text/javascript"></script>
+    <div id="requestFormDivId" name="requestFormDivName">
+        <form class="form-horizontal" id="request-form" name="request-form" method="post">
+            <fieldset>
+                <div class="tab-pane" id="request" role="tabpanel">
+                    <div class="request-main-section" id="searchRequestsSection" *ngIf="searchBar">
+                        <div class="search-bar">
+                            <div class="row margin-0">
+                                <div class="col-xs-12 padding-0">
+                                    <form>
+                                        <div class="input-group buscador-principal col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
+                                                <label class="fontcolor-dark margin-btm-10"> Date From</label>
+                                                <input class="form-control themed-input"
+                                                       id="RequestDateRangefrom"
+                                                       name="RequestDateRangefrom" type="date"
+                                                       placeholder="MM/DD/YYYY"
+                                                       [ngModelOptions]="{standalone: true}"
+                                                       [(ngModel)]="requestDateRangefrom">
+                                                <p id="requestFromDateErrorText"
+                                                   *ngIf="requestFromDateErrorText" style="color: red">This
+                                                    Field is Required
+                                                </p>
+                                                <p id="requestFromToErrorText"
+                                                   *ngIf="requestExceptionFromToError" style="color: red">
+                                                    To Date must be greater than or equal to the From Date
+                                                </p>
+
+                                            </div>
+                                            <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
+                                                <label class="fontcolor-dark margin-btm-10">To</label>
+                                                <input class="form-control themed-input"
+                                                       id="RequestDateRangeto" name="RequestDateRangeto"
+                                                       type="date" placeholder="MM/DD/YYYY"
+                                                       [ngModelOptions]="{standalone: true}"
+                                                       [(ngModel)]="requestDateRangeto">
+                                                <p id="requestToDateErrorText"
+                                                   *ngIf="requestToDateErrorText" style="color: red;">This
+                                                    Field is Required
+                                                </p>
+                                                <p id="requestFromToError" *ngIf="requestFromToError"
+                                                   style="color: red">To Date must be greater than or
+                                                    <br>equal to the From Date
+                                                </p>
+                                            </div>
+                                            <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
+                                                <label class="fontcolor-dark margin-btm-10">Status</label>
+                                                <div class="select-holder">
+                                                    <select class="themed-input themed-select" id="requestStatus"
+                                                            name="requestStatus" [ngModelOptions]="{ standalone: true }"
+                                                            [(ngModel)]="requestStatus" style="
+                              border: 1px solid #888988;
+                              color: #555555;
+                              outline: none;
+                              height: 50px;
+                              box-shadow: none;
+                            ">
+                                                        <option value=""></option>
+                                                        <option value="success">SUCCESS</option>
+                                                        <option value="failed">FAILED</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2 col-sm-3 col-lg-2 padding-right-20">
+                                                <label class="fontcolor-dark margin-btm-10">Institution</label>
+                                                <div class="select-holder">
+                                                    <select class="themed-input themed-select"
+                                                            id="searchInstitutionList" name="searchInstitutionList"
+                                                            [ngModelOptions]="{ standalone: true }"
+                                                            [(ngModel)]="searchInstitution" style="
+                              border: 1px solid #888988;
+                              color: #555555;
+                              outline: none;
+                              height: 50px;
+                              box-shadow: none;
+                            ">
+                                                        <option value=""></option>
+                                                        <option *ngFor="
+                                let del5 of searchReqVal['institutionList']
+                              " [ngValue]="del5">
+                                                            {{ del5 }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <input id="searchInstitutionHdn" type="hidden" />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-lg-3" style="width: 15% !important;padding-left: 10%;">
+                                                <div class="input-group-btn search-panel padding-right-10">
+                                                    <button class="btn themed-button themed-button-search"
+                                                            id="searchRequestsButton" name="searchRequestsButton"
+                                                            type="button" (click)="searchRequests()">
+                                                        Search
+                                                    </button>
+                                                </div>
+                                                <div class="input-group-btn search-panel" style="padding-right: 30px;">
+                                                    <button class="btn themed-button themed-button-collection"
+                                                            id="submitRequestsButton" name="submitRequestsButton"
+                                                            type="button" (click)="submitRequests()">
+                                                        Resubmit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-results-container" *ngIf="searchReqresultFirst">
+                            <div class="divider-horizontal margin-top-10 margin-btm-10"></div>
+                            <div class="row margin-btm-10" *ngIf="messageNoSearchRecords">
+                                <div class="col-sm-12">
+                                    <div class="bg-danger text-danger padding-10">
+                                        <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span
+                                            name="noSearchRecords">
+                                            {{ searchreqResultVal["message"] }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="searchReqresult">
+                                <div class="row">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 margin-top-05 show-entries-section">
+                                        <div class="">
+                                            <span class="show-title margin-right-05">Show Entries</span>
+                                            <select class="themed-input" id="numOfRecordsId" name="numOfRecordsName"
+                                                    [(ngModel)]="showentries" (change)="onPageSizeChange(showentries)"
+                                                    [ngModelOptions]="{ standalone: true }">
+                                                <option value="10" selected="selected">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9 col-md-10 col-lg-7 margin-top-10">
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-3 text-right">
+                                        <h4>
+                                            Search Results Found: <span>{{ searchRecCount }}</span>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <table class="table table-striped margin-btm-0" id="request-result-table">
+                                            <thead class="tablesorter-headerRow">
+                                            <tr name="results_rowhdrs">
+                                                <th>Item Barcodes</th>
+                                                <th>Requesting Institution</th>
+                                                <th>Item Owning Institution</th>
+                                                <th>Last Updated Date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="requestRow" id="rowData_results_{{ i }}" *ngFor="
+                            let item of requestLogResponse['requestInfoList'];
+                            let i = index
+                          ">
+                                                <td id="data_rib_{{ i }}">{{ item.requestedItemBarcode }}</td>
+                                                <td id="data_ri_{{ i }}">{{ item.requestInstitution }}</td>
+                                                <td id="data_oi_{{ i }}"> {{ item.itemOwningInstitution }} </td>
+                                                <td id="data_rt_{{ i }}">  {{
+                                                    item.date
+                                                        | date
+                                                        : "yyyy-MM-dd HH:mm:ss"
+                                                            : timezone(
+                                                            item.date
+                                                                | date: "yyyy-MM-dd HH:mm:ss":"UTC"
+                                                        )
+                                                    }}</td>
+                                                <td id="data_il_{{ i }}">{{ item.status }}</td>
+                                                <td>
+                                                    <button class="btn btn-round" id="btn_rs_{{ i }}" type="button" style="
+                                background-color: transparent;
+                                box-shadow: none;
+                                outline: none;
+                                color: #337ab7;
+                                border-color: #337ab7;
+                              " (click)="reSubmitRequest(item.requestedItemBarcode,item.id)">
+                                                        Resubmit Request
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-12" id="requestPaginationDivId" name="requestPaginationDivName"
+                                         style="margin-bottom: -20px">
+                                        <div class="pull-right">
+                                            <div id="requestPaginationId" name="requestPaginationName"
+                                                 xmlns:th="http://www.w3.org/1999/xhtml">
+                                                <ul class="pagination">
+                                                    <li [ngClass]="firstbutton == true ? 'disabled' : ''">
+                                                        <span id="first"  (click)="firstCall()"
+                                                              style="cursor: pointer">First</span>
+                                                    </li>
+                                                    <li [ngClass]="previousbutton == true ? 'disabled' : ''">
+                                                        <span id="previous" (click)="previousCall()"
+                                                              style="cursor: pointer">Previous</span>
+                                                    </li>
+                                                    <li [ngClass]="nextbutton == true ? 'disabled' : ''">
+                                                        <span id="next" (click)="nextCall()"
+                                                              style="cursor: pointer">Next</span>
+                                                    </li>
+                                                    <li [ngClass]="lastbutton == true ? 'disabled' : ''">
+                                                        <span id="last" (click)="lastCall()"
+                                                              style="cursor: pointer">Last</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Resubmit Request Modal Data-->
+                <div class="modal fade create-request-details" id="resubmitRequestModal" data-backdrop="static"
+                     data-keyboard="false" role="dialog" aria-labelledby="resubmitRequestLargeModalLabel" tabindex="-2">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" id="resubmitRequestModalContent">
+                            <div class="modal-header bg-success">
+                                <button class="close" id="closeResubmitRequest" data-dismiss="modal" type="button"
+                                        aria-label="Close" onclick="resetToResubmitRequest()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h2 class="modal-title text-center text-success" id="resubmitRequestModalLabel">
+                                    Resubmit Request
+                                </h2>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="padding-10">
+                                            <div id="resubmitRequestConfirmBodyId" *ngIf="resubmitRequestConfirmBodyId">
+                                                <span>Do you want to resubmit the request for the barcode :
+                                                    <span id="resubmitReqConfirmItemBarcode">{{
+                                                        resubmitReqConfirmItemBarcode
+                                                        }}</span></span>
+                                            </div>
+                                            <div id="resubmitRequestBodyId" *ngIf="!resubmitRequestConfirmBodyId">
+                                                <div>
+                                                    <span>Barcode :
+                                                        <span id="resubmitReqItemBarcode">{{
+                                                            resubmitReqConfirmItemBarcode
+                                                            }}</span></span>
+                                                </div>
+                                                <div *ngIf="status">
+                                                    <span class="text-success" id="resubmitRequestStatus">{{
+                                                        resubmitResponseMessage }}</span>
+                                                </div>
+                                                <div *ngIf="!status">
+                                                    <span class="error-color" id="resubmitRequestStatus">{{
+                                                        resubmitResponseMessage }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="padding-top: 0px">
+                                <div class="pull-right" id="resubmitRequestConfirmFooterId">
+                                    <button class="btn btn-default themed-button btn-primary" id="resubmitRequestYes"
+                                            type="button" style="height: 35px; font-size: 15px"
+                                            *ngIf="resubmitRequestConfirmBodyId" (click)="resubmitRequestItem()">
+                                        Yes
+                                    </button>
+                                    <button class="btn btn-default themed-button themed-button-cancel"
+                                            id="resubmitRequestNo" data-dismiss="modal" type="button"
+                                            style="height: 35px; font-size: 15px" *ngIf="resubmitRequestConfirmBodyId"
+                                            (click)="closeResubmitRequestItem()">
+                                        No
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Resubmit Request Modal Data-->
+            </fieldset>
+        </form>
+    </div>
+</div>
+<!-- Request Tab Ends-->
