@@ -179,7 +179,12 @@ export class RequestLogComponent implements OnInit {
           this.searchRecCount = this.requestLogResponse['totalRecordsCount'];
           this.searchBar = true;
           this.searchReqresultFirst = true;
+          if(this.searchRecCount == 0){
+            this.searchReqresult = false;
+            this.messageNoSearchRecords = true;
+          }
           this.searchReqresult = true;
+          this.messageNoSearchRecords = false;
           this.paginationRequestLogReport();
         },
         (error) => {
