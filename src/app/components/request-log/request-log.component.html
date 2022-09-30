@@ -181,7 +181,7 @@
                                 outline: none;
                                 color: #337ab7;
                                 border-color: #337ab7;
-                              " (click)="reSubmitRequest(item.requestedItemBarcode,item.id)">
+                              " *ngIf="item.status == 'FAILED'" (click)="reSubmitRequest(item.requestedItemBarcode,item.id)">
                                                         Resubmit Request
                                                     </button>
                                                 </td>
