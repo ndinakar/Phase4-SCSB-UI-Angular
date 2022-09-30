@@ -115,6 +115,7 @@ export class RequestLogComponent implements OnInit {
   requestFromDateErrorText: any;
   requestToDateErrorText: any;
   requestFromToError: any;
+  submitClick: boolean = false;
 
   postData = {
   "institution": "",
@@ -125,6 +126,7 @@ export class RequestLogComponent implements OnInit {
   "toDate": "",
   "id":0
   }
+  noRecordsMessage: string = "No records found";
 
   ngOnInit(): void {
     this.loadRequestLog();
@@ -179,13 +181,18 @@ export class RequestLogComponent implements OnInit {
           this.searchRecCount = this.requestLogResponse['totalRecordsCount'];
           this.searchBar = true;
           this.searchReqresultFirst = true;
-          if(this.searchRecCount == 0){
+          if (this.requestLogResponse['totalRecordsCount'] == "0") {
+            this.submitClick = true;
             this.searchReqresult = false;
             this.messageNoSearchRecords = true;
+          } else {
+            if(this.requestStatus == "SUCCESS"){
+              this.submitClick = true;
+            }
+            this.searchReqresult = true;
+            this.messageNoSearchRecords = false;
+            this.paginationRequestLogReport();
           }
-          this.searchReqresult = true;
-          this.messageNoSearchRecords = false;
-          this.paginationRequestLogReport();
         },
         (error) => {
           this.spinner.hide();
@@ -343,5 +350,13 @@ export class RequestLogComponent implements OnInit {
   onPageSizeChange(showentries){
     this.pageNumber = 0;
     this.showentries = showentries;
+  }
+
+  statusChange() {
+    if(this.requestStatus == "SUCCESS"){
+      this.submitClick = true;
+    } else {
+      this.submitClick = false;
+    }
   }
 }

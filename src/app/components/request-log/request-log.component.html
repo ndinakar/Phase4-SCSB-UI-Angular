@@ -57,7 +57,7 @@
                               outline: none;
                               height: 50px;
                               box-shadow: none;
-                            ">
+                            " (change)="statusChange()" >
                                                         <option value=""></option>
                                                         <option value="success">SUCCESS</option>
                                                         <option value="failed">FAILED</option>
@@ -98,7 +98,7 @@
                                                 </div>
                                                 <div class="input-group-btn search-panel" style="padding-right: 30px;">
                                                     <button class="btn themed-button themed-button-collection"
-                                                            id="submitRequestsButton" name="submitRequestsButton"
+                                                            id="submitRequestsButton" name="submitRequestsButton" [disabled]="submitClick"
                                                             type="button" (click)="submitRequests()">
                                                         Resubmit
                                                     </button>
@@ -116,7 +116,7 @@
                                     <div class="bg-danger text-danger padding-10">
                                         <span class="margin-right-05 glyphicon glyphicon-warning-sign"></span><span
                                             name="noSearchRecords">
-                                            {{ searchreqResultVal["message"] }}</span>
+                                            {{noRecordsMessage}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +256,7 @@
                                                         resubmitResponseMessage }}</span>
                                                 </div>
                                                 <div *ngIf="!status">
-                                                    <span class="error-color" id="resubmitRequestStatus">{{
+                                                    <span class="error-color" id="resubmitRequestStatuse">{{
                                                         resubmitResponseMessage }}</span>
                                                 </div>
                                             </div>
