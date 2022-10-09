@@ -505,6 +505,7 @@ export class RequestComponent implements OnInit,OnDestroy {
         this.deliveryLocVal = Object.keys(del).map(function (data) {
           return [data, del[data]];
         });
+        console.log("deliveryLocations"+this.deliveryLocVal);
         this.requestTypes = [];
         for (var j = 0; j < res['requestTypes'].length; j++) {
           this.requestTypes.push(res['requestTypes'][j]);
@@ -833,7 +834,7 @@ export class RequestComponent implements OnInit,OnDestroy {
     this.storageLocation = '';
     this.initialload();
   }
-  loadCreateRequestForSamePatron(patronId, reqInstId) {
+  loadCreateRequestForSamePatron(patronId, reqInstId ,emailId, deliveryLocationId) {
     this.eddshow = false;
     this.createsubmit = false;
     this.requestService.loadCreateRequest().subscribe(
@@ -846,8 +847,8 @@ export class RequestComponent implements OnInit,OnDestroy {
         this.itemTitleId = '';
         this.itemOwningInstitutionId = '';
         this.patronBarcodeId = patronId;
-        this.patronEmailId = '';
-        this.deliveryLocationId = '';
+        this.patronEmailId = emailId;
+        this.deliveryLocationId = deliveryLocationId;
         this.requestNotesId = '';
         this.StartPage = '';
         this.EndPage = '';

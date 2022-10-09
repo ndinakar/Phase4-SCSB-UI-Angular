@@ -70,9 +70,9 @@
                         <a class="tab-users" aria-controls="logging" routerLink="/dataExport"><span
                                 class="icons"></span><span>Data Export</span></a>
                     </li>
-                    <li class="tab-request-holder" routerLinkActive="tab-request-holder active"
-                        *ngIf="res['isBulkRequestAllowed']" (click)="reload()">
-                        <a class="tab-request" aria-controls="request" routerLink="/requestLog"><span
+                    <li class="tab-request-log-holder" routerLinkActive="tab-request-log-holder active"
+                        *ngIf="res['isRequestLog']" (click)="reload()">
+                        <a class="tab-request-log" aria-controls="request" routerLink="/requestLog"><span
                                 class="icons"></span><span class="margin-top-bk">Request Log</span></a>
                     </li>
                 </ul>
