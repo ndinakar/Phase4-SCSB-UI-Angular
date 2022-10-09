@@ -758,6 +758,7 @@ footer {
 .tab-search-request span.icons,
 .tab-collection span.icons,
 .tab-request span.icons,
+.tab-request-log span.icons,
 .tab-reports span.icons,
 .tab-role span.icons,
 .tab-users span.icons {
@@ -797,6 +798,11 @@ footer {
   width: 45px;
 }
 
+.tab-request-log span.icons {
+  background-position: -87px -37px;
+  width: 45px;
+}
+
 .tab-reports span.icons {
   background-position: -138px -37px;
 }
@@ -825,11 +831,13 @@ li.active .tab-search span.icons,
 li.active .tab-search-request span.icons,
 li.active .tab-collection span.icons,
 li.active .tab-request span.icons,
+li.active .tab-request-log span.icons,
 li.active .tab-reports span.icons,
 li a.tab-search:hover span.icons,
 li a.tab-search-request:hover span.icons,
 li a.tab-collection:hover span.icons,
 li a.tab-request:hover span.icons,
+li a.tab-request-log:hover span.icons,
 li a.tab-reports:hover span.icons,
 li a.tab-role:hover span.icons,
 li a.tab-users:hover span.icons {
@@ -859,6 +867,11 @@ li a.tab-collection:hover span.icons {
 
 li.active .tab-request span.icons,
 li a.tab-request:hover span.icons {
+  background-position: -87px -78px;
+}
+
+li.active .tab-request-log span.icons,
+li a.tab-request-log:hover span.icons {
   background-position: -87px -78px;
 }
 
@@ -915,6 +928,11 @@ li.active a.tab-request span {
   color: #41cac0;
 }
 
+li a.tab-request-log:hover span,
+li.active a.tab-request-log span {
+  color: #41cac0;
+}
+
 li a.tab-reports:hover span,
 li.active a.tab-reports span {
   color: #ff6d60;
@@ -949,6 +967,7 @@ li.active a.tab-logg span {
 .tab-search-request span,
 .tab-collection span,
 .tab-request span,
+.tab-request-log span,
 .tab-reports span,
 .tab-role span,
 .tab-jobs span,
@@ -972,6 +991,10 @@ li.active a.tab-logg span {
 }
 
 .nav-tabs .active.tab-request-holder {
+  border-color: #41cac0;
+}
+
+.nav-tabs .active.tab-request-log-holder {
   border-color: #41cac0;
 }
 
