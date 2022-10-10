@@ -506,7 +506,6 @@ export class RequestComponent implements OnInit,OnDestroy {
           return [data, del[data]];
         });
         var isHaving = false;
-        console.log("old delivery location::"+this.deliveryLocationId);
         for(var i = 0; i < this.deliveryLocVal.length; i++) {
           var location = this.deliveryLocVal[i];
           if(location[0] == this.deliveryLocationId){
