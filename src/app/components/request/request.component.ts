@@ -847,8 +847,21 @@ export class RequestComponent implements OnInit,OnDestroy {
     this.initialload();
   }
   loadCreateRequestForSamePatron(patronId, reqInstId ,emailId, deliveryLocationId) {
-    this.eddshow = false;
+  /*  this.eddshow = false;
     this.createsubmit = false;
+    var isHaving = false;
+    console.log("old delivery location::"+this.deliveryLocationId);
+    for(var i = 0; i < this.deliveryLocVal.length; i++) {
+      var location = this.deliveryLocVal[i];
+      if(location[0] == this.deliveryLocationId){
+        this.deliveryLocationId = location[1]+"-"+location[0];
+        isHaving = true;
+        console.log("new delivery location::"+this.deliveryLocationId);
+      }
+    }
+    if(!isHaving){
+      this.deliveryLocationId='';
+    }*/
     this.requestService.loadCreateRequest().subscribe(
       (res) => {
         this.requestVal = res;
@@ -860,7 +873,7 @@ export class RequestComponent implements OnInit,OnDestroy {
         this.itemOwningInstitutionId = '';
         this.patronBarcodeId = patronId;
         this.patronEmailId = emailId;
-        this.deliveryLocationId = deliveryLocationId;
+        //this.deliveryLocationId = deliveryLocationId;
         this.requestNotesId = '';
         this.StartPage = '';
         this.EndPage = '';
@@ -868,7 +881,7 @@ export class RequestComponent implements OnInit,OnDestroy {
         this.Issue = '';
         this.ArticleAuthor = '';
         this.ChapterTitle = '';
-        this.deliveryLocVal = [];
+        //this.deliveryLocVal = [];
       },
       (error) => {
         this.dashBoardService.errorNavigation();
