@@ -22,5 +22,6 @@ export const urls = {
     MONITORING: '/monitoring',
     APP_URL: appURL,
     PORT: window.location.port,
-    ENTER: 'Enter'
+    ENTER: 'Enter',
+    REQUEST_LOG:'/request-log'
 }

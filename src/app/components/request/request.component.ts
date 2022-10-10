@@ -505,6 +505,17 @@ export class RequestComponent implements OnInit,OnDestroy {
         this.deliveryLocVal = Object.keys(del).map(function (data) {
           return [data, del[data]];
         });
+        var isHaving = false;
+        for(var i = 0; i < this.deliveryLocVal.length; i++) {
+          var location = this.deliveryLocVal[i];
+          if(location[0] == this.deliveryLocationId){
+            this.deliveryLocationId =location[0];
+            isHaving = true;
+          }
+        }
+        if(!isHaving){
+          this.deliveryLocationId='';
+        }
         this.requestTypes = [];
         for (var j = 0; j < res['requestTypes'].length; j++) {
           this.requestTypes.push(res['requestTypes'][j]);
@@ -833,9 +844,10 @@ export class RequestComponent implements OnInit,OnDestroy {
     this.storageLocation = '';
     this.initialload();
   }
-  loadCreateRequestForSamePatron(patronId, reqInstId) {
+  loadCreateRequestForSamePatron(patronId, reqInstId ,emailId, deliveryLocationId) {
     this.eddshow = false;
     this.createsubmit = false;
+
     this.requestService.loadCreateRequest().subscribe(
       (res) => {
         this.requestVal = res;
@@ -846,8 +858,8 @@ export class RequestComponent implements OnInit,OnDestroy {
         this.itemTitleId = '';
         this.itemOwningInstitutionId = '';
         this.patronBarcodeId = patronId;
-        this.patronEmailId = '';
-        this.deliveryLocationId = '';
+        this.patronEmailId = emailId;
+        //this.deliveryLocationId = deliveryLocationId;
         this.requestNotesId = '';
         this.StartPage = '';
         this.EndPage = '';
@@ -855,7 +867,7 @@ export class RequestComponent implements OnInit,OnDestroy {
         this.Issue = '';
         this.ArticleAuthor = '';
         this.ChapterTitle = '';
-        this.deliveryLocVal = [];
+        //this.deliveryLocVal = [];
       },
       (error) => {
         this.dashBoardService.errorNavigation();

@@ -20,6 +20,7 @@ import { UserRolesComponent } from './components/user-roles/user-roles.component
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
 import { SearchRequestComponent } from '@component/search-request/search-request.component';
+import {RequestLogComponent} from "@component/request-log/request-log.component";
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -100,6 +101,10 @@ const routes: Routes = [
       {
         path: 'dataExport',
         component: DataExportComponent,
+      },
+      {
+        path: 'requestLog',
+        component: RequestLogComponent,
       }
     ]
   },

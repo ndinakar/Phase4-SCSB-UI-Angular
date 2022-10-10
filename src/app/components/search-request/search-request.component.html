@@ -262,7 +262,7 @@
                                   item.status == 'RECALL ORDER PLACED' ||
                                   item.status == 'EDD ORDER PLACED' ||
                                   item.status == 'LAS REFILE REQUEST PLACED') &&
-                                item.showItems
+                                item.showItems &&  rolesRes['isRepository']
                               " style="
                                 background-color: transparent;
                                 box-shadow: none;
