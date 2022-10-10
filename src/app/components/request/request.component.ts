@@ -505,7 +505,19 @@ export class RequestComponent implements OnInit,OnDestroy {
         this.deliveryLocVal = Object.keys(del).map(function (data) {
           return [data, del[data]];
         });
-        console.log("deliveryLocations"+this.deliveryLocVal);
+        var isHaving = false;
+        console.log("old delivery location::"+this.deliveryLocationId);
+        for(var i = 0; i < this.deliveryLocVal.length; i++) {
+          var location = this.deliveryLocVal[i];
+          if(location[0] == this.deliveryLocationId){
+            this.deliveryLocationId = location[1]+"-"+location[0];
+            isHaving = true;
+            console.log("new delivery location::"+this.deliveryLocationId);
+          }
+        }
+        if(!isHaving){
+          this.deliveryLocationId='';
+        }
         this.requestTypes = [];
         for (var j = 0; j < res['requestTypes'].length; j++) {
           this.requestTypes.push(res['requestTypes'][j]);
