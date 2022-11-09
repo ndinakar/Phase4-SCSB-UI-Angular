@@ -758,7 +758,7 @@ footer {
 .tab-search-request span.icons,
 .tab-collection span.icons,
 .tab-request span.icons,
-.tab-request-log span.icons,
+.tab-search-log span.icons,
 .tab-reports span.icons,
 .tab-role span.icons,
 .tab-users span.icons {
@@ -798,7 +798,7 @@ footer {
   width: 45px;
 }
 
-.tab-request-log span.icons {
+.tab-search-log span.icons {
   background-position: -87px -37px;
   width: 45px;
 }
@@ -831,13 +831,13 @@ li.active .tab-search span.icons,
 li.active .tab-search-request span.icons,
 li.active .tab-collection span.icons,
 li.active .tab-request span.icons,
-li.active .tab-request-log span.icons,
+li.active .tab-search-log span.icons,
 li.active .tab-reports span.icons,
 li a.tab-search:hover span.icons,
 li a.tab-search-request:hover span.icons,
 li a.tab-collection:hover span.icons,
 li a.tab-request:hover span.icons,
-li a.tab-request-log:hover span.icons,
+li a.tab-search-log:hover span.icons,
 li a.tab-reports:hover span.icons,
 li a.tab-role:hover span.icons,
 li a.tab-users:hover span.icons {
@@ -870,8 +870,8 @@ li a.tab-request:hover span.icons {
   background-position: -87px -78px;
 }
 
-li.active .tab-request-log span.icons,
-li a.tab-request-log:hover span.icons {
+li.active .tab-search-log span.icons,
+li a.tab-search-log:hover span.icons {
   background-position: -87px -78px;
 }
 
@@ -928,8 +928,8 @@ li.active a.tab-request span {
   color: #41cac0;
 }
 
-li a.tab-request-log:hover span,
-li.active a.tab-request-log span {
+li a.tab-search-log:hover span,
+li.active a.tab-search-log span {
   color: #41cac0;
 }
 
@@ -967,7 +967,7 @@ li.active a.tab-logg span {
 .tab-search-request span,
 .tab-collection span,
 .tab-request span,
-.tab-request-log span,
+.tab-search-log span,
 .tab-reports span,
 .tab-role span,
 .tab-jobs span,
