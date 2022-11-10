@@ -226,11 +226,14 @@ export class RequestLogComponent implements OnInit {
           this.spinner.hide();
           this.requestSubmitResponse = res;
           this.resubmitRequestConfirmBodyId = false;
-          if(this.requestSubmitResponse['status'] != null && this.requestSubmitResponse['status'].includes('success')){
-            this.resubmitResponseMessage = 'resubmit success';
+          if(this.requestSubmitResponse['status'] != null && this.requestSubmitResponse['status'].includes('SUCCESS')){
+            this.resubmitResponseMessage = 'Resubmit Successful';
             this.status = true;
+          } else if(this.requestSubmitResponse['status'] != null && this.requestSubmitResponse['status'].includes('PARTIALLY')){
+            this.resubmitResponseMessage = 'Resubmit Partially Successful';
+            this.status = false;
           } else {
-            this.resubmitResponseMessage = 'resubmit failed';
+            this.resubmitResponseMessage = 'Resubmit Failed';
             this.status = false;
           }
         },
