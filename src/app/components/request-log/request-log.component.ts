@@ -124,7 +124,7 @@ export class RequestLogComponent implements OnInit {
   "pageSize": 10,
   "fromDate": "",
   "toDate": "",
-  "id":0
+  "gatewayRequestLogId":0
   }
   noRecordsMessage: string = "No records found";
 
@@ -171,7 +171,7 @@ export class RequestLogComponent implements OnInit {
       "pageSize": this.showentries,
       "fromDate":this.requestDateRangefrom ,
       "toDate": this.requestDateRangeto,
-      "id":0
+      "gatewayRequestLogId":0
     }
     this.requestLogService.getAllRequests(this.postData).subscribe(
         (res) => {
@@ -219,7 +219,7 @@ export class RequestLogComponent implements OnInit {
       "pageSize": this.showentries,
       "fromDate":this.requestDateRangefrom ,
       "toDate": this.requestDateRangeto,
-      "id":this.requestId
+      "gatewayRequestLogId":this.requestId
     }
     this.requestLogService.submitAllRequests(this.postData).subscribe(
         (res) => {
@@ -252,7 +252,7 @@ export class RequestLogComponent implements OnInit {
       "pageSize": 0,
       "fromDate":this.requestDateRangefrom ,
       "toDate": this.requestDateRangeto,
-      "id": 0
+      "gatewayRequestLogId": 0
     }
     this.requestLogService.submitAllRequests(this.postData).subscribe(
         (res) => {
