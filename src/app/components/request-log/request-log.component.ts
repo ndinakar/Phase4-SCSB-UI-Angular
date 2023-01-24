@@ -78,6 +78,7 @@ export class RequestLogComponent implements OnInit {
   searchPatronBarcode: string;
   searchItemBarcode: string;
   requestStatus: string;
+  validationStatus: string;
   searchInstitution: string;
   searchReqresult = false;
   patronBarcodeSearchError = false;
@@ -120,6 +121,7 @@ export class RequestLogComponent implements OnInit {
   postData = {
   "institution": "",
   "status":"",
+  "validationStatus":"",
   "pageNumber": 0,
   "pageSize": 10,
   "fromDate": "",
@@ -141,11 +143,18 @@ export class RequestLogComponent implements OnInit {
       this.getRequestLogData();
     }
   }
-
+  clear(){
+    this.requestDateRangeto = '',
+    this.requestDateRangefrom = '',
+    this.requestStatus = '',
+    this.validationStatus = '',
+    this.searchInstitution = ''
+  }
   loadRequestLog() {
     this.spinner.show();
     this.searchInstitution = '';
     this.requestStatus = '';
+    this.validationStatus = '';
     this.searchItemBarcode = '';
     this.searchReqresult = false;
     this.create_request = false;
@@ -167,6 +176,7 @@ export class RequestLogComponent implements OnInit {
     this.postData = {
       "institution": this.searchInstitution,
       "status":this.requestStatus,
+      "validationStatus":this.validationStatus,
       "pageNumber": this.pageNumber,
       "pageSize": this.showentries,
       "fromDate":this.requestDateRangefrom ,
@@ -215,6 +225,7 @@ export class RequestLogComponent implements OnInit {
     this.postData = {
       "institution": this.searchInstitution,
       "status":this.requestStatus,
+      "validationStatus":this.validationStatus,
       "pageNumber": this.pageNumber,
       "pageSize": this.showentries,
       "fromDate":this.requestDateRangefrom ,
@@ -248,6 +259,7 @@ export class RequestLogComponent implements OnInit {
     this.postData = {
       "institution": this.searchInstitution,
       "status":this.requestStatus,
+      "validationStatus":this.validationStatus,
       "pageNumber": 0,
       "pageSize": 0,
       "fromDate":this.requestDateRangefrom ,
@@ -361,5 +373,9 @@ export class RequestLogComponent implements OnInit {
     } else {
       this.submitClick = false;
     }
+  }
+  requestValidationNoteModal(notes) {
+    this.requestNotesData = notes;
+    $('#requestNotesModal').modal({ show: true });
   }
 }
