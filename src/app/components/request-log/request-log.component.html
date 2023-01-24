@@ -195,7 +195,7 @@
                                                 <td id="data_is_{{ i }}">{{ item.status }}</td>
                                                 <td id="data_vm_{{ i }}">
                                                     <div>
-                                                        <span *ngIf="item.validationMessage == 'FAILURE'" (click)="requestValidationNoteModal(item.responseMessage)">{{ item.validationMessage }}</span>
+                                                        <span *ngIf="item.validationMessage == 'FAILURE'" (click)="requestValidationNoteModal(item.responseMessage)" class="failure_test_decoration">{{ item.validationMessage }}</span>
                                                         <span *ngIf="item.validationMessage == 'SUCCESS'">SUCCESS</span>
                                                     </div>
                                                 </td>
