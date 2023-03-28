@@ -113,8 +113,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    useHash: false, enableTracing: false, initialNavigation: 'enabledNonBlocking', onSameUrlNavigation: 'reload',
-    relativeLinkResolution: 'legacy'
+    useHash: false, enableTracing: false, initialNavigation: 'enabledNonBlocking', onSameUrlNavigation: 'reload'
 })],
   exports: [RouterModule],
   providers: [AuthGuard]
