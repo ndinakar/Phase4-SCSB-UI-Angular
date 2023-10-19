@@ -224,6 +224,7 @@ export class RolesComponent implements OnInit {
           this.showResults = true;
           this.roleName = "";
         }
+        this.pagination();
       });
   }
   createRole() {

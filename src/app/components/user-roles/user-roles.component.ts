@@ -206,6 +206,7 @@ export class UserRolesComponent implements OnInit {
     this.userRolesService.editUser(userId, networkLoginId).subscribe(
       (res) => {
         this.userResponse = res;
+        this.userRoleFormVal = res;
         this.userRoleListVal = this.userResponse['roles'].map(function (x) { return { id: x[0], name: x[1] }; });
         this.deleteEmailId = this.userResponse['editEmailId'];
         this.deleteUserDescription = this.userResponse['editUserDescription'];
@@ -214,6 +215,7 @@ export class UserRolesComponent implements OnInit {
         this.deletedRoleId = this.userResponse['editSelectedForCreate'];
         this.spinner.hide();
       });
+      this.pagination();
   }
   searchUserRoles() {
     this.deletedSuccessMsgDiv = false;
