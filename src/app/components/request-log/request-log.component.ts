@@ -365,6 +365,7 @@ export class RequestLogComponent implements OnInit {
   onPageSizeChange(showentries){
     this.pageNumber = 0;
     this.showentries = showentries;
+    this.getRequestLogData();
   }
 
   statusChange() {
