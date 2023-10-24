@@ -411,6 +411,7 @@ export class UserRolesComponent implements OnInit {
           this.deleteErrorMsgDiv = true;
         }
         this.spinner.hide();
+        this.pagination();
       },
       (error) => {
         this.dashBoardService.errorNavigation();
