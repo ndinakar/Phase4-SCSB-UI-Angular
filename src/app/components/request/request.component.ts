@@ -638,12 +638,14 @@ export class RequestComponent implements OnInit,OnDestroy {
           "searchInstitutionHdn": null
         }
         this.spinner.show();
+        this.createsubmit = true;
         this.requestService.createRequest(this.postData).subscribe(
           (res) => {
             this.createResponse = res;
             if (this.createResponse['errorMessage'] != null) {
               this.errorMessage = this.createResponse['errorMessage'];
               this.createRequestError = true;
+              this.createsubmit = false;
             } else {
               this.createsubmit = true;
               this.createRequestError = false;
@@ -721,12 +723,14 @@ export class RequestComponent implements OnInit,OnDestroy {
           "searchInstitutionHdn": null
         }
         this.spinner.show();
+        this.createsubmit = true;
         this.requestService.createRequest(this.postData).subscribe(
           (res) => {
             this.createResponse = res;
             if (this.createResponse['errorMessage'] != null) {
               this.errorMessage = this.createResponse['errorMessage'];
               this.createRequestError = true;
+              this.createsubmit = false;
             } else {
               this.createsubmit = true;
               this.createRequestError = false;
