@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {urls} from "@config/urls";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Observable} from "rxjs";
 import {TreeNode} from "primeng/api";
 import {appHeaders} from "@config/headers";

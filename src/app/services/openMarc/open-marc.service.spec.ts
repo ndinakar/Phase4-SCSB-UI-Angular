@@ -1,5 +1,5 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController } from '@angular/common/http/testing';
 import { OpenMarcService } from './open-marc.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Router } from '@angular/router';

@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 
 import { CollectionService } from './collection.service';
 import { CollectionForm } from '../../model/CollectionForm';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {} from '@angular/common/http/testing';
 import { error } from '@angular/compiler/src/util';
 
 describe('CollectionService', () => {

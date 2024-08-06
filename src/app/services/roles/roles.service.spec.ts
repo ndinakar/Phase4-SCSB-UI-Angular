@@ -1,5 +1,5 @@
-import { HttpClient, HttpHandler } from "@angular/common/http";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { HttpClient, HttpHandler, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from "@angular/router";
 import { of } from 'rxjs';
@@ -13,13 +13,10 @@ describe('RolesService', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [],
-      providers: [RolesService, HttpClient, Router],
-      imports: [
-        HttpClientTestingModule
-      ]
-
-    })
+    declarations: [],
+    imports: [],
+    providers: [RolesService, HttpClient, Router, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
   }));
   beforeEach(() => {

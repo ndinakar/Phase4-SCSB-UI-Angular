@@ -1,11 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* @import "~bootstrap/dist/css/bootstrap.css"; */
+/* @import "bootstrap/dist/css/bootstrap.css"; */
 
-@import "~primeicons/primeicons.css";
-@import "~primeng/resources/themes/saga-blue/theme.css";
-@import "~primeng/resources/primeng.min.css";
-@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "primeicons/primeicons.css";
+@import "primeng/resources/themes/saga-blue/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import "@ng-select/ng-select/themes/default.theme.css";
 @font-face{ font-family: 'mukta-regular'; src: url('src/fonts/mukta_regular.ttf'); } 
 .p-component {
   font-family: "roboto-condensed", sans-serif !important;

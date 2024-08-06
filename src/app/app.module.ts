@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,60 +43,53 @@ import { UserLoginComponent } from './components/user-login/user-login.component
 import { InterceptorService } from '@service/interceptor.service';
 import { SearchRequestComponent } from '@component/search-request/search-request.component';
 import { RequestLogComponent } from './components/request-log/request-log.component';
-@NgModule({
-  declarations: [
-    AppComponent,
-    PageNotFoundComponent,
-    HomeComponent,
-    RequestComponent,
-    BulkrequestComponent,
-    ReportsComponent,
-    RolesComponent,
-    UserRolesComponent,
-    JobsComponent,
-    MonitoringComponent,
-    LoggingComponent,
-    AdminComponent,
-    DataExportComponent,
-    DashboardComponent,
-    SearchComponent,
-    HeaderComponent,
-    FooterComponent,
-    CollectionComponent,
-    OpenMarcComponent,
-    ErrorPageComponent,
-    UserLoginComponent,
-    SearchRequestComponent,
-    RequestLogComponent
-  ],
-  imports: [
-    LoggerModule.forRoot({ level: NgxLoggerLevel.TRACE }),
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    NgSelectModule,
-    NgxSpinnerModule,
-    CommonModule,
-    TreeTableModule,
-    BrowserAnimationsModule,
-    TableModule,
-    ToastModule,
-    DialogModule,
-    ButtonModule,
-    MultiSelectModule,
-    InputTextModule,
-    ContextMenuModule,
-    FormsModule,
-    TooltipModule,
-    ReactiveFormsModule,
-  ],
-  providers: [CookieService, AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: InterceptorService,
-      multi: true
-    }],
-  bootstrap: [AppComponent]
-})  
+@NgModule({ declarations: [
+        AppComponent,
+        PageNotFoundComponent,
+        HomeComponent,
+        RequestComponent,
+        BulkrequestComponent,
+        ReportsComponent,
+        RolesComponent,
+        UserRolesComponent,
+        JobsComponent,
+        MonitoringComponent,
+        LoggingComponent,
+        AdminComponent,
+        DataExportComponent,
+        DashboardComponent,
+        SearchComponent,
+        HeaderComponent,
+        FooterComponent,
+        CollectionComponent,
+        OpenMarcComponent,
+        ErrorPageComponent,
+        UserLoginComponent,
+        SearchRequestComponent,
+        RequestLogComponent
+    ],
+    bootstrap: [AppComponent], imports: [LoggerModule.forRoot({ level: NgxLoggerLevel.TRACE }),
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        NgSelectModule,
+        NgxSpinnerModule,
+        CommonModule,
+        TreeTableModule,
+        BrowserAnimationsModule,
+        TableModule,
+        ToastModule,
+        DialogModule,
+        ButtonModule,
+        MultiSelectModule,
+        InputTextModule,
+        ContextMenuModule,
+        FormsModule,
+        TooltipModule,
+        ReactiveFormsModule], providers: [CookieService, AuthGuard,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: InterceptorService,
+            multi: true
+        }, provideHttpClient(withInterceptorsFromDi())] })  
 export class AppModule { }

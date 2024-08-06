@@ -1,5 +1,5 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {} from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
